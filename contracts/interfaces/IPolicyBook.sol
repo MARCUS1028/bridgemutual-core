@@ -3,7 +3,7 @@ pragma solidity =0.7.4;
 pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "./IPolicyFabric.sol";
+import "./IPolicyBookFabric.sol";
 
 interface IPolicyBook is IERC20 {
   struct Policy {
