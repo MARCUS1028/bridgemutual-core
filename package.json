@@ -5,6 +5,7 @@
   "author": "BridgeMutual R&D Team",
   "description": "",
   "scripts": {
+    "private-network": "ganache-cli",
     "test": "truffle test",
     "test:coverage": "truffle run coverage",
     "compile": "truffle compile",
@@ -33,20 +34,5 @@
     "solidity-coverage": "^0.7.1",
     "truffle": "^5.1.56",
     "truffle-assertions": "^0.9.2"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "*.js": [
-      "prettier --write",
-      "yarn lint-js:fix"
-    ],
-    "*.sol": [
-      "prettier --write",
-      "yarn lint-sol:fix"
-    ]
   }
 }
