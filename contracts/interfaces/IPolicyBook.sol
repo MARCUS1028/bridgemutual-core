@@ -164,4 +164,18 @@ interface IPolicyBook is IERC20 {
   /// @notice Let user to claim rewards for unclaimed policy cost in DAI, access: ANY
   /// @param _policyId is id of policy to get reward for, reward will be sent to policy holder
   function rewardForUnclaimedExpiredPolicy(uint256 _policyId) external;
+
+  /// @notice Getting stats, access: ANY
+  /// @return _yearlyCost
+  /// @return _maxCapacities is max DAI amount to be covered at now
+  /// @return _totalDaiLiquidity is DAI amount placed by Policy providers
+  /// @return _annualProfitYields is current annual profit yield
+  function getStats()
+    external
+    returns (
+      uint256 _yearlyCost,
+      uint256 _maxCapacities,
+      uint256 _totalDaiLiquidity,
+      uint256 _annualProfitYields
+    );
 }
