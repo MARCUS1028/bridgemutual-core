@@ -170,7 +170,7 @@ interface IPolicyBook is IERC20 {
   /// @return _maxCapacities is max DAI amount to be covered at now
   /// @return _totalDaiLiquidity is DAI amount placed by Policy providers
   /// @return _annualProfitYields is current annual profit yield
-  function getStats()
+  function stats()
     external
     returns (
       uint256 _yearlyCost,
