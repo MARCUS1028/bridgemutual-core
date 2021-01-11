@@ -145,4 +145,17 @@ contract PolicyBook is IPolicyBook, ERC20 {
   }
 
   function rewardForUnclaimedExpiredPolicy(uint256 _policyId) external override {}
+
+  function stats()
+    external
+    override
+    returns (
+      uint256 _yearlyCost,
+      uint256 _maxCapacities,
+      uint256 _totalDaiLiquidity,
+      uint256 _annualProfitYields
+    )
+  {
+    return (0, 0, 0, 0);
+  }
 }
