@@ -23,10 +23,10 @@ contract BMITokenVesting is Ownable {
     bool isCancelable;
   }
 
-  IERC20 private token;
+  IERC20 public token;
   mapping(uint256 => Vesting) private vestings;
-  uint256 private vestingCount;
-  uint256 private amountInVestings;
+  uint256 public vestingCount;
+  uint256 public amountInVestings;
 
   event TokenSet(IERC20 token);
   event VestingAdded(uint256 vestingId);
@@ -108,18 +108,6 @@ contract BMITokenVesting is Ownable {
 
   function withdrawExcessiveTokens() external onlyOwner {
     token.transfer(owner(), getTokensAvailable());
-  }
-
-  function getAmountInVestings() public view returns (uint256) {
-    return amountInVestings;
-  }
-
-  function getVestingsCount() public view returns (uint256) {
-    return vestingCount;
-  }
-
-  function getToken() public view returns (address) {
-    return address(token);
   }
 
   function getTokensAvailable() public view returns (uint256) {

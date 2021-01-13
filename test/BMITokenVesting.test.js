@@ -137,9 +137,9 @@ contract("BMITokenVesting", async ([deployer, otherAddress, otherAddress2]) => {
     it("should add amount to amount in vesting", async () => {
       const [vesting] = await deployReadyToUseContract();
 
-      (await vesting.getAmountInVestings()).should.be.bignumber.equal("0");
+      (await vesting.amountInVestings()).should.be.bignumber.equal("0");
       await vesting.createVesting(otherAddress, 100, getNowTimestamp(), 1, 25, 0, true).should.be.fulfilled;
-      (await vesting.getAmountInVestings()).should.be.bignumber.equal("100");
+      (await vesting.amountInVestings()).should.be.bignumber.equal("100");
     });
 
     it("should create valid vesting instance", async () => {
@@ -231,7 +231,7 @@ contract("BMITokenVesting", async ([deployer, otherAddress, otherAddress2]) => {
       const [vesting, vestingId] = await deployContractWithVesting();
 
       await vesting.cancelVesting(vestingId).should.be.fulfilled;
-      (await vesting.getAmountInVestings()).should.be.bignumber.equal("0");
+      (await vesting.amountInVestings()).should.be.bignumber.equal("0");
     });
 
     it("should lower amount in vesting for partly paid vesting", async () => {
@@ -241,9 +241,9 @@ contract("BMITokenVesting", async ([deployer, otherAddress, otherAddress2]) => {
         from: otherAddress,
       });
 
-      (await vesting.getAmountInVestings()).should.be.bignumber.equal("50");
+      (await vesting.amountInVestings()).should.be.bignumber.equal("50");
       await vesting.cancelVesting(vestingId).should.be.fulfilled;
-      (await vesting.getAmountInVestings()).should.be.bignumber.equal("0");
+      (await vesting.amountInVestings()).should.be.bignumber.equal("0");
     });
   });
 
@@ -358,7 +358,7 @@ contract("BMITokenVesting", async ([deployer, otherAddress, otherAddress2]) => {
       await vesting.withdrawFromVesting(vestingId, {
         from: otherAddress,
       });
-      (await vesting.getAmountInVestings()).should.be.bignumber.equal("0");
+      (await vesting.amountInVestings()).should.be.bignumber.equal("0");
       (await vesting.getTokensAvailable()).should.be.bignumber.equal(availableBefore);
     });
   });
@@ -402,7 +402,7 @@ contract("BMITokenVesting", async ([deployer, otherAddress, otherAddress2]) => {
     it("should reference deployed token contract", async () => {
       const vesting = await BMITokenVesting.deployed();
       const token = await BMIToken.deployed();
-      (await vesting.getToken()).should.be.equal(token.address);
+      (await vesting.token()).should.be.equal(token.address);
     });
 
     it("should not have unvested tokens", async () => {
@@ -413,7 +413,7 @@ contract("BMITokenVesting", async ([deployer, otherAddress, otherAddress2]) => {
 
     it("should have expected vestings count", async () => {
       const vesting = await BMITokenVesting.deployed();
-      (await vesting.getVestingsCount()).should.be.bignumber.equal("21");
+      (await vesting.vestingCount()).should.be.bignumber.equal("21");
     });
 
     it("should contain angel round vesting with id 0 and with expected behaviour", async () => {
