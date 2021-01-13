@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity =0.7.4;
 
-import "./IPolicyFabric.sol";
+import "./IPolicyBookFabric.sol";
 
 interface IPolicyBookRegistry {
   /// @notice Adds PolicyBook to registry, access: PolicyFabric

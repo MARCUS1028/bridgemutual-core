@@ -6,14 +6,18 @@ require("chai").use(require("chai-as-promised")).use(require("chai-bn")(BN)).sho
 
 const PolicyBookFabric = artifacts.require("PolicyBookFabric");
 const PolicyBook = artifacts.require("PolicyBook");
+const PolicyBookRegistry = artifacts.require("PolicyBookRegistry");
 
 contract("PolicyBookFabric", async (addresses) => {
   const deploy = async () => {
-    return await PolicyBookFabric.new();
+    const registry = await PolicyBookRegistry.new();
+    const fabric = await PolicyBookFabric.new(registry.address);
+    registry.setPolicyFabricAddress(fabric.address);
+    return [fabric, registry];
   };
 
   const deployWithThreeBooks = async () => {
-    const fabric = await PolicyBookFabric.new();
+    const [fabric] = await deploy();
 
     const bookAddresses = [];
 
@@ -31,7 +35,7 @@ contract("PolicyBookFabric", async (addresses) => {
 
   describe("# PolicyBookFabric create", async () => {
     it("should instantiate contract at saved address", async () => {
-      const fabric = await deploy();
+      const [fabric] = await deploy();
 
       await fabric.create(addresses[1], 1);
       const address = await fabric.policyBookFor(addresses[1]);
@@ -41,7 +45,7 @@ contract("PolicyBookFabric", async (addresses) => {
     });
 
     it("should emit created event", async () => {
-      const fabric = await deploy();
+      const [fabric] = await deploy();
 
       const tx = await fabric.create(addresses[1], 1);
       const address = await fabric.policyBookFor(addresses[1]);
@@ -52,14 +56,23 @@ contract("PolicyBookFabric", async (addresses) => {
     });
 
     it("should not allow to create dublicate by the same address", async () => {
-      const fabric = await deploy();
+      const [fabric] = await deploy();
 
       await fabric.create(addresses[1], 1);
-      await expectRevert(fabric.create(addresses[1], 1), "Address already used");
+      await expectRevert(fabric.create(addresses[1], 1), "PolicyBook for the contract is already created");
+    });
+
+    it("should add policy to registry", async () => {
+      const [fabric, registry] = await deploy();
+
+      const tx = await fabric.create(addresses[1], 1);
+      const event = getCreatedSetEvent(tx);
+      const bookAddress = event.at;
+      (await registry.policyBookFor(addresses[1])).should.be.equal(bookAddress);
     });
 
     it("should increase count of books", async () => {
-      const fabric = await deploy();
+      const [fabric] = await deploy();
 
       (await fabric.policyBooksCount()).should.be.bignumber.equal("0");
       await fabric.create(addresses[1], 1);
