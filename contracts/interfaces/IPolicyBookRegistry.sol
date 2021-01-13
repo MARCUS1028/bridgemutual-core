@@ -5,16 +5,24 @@ import "./IPolicyFabric.sol";
 
 interface IPolicyBookRegistry {
   /// @notice Adds PolicyBook to registry, access: PolicyFabric
-  /// @return _policyBooksCount is number of PolicyBooks
-  function add(address _insuredContract, address _policyBook) external returns (uint256);
+  function add(address _insuredContract, address _policyBook) external;
 
   /// @notice Returns number of registered PolicyBooks, access: ANY
   /// @return _policyBooksCount is number of PolicyBooks
-  function count() external returns (uint256 _policyBooksCount);
+  function count() external view returns (uint256 _policyBooksCount);
 
   /// @notice Listing registered PolicyBooks, access: ANY
+  /// @return _policyBooksCount is count of returned registered PolicyBook addresses
   /// @return _policyBooks is array of registered PolicyBook addresses
-  function list(uint256 _offset, uint256 _limit) external returns (address[] memory _policyBooks);
+  function list(uint256 _offset, uint256 _limit)
+    external
+    view
+    returns (uint256 _policyBooksCount, address[] memory _policyBooks);
+
+  /// @notice Return existing Policy Book contract, access: ANY
+  /// @param _contract is contract address to lookup for created IPolicyBook
+  /// @return _policyBook is policy book address if exists for passed contract address, if not it will return address(0)
+  function policyBookFor(address _contract) external view returns (address _policyBook);
 
   /// @notice Getting stats from policy books, access: ANY
   /// @param _policyBooks is list of PolicyBooks addresses
