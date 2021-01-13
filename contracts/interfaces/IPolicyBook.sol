@@ -3,7 +3,7 @@ pragma solidity =0.7.4;
 pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "./IPolicyFabric.sol";
+import "./IPolicyBookFabric.sol";
 
 interface IPolicyBook is IERC20 {
   struct Policy {
@@ -170,7 +170,7 @@ interface IPolicyBook is IERC20 {
   /// @return _maxCapacities is max DAI amount to be covered at now
   /// @return _totalDaiLiquidity is DAI amount placed by Policy providers
   /// @return _annualProfitYields is current annual profit yield
-  function getStats()
+  function stats()
     external
     returns (
       uint256 _yearlyCost,
