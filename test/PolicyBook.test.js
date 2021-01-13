@@ -5,13 +5,13 @@ const { assert } = require("chai");
 
 require("chai").use(require("chai-as-promised")).use(require("chai-bn")(BN)).should();
 
-const PolicyBook = artifacts.require("PolicyBook");
+const MockPolicyBook = artifacts.require("MockPolicyBook");
 
 contract("PolicyBook", async (addresses) => {
   let deployed;
 
   beforeEach("setup", async () => {
-    deployed = await PolicyBook.new(addresses[1], 0);
+    deployed = await MockPolicyBook.new(addresses[1], 0);
   });
 
   describe.only("getQuote()", async () => {

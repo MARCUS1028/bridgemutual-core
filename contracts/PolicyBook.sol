@@ -167,17 +167,6 @@ contract PolicyBook is IPolicyBook, ERC20 {
   uint256 public daiInThePoolTotal;
   uint256 public daiInThePoolBought;
 
-  /// ONLY FOR TESING PURPOSES
-  function setPoolDaiTotal(uint256 _daiInThePoolTotal) public {
-    daiInThePoolTotal = _daiInThePoolTotal;
-  }
-
-  function setPoolDaiBought(uint256 _daiInThePoolBought) public {
-    daiInThePoolBought = _daiInThePoolBought;
-  }
-
-  ///
-
   function calculateWhenNotRisky(uint256 _utilizationRatioPersentage) internal pure returns (uint256 _persentage) {
     return (_utilizationRatioPersentage * MAXIMUM_COST_NOT_RISKY_PERSENTAGE) / RISKY_ASSET_TRESHOLD_PERSENTAGE;
   }
