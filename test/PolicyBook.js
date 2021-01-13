@@ -1,7 +1,7 @@
 const PolicyBook = artifacts.require("PolicyBook");
-const { catchRevert } = require("./helpers/ExceptionCatcher")
+// const { catchRevert } = require("./helpers/ExceptionCatcher")
 
-contract("PolicyBook", async (accounts) =>
+contract("PolicyBook", async () =>
 {    
     let deployed;
 
