@@ -58,7 +58,7 @@ contract('PolicyBook', async (accounts) => {
 
       assert.equal(await policyBook.totalCoverTokens(), coverTokensAmount.toString());
 
-      let policyHolder = await policyBook.policyHolders(USER2);
+      const policyHolder = await policyBook.policyHolders(USER2);
       assert.equal(policyHolder.coverTokens, coverTokensAmount.toString());
       assert.equal(policyHolder.durationDays, durationDays.toString());
       assert.equal(policyHolder.maxDaiTokens, maxDaiTokens.toString());
@@ -71,7 +71,7 @@ contract('PolicyBook', async (accounts) => {
     it('should get exception, not enough available liquidity', async () => {
       const reason = 'Not enough available liquidity';
       await truffleAssert.reverts(policyBook
-        .buyPolicy(durationDays, coverTokensAmount.times(10), maxDaiTokens, {from: USER2}), reason);
+      .buyPolicy(durationDays, coverTokensAmount.times(10), maxDaiTokens, {from: USER2}), reason);
     });
   });
 
@@ -103,7 +103,7 @@ contract('PolicyBook', async (accounts) => {
 
       assert.equal(await policyBook.totalCoverTokens(), coverTokensAmount.toString());
 
-      let policyHolder = await policyBook.policyHolders(USER2);
+      const policyHolder = await policyBook.policyHolders(USER2);
       assert.equal(policyHolder.coverTokens, coverTokensAmount.toString());
       assert.equal(policyHolder.durationDays, durationDays.toString());
       assert.equal(policyHolder.maxDaiTokens, maxDaiTokens.toString());
@@ -116,7 +116,7 @@ contract('PolicyBook', async (accounts) => {
     it('should get exception, not enough available liquidity', async () => {
       const reason = 'Not enough available liquidity';
       await truffleAssert.reverts(policyBook
-        .buyPolicyFor(USER2, durationDays, coverTokensAmount.times(10), maxDaiTokens), reason);
+      .buyPolicyFor(USER2, durationDays, coverTokensAmount.times(10), maxDaiTokens), reason);
     });
   });
 
@@ -140,7 +140,7 @@ contract('PolicyBook', async (accounts) => {
       assert.equal((await policyBook.liquidityHolders(USER1)).depositedAmount, amount.toString());
       assert.equal((await policyBook.liquidityHolders(USER1)).lastUpdate, 1);
 
-      await setCurrentTime(100)
+      await setCurrentTime(100);
       await policyBook.addLiquidity(amount, {from: USER2});
 
       assert.equal(await policyBook.totalLiquidity(), amount.times(2).toString());
@@ -154,7 +154,7 @@ contract('PolicyBook', async (accounts) => {
 
     it('should set correct values', async () => {
       await setCurrentTime(1);
-      await policyBook.addLiquidityFor(USER1 ,amount);
+      await policyBook.addLiquidityFor(USER1, amount);
 
       assert.equal(await policyBook.totalLiquidity(), amount.toString());
       assert.equal((await policyBook.liquidityHolders(USER1)).depositedAmount, amount.toString());
@@ -169,7 +169,7 @@ contract('PolicyBook', async (accounts) => {
       assert.equal((await policyBook.liquidityHolders(USER1)).depositedAmount, amount.toString());
       assert.equal((await policyBook.liquidityHolders(USER1)).lastUpdate, 1);
 
-      await setCurrentTime(100)
+      await setCurrentTime(100);
       await policyBook.addLiquidityFor(USER2, amount);
 
       assert.equal(await policyBook.totalLiquidity(), amount.times(2).toString());
