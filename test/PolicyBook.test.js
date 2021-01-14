@@ -5,7 +5,7 @@ const { assert } = require("chai");
 
 require("chai").use(require("chai-as-promised")).use(require("chai-bn")(BN)).should();
 
-const MockPolicyBook = artifacts.require("MockPolicyBook");
+const MockPolicyBook = artifacts.require("./Mock/MockPolicyBook");
 
 contract("PolicyBook", async (addresses) => {
   let deployed;
