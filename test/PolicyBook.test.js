@@ -8,10 +8,10 @@ require("chai").use(require("chai-as-promised")).use(require("chai-bn")(BN)).sho
 const MockPolicyBook = artifacts.require("./Mock/MockPolicyBook");
 
 contract("PolicyBook", async (addresses) => {
-  let deployed;
+  let mockPolicyBook;
 
   beforeEach("setup", async () => {
-    deployed = await MockPolicyBook.new(addresses[1], 0);
+    mockPolicyBook = await MockPolicyBook.new(addresses[1], 0);
   });
 
   describe("getQuote()", async () => {
@@ -26,10 +26,10 @@ contract("PolicyBook", async (addresses) => {
       total = 10000000; // 10mil
       bought = 5000000; // 5mil
 
-      await deployed.setPoolDaiTotal(total);
-      await deployed.setPoolDaiBought(bought);
+      await mockPolicyBook.setPoolDaiTotal(total);
+      await mockPolicyBook.setPoolDaiBought(bought);
 
-      const calculatedPrice = (await deployed.getQuote(days, myMoney)).toNumber();
+      const calculatedPrice = (await mockPolicyBook.getQuote(days, myMoney)).toNumber();
 
       assert.equal(calculatedPrice, 21857, "UR < RISKY case is incorrect");
     });
@@ -40,10 +40,10 @@ contract("PolicyBook", async (addresses) => {
       total = 10000000; // 10mil
       bought = 5000000; // 5mil
 
-      await deployed.setPoolDaiTotal(total);
-      await deployed.setPoolDaiBought(bought);
+      await mockPolicyBook.setPoolDaiTotal(total);
+      await mockPolicyBook.setPoolDaiBought(bought);
 
-      const calculatedPrice = (await deployed.getQuote(days, myMoney)).toNumber();
+      const calculatedPrice = (await mockPolicyBook.getQuote(days, myMoney)).toNumber();
 
       assert.equal(calculatedPrice, 4399999, "UR > RISKY case is incorrect");
     });
@@ -54,10 +54,10 @@ contract("PolicyBook", async (addresses) => {
       total = 10000000; // 10mil
       bought = 500000; // 500k
 
-      await deployed.setPoolDaiTotal(total);
-      await deployed.setPoolDaiBought(bought);
+      await mockPolicyBook.setPoolDaiTotal(total);
+      await mockPolicyBook.setPoolDaiBought(bought);
 
-      const calculatedPrice = (await deployed.getQuote(days, myMoney)).toNumber();
+      const calculatedPrice = (await mockPolicyBook.getQuote(days, myMoney)).toNumber();
 
       assert.equal(calculatedPrice, 5000, "UR < RISKY case is incorrect");
     });
@@ -68,10 +68,10 @@ contract("PolicyBook", async (addresses) => {
       total = 10000000; // 10mil
       bought = 5000000; // 5mil
 
-      await deployed.setPoolDaiTotal(total);
-      await deployed.setPoolDaiBought(bought);
+      await mockPolicyBook.setPoolDaiTotal(total);
+      await mockPolicyBook.setPoolDaiBought(bought);
 
-      const calculatedPrice = (await deployed.getQuote(days, myMoney)).toNumber();
+      const calculatedPrice = (await mockPolicyBook.getQuote(days, myMoney)).toNumber();
 
       assert.equal(calculatedPrice, parseInt(21857 * (100 / 365)), "UR < RISKY case is incorrect");
     });
@@ -82,10 +82,10 @@ contract("PolicyBook", async (addresses) => {
       total = 10000000; // 10mil
       bought = 5000000; // 5mil
 
-      await deployed.setPoolDaiTotal(total);
-      await deployed.setPoolDaiBought(bought);
+      await mockPolicyBook.setPoolDaiTotal(total);
+      await mockPolicyBook.setPoolDaiBought(bought);
 
-      const calculatedPrice = (await deployed.getQuote(days, myMoney)).toNumber();
+      const calculatedPrice = (await mockPolicyBook.getQuote(days, myMoney)).toNumber();
 
       assert.equal(calculatedPrice, parseInt(21857 * (1 / 365)), "UR < RISKY case is incorrect");
     });
@@ -96,10 +96,10 @@ contract("PolicyBook", async (addresses) => {
       total = 10000000; // 10mil
       bought = 5000000; // 5mil
 
-      await deployed.setPoolDaiTotal(total);
-      await deployed.setPoolDaiBought(bought);
+      await mockPolicyBook.setPoolDaiTotal(total);
+      await mockPolicyBook.setPoolDaiBought(bought);
 
-      const calculatedPrice = (await deployed.getQuote(days, myMoney)).toNumber();
+      const calculatedPrice = (await mockPolicyBook.getQuote(days, myMoney)).toNumber();
 
       assert.equal(calculatedPrice, parseInt(21857 * (999 / 365)), "UR < RISKY case is incorrect");
     });
@@ -110,10 +110,10 @@ contract("PolicyBook", async (addresses) => {
       total = 10000000; // 10mil
       bought = 5000000; // 5mil
 
-      await deployed.setPoolDaiTotal(total);
-      await deployed.setPoolDaiBought(bought);
+      await mockPolicyBook.setPoolDaiTotal(total);
+      await mockPolicyBook.setPoolDaiBought(bought);
 
-      const calculatedPrice = (await deployed.getQuote(days, myMoney)).toNumber();
+      const calculatedPrice = (await mockPolicyBook.getQuote(days, myMoney)).toNumber();
 
       assert.equal(calculatedPrice, 0, "No matter what it should equal to 0");
     });
@@ -124,10 +124,10 @@ contract("PolicyBook", async (addresses) => {
       total = 10000000; // 10mil
       bought = 0; // 0
 
-      await deployed.setPoolDaiTotal(total);
-      await deployed.setPoolDaiBought(bought);
+      await mockPolicyBook.setPoolDaiTotal(total);
+      await mockPolicyBook.setPoolDaiBought(bought);
 
-      const calculatedPrice = (await deployed.getQuote(days, myMoney)).toNumber();
+      const calculatedPrice = (await mockPolicyBook.getQuote(days, myMoney)).toNumber();
 
       assert.equal(calculatedPrice, 5, "Less than minimal");
     });
@@ -138,10 +138,10 @@ contract("PolicyBook", async (addresses) => {
       total = 100000000000000; // 100tril
       bought = 50000000000000; // 50tril
 
-      await deployed.setPoolDaiTotal(total);
-      await deployed.setPoolDaiBought(bought);
+      await mockPolicyBook.setPoolDaiTotal(total);
+      await mockPolicyBook.setPoolDaiBought(bought);
 
-      const calculatedPrice = (await deployed.getQuote(days, myMoney)).toNumber();
+      const calculatedPrice = (await mockPolicyBook.getQuote(days, myMoney)).toNumber();
 
       assert.equal(calculatedPrice, 2185714285710, "UR < RISKY case is incorrect");
     });
@@ -152,10 +152,10 @@ contract("PolicyBook", async (addresses) => {
       total = 100; // 100
       bought = 50; // 50
 
-      await deployed.setPoolDaiTotal(total);
-      await deployed.setPoolDaiBought(bought);
+      await mockPolicyBook.setPoolDaiTotal(total);
+      await mockPolicyBook.setPoolDaiBought(bought);
 
-      const calculatedPrice = (await deployed.getQuote(days, myMoney)).toNumber();
+      const calculatedPrice = (await mockPolicyBook.getQuote(days, myMoney)).toNumber();
 
       assert.equal(calculatedPrice, 21, "UR < RISKY case is incorrect");
     });
@@ -166,10 +166,10 @@ contract("PolicyBook", async (addresses) => {
       total = 1000000; // 1mil
       bought = 500000; // 500k
 
-      await deployed.setPoolDaiTotal(total);
-      await deployed.setPoolDaiBought(bought);
+      await mockPolicyBook.setPoolDaiTotal(total);
+      await mockPolicyBook.setPoolDaiBought(bought);
 
-      const calculatedPrice = (await deployed.getQuote(days, myMoney)).toNumber();
+      const calculatedPrice = (await mockPolicyBook.getQuote(days, myMoney)).toNumber();
 
       assert.equal(calculatedPrice, 750000, "UR > RISKY case is incorrect");
     });
@@ -180,10 +180,10 @@ contract("PolicyBook", async (addresses) => {
       total = 1000000; // 1mil
       bought = 500000; // 500k
 
-      await deployed.setPoolDaiTotal(total);
-      await deployed.setPoolDaiBought(bought);
+      await mockPolicyBook.setPoolDaiTotal(total);
+      await mockPolicyBook.setPoolDaiBought(bought);
 
-      expectRevert(deployed.getQuote(days, myMoney), "Requiring more than there exists");
+      expectRevert(mockPolicyBook.getQuote(days, myMoney), "Requiring more than there exists");
     });
 
     it("pool is empty (should revert)", async () => {
@@ -192,10 +192,10 @@ contract("PolicyBook", async (addresses) => {
       total = 0; // 0
       bought = 0; // 0
 
-      await deployed.setPoolDaiTotal(total);
-      await deployed.setPoolDaiBought(bought);
+      await mockPolicyBook.setPoolDaiTotal(total);
+      await mockPolicyBook.setPoolDaiBought(bought);
 
-      expectRevert(deployed.getQuote(days, myMoney), "The pool should be empty");
+      expectRevert(mockPolicyBook.getQuote(days, myMoney), "The pool should be empty");
     });
   });
 });

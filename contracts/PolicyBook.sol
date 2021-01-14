@@ -8,22 +8,20 @@ import "./interfaces/IPolicyBook.sol";
 import "./interfaces/IPolicyBookFabric.sol";
 
 contract PolicyBook is IPolicyBook, ERC20 {
-  address private contractAddress_;
-  IPolicyBookFabric.ContractType private contractType_;
+  address private _contractAddress;
+  IPolicyBookFabric.ContractType private _contractType;
 
-  constructor(address _contract, IPolicyBookFabric.ContractType _contractType)
-    ERC20("BridgeMutual Insurance", "bmiDAIx")
-  {
-    contractAddress_ = _contract;
-    contractType_ = _contractType;
+  constructor(address _contract, IPolicyBookFabric.ContractType _type) ERC20("BridgeMutual Insurance", "bmiDAIx") {
+    _contractAddress = _contract;
+    _contractType = _type;
   }
 
   function contractAddress() external view override returns (address _contract) {
-    return contractAddress_;
+    return _contractAddress;
   }
 
   function contractType() external view override returns (IPolicyBookFabric.ContractType _type) {
-    return contractType_;
+    return _contractType;
   }
 
   function quoteStrategy() external view override returns (address _quoteStrategy) {
@@ -186,7 +184,6 @@ contract PolicyBook is IPolicyBook, ERC20 {
     require(daiInThePoolBought + _tokens <= daiInThePoolTotal, "Requiring more than there exists");
     require(daiInThePoolTotal > 0, "The pool is empty");
     require(RISKY_ASSET_THRESHOLD_PERCENTAGE < PERCENTAGE_100, "Risky asset threshold should be less than 100%");
-    require(PRECISION > 0, "Precision can't be equal to 0");
 
     uint256 utilizationRatioPercentage = ((daiInThePoolBought + _tokens) * PERCENTAGE_100) / daiInThePoolTotal;
 
