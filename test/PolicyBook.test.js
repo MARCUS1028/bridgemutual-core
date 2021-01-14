@@ -14,7 +14,7 @@ contract("PolicyBook", async (addresses) => {
     deployed = await MockPolicyBook.new(addresses[1], 0);
   });
 
-  describe.only("getQuote()", async () => {
+  describe("getQuote()", async () => {
     let days;
     let myMoney;
     let total;
@@ -118,7 +118,7 @@ contract("PolicyBook", async (addresses) => {
       assert.equal(calculatedPrice, 0, "No matter what it should equal to 0");
     });
 
-    it("calculating annual days cost, forcing minimal percentage treshold", async () => {
+    it("calculating annual days cost, forcing minimal percentage threshold", async () => {
       days = 365;
       myMoney = 100; // 100
       total = 10000000; // 10mil
@@ -183,7 +183,19 @@ contract("PolicyBook", async (addresses) => {
       await deployed.setPoolDaiTotal(total);
       await deployed.setPoolDaiBought(bought);
 
-      expectRevert(deployed.getQuote(days, myMoney), "Requiring more than should be able to");
+      expectRevert(deployed.getQuote(days, myMoney), "Requiring more than there exists");
+    });
+
+    it("pool is empty (should revert)", async () => {
+      days = 365;
+      myMoney = 0; // 0
+      total = 0; // 0
+      bought = 0; // 0
+
+      await deployed.setPoolDaiTotal(total);
+      await deployed.setPoolDaiBought(bought);
+
+      expectRevert(deployed.getQuote(days, myMoney), "The pool should be empty");
     });
   });
 });

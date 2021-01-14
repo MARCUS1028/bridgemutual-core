@@ -160,21 +160,21 @@ contract PolicyBook is IPolicyBook, ERC20 {
   uint256 public constant PERCENTAGE_100 = 100 * PRECISION;
 
   uint256 public constant MINIMUM_COST_PERCENTAGE = 5 * PRECISION;
-  uint256 public constant RISKY_ASSET_TRESHOLD_PERCENTAGE = 70 * PRECISION;
+  uint256 public constant RISKY_ASSET_THRESHOLD_PERCENTAGE = 70 * PRECISION;
   uint256 public constant MAXIMUM_COST_NOT_RISKY_PERCENTAGE = 30 * PRECISION;
   uint256 public constant MAXIMUM_COST_100_UTILIZATION_PERCENTAGE = 150 * PRECISION;
 
   uint256 public daiInThePoolTotal;
   uint256 public daiInThePoolBought;
 
-  function calculateWhenNotRisky(uint256 _utilizationRatioPercentage) internal pure returns (uint256) {
-    return (_utilizationRatioPercentage * MAXIMUM_COST_NOT_RISKY_PERCENTAGE) / RISKY_ASSET_TRESHOLD_PERCENTAGE;
+  function calculateWhenNotRisky(uint256 _utilizationRatioPercentage) private pure returns (uint256) {
+    return (_utilizationRatioPercentage * MAXIMUM_COST_NOT_RISKY_PERCENTAGE) / RISKY_ASSET_THRESHOLD_PERCENTAGE;
   }
 
-  function calculateWhenIsRisky(uint256 _utilizationRatioPercentage) internal pure returns (uint256) {
+  function calculateWhenIsRisky(uint256 _utilizationRatioPercentage) private pure returns (uint256) {
     uint256 riskyRelation =
-      (PRECISION * (_utilizationRatioPercentage - RISKY_ASSET_TRESHOLD_PERCENTAGE)) /
-        (PERCENTAGE_100 - RISKY_ASSET_TRESHOLD_PERCENTAGE);
+      (PRECISION * (_utilizationRatioPercentage - RISKY_ASSET_THRESHOLD_PERCENTAGE)) /
+        (PERCENTAGE_100 - RISKY_ASSET_THRESHOLD_PERCENTAGE);
 
     return
       MAXIMUM_COST_NOT_RISKY_PERCENTAGE +
@@ -184,12 +184,15 @@ contract PolicyBook is IPolicyBook, ERC20 {
 
   function getQuote(uint256 _durationDays, uint256 _tokens) external view override returns (uint256 _daiTokens) {
     require(daiInThePoolBought + _tokens <= daiInThePoolTotal, "Requiring more than there exists");
+    require(daiInThePoolTotal > 0, "The pool is empty");
+    require(RISKY_ASSET_THRESHOLD_PERCENTAGE < PERCENTAGE_100, "Risky asset threshold should be less than 100%");
+    require(PRECISION > 0, "Precision can't be equal to 0");
 
     uint256 utilizationRatioPercentage = ((daiInThePoolBought + _tokens) * PERCENTAGE_100) / daiInThePoolTotal;
 
     uint256 annualInsuranceCostPercentage;
 
-    if (utilizationRatioPercentage < RISKY_ASSET_TRESHOLD_PERCENTAGE) {
+    if (utilizationRatioPercentage < RISKY_ASSET_THRESHOLD_PERCENTAGE) {
       annualInsuranceCostPercentage = calculateWhenNotRisky(utilizationRatioPercentage);
     } else {
       annualInsuranceCostPercentage = calculateWhenIsRisky(utilizationRatioPercentage);
