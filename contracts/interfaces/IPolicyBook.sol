@@ -126,34 +126,32 @@ interface IPolicyBook is IERC20 {
   /// @param _durationDays is number of days to cover
   /// @param _coverTokens is number of tokens to cover
   /// @param _maxDaiTokens is number of DAI to spend
-  /// @return _policyId is id of policy created
   function buyPolicy(
     uint256 _durationDays,
     uint256 _coverTokens,
     uint256 _maxDaiTokens
-  ) external returns (uint256 _policyId);
+  ) external;
 
   /// @notice Let user to buy policy for another user by supplying DAI, access: ANY
-  /// @param _policyHolder is address of address to assign cover
+  /// @param _policyHolderAddr is address of address to assign cover
   /// @param _durationDays is number of days to cover
   /// @param _coverTokens is number of tokens to cover
   /// @param _maxDaiTokens is number of DAI to spend
-  /// @return _policyId is id of policy created
   function buyPolicyFor(
-    address _policyHolder,
+    address _policyHolderAddr,
     uint256 _durationDays,
     uint256 _coverTokens,
     uint256 _maxDaiTokens
-  ) external returns (uint256 _policyId);
+  ) external;
 
   /// @notice Let user to add liquidity by supplying DAI, access: ANY
   /// @param _daiTokens is amount of DAI tokens to secure
   function addLiquidity(uint256 _daiTokens) external;
 
   /// @notice Let user to add liqiudity for another user by supplying DAI, access: ANY
-  /// @param _liquidityHolder is address of address to assign cover
+  /// @param _liquidityHolderAddr is address of address to assign cover
   /// @param _daiTokens is amount of DAI tokens to secure
-  function addLiquidityFor(address _liquidityHolder, uint256 _daiTokens) external;
+  function addLiquidityFor(address _liquidityHolderAddr, uint256 _daiTokens) external;
 
   /// @notice Let user to calculate policy cost in DAI, access: ANY
   /// @param _durationDays is number of days to cover

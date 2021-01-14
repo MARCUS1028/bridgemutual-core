@@ -3,13 +3,33 @@ pragma solidity =0.7.4;
 pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/math/SafeMath.sol";
 
 import "./interfaces/IPolicyBook.sol";
 import "./interfaces/IPolicyBookFabric.sol";
 
 contract PolicyBook is IPolicyBook, ERC20 {
+  using SafeMath for uint256;
+
   address contractAddress_;
   IPolicyBookFabric.ContractType contractType_;
+
+  uint256 public totalLiquidity;
+  uint256 public totalCoverTokens;
+
+  struct LiquidityHolder {
+    uint256 depositedAmount;
+    uint256 lastUpdate;
+  }
+
+  struct PolicyHolder {
+    uint256 coverTokens;
+    uint256 durationDays;
+    uint256 maxDaiTokens;
+  }
+
+  mapping(address => LiquidityHolder) public liquidityHolders;
+  mapping(address => PolicyHolder) public policyHolders;
 
   constructor(address _contract, IPolicyBookFabric.ContractType _contractType)
     ERC20("BridgeMutual Insurance", "bmiDAIx")
@@ -17,6 +37,8 @@ contract PolicyBook is IPolicyBook, ERC20 {
     contractAddress_ = _contract;
     contractType_ = _contractType;
   }
+
+  receive() external payable {}
 
   function contractAddress() external view override returns (address _contract) {
     return contractAddress_;
@@ -123,22 +145,101 @@ contract PolicyBook is IPolicyBook, ERC20 {
     uint256 _durationDays,
     uint256 _coverTokens,
     uint256 _maxDaiTokens
-  ) external override returns (uint256 _policyId) {
-    return 0;
+  ) external override {
+    PolicyHolder memory _policyHolder = policyHolders[msg.sender];
+    require(_policyHolder.durationDays == 0, "The policy holder already exists");
+    require(totalLiquidity >= totalCoverTokens.add(_coverTokens), "Not enough available liquidity");
+
+    _policyHolder.coverTokens = _coverTokens;
+    _policyHolder.durationDays = _durationDays;
+    _policyHolder.maxDaiTokens = _maxDaiTokens;
+
+    policyHolders[msg.sender] = _policyHolder;
+    totalCoverTokens = totalCoverTokens.add(_coverTokens);
+    address(this).transfer(_calculatePrice(_coverTokens));
   }
 
   function buyPolicyFor(
-    address _policyHolder,
+    address _policyHolderAddr,
     uint256 _durationDays,
     uint256 _coverTokens,
     uint256 _maxDaiTokens
-  ) external override returns (uint256 _policyId) {
-    return 0;
+  ) external override {
+    PolicyHolder memory _policyHolder = policyHolders[_policyHolderAddr];
+    require(_policyHolder.durationDays == 0, "The policy holder already exists");
+    require(totalLiquidity >= totalCoverTokens.add(_coverTokens), "Not enough available liquidity");
+
+    _policyHolder.coverTokens = _coverTokens;
+    _policyHolder.durationDays = _durationDays;
+    _policyHolder.maxDaiTokens = _maxDaiTokens;
+
+    policyHolders[_policyHolderAddr] = _policyHolder;
+    totalCoverTokens = totalCoverTokens.add(_coverTokens);
+    address(this).transfer(_calculatePrice(_coverTokens));
   }
 
-  function addLiquidity(uint256 _daiTokens) external override {}
+  function _calculatePrice(uint256 _coverTokens) internal view returns (uint256) {
+    return 100;
+  }
 
-  function addLiquidityFor(address _liquidityHolder, uint256 _daiTokens) external override {}
+  function addLiquidity(uint256 _daiTokens) external override {
+    LiquidityHolder memory _liquidityHolder = liquidityHolders[msg.sender];
+
+    uint256 _calculatedInterest;
+    if (_liquidityHolder.lastUpdate > 0) {
+      _calculatedInterest = _calculateInterest(msg.sender);
+    }
+
+    uint256 _tokensToAdd = _daiTokens.add(_calculatedInterest);
+
+    _liquidityHolder.depositedAmount = _liquidityHolder.depositedAmount.add(_tokensToAdd);
+    _liquidityHolder.lastUpdate = block.timestamp;
+
+    liquidityHolders[msg.sender] = _liquidityHolder;
+
+    totalLiquidity = totalLiquidity.add(_tokensToAdd);
+  }
+
+  function addLiquidityFor(address _liquidityHolderAddr, uint256 _daiTokens) external override {
+    LiquidityHolder memory _liquidityHolder = liquidityHolders[_liquidityHolderAddr];
+
+    uint256 _calculatedInterest;
+    if (_liquidityHolder.lastUpdate > 0) {
+      _calculatedInterest = _calculateInterest(_liquidityHolderAddr);
+    }
+
+    uint256 _tokensToAdd = _daiTokens.add(_calculatedInterest);
+
+    _liquidityHolder.depositedAmount = _liquidityHolder.depositedAmount.add(_tokensToAdd);
+    _liquidityHolder.lastUpdate = block.timestamp;
+
+    liquidityHolders[_liquidityHolderAddr] = _liquidityHolder;
+
+    totalLiquidity = totalLiquidity.add(_tokensToAdd);
+  }
+
+  function withdrawLiquidity(uint256 _tokensToWithdraw) external {
+    LiquidityHolder memory _liquidityHolder = liquidityHolders[msg.sender];
+
+    require(_liquidityHolder.lastUpdate > 0, "Liquidity holder does not exist");
+
+    uint256 _calculatedInterest = _calculateInterest(msg.sender);
+    _liquidityHolder.depositedAmount = _liquidityHolder.depositedAmount.add(_calculatedInterest);
+    totalLiquidity = totalLiquidity.add(_calculatedInterest);
+
+    require(
+      _liquidityHolder.depositedAmount >= _tokensToWithdraw,
+      "The amount to be withdrawn is greater than the deposited amount"
+    );
+
+    require(totalLiquidity.sub(_tokensToWithdraw) >= totalCoverTokens, "Not enough available liquidity");
+
+    _liquidityHolder.depositedAmount = _liquidityHolder.depositedAmount.sub(_tokensToWithdraw);
+  }
+
+  function _calculateInterest(address _policyHolder) internal view returns (uint256) {
+    return 0;
+  }
 
   function getQuote(uint256 _durationDays, uint256 _tokens) external view override returns (uint256 _daiTokens) {
     return 0;
