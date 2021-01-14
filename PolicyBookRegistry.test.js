@@ -6,7 +6,7 @@ require("chai").use(require("chai-as-promised")).use(require("chai-bn")(BN)).sho
 
 const PolicyBookRegistry = artifacts.require("PolicyBookRegistry");
 
-contract("PolicyBookRegistry", async ([defaultAddress, ...addresses]) => {
+contract.skip("PolicyBookRegistry", async ([defaultAddress, ...addresses]) => {
   const zeroAddress = "0x0000000000000000000000000000000000000000";
   const deploy = async () => {
     const registry = await PolicyBookRegistry.new();

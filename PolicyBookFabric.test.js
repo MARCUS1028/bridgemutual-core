@@ -8,7 +8,7 @@ const PolicyBookFabric = artifacts.require("PolicyBookFabric");
 const PolicyBook = artifacts.require("PolicyBook");
 const PolicyBookRegistry = artifacts.require("PolicyBookRegistry");
 
-contract("PolicyBookFabric", async (addresses) => {
+contract.skip("PolicyBookFabric", async (addresses) => {
   const deploy = async () => {
     const registry = await PolicyBookRegistry.new();
     const fabric = await PolicyBookFabric.new(registry.address);
