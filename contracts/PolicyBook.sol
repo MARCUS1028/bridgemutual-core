@@ -157,50 +157,50 @@ contract PolicyBook is IPolicyBook, ERC20 {
 
   uint256 public constant DAYS_IN_THE_YEAR = 365;
   uint256 public constant PRECISION = 10**10;
-  uint256 public constant PERSENTAGE_100 = 100 * PRECISION;
+  uint256 public constant PERCENTAGE_100 = 100 * PRECISION;
 
-  uint256 public constant MINIMUM_COST_PERSENTAGE = 5 * PRECISION;
-  uint256 public constant RISKY_ASSET_TRESHOLD_PERSENTAGE = 70 * PRECISION;
-  uint256 public constant MAXIMUM_COST_NOT_RISKY_PERSENTAGE = 30 * PRECISION;
-  uint256 public constant MAXIMUM_COST_100_UTILIZATION_PERSENTAGE = 150 * PRECISION;
+  uint256 public constant MINIMUM_COST_PERCENTAGE = 5 * PRECISION;
+  uint256 public constant RISKY_ASSET_TRESHOLD_PERCENTAGE = 70 * PRECISION;
+  uint256 public constant MAXIMUM_COST_NOT_RISKY_PERCENTAGE = 30 * PRECISION;
+  uint256 public constant MAXIMUM_COST_100_UTILIZATION_PERCENTAGE = 150 * PRECISION;
 
   uint256 public daiInThePoolTotal;
   uint256 public daiInThePoolBought;
 
-  function calculateWhenNotRisky(uint256 _utilizationRatioPersentage) internal pure returns (uint256 _persentage) {
-    return (_utilizationRatioPersentage * MAXIMUM_COST_NOT_RISKY_PERSENTAGE) / RISKY_ASSET_TRESHOLD_PERSENTAGE;
+  function calculateWhenNotRisky(uint256 _utilizationRatioPercentage) internal pure returns (uint256) {
+    return (_utilizationRatioPercentage * MAXIMUM_COST_NOT_RISKY_PERCENTAGE) / RISKY_ASSET_TRESHOLD_PERCENTAGE;
   }
 
-  function calculateWhenIsRisky(uint256 _utilizationRatioPersentage) internal pure returns (uint256 _persentage) {
+  function calculateWhenIsRisky(uint256 _utilizationRatioPercentage) internal pure returns (uint256) {
     uint256 riskyRelation =
-      (PRECISION * (_utilizationRatioPersentage - RISKY_ASSET_TRESHOLD_PERSENTAGE)) /
-        (PERSENTAGE_100 - RISKY_ASSET_TRESHOLD_PERSENTAGE);
+      (PRECISION * (_utilizationRatioPercentage - RISKY_ASSET_TRESHOLD_PERCENTAGE)) /
+        (PERCENTAGE_100 - RISKY_ASSET_TRESHOLD_PERCENTAGE);
 
     return
-      MAXIMUM_COST_NOT_RISKY_PERSENTAGE +
-      (riskyRelation * (MAXIMUM_COST_100_UTILIZATION_PERSENTAGE - MAXIMUM_COST_NOT_RISKY_PERSENTAGE)) /
+      MAXIMUM_COST_NOT_RISKY_PERCENTAGE +
+      (riskyRelation * (MAXIMUM_COST_100_UTILIZATION_PERCENTAGE - MAXIMUM_COST_NOT_RISKY_PERCENTAGE)) /
       PRECISION;
   }
 
   function getQuote(uint256 _durationDays, uint256 _tokens) external view override returns (uint256 _daiTokens) {
     require(daiInThePoolBought + _tokens <= daiInThePoolTotal, "Requiring more than there exists");
 
-    uint256 utilizationRatioPersentage = ((daiInThePoolBought + _tokens) * PERSENTAGE_100) / daiInThePoolTotal;
+    uint256 utilizationRatioPercentage = ((daiInThePoolBought + _tokens) * PERCENTAGE_100) / daiInThePoolTotal;
 
-    uint256 annualInsuranceCostPersentage;
+    uint256 annualInsuranceCostPercentage;
 
-    if (utilizationRatioPersentage < RISKY_ASSET_TRESHOLD_PERSENTAGE) {
-      annualInsuranceCostPersentage = calculateWhenNotRisky(utilizationRatioPersentage);
+    if (utilizationRatioPercentage < RISKY_ASSET_TRESHOLD_PERCENTAGE) {
+      annualInsuranceCostPercentage = calculateWhenNotRisky(utilizationRatioPercentage);
     } else {
-      annualInsuranceCostPersentage = calculateWhenIsRisky(utilizationRatioPersentage);
+      annualInsuranceCostPercentage = calculateWhenIsRisky(utilizationRatioPercentage);
     }
 
-    annualInsuranceCostPersentage = (
-      annualInsuranceCostPersentage > MINIMUM_COST_PERSENTAGE ? annualInsuranceCostPersentage : MINIMUM_COST_PERSENTAGE
+    annualInsuranceCostPercentage = (
+      annualInsuranceCostPercentage > MINIMUM_COST_PERCENTAGE ? annualInsuranceCostPercentage : MINIMUM_COST_PERCENTAGE
     );
 
-    uint256 actualInsuranceCostPersentage = (_durationDays * annualInsuranceCostPersentage) / DAYS_IN_THE_YEAR;
+    uint256 actualInsuranceCostPercentage = (_durationDays * annualInsuranceCostPercentage) / DAYS_IN_THE_YEAR;
 
-    return (_tokens * actualInsuranceCostPersentage) / PERSENTAGE_100;
+    return (_tokens * actualInsuranceCostPercentage) / PERCENTAGE_100;
   }
 }

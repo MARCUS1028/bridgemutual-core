@@ -118,7 +118,7 @@ contract("PolicyBook", async (addresses) => {
       assert.equal(calculatedPrice, 0, "No matter what it should equal to 0");
     });
 
-    it("calculating annual days cost, forcing minimal persentage treshold", async () => {
+    it("calculating annual days cost, forcing minimal percentage treshold", async () => {
       days = 365;
       myMoney = 100; // 100
       total = 10000000; // 10mil
@@ -171,7 +171,7 @@ contract("PolicyBook", async (addresses) => {
 
       const calculatedPrice = (await deployed.getQuote(days, myMoney)).toNumber();
 
-      assert.equal(calculatedPrice, 750000, "UR < RISKY case is incorrect");
+      assert.equal(calculatedPrice, 750000, "UR > RISKY case is incorrect");
     });
 
     it("require more tokens than there exists (should revert)", async () => {
