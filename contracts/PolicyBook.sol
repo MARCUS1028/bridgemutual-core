@@ -156,7 +156,6 @@ contract PolicyBook is IPolicyBook, ERC20 {
 
     policyHolders[msg.sender] = _policyHolder;
     totalCoverTokens = totalCoverTokens.add(_coverTokens);
-    address(this).transfer(_calculatePrice(_coverTokens));
   }
 
   function buyPolicyFor(
@@ -175,7 +174,6 @@ contract PolicyBook is IPolicyBook, ERC20 {
 
     policyHolders[_policyHolderAddr] = _policyHolder;
     totalCoverTokens = totalCoverTokens.add(_coverTokens);
-    address(this).transfer(_calculatePrice(_coverTokens));
   }
 
   function _calculatePrice(uint256 _coverTokens) internal view returns (uint256) {
@@ -221,7 +219,7 @@ contract PolicyBook is IPolicyBook, ERC20 {
   function withdrawLiquidity(uint256 _tokensToWithdraw) external {
     LiquidityHolder memory _liquidityHolder = liquidityHolders[msg.sender];
 
-    require(_liquidityHolder.lastUpdate > 0, "Liquidity holder does not exist");
+    require(_liquidityHolder.lastUpdate > 0, "Liquidity holder does not exists");
 
     uint256 _calculatedInterest = _calculateInterest(msg.sender);
     _liquidityHolder.depositedAmount = _liquidityHolder.depositedAmount.add(_calculatedInterest);
@@ -235,6 +233,11 @@ contract PolicyBook is IPolicyBook, ERC20 {
     require(totalLiquidity.sub(_tokensToWithdraw) >= totalCoverTokens, "Not enough available liquidity");
 
     _liquidityHolder.depositedAmount = _liquidityHolder.depositedAmount.sub(_tokensToWithdraw);
+    _liquidityHolder.lastUpdate = block.timestamp;
+
+    liquidityHolders[msg.sender] = _liquidityHolder;
+
+    totalLiquidity = totalLiquidity.sub(_tokensToWithdraw);
   }
 
   function _calculateInterest(address _policyHolder) internal view returns (uint256) {
