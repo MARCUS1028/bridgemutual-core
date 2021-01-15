@@ -45,7 +45,7 @@ contract('PolicyBook', async (accounts) => {
       await dai.transfer(USER1, daiAmount);
       await dai.approve(policyBook.address, daiAmount, {from: USER1});
 
-      await dai.transfer(USER2, daiAmount)
+      await dai.transfer(USER2, daiAmount);
       await dai.approve(policyBook.address, daiAmount, {from: USER2});
 
       await setCurrentTime(1);
@@ -106,9 +106,9 @@ contract('PolicyBook', async (accounts) => {
       await dai.transfer(USER1, daiAmount);
       await dai.approve(policyBook.address, daiAmount, {from: USER1});
 
-      await dai.transfer(USER2, daiAmount)
+      await dai.transfer(USER2, daiAmount);
       await dai.approve(policyBook.address, daiAmount, {from: USER2});
-      
+
       await setCurrentTime(1);
       await policyBook.addLiquidity(liquidityAmount, {from: USER1});
       assert.equal(await policyBook.totalLiquidity(), liquidityAmount.toString());
