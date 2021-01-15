@@ -3,11 +3,16 @@ pragma solidity =0.7.4;
 pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/math/SafeMath.sol";
+import "@openzeppelin/contracts/math/Math.sol";
 
 import "./interfaces/IPolicyBook.sol";
 import "./interfaces/IPolicyBookFabric.sol";
 
 contract PolicyBook is IPolicyBook, ERC20 {
+  using SafeMath for uint256;
+  using Math for uint256;
+
   address private _contractAddress;
   IPolicyBookFabric.ContractType private _contractType;
 
@@ -166,26 +171,28 @@ contract PolicyBook is IPolicyBook, ERC20 {
   uint256 public daiInThePoolBought;
 
   function calculateWhenNotRisky(uint256 _utilizationRatioPercentage) private pure returns (uint256) {
-    return (_utilizationRatioPercentage * MAXIMUM_COST_NOT_RISKY_PERCENTAGE) / RISKY_ASSET_THRESHOLD_PERCENTAGE;
+    return (_utilizationRatioPercentage.mul(MAXIMUM_COST_NOT_RISKY_PERCENTAGE)).div(RISKY_ASSET_THRESHOLD_PERCENTAGE);
   }
 
   function calculateWhenIsRisky(uint256 _utilizationRatioPercentage) private pure returns (uint256) {
     uint256 riskyRelation =
-      (PRECISION * (_utilizationRatioPercentage - RISKY_ASSET_THRESHOLD_PERCENTAGE)) /
-        (PERCENTAGE_100 - RISKY_ASSET_THRESHOLD_PERCENTAGE);
+      (PRECISION.mul(_utilizationRatioPercentage.sub(RISKY_ASSET_THRESHOLD_PERCENTAGE))).div(
+        (PERCENTAGE_100.sub(RISKY_ASSET_THRESHOLD_PERCENTAGE))
+      );
 
     return
-      MAXIMUM_COST_NOT_RISKY_PERCENTAGE +
-      (riskyRelation * (MAXIMUM_COST_100_UTILIZATION_PERCENTAGE - MAXIMUM_COST_NOT_RISKY_PERCENTAGE)) /
-      PRECISION;
+      MAXIMUM_COST_NOT_RISKY_PERCENTAGE.add(
+        (riskyRelation.mul(MAXIMUM_COST_100_UTILIZATION_PERCENTAGE.sub(MAXIMUM_COST_NOT_RISKY_PERCENTAGE))).div(
+          PRECISION
+        )
+      );
   }
 
   function getQuote(uint256 _durationDays, uint256 _tokens) external view override returns (uint256 _daiTokens) {
-    require(daiInThePoolBought + _tokens <= daiInThePoolTotal, "Requiring more than there exists");
+    require(daiInThePoolBought.add(_tokens) <= daiInThePoolTotal, "Requiring more than there exists");
     require(daiInThePoolTotal > 0, "The pool is empty");
-    require(RISKY_ASSET_THRESHOLD_PERCENTAGE < PERCENTAGE_100, "Risky asset threshold should be less than 100%");
 
-    uint256 utilizationRatioPercentage = ((daiInThePoolBought + _tokens) * PERCENTAGE_100) / daiInThePoolTotal;
+    uint256 utilizationRatioPercentage = ((daiInThePoolBought.add(_tokens)).mul(PERCENTAGE_100)).div(daiInThePoolTotal);
 
     uint256 annualInsuranceCostPercentage;
 
@@ -195,12 +202,10 @@ contract PolicyBook is IPolicyBook, ERC20 {
       annualInsuranceCostPercentage = calculateWhenIsRisky(utilizationRatioPercentage);
     }
 
-    annualInsuranceCostPercentage = (
-      annualInsuranceCostPercentage > MINIMUM_COST_PERCENTAGE ? annualInsuranceCostPercentage : MINIMUM_COST_PERCENTAGE
-    );
+    annualInsuranceCostPercentage = Math.max(annualInsuranceCostPercentage, MINIMUM_COST_PERCENTAGE);
 
-    uint256 actualInsuranceCostPercentage = (_durationDays * annualInsuranceCostPercentage) / DAYS_IN_THE_YEAR;
+    uint256 actualInsuranceCostPercentage = (_durationDays.mul(annualInsuranceCostPercentage)).div(DAYS_IN_THE_YEAR);
 
-    return (_tokens * actualInsuranceCostPercentage) / PERCENTAGE_100;
+    return (_tokens.mul(actualInsuranceCostPercentage)).div(PERCENTAGE_100);
   }
 }

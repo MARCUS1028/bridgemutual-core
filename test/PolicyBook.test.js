@@ -195,7 +195,19 @@ contract("PolicyBook", async (addresses) => {
       await mockPolicyBook.setPoolDaiTotal(total);
       await mockPolicyBook.setPoolDaiBought(bought);
 
-      expectRevert(mockPolicyBook.getQuote(days, myMoney), "The pool should be empty");
+      expectRevert(mockPolicyBook.getQuote(days, myMoney), "The pool is empty");
+    });
+
+    it("forcing overflow (should revert)", async () => {
+      days = 365;
+      myMoney = new BN(4).mul(new BN(10).pow(new BN(76)));
+      total = new BN(10).mul(new BN(10).pow(new BN(76)));
+      bought = new BN(5).mul(new BN(10).pow(new BN(76)));
+
+      await mockPolicyBook.setPoolDaiTotal(total);
+      await mockPolicyBook.setPoolDaiBought(bought);
+
+      expectRevert(mockPolicyBook.getQuote(days, myMoney), "SafeMath: multiplication overflow");
     });
   });
 });
