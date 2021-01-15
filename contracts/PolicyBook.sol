@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity =0.7.4;
+pragma solidity ^0.7.4;
 pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
@@ -7,12 +7,14 @@ import "@openzeppelin/contracts/math/SafeMath.sol";
 
 import "./interfaces/IPolicyBook.sol";
 import "./interfaces/IPolicyBookFabric.sol";
+import "./DAIMock.sol";
 
 contract PolicyBook is IPolicyBook, ERC20 {
   using SafeMath for uint256;
 
   address contractAddress_;
   IPolicyBookFabric.ContractType contractType_;
+  address daiAddr;
 
   uint256 public totalLiquidity;
   uint256 public totalCoverTokens;
@@ -31,11 +33,12 @@ contract PolicyBook is IPolicyBook, ERC20 {
   mapping(address => LiquidityHolder) public liquidityHolders;
   mapping(address => PolicyHolder) public policyHolders;
 
-  constructor(address _contract, IPolicyBookFabric.ContractType _contractType)
+  constructor(address _contract, IPolicyBookFabric.ContractType _contractType, address _daiAddr)
     ERC20("BridgeMutual Insurance", "bmiDAIx")
   {
     contractAddress_ = _contract;
     contractType_ = _contractType;
+    daiAddr = _daiAddr;
   }
 
   receive() external payable {}
@@ -156,6 +159,10 @@ contract PolicyBook is IPolicyBook, ERC20 {
 
     policyHolders[msg.sender] = _policyHolder;
     totalCoverTokens = totalCoverTokens.add(_coverTokens);
+
+    DAIMock dai = DAIMock(daiAddr);
+    bool _success = dai.transferFrom(msg.sender, address(this), _calculatePrice(_coverTokens));
+    require(_success, "Failed to transfer tokens");
   }
 
   function buyPolicyFor(
@@ -174,6 +181,10 @@ contract PolicyBook is IPolicyBook, ERC20 {
 
     policyHolders[_policyHolderAddr] = _policyHolder;
     totalCoverTokens = totalCoverTokens.add(_coverTokens);
+
+    DAIMock dai = DAIMock(daiAddr);
+    bool _success = dai.transferFrom(_policyHolderAddr, address(this), _calculatePrice(_coverTokens));
+    require(_success, "Failed to transfer tokens");
   }
 
   function _calculatePrice(uint256 _coverTokens) internal view returns (uint256) {
@@ -196,6 +207,10 @@ contract PolicyBook is IPolicyBook, ERC20 {
     liquidityHolders[msg.sender] = _liquidityHolder;
 
     totalLiquidity = totalLiquidity.add(_tokensToAdd);
+
+    DAIMock dai = DAIMock(daiAddr);
+    bool _success = dai.transferFrom(msg.sender, address(this), _daiTokens);
+    require(_success, "Failed to transfer tokens");
   }
 
   function addLiquidityFor(address _liquidityHolderAddr, uint256 _daiTokens) external override {
@@ -214,6 +229,10 @@ contract PolicyBook is IPolicyBook, ERC20 {
     liquidityHolders[_liquidityHolderAddr] = _liquidityHolder;
 
     totalLiquidity = totalLiquidity.add(_tokensToAdd);
+
+    DAIMock dai = DAIMock(daiAddr);
+    bool _success = dai.transferFrom(_liquidityHolderAddr, address(this), _daiTokens);
+    require(_success, "Failed to transfer tokens");
   }
 
   function withdrawLiquidity(uint256 _tokensToWithdraw) external {
@@ -238,6 +257,10 @@ contract PolicyBook is IPolicyBook, ERC20 {
     liquidityHolders[msg.sender] = _liquidityHolder;
 
     totalLiquidity = totalLiquidity.sub(_tokensToWithdraw);
+
+    DAIMock dai = DAIMock(daiAddr);
+    bool _success = dai.transfer(msg.sender, _tokensToWithdraw);
+    require(_success, "Failed to transfer tokens");
   }
 
   function _calculateInterest(address _policyHolder) internal view returns (uint256) {
