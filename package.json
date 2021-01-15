@@ -19,6 +19,10 @@
     "truffle": "0.6.0"
   },
   "devDependencies": {
+    "@openzeppelin/test-helpers": "^0.5.10",
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
+    "chai-bn": "^0.2.1",
     "dotenv": "^8.1.0",
     "eslint": "^7.16.0",
     "eslint-config-prettier": "^6.10.0",
@@ -26,6 +30,7 @@
     "eslint-plugin-import": "^2.20.1",
     "eth-gas-reporter": "^0.2.19",
     "ganache-cli": "^6.7.0",
+    "ganache-time-traveler": "^1.0.15",
     "husky": "^4.3.6",
     "lint-staged": "^10.5.3",
     "prettier": "^2.2.1",
