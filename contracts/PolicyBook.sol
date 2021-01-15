@@ -35,6 +35,10 @@ contract PolicyBook is IPolicyBook, ERC20 {
   mapping(address => LiquidityHolder) public liquidityHolders;
   mapping(address => PolicyHolder) public policyHolders;
 
+  event AddLiquidity(address _liquidityHolder, uint256 _liqudityAmount, uint256 _newTotalLiquidity);
+  event WithdrawLiquidity(address _liquidityHolder, uint256 _tokensToWithdraw, uint256 _newTotalLiquidity);
+  event BuyPolicy(address _policyHolder, uint256 _coverTokens, uint256 _price, uint256 _newTotalCoverTokens);
+
   constructor(address _contract, IPolicyBookFabric.ContractType _contractType, address _daiAddr)
     ERC20("BridgeMutual Insurance", "bmiDAIx")
   {
@@ -180,9 +184,13 @@ contract PolicyBook is IPolicyBook, ERC20 {
     policyHolders[_policyHolderAddr] = _policyHolder;
     totalCoverTokens = totalCoverTokens.add(_coverTokens);
 
+    uint256 _price = _calculatePrice(_coverTokens);
+
     IERC20 daiToken = IERC20(daiAddr);
-    bool _success = daiToken.transferFrom(_policyHolderAddr, address(this), _calculatePrice(_coverTokens));
+    bool _success = daiToken.transferFrom(_policyHolderAddr, address(this), _price);
     require(_success, "Failed to transfer tokens");
+
+    emit BuyPolicy(_policyHolderAddr, _coverTokens, _price, totalCoverTokens);
   }
 
   function _calculatePrice(uint256 _coverTokens) internal view returns (uint256) {
@@ -217,6 +225,8 @@ contract PolicyBook is IPolicyBook, ERC20 {
     IERC20 daiToken = IERC20(daiAddr);
     bool _success = daiToken.transferFrom(_liquidityHolderAddr, address(this), _liqudityAmount);
     require(_success, "Failed to transfer tokens");
+
+    emit AddLiquidity(_liquidityHolderAddr, _liqudityAmount, totalLiquidity);
   }
 
   function withdrawLiquidity(uint256 _tokensToWithdraw) external override {
@@ -245,6 +255,8 @@ contract PolicyBook is IPolicyBook, ERC20 {
     IERC20 daiToken = IERC20(daiAddr);
     bool _success = daiToken.transfer(msg.sender, _tokensToWithdraw);
     require(_success, "Failed to transfer tokens");
+
+    emit WithdrawLiquidity(msg.sender, _tokensToWithdraw, totalLiquidity);
   }
 
   function _calculateInterest(address _policyHolder) internal view returns (uint256) {
