@@ -3,27 +3,30 @@ pragma solidity =0.7.4;
 pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/math/SafeMath.sol";
+import "@openzeppelin/contracts/math/Math.sol";
 
 import "./interfaces/IPolicyBook.sol";
 import "./interfaces/IPolicyBookFabric.sol";
 
 contract PolicyBook is IPolicyBook, ERC20 {
-  address contractAddress_;
-  IPolicyBookFabric.ContractType contractType_;
+  using SafeMath for uint256;
+  using Math for uint256;
 
-  constructor(address _contract, IPolicyBookFabric.ContractType _contractType)
-    ERC20("BridgeMutual Insurance", "bmiDAIx")
-  {
-    contractAddress_ = _contract;
-    contractType_ = _contractType;
+  address private _contractAddress;
+  IPolicyBookFabric.ContractType private _contractType;
+
+  constructor(address _contract, IPolicyBookFabric.ContractType _type) ERC20("BridgeMutual Insurance", "bmiDAIx") {
+    _contractAddress = _contract;
+    _contractType = _type;
   }
 
   function contractAddress() external view override returns (address _contract) {
-    return contractAddress_;
+    return _contractAddress;
   }
 
   function contractType() external view override returns (IPolicyBookFabric.ContractType _type) {
-    return contractType_;
+    return _contractType;
   }
 
   function quoteStrategy() external view override returns (address _quoteStrategy) {
@@ -140,10 +143,6 @@ contract PolicyBook is IPolicyBook, ERC20 {
 
   function addLiquidityFor(address _liquidityHolder, uint256 _daiTokens) external override {}
 
-  function getQuote(uint256 _durationDays, uint256 _tokens) external view override returns (uint256 _daiTokens) {
-    return 0;
-  }
-
   function rewardForUnclaimedExpiredPolicy(uint256 _policyId) external override {}
 
   function stats()
@@ -157,5 +156,56 @@ contract PolicyBook is IPolicyBook, ERC20 {
     )
   {
     return (0, 0, 0, 0);
+  }
+
+  uint256 public constant DAYS_IN_THE_YEAR = 365;
+  uint256 public constant PRECISION = 10**10;
+  uint256 public constant PERCENTAGE_100 = 100 * PRECISION;
+
+  uint256 public constant MINIMUM_COST_PERCENTAGE = 5 * PRECISION;
+  uint256 public constant RISKY_ASSET_THRESHOLD_PERCENTAGE = 70 * PRECISION;
+  uint256 public constant MAXIMUM_COST_NOT_RISKY_PERCENTAGE = 30 * PRECISION;
+  uint256 public constant MAXIMUM_COST_100_UTILIZATION_PERCENTAGE = 150 * PRECISION;
+
+  uint256 public daiInThePoolTotal;
+  uint256 public daiInThePoolBought;
+
+  function calculateWhenNotRisky(uint256 _utilizationRatioPercentage) private pure returns (uint256) {
+    return (_utilizationRatioPercentage.mul(MAXIMUM_COST_NOT_RISKY_PERCENTAGE)).div(RISKY_ASSET_THRESHOLD_PERCENTAGE);
+  }
+
+  function calculateWhenIsRisky(uint256 _utilizationRatioPercentage) private pure returns (uint256) {
+    uint256 riskyRelation =
+      (PRECISION.mul(_utilizationRatioPercentage.sub(RISKY_ASSET_THRESHOLD_PERCENTAGE))).div(
+        (PERCENTAGE_100.sub(RISKY_ASSET_THRESHOLD_PERCENTAGE))
+      );
+
+    return
+      MAXIMUM_COST_NOT_RISKY_PERCENTAGE.add(
+        (riskyRelation.mul(MAXIMUM_COST_100_UTILIZATION_PERCENTAGE.sub(MAXIMUM_COST_NOT_RISKY_PERCENTAGE))).div(
+          PRECISION
+        )
+      );
+  }
+
+  function getQuote(uint256 _durationDays, uint256 _tokens) external view override returns (uint256 _daiTokens) {
+    require(daiInThePoolBought.add(_tokens) <= daiInThePoolTotal, "Requiring more than there exists");
+    require(daiInThePoolTotal > 0, "The pool is empty");
+
+    uint256 utilizationRatioPercentage = ((daiInThePoolBought.add(_tokens)).mul(PERCENTAGE_100)).div(daiInThePoolTotal);
+
+    uint256 annualInsuranceCostPercentage;
+
+    if (utilizationRatioPercentage < RISKY_ASSET_THRESHOLD_PERCENTAGE) {
+      annualInsuranceCostPercentage = calculateWhenNotRisky(utilizationRatioPercentage);
+    } else {
+      annualInsuranceCostPercentage = calculateWhenIsRisky(utilizationRatioPercentage);
+    }
+
+    annualInsuranceCostPercentage = Math.max(annualInsuranceCostPercentage, MINIMUM_COST_PERCENTAGE);
+
+    uint256 actualInsuranceCostPercentage = (_durationDays.mul(annualInsuranceCostPercentage)).div(DAYS_IN_THE_YEAR);
+
+    return (_tokens.mul(actualInsuranceCostPercentage)).div(PERCENTAGE_100);
   }
 }

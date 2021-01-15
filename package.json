@@ -5,6 +5,7 @@
   "author": "BridgeMutual R&D Team",
   "description": "",
   "scripts": {
+    "private-network": "ganache-cli",
     "test": "truffle test",
     "test:coverage": "truffle run coverage",
     "compile": "truffle compile",
@@ -16,7 +17,10 @@
   },
   "dependencies": {
     "@openzeppelin/contracts": "^3.2.1-solc-0.7",
-    "truffle": "0.6.0"
+    "@openzeppelin/test-helpers": "^0.5.10",
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
+    "truffle": "5.1.61"
   },
   "devDependencies": {
     "@openzeppelin/test-helpers": "^0.5.10",
@@ -47,11 +51,11 @@
   "lint-staged": {
     "*.js": [
       "prettier --write",
-      "yarn lint-js:fix"
+      "npm run lint-js:fix"
     ],
     "*.sol": [
       "prettier --write",
-      "yarn lint-sol:fix"
+      "npm run lint-sol:fix"
     ]
   }
 }
