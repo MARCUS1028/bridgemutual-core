@@ -20,11 +20,11 @@ interface IPolicyBook is IERC20 {
   // @TODO: should we let DAO to change contract address?
   /// @notice Returns address of contract this PolicyBook covers, access: ANY
   /// @return _contract is address of covered contract
-  function contractAddress() external view returns (address _contract);
+  function getContractAddress() external view returns (address _contract);
 
   /// @notice Returns type of contract this PolicyBook covers, access: ANY
   /// @return _type is type of contract
-  function contractType() external view returns (IPolicyBookFabric.ContractType _type);
+  function getContractType() external view returns (IPolicyBookFabric.ContractType _type);
 
   /// @notice Returns quote strategy defined during creation of PolicyBook, access: ANY
   /// @return _quoteStrategy is address of Quote strategy contract used to calculate quote
@@ -126,34 +126,36 @@ interface IPolicyBook is IERC20 {
   /// @param _durationDays is number of days to cover
   /// @param _coverTokens is number of tokens to cover
   /// @param _maxDaiTokens is number of DAI to spend
-  /// @return _policyId is id of policy created
   function buyPolicy(
     uint256 _durationDays,
     uint256 _coverTokens,
     uint256 _maxDaiTokens
-  ) external returns (uint256 _policyId);
+  ) external;
 
   /// @notice Let user to buy policy for another user by supplying DAI, access: ANY
-  /// @param _policyHolder is address of address to assign cover
+  /// @param _policyHolderAddr is address of address to assign cover
   /// @param _durationDays is number of days to cover
   /// @param _coverTokens is number of tokens to cover
   /// @param _maxDaiTokens is number of DAI to spend
-  /// @return _policyId is id of policy created
   function buyPolicyFor(
-    address _policyHolder,
+    address _policyHolderAddr,
     uint256 _durationDays,
     uint256 _coverTokens,
     uint256 _maxDaiTokens
-  ) external returns (uint256 _policyId);
+  ) external;
 
   /// @notice Let user to add liquidity by supplying DAI, access: ANY
-  /// @param _daiTokens is amount of DAI tokens to secure
-  function addLiquidity(uint256 _daiTokens) external;
+  /// @param _liqudityAmount is amount of DAI tokens to secure
+  function addLiquidity(uint256 _liqudityAmount) external;
 
   /// @notice Let user to add liqiudity for another user by supplying DAI, access: ANY
-  /// @param _liquidityHolder is address of address to assign cover
-  /// @param _daiTokens is amount of DAI tokens to secure
-  function addLiquidityFor(address _liquidityHolder, uint256 _daiTokens) external;
+  /// @param _liquidityHolderAddr is address of address to assign cover
+  /// @param _liqudityAmount is amount of DAI tokens to secure
+  function addLiquidityFor(address _liquidityHolderAddr, uint256 _liqudityAmount) external;
+
+  /// @notice Let user to withdraw deposited liqiudity, access: ANY
+  /// @param _tokensToWithdraw is amount of DAI tokens to withdraw
+  function withdrawLiquidity(uint256 _tokensToWithdraw) external;
 
   /// @notice Let user to calculate policy cost in DAI, access: ANY
   /// @param _durationDays is number of days to cover

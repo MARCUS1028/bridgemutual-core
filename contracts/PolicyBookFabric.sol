@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity =0.7.4;
+pragma solidity ^0.7.4;
 
 import "@openzeppelin/contracts/math/Math.sol";
 
@@ -11,15 +11,17 @@ contract PolicyBookFabric is IPolicyBookFabric {
   using Math for uint256;
 
   IPolicyBookRegistry public registry;
+  address public daiAddr;
 
   event Created(address insured, ContractType contractType, address at);
 
-  constructor(IPolicyBookRegistry _registry) {
+  constructor(IPolicyBookRegistry _registry, address _daiAddr) {
     registry = _registry;
+    daiAddr = _daiAddr;
   }
 
   function create(address _contract, ContractType _contractType) external override returns (address _policyBook) {
-    PolicyBook _newPolicyBook = new PolicyBook(_contract, _contractType);
+    PolicyBook _newPolicyBook = new PolicyBook(_contract, _contractType, daiAddr);
     registry.add(_contract, address(_newPolicyBook));
 
     emit Created(_contract, _contractType, address(_newPolicyBook));
