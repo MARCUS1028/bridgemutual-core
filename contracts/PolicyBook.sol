@@ -3,19 +3,19 @@ pragma solidity ^0.7.4;
 pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/math/SafeMath.sol";
 import "@openzeppelin/contracts/math/Math.sol";
 
 import "./interfaces/IPolicyBook.sol";
 import "./interfaces/IPolicyBookFabric.sol";
-import "./DAIMock.sol";
 
 contract PolicyBook is IPolicyBook, ERC20 {
   using SafeMath for uint256;
   using Math for uint256;
 
-  address contractAddress_;
-  IPolicyBookFabric.ContractType contractType_;
+  address contractAddress;
+  IPolicyBookFabric.ContractType contractType;
   address daiAddr;
 
   uint256 public totalLiquidity;
@@ -38,19 +38,19 @@ contract PolicyBook is IPolicyBook, ERC20 {
   constructor(address _contract, IPolicyBookFabric.ContractType _contractType, address _daiAddr)
     ERC20("BridgeMutual Insurance", "bmiDAIx")
   {
-    contractAddress_ = _contract;
-    contractType_ = _contractType;
+    contractAddress = _contract;
+    contractType = _contractType;
     daiAddr = _daiAddr;
   }
 
   receive() external payable {}
 
-  function contractAddress() external view override returns (address) {
-    return contractAddress_;
+  function getContractAddress() external view override returns (address _contract) {
+    _contract = contractAddress;
   }
 
-  function contractType() external view override returns (IPolicyBookFabric.ContractType) {
-    return contractType_;
+  function getContractType() external view override returns (IPolicyBookFabric.ContractType _type) {
+    _type = contractType;
   }
 
   function quoteStrategy() external view override returns (address _quoteStrategy) {
@@ -151,20 +151,7 @@ contract PolicyBook is IPolicyBook, ERC20 {
     uint256 _coverTokens,
     uint256 _maxDaiTokens
   ) external override {
-    PolicyHolder memory _policyHolder = policyHolders[msg.sender];
-    require(_policyHolder.durationDays == 0, "The policy holder already exists");
-    require(totalLiquidity >= totalCoverTokens.add(_coverTokens), "Not enough available liquidity");
-
-    _policyHolder.coverTokens = _coverTokens;
-    _policyHolder.durationDays = _durationDays;
-    _policyHolder.maxDaiTokens = _maxDaiTokens;
-
-    policyHolders[msg.sender] = _policyHolder;
-    totalCoverTokens = totalCoverTokens.add(_coverTokens);
-
-    DAIMock dai = DAIMock(daiAddr);
-    bool _success = dai.transferFrom(msg.sender, address(this), _calculatePrice(_coverTokens));
-    require(_success, "Failed to transfer tokens");
+    _buyPolicyFor(msg.sender, _durationDays, _coverTokens, _maxDaiTokens);
   }
 
   function buyPolicyFor(
@@ -173,6 +160,15 @@ contract PolicyBook is IPolicyBook, ERC20 {
     uint256 _coverTokens,
     uint256 _maxDaiTokens
   ) external override {
+    _buyPolicyFor(_policyHolderAddr, _durationDays, _coverTokens, _maxDaiTokens);
+  }
+
+  function _buyPolicyFor(
+    address _policyHolderAddr,
+    uint256 _durationDays,
+    uint256 _coverTokens,
+    uint256 _maxDaiTokens
+  ) internal {
     PolicyHolder memory _policyHolder = policyHolders[_policyHolderAddr];
     require(_policyHolder.durationDays == 0, "The policy holder already exists");
     require(totalLiquidity >= totalCoverTokens.add(_coverTokens), "Not enough available liquidity");
@@ -184,8 +180,8 @@ contract PolicyBook is IPolicyBook, ERC20 {
     policyHolders[_policyHolderAddr] = _policyHolder;
     totalCoverTokens = totalCoverTokens.add(_coverTokens);
 
-    DAIMock dai = DAIMock(daiAddr);
-    bool _success = dai.transferFrom(_policyHolderAddr, address(this), _calculatePrice(_coverTokens));
+    IERC20 daiToken = IERC20(daiAddr);
+    bool _success = daiToken.transferFrom(_policyHolderAddr, address(this), _calculatePrice(_coverTokens));
     require(_success, "Failed to transfer tokens");
   }
 
@@ -193,29 +189,15 @@ contract PolicyBook is IPolicyBook, ERC20 {
     return 100;
   }
 
-  function addLiquidity(uint256 _daiTokens) external override {
-    LiquidityHolder memory _liquidityHolder = liquidityHolders[msg.sender];
-
-    uint256 _calculatedInterest;
-    if (_liquidityHolder.lastUpdate > 0) {
-      _calculatedInterest = _calculateInterest(msg.sender);
-    }
-
-    uint256 _tokensToAdd = _daiTokens.add(_calculatedInterest);
-
-    _liquidityHolder.depositedAmount = _liquidityHolder.depositedAmount.add(_tokensToAdd);
-    _liquidityHolder.lastUpdate = block.timestamp;
-
-    liquidityHolders[msg.sender] = _liquidityHolder;
-
-    totalLiquidity = totalLiquidity.add(_tokensToAdd);
-
-    DAIMock dai = DAIMock(daiAddr);
-    bool _success = dai.transferFrom(msg.sender, address(this), _daiTokens);
-    require(_success, "Failed to transfer tokens");
+  function addLiquidity(uint256 _liqudityAmount) external override {
+    _addLiquidityFor(msg.sender, _liqudityAmount);
   }
 
-  function addLiquidityFor(address _liquidityHolderAddr, uint256 _daiTokens) external override {
+  function addLiquidityFor(address _liquidityHolderAddr, uint256 _liqudityAmount) external override {
+    _addLiquidityFor(_liquidityHolderAddr, _liqudityAmount);
+  }
+
+  function _addLiquidityFor(address _liquidityHolderAddr, uint256 _liqudityAmount) internal {
     LiquidityHolder memory _liquidityHolder = liquidityHolders[_liquidityHolderAddr];
 
     uint256 _calculatedInterest;
@@ -223,7 +205,7 @@ contract PolicyBook is IPolicyBook, ERC20 {
       _calculatedInterest = _calculateInterest(_liquidityHolderAddr);
     }
 
-    uint256 _tokensToAdd = _daiTokens.add(_calculatedInterest);
+    uint256 _tokensToAdd = _liqudityAmount.add(_calculatedInterest);
 
     _liquidityHolder.depositedAmount = _liquidityHolder.depositedAmount.add(_tokensToAdd);
     _liquidityHolder.lastUpdate = block.timestamp;
@@ -232,12 +214,12 @@ contract PolicyBook is IPolicyBook, ERC20 {
 
     totalLiquidity = totalLiquidity.add(_tokensToAdd);
 
-    DAIMock dai = DAIMock(daiAddr);
-    bool _success = dai.transferFrom(_liquidityHolderAddr, address(this), _daiTokens);
+    IERC20 daiToken = IERC20(daiAddr);
+    bool _success = daiToken.transferFrom(_liquidityHolderAddr, address(this), _liqudityAmount);
     require(_success, "Failed to transfer tokens");
   }
 
-  function withdrawLiquidity(uint256 _tokensToWithdraw) external {
+  function withdrawLiquidity(uint256 _tokensToWithdraw) external override {
     LiquidityHolder memory _liquidityHolder = liquidityHolders[msg.sender];
 
     require(_liquidityHolder.lastUpdate > 0, "Liquidity holder does not exists");
@@ -260,8 +242,8 @@ contract PolicyBook is IPolicyBook, ERC20 {
 
     totalLiquidity = totalLiquidity.sub(_tokensToWithdraw);
 
-    DAIMock dai = DAIMock(daiAddr);
-    bool _success = dai.transfer(msg.sender, _tokensToWithdraw);
+    IERC20 daiToken = IERC20(daiAddr);
+    bool _success = daiToken.transfer(msg.sender, _tokensToWithdraw);
     require(_success, "Failed to transfer tokens");
   }
 
