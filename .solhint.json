@@ -4,7 +4,7 @@
     "compiler-version": ["error","=0.7.4"],
     "quotes": ["error", "double"],
     "max-line-length": ["error", 120],
-    "no-unused-vars": "error",
+    "no-unused-vars": "warn",
     "reason-string": ["error", {"maxLength": 64}],
     "avoid-call-value": "off",
     "no-complex-fallback": "off",
