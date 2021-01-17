@@ -1,5 +1,5 @@
-const PolicyBook = artifacts.require('PolicyBook');
-const DAI = artifacts.require('DAIMock');
+const PolicyBook = artifacts.require('./Mock/MockPolicyBook');
+const DAI = artifacts.require('./Mock/DAIMock');
 
 const Reverter = require('./helpers/reverter');
 const BigNumber = require('bignumber.js');
@@ -39,7 +39,7 @@ contract('PolicyBook', async (accounts) => {
     const durationDays = toBN(100);
     const coverTokensAmount = toBN(1000);
     const maxDaiTokens = toBN(500);
-    const price = toBN(100);
+    let price;
 
     beforeEach('setup', async () => {
       await dai.transfer(USER1, daiAmount);
@@ -53,6 +53,7 @@ contract('PolicyBook', async (accounts) => {
       assert.equal(await policyBook.totalLiquidity(), liquidityAmount.toString());
       assert.equal(await dai.balanceOf(policyBook.address), liquidityAmount.toString());
       assert.equal(await dai.balanceOf(USER1), daiAmount.minus(liquidityAmount).toString());
+      price = toBN(await policyBook.getQuote(durationDays, coverTokensAmount));
     });
 
     it('should set correct values', async () => {
@@ -65,7 +66,7 @@ contract('PolicyBook', async (accounts) => {
       assert.equal(policyHolder.durationDays, durationDays.toString());
       assert.equal(policyHolder.maxDaiTokens, maxDaiTokens.toString());
 
-      assert.equal(await dai.balanceOf(policyBook.address), liquidityAmount.plus(price).toString());
+      assert.equal(toBN(await dai.balanceOf(policyBook.address)).toString(), liquidityAmount.plus(price).toString());
       assert.equal(await dai.balanceOf(USER2), daiAmount.minus(price).toString());
     });
 
@@ -79,7 +80,7 @@ contract('PolicyBook', async (accounts) => {
       assert.equal(policyHolder.durationDays, durationDays.toString());
       assert.equal(policyHolder.maxDaiTokens, maxDaiTokens.toString());
 
-      assert.equal(await dai.balanceOf(policyBook.address), liquidityAmount.plus(price).toString());
+      assert.equal(toBN(await dai.balanceOf(policyBook.address)).toString(), liquidityAmount.plus(price).toString());
       assert.equal(await dai.balanceOf(USER2), daiAmount.minus(price).toString());
 
       const reason = 'The policy holder already exists';
@@ -100,7 +101,7 @@ contract('PolicyBook', async (accounts) => {
     const durationDays = toBN(100);
     const coverTokensAmount = toBN(1000);
     const maxDaiTokens = toBN(500);
-    const price = toBN(100);
+    let price;
 
     beforeEach('setup', async () => {
       await dai.transfer(USER1, daiAmount);
@@ -114,6 +115,7 @@ contract('PolicyBook', async (accounts) => {
       assert.equal(await policyBook.totalLiquidity(), liquidityAmount.toString());
       assert.equal(await dai.balanceOf(policyBook.address), liquidityAmount.toString());
       assert.equal(await dai.balanceOf(USER1), daiAmount.minus(liquidityAmount).toString());
+      price = toBN(await policyBook.getQuote(durationDays, coverTokensAmount));
     });
 
     it('should set correct values', async () => {
@@ -126,7 +128,7 @@ contract('PolicyBook', async (accounts) => {
       assert.equal(policyHolder.durationDays, durationDays.toString());
       assert.equal(policyHolder.maxDaiTokens, maxDaiTokens.toString());
 
-      assert.equal(await dai.balanceOf(policyBook.address), liquidityAmount.plus(price).toString());
+      assert.equal(toBN(await dai.balanceOf(policyBook.address)).toString(), liquidityAmount.plus(price).toString());
       assert.equal(await dai.balanceOf(USER2), daiAmount.minus(price).toString());
     });
 
@@ -140,7 +142,7 @@ contract('PolicyBook', async (accounts) => {
       assert.equal(policyHolder.durationDays, durationDays.toString());
       assert.equal(policyHolder.maxDaiTokens, maxDaiTokens.toString());
 
-      assert.equal(await dai.balanceOf(policyBook.address), liquidityAmount.plus(price).toString());
+      assert.equal(toBN(await dai.balanceOf(policyBook.address)).toString(), liquidityAmount.plus(price).toString());
       assert.equal(await dai.balanceOf(USER2), daiAmount.minus(price).toString());
 
       const reason = 'The policy holder already exists';
@@ -242,7 +244,8 @@ contract('PolicyBook', async (accounts) => {
     const liquidityAmount = toBN(5000);
     const coverTokensAmount = toBN(3000);
     const amountToWithdraw = toBN(1000);
-    const price = toBN(100);
+    const durationDays = toBN(100);
+    let price;
 
     beforeEach('setup', async () => {
       await dai.transfer(USER1, daiAmount);
@@ -257,7 +260,9 @@ contract('PolicyBook', async (accounts) => {
       await policyBook.addLiquidity(liquidityAmount, {from: USER1});
       assert.equal(await policyBook.totalLiquidity(), liquidityAmount.toString());
 
-      await policyBook.buyPolicy(1, coverTokensAmount, 10, {from: USER2});
+      price = toBN(await policyBook.getQuote(durationDays, coverTokensAmount));
+
+      await policyBook.buyPolicy(durationDays, coverTokensAmount, 10, {from: USER2});
       assert.equal(await policyBook.totalCoverTokens(), coverTokensAmount.toString());
 
       assert.equal(await dai.balanceOf(policyBook.address), liquidityAmount.plus(price).toString());
@@ -302,6 +307,177 @@ contract('PolicyBook', async (accounts) => {
     it('should get exception, liquidity holder does not exist', async () => {
       const reason = 'Liquidity holder does not exists';
       await truffleAssert.reverts(policyBook.withdrawLiquidity(amountToWithdraw, {from: USER1}), reason);
+    });
+  });
+
+  describe('getQuote', async () => {
+    let days;
+    let myMoney;
+    let total;
+    let bought;
+
+    it('calculating annual cost where UR = 51% < RISKY, (doc example 1)', async () => {
+      days = 365;
+      myMoney = 100000; // 100k
+      total = 10000000; // 10mil
+      bought = 5000000; // 5mil
+
+      await policyBook.setTotalLiquidity(total);
+      await policyBook.setTotalCoverTokens(bought);
+
+      const calculatedPrice = toBN(await policyBook.getQuote(days, myMoney));
+
+      assert.equal(calculatedPrice.toString(), toBN(21857).toString(), 'UR < RISKY case is incorrect');
+    });
+
+    it('calculating annual cost where UR = 90% > RISKY, (doc example 2)', async () => {
+      days = 365;
+      myMoney = 4000000; // 4mil
+      total = 10000000; // 10mil
+      bought = 5000000; // 5mil
+
+      await policyBook.setTotalLiquidity(total);
+      await policyBook.setTotalCoverTokens(bought);
+
+      const calculatedPrice = toBN(await policyBook.getQuote(days, myMoney));
+
+      assert.equal(calculatedPrice.toString(), toBN(4399999), 'UR > RISKY case is incorrect');
+    });
+
+    it('calculating annual cost where UR = 6% < RISKY, (doc example 3)', async () => {
+      days = 365;
+      myMoney = 100000; // 100k
+      total = 10000000; // 10mil
+      bought = 500000; // 500k
+
+      await policyBook.setTotalLiquidity(total);
+      await policyBook.setTotalCoverTokens(bought);
+
+      const calculatedPrice = toBN(await policyBook.getQuote(days, myMoney));
+
+      assert.equal(calculatedPrice.toString(), toBN(5000), 'UR < RISKY case is incorrect');
+    });
+
+    it('calculating 100 days cost where UR = 51% < RISKY', async () => {
+      days = 100;
+      myMoney = 100000; // 100k
+      total = 10000000; // 10mil
+      bought = 5000000; // 5mil
+
+      await policyBook.setTotalLiquidity(total);
+      await policyBook.setTotalCoverTokens(bought);
+
+      const calculatedPrice = toBN(await policyBook.getQuote(days, myMoney));
+      const expectedPrice = toBN(21857).times(days).idiv(365);
+      assert.equal(calculatedPrice.toString(), expectedPrice.toString(), 'UR < RISKY case is incorrect');
+    });
+
+    it('calculating 1 days cost where UR = 51% < RISKY', async () => {
+      days = 1;
+      myMoney = 100000; // 100k
+      total = 10000000; // 10mil
+      bought = 5000000; // 5mil
+
+      await policyBook.setTotalLiquidity(total);
+      await policyBook.setTotalCoverTokens(bought);
+
+      const calculatedPrice = toBN(await policyBook.getQuote(days, myMoney));
+      const expectedPrice = toBN(21857).times(days).idiv(365);
+      assert.equal(calculatedPrice.toString(), expectedPrice.toString(), 'UR < RISKY case is incorrect');
+    });
+
+    it('calculating 999 days cost where UR = 51% < RISKY', async () => {
+      days = 999;
+      myMoney = 100000; // 100k
+      total = 10000000; // 10mil
+      bought = 5000000; // 5mil
+
+      await policyBook.setTotalLiquidity(total);
+      await policyBook.setTotalCoverTokens(bought);
+
+      const calculatedPrice = toBN(await policyBook.getQuote(days, myMoney));
+      const expectedPrice = toBN(21857).times(days).idiv(365);
+      assert.equal(calculatedPrice.toString(), expectedPrice.toString(), 'UR < RISKY case is incorrect');
+    });
+
+    it('calculating 0 days cost', async () => {
+      days = 0;
+      myMoney = 100000; // 100k
+      total = 10000000; // 10mil
+      bought = 5000000; // 5mil
+
+      await policyBook.setTotalLiquidity(total);
+      await policyBook.setTotalCoverTokens(bought);
+
+      const calculatedPrice = toBN(await policyBook.getQuote(days, myMoney));
+      assert.equal(calculatedPrice.toString(), 0, 'No matter what it should equal to 0');
+    });
+
+    it('calculating annual days cost, forcing minimal percentage threshold', async () => {
+      days = 365;
+      myMoney = 100; // 100
+      total = 10000000; // 10mil
+      bought = 0; // 0
+
+      await policyBook.setTotalLiquidity(total);
+      await policyBook.setTotalCoverTokens(bought);
+
+      const calculatedPrice = toBN(await policyBook.getQuote(days, myMoney));
+      const expectedPrice = toBN(5);
+      assert.equal(calculatedPrice.toString(), expectedPrice.toString(), 'Less than minimal');
+    });
+
+    it('calculating 10 years cost where UR = 51% < RISKY + really big money', async () => {
+      days = toBN(365).times(10);
+      myMoney = toBN(10).pow(12); // 1tril
+      total = toBN(10).pow(14); // 100tril
+      bought = toBN(10).pow(13).times(5); // 50tril
+
+      await policyBook.setTotalLiquidity(total);
+      await policyBook.setTotalCoverTokens(bought);
+
+      const calculatedPrice = toBN(await policyBook.getQuote(days, myMoney));
+      const expectedPrice = toBN(2185714285710);
+      assert.equal(calculatedPrice.toString(), expectedPrice.toString(), 'UR < RISKY case is incorrect');
+    });
+
+    it('edge case: calculating annual cost where UR = 100% > RISKY', async () => {
+      days = 365;
+      myMoney = 500000; // 500k
+      total = 1000000; // 1mil
+      bought = 500000; // 500k
+
+      await policyBook.setTotalLiquidity(total);
+      await policyBook.setTotalCoverTokens(bought);
+
+      const calculatedPrice = toBN(await policyBook.getQuote(days, myMoney));
+      assert.equal(calculatedPrice, 750000, 'UR > RISKY case is incorrect');
+    });
+
+    it('require more tokens than there exists (should revert)', async () => {
+      days = 365;
+      myMoney = 600000; // 600k
+      total = 1000000; // 1mil
+      bought = 500000; // 500k
+
+      await policyBook.setTotalLiquidity(total);
+      await policyBook.setTotalCoverTokens(bought);
+
+      await truffleAssert.reverts(policyBook.getQuote(days, myMoney),
+        'Requiring more than there exists');
+    });
+
+    it('pool is empty (should revert)', async () => {
+      days = 365;
+      myMoney = 0; // 0
+      total = 0; // 0
+      bought = 0; // 0
+
+      await policyBook.setTotalLiquidity(total);
+      await policyBook.setTotalCoverTokens(bought);
+
+      await truffleAssert.reverts(policyBook.getQuote(days, myMoney),
+        'The pool is empty');
     });
   });
 });

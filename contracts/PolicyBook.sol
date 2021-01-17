@@ -177,6 +177,8 @@ contract PolicyBook is IPolicyBook, ERC20 {
     require(_policyHolder.durationDays == 0, "The policy holder already exists");
     require(totalLiquidity >= totalCoverTokens.add(_coverTokens), "Not enough available liquidity");
 
+    uint256 _price = _getQuote(_durationDays, _coverTokens);
+
     _policyHolder.coverTokens = _coverTokens;
     _policyHolder.durationDays = _durationDays;
     _policyHolder.maxDaiTokens = _maxDaiTokens;
@@ -184,17 +186,11 @@ contract PolicyBook is IPolicyBook, ERC20 {
     policyHolders[_policyHolderAddr] = _policyHolder;
     totalCoverTokens = totalCoverTokens.add(_coverTokens);
 
-    uint256 _price = _calculatePrice(_coverTokens);
-
     IERC20 daiToken = IERC20(daiAddr);
     bool _success = daiToken.transferFrom(_policyHolderAddr, address(this), _price);
     require(_success, "Failed to transfer tokens");
 
     emit BuyPolicy(_policyHolderAddr, _coverTokens, _price, totalCoverTokens);
-  }
-
-  function _calculatePrice(uint256 _coverTokens) internal view returns (uint256) {
-    return 100;
   }
 
   function addLiquidity(uint256 _liqudityAmount) external override {
@@ -287,9 +283,6 @@ contract PolicyBook is IPolicyBook, ERC20 {
   uint256 public constant MAXIMUM_COST_NOT_RISKY_PERCENTAGE = 30 * PRECISION;
   uint256 public constant MAXIMUM_COST_100_UTILIZATION_PERCENTAGE = 150 * PRECISION;
 
-  uint256 public daiInThePoolTotal;
-  uint256 public daiInThePoolBought;
-
   function calculateWhenNotRisky(uint256 _utilizationRatioPercentage) private pure returns (uint256) {
     return (_utilizationRatioPercentage.mul(MAXIMUM_COST_NOT_RISKY_PERCENTAGE)).div(RISKY_ASSET_THRESHOLD_PERCENTAGE);
   }
@@ -309,10 +302,14 @@ contract PolicyBook is IPolicyBook, ERC20 {
   }
 
   function getQuote(uint256 _durationDays, uint256 _tokens) external view override returns (uint256 _daiTokens) {
-    require(daiInThePoolBought.add(_tokens) <= daiInThePoolTotal, "Requiring more than there exists");
-    require(daiInThePoolTotal > 0, "The pool is empty");
+    _daiTokens = _getQuote(_durationDays, _tokens);
+  }
 
-    uint256 utilizationRatioPercentage = ((daiInThePoolBought.add(_tokens)).mul(PERCENTAGE_100)).div(daiInThePoolTotal);
+  function _getQuote(uint256 _durationDays, uint256 _tokens) internal view returns (uint256) {
+    require(totalCoverTokens.add(_tokens) <= totalLiquidity, "Requiring more than there exists");
+    require(totalLiquidity > 0, "The pool is empty");
+
+    uint256 utilizationRatioPercentage = ((totalCoverTokens.add(_tokens)).mul(PERCENTAGE_100)).div(totalLiquidity);
 
     uint256 annualInsuranceCostPercentage;
 
