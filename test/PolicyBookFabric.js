@@ -5,7 +5,6 @@ const DAI = artifacts.require('DAIMock');
 
 const Reverter = require('./helpers/reverter');
 const truffleAssert = require('truffle-assertions');
-const {assert} = require('chai');
 
 const ContractType = {
   STABLECOIN: 0,
