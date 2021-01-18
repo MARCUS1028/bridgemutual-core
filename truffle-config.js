@@ -18,11 +18,12 @@
  *
  */
 
-// const HDWalletProvider = require('@truffle/hdwallet-provider');
-// const infuraKey = "fj4jll3k.....";
-//
-// const fs = require('fs');
-// const mnemonic = fs.readFileSync(".secret").toString().trim();
+const HDWalletProvider = require('@truffle/hdwallet-provider');
+const dotenv = require('dotenv');
+dotenv.config();
+
+// process.env.PRIVATE_KEY - your private key
+// process.env.PROJECT_ID - infure project id
 
 module.exports = {
   /**
@@ -49,6 +50,12 @@ module.exports = {
       gas: 6721975,
       gasLimit: 6721975, // <-- Use this high gas value
       gasPrice: 1,
+    },
+    ropsten: {
+      provider: () => new HDWalletProvider([process.env.PRIVATE_KEY], `wss://ropsten.infura.io/ws/v3/${process.env.PROJECT_ID}`),
+      network_id: 3,       // Ropsten's id      
+      gas: 6721975,        // Ropsten has a lower block limit than mainnet            
+      skipDryRun: true     // Skip dry run before migrations? (default: false for public nets )
     },
     // Useful for testing. The `development` name is special - truffle uses it by default
     // if it's defined here and no other network is specified at the command line.
