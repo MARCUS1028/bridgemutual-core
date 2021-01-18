@@ -1,0 +1,1131 @@
+{
+  "contractName": "IPolicyBookFabric",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_contract",
+          "type": "address"
+        },
+        {
+          "internalType": "enum IPolicyBookFabric.ContractType",
+          "name": "_contractType",
+          "type": "uint8"
+        }
+      ],
+      "name": "create",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "_policyBook",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_contract",
+          "type": "address"
+        }
+      ],
+      "name": "policyBookFor",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "_policyBook",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "policyBooksCount",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "_policyBookCount",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_offset",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_limit",
+          "type": "uint256"
+        }
+      ],
+      "name": "policyBooks",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "_policyBooksCount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address[]",
+          "name": "_policyBooks",
+          "type": "address[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.7.4+commit.3f05b770\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_contract\",\"type\":\"address\"},{\"internalType\":\"enum IPolicyBookFabric.ContractType\",\"name\":\"_contractType\",\"type\":\"uint8\"}],\"name\":\"create\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"_policyBook\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_contract\",\"type\":\"address\"}],\"name\":\"policyBookFor\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"_policyBook\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_offset\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_limit\",\"type\":\"uint256\"}],\"name\":\"policyBooks\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"_policyBooksCount\",\"type\":\"uint256\"},{\"internalType\":\"address[]\",\"name\":\"_policyBooks\",\"type\":\"address[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"policyBooksCount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"_policyBookCount\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{\"create(address,uint8)\":{\"params\":{\"_contract\":\"is Contract to create policy book for\",\"_contractType\":\"is Contract to create policy book for\"},\"returns\":{\"_policyBook\":\"is address of created contract\"}},\"policyBookFor(address)\":{\"params\":{\"_contract\":\"is contract address to lookup for created IPolicyBook\"},\"returns\":{\"_policyBook\":\"is policy book address if exists for passed contract address, if not it will return address(0)\"}},\"policyBooks(uint256,uint256)\":{\"params\":{\"_limit\":\"is number of policy books to returns from _offset\",\"_offset\":\"is starting item in array to return array from\"},\"returns\":{\"_policyBooks\":\"is array of contract addresses\",\"_policyBooksCount\":\"is updated number of policy books\"}},\"policyBooksCount()\":{\"returns\":{\"_policyBookCount\":\"is number of created policy books\"}}},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"create(address,uint8)\":{\"notice\":\"Create new Policy Book contract, access: ANY\"},\"policyBookFor(address)\":{\"notice\":\"Return created Policy Book contract, access: ANY\"},\"policyBooks(uint256,uint256)\":{\"notice\":\"Returns number of created Policy Book contracts address, access: ANY\"},\"policyBooksCount()\":{\"notice\":\"Returns number of created Policy Book contracts, access: ANY\"}},\"version\":1}},\"settings\":{\"compilationTarget\":{\"/Users/armenarakelian/Documents/GitHub/bridgemutual-core/contracts/interfaces/IPolicyBookFabric.sol\":\"IPolicyBookFabric\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":10000},\"remappings\":[]},\"sources\":{\"/Users/armenarakelian/Documents/GitHub/bridgemutual-core/contracts/interfaces/IPolicyBookFabric.sol\":{\"keccak256\":\"0x243c0c0820d278cd59abfc5ee3941adaff0c6f11f8c3ae9e1fd4b3e10d94b61a\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://a78a7637452417a50ea81e1a15a07df3bdff3cf8cba41c06fe019ade5c556be2\",\"dweb:/ipfs/QmZfuC1pY6jdu9p47G66a9rNrPezoGYLvEKEBd3Weje13K\"]}},\"version\":1}",
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "immutableReferences": {},
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "// SPDX-License-Identifier: MIT\npragma solidity =0.7.4;\n\ninterface IPolicyBookFabric {\n  enum ContractType {STABLECOIN, DEFI, CONTRACT, EXCHANGE}\n\n  /// @notice Create new Policy Book contract, access: ANY\n  /// @param _contract is Contract to create policy book for\n  /// @param _contractType is Contract to create policy book for\n  /// @return _policyBook is address of created contract\n  function create(address _contract, ContractType _contractType) external returns (address _policyBook);\n\n  /// @notice Return created Policy Book contract, access: ANY\n  /// @param _contract is contract address to lookup for created IPolicyBook\n  /// @return _policyBook is policy book address if exists for passed contract address, if not it will return address(0)\n  function policyBookFor(address _contract) external view returns (address _policyBook);\n\n  /// @notice Returns number of created Policy Book contracts, access: ANY\n  /// @return _policyBookCount is number of created policy books\n  function policyBooksCount() external view returns (uint256 _policyBookCount);\n\n  /// @notice Returns number of created Policy Book contracts address, access: ANY\n  /// @param _offset is starting item in array to return array from\n  /// @param _limit is number of policy books to returns from _offset\n  /// @return _policyBooksCount is updated number of policy books\n  /// @return _policyBooks is array of contract addresses\n  function policyBooks(uint256 _offset, uint256 _limit)\n    external\n    view\n    returns (uint256 _policyBooksCount, address[] memory _policyBooks);\n}\n",
+  "sourcePath": "/Users/armenarakelian/Documents/GitHub/bridgemutual-core/contracts/interfaces/IPolicyBookFabric.sol",
+  "ast": {
+    "absolutePath": "/Users/armenarakelian/Documents/GitHub/bridgemutual-core/contracts/interfaces/IPolicyBookFabric.sol",
+    "exportedSymbols": {
+      "IPolicyBookFabric": [
+        2004
+      ]
+    },
+    "id": 2005,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 1961,
+        "literals": [
+          "solidity",
+          "=",
+          "0.7",
+          ".4"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "32:23:9"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "fullyImplemented": false,
+        "id": 2004,
+        "linearizedBaseContracts": [
+          2004
+        ],
+        "name": "IPolicyBookFabric",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "canonicalName": "IPolicyBookFabric.ContractType",
+            "id": 1966,
+            "members": [
+              {
+                "id": 1962,
+                "name": "STABLECOIN",
+                "nodeType": "EnumValue",
+                "src": "108:10:9"
+              },
+              {
+                "id": 1963,
+                "name": "DEFI",
+                "nodeType": "EnumValue",
+                "src": "120:4:9"
+              },
+              {
+                "id": 1964,
+                "name": "CONTRACT",
+                "nodeType": "EnumValue",
+                "src": "126:8:9"
+              },
+              {
+                "id": 1965,
+                "name": "EXCHANGE",
+                "nodeType": "EnumValue",
+                "src": "136:8:9"
+              }
+            ],
+            "name": "ContractType",
+            "nodeType": "EnumDefinition",
+            "src": "89:56:9"
+          },
+          {
+            "documentation": {
+              "id": 1967,
+              "nodeType": "StructuredDocumentation",
+              "src": "149:239:9",
+              "text": "@notice Create new Policy Book contract, access: ANY\n @param _contract is Contract to create policy book for\n @param _contractType is Contract to create policy book for\n @return _policyBook is address of created contract"
+            },
+            "functionSelector": "6697a437",
+            "id": 1976,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "create",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 1972,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1969,
+                  "mutability": "mutable",
+                  "name": "_contract",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1976,
+                  "src": "407:17:9",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 1968,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "407:7:9",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 1971,
+                  "mutability": "mutable",
+                  "name": "_contractType",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1976,
+                  "src": "426:26:9",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_enum$_ContractType_$1966",
+                    "typeString": "enum IPolicyBookFabric.ContractType"
+                  },
+                  "typeName": {
+                    "id": 1970,
+                    "name": "ContractType",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 1966,
+                    "src": "426:12:9",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_enum$_ContractType_$1966",
+                      "typeString": "enum IPolicyBookFabric.ContractType"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "406:47:9"
+            },
+            "returnParameters": {
+              "id": 1975,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1974,
+                  "mutability": "mutable",
+                  "name": "_policyBook",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1976,
+                  "src": "472:19:9",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 1973,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "472:7:9",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "471:21:9"
+            },
+            "scope": 2004,
+            "src": "391:102:9",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 1977,
+              "nodeType": "StructuredDocumentation",
+              "src": "497:258:9",
+              "text": "@notice Return created Policy Book contract, access: ANY\n @param _contract is contract address to lookup for created IPolicyBook\n @return _policyBook is policy book address if exists for passed contract address, if not it will return address(0)"
+            },
+            "functionSelector": "217c1552",
+            "id": 1984,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "policyBookFor",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 1980,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1979,
+                  "mutability": "mutable",
+                  "name": "_contract",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1984,
+                  "src": "781:17:9",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 1978,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "781:7:9",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "780:19:9"
+            },
+            "returnParameters": {
+              "id": 1983,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1982,
+                  "mutability": "mutable",
+                  "name": "_policyBook",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1984,
+                  "src": "823:19:9",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 1981,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "823:7:9",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "822:21:9"
+            },
+            "scope": 2004,
+            "src": "758:86:9",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 1985,
+              "nodeType": "StructuredDocumentation",
+              "src": "848:137:9",
+              "text": "@notice Returns number of created Policy Book contracts, access: ANY\n @return _policyBookCount is number of created policy books"
+            },
+            "functionSelector": "7151f5e4",
+            "id": 1990,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "policyBooksCount",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 1986,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1013:2:9"
+            },
+            "returnParameters": {
+              "id": 1989,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1988,
+                  "mutability": "mutable",
+                  "name": "_policyBookCount",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1990,
+                  "src": "1039:24:9",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 1987,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1039:7:9",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1038:26:9"
+            },
+            "scope": 2004,
+            "src": "988:77:9",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 1991,
+              "nodeType": "StructuredDocumentation",
+              "src": "1069:342:9",
+              "text": "@notice Returns number of created Policy Book contracts address, access: ANY\n @param _offset is starting item in array to return array from\n @param _limit is number of policy books to returns from _offset\n @return _policyBooksCount is updated number of policy books\n @return _policyBooks is array of contract addresses"
+            },
+            "functionSelector": "d2784216",
+            "id": 2003,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "policyBooks",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 1996,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1993,
+                  "mutability": "mutable",
+                  "name": "_offset",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 2003,
+                  "src": "1435:15:9",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 1992,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1435:7:9",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 1995,
+                  "mutability": "mutable",
+                  "name": "_limit",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 2003,
+                  "src": "1452:14:9",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 1994,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1452:7:9",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1434:33:9"
+            },
+            "returnParameters": {
+              "id": 2002,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1998,
+                  "mutability": "mutable",
+                  "name": "_policyBooksCount",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 2003,
+                  "src": "1503:25:9",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 1997,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1503:7:9",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 2001,
+                  "mutability": "mutable",
+                  "name": "_policyBooks",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 2003,
+                  "src": "1530:29:9",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_array$_t_address_$dyn_memory_ptr",
+                    "typeString": "address[]"
+                  },
+                  "typeName": {
+                    "baseType": {
+                      "id": 1999,
+                      "name": "address",
+                      "nodeType": "ElementaryTypeName",
+                      "src": "1530:7:9",
+                      "stateMutability": "nonpayable",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      }
+                    },
+                    "id": 2000,
+                    "nodeType": "ArrayTypeName",
+                    "src": "1530:9:9",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_array$_t_address_$dyn_storage_ptr",
+                      "typeString": "address[]"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1502:58:9"
+            },
+            "scope": 2004,
+            "src": "1414:147:9",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "scope": 2005,
+        "src": "57:1506:9"
+      }
+    ],
+    "src": "32:1532:9"
+  },
+  "legacyAST": {
+    "absolutePath": "/Users/armenarakelian/Documents/GitHub/bridgemutual-core/contracts/interfaces/IPolicyBookFabric.sol",
+    "exportedSymbols": {
+      "IPolicyBookFabric": [
+        2004
+      ]
+    },
+    "id": 2005,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 1961,
+        "literals": [
+          "solidity",
+          "=",
+          "0.7",
+          ".4"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "32:23:9"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "fullyImplemented": false,
+        "id": 2004,
+        "linearizedBaseContracts": [
+          2004
+        ],
+        "name": "IPolicyBookFabric",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "canonicalName": "IPolicyBookFabric.ContractType",
+            "id": 1966,
+            "members": [
+              {
+                "id": 1962,
+                "name": "STABLECOIN",
+                "nodeType": "EnumValue",
+                "src": "108:10:9"
+              },
+              {
+                "id": 1963,
+                "name": "DEFI",
+                "nodeType": "EnumValue",
+                "src": "120:4:9"
+              },
+              {
+                "id": 1964,
+                "name": "CONTRACT",
+                "nodeType": "EnumValue",
+                "src": "126:8:9"
+              },
+              {
+                "id": 1965,
+                "name": "EXCHANGE",
+                "nodeType": "EnumValue",
+                "src": "136:8:9"
+              }
+            ],
+            "name": "ContractType",
+            "nodeType": "EnumDefinition",
+            "src": "89:56:9"
+          },
+          {
+            "documentation": {
+              "id": 1967,
+              "nodeType": "StructuredDocumentation",
+              "src": "149:239:9",
+              "text": "@notice Create new Policy Book contract, access: ANY\n @param _contract is Contract to create policy book for\n @param _contractType is Contract to create policy book for\n @return _policyBook is address of created contract"
+            },
+            "functionSelector": "6697a437",
+            "id": 1976,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "create",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 1972,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1969,
+                  "mutability": "mutable",
+                  "name": "_contract",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1976,
+                  "src": "407:17:9",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 1968,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "407:7:9",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 1971,
+                  "mutability": "mutable",
+                  "name": "_contractType",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1976,
+                  "src": "426:26:9",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_enum$_ContractType_$1966",
+                    "typeString": "enum IPolicyBookFabric.ContractType"
+                  },
+                  "typeName": {
+                    "id": 1970,
+                    "name": "ContractType",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 1966,
+                    "src": "426:12:9",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_enum$_ContractType_$1966",
+                      "typeString": "enum IPolicyBookFabric.ContractType"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "406:47:9"
+            },
+            "returnParameters": {
+              "id": 1975,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1974,
+                  "mutability": "mutable",
+                  "name": "_policyBook",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1976,
+                  "src": "472:19:9",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 1973,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "472:7:9",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "471:21:9"
+            },
+            "scope": 2004,
+            "src": "391:102:9",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 1977,
+              "nodeType": "StructuredDocumentation",
+              "src": "497:258:9",
+              "text": "@notice Return created Policy Book contract, access: ANY\n @param _contract is contract address to lookup for created IPolicyBook\n @return _policyBook is policy book address if exists for passed contract address, if not it will return address(0)"
+            },
+            "functionSelector": "217c1552",
+            "id": 1984,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "policyBookFor",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 1980,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1979,
+                  "mutability": "mutable",
+                  "name": "_contract",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1984,
+                  "src": "781:17:9",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 1978,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "781:7:9",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "780:19:9"
+            },
+            "returnParameters": {
+              "id": 1983,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1982,
+                  "mutability": "mutable",
+                  "name": "_policyBook",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1984,
+                  "src": "823:19:9",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 1981,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "823:7:9",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "822:21:9"
+            },
+            "scope": 2004,
+            "src": "758:86:9",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 1985,
+              "nodeType": "StructuredDocumentation",
+              "src": "848:137:9",
+              "text": "@notice Returns number of created Policy Book contracts, access: ANY\n @return _policyBookCount is number of created policy books"
+            },
+            "functionSelector": "7151f5e4",
+            "id": 1990,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "policyBooksCount",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 1986,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1013:2:9"
+            },
+            "returnParameters": {
+              "id": 1989,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1988,
+                  "mutability": "mutable",
+                  "name": "_policyBookCount",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 1990,
+                  "src": "1039:24:9",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 1987,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1039:7:9",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1038:26:9"
+            },
+            "scope": 2004,
+            "src": "988:77:9",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 1991,
+              "nodeType": "StructuredDocumentation",
+              "src": "1069:342:9",
+              "text": "@notice Returns number of created Policy Book contracts address, access: ANY\n @param _offset is starting item in array to return array from\n @param _limit is number of policy books to returns from _offset\n @return _policyBooksCount is updated number of policy books\n @return _policyBooks is array of contract addresses"
+            },
+            "functionSelector": "d2784216",
+            "id": 2003,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "policyBooks",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 1996,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1993,
+                  "mutability": "mutable",
+                  "name": "_offset",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 2003,
+                  "src": "1435:15:9",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 1992,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1435:7:9",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 1995,
+                  "mutability": "mutable",
+                  "name": "_limit",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 2003,
+                  "src": "1452:14:9",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 1994,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1452:7:9",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1434:33:9"
+            },
+            "returnParameters": {
+              "id": 2002,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 1998,
+                  "mutability": "mutable",
+                  "name": "_policyBooksCount",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 2003,
+                  "src": "1503:25:9",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 1997,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1503:7:9",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 2001,
+                  "mutability": "mutable",
+                  "name": "_policyBooks",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 2003,
+                  "src": "1530:29:9",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_array$_t_address_$dyn_memory_ptr",
+                    "typeString": "address[]"
+                  },
+                  "typeName": {
+                    "baseType": {
+                      "id": 1999,
+                      "name": "address",
+                      "nodeType": "ElementaryTypeName",
+                      "src": "1530:7:9",
+                      "stateMutability": "nonpayable",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      }
+                    },
+                    "id": 2000,
+                    "nodeType": "ArrayTypeName",
+                    "src": "1530:9:9",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_array$_t_address_$dyn_storage_ptr",
+                      "typeString": "address[]"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1502:58:9"
+            },
+            "scope": 2004,
+            "src": "1414:147:9",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "scope": 2005,
+        "src": "57:1506:9"
+      }
+    ],
+    "src": "32:1532:9"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.7.4+commit.3f05b770.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.2.0-tezos.1",
+  "updatedAt": "2021-01-18T12:01:15.911Z",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {
+      "create(address,uint8)": {
+        "params": {
+          "_contract": "is Contract to create policy book for",
+          "_contractType": "is Contract to create policy book for"
+        },
+        "returns": {
+          "_policyBook": "is address of created contract"
+        }
+      },
+      "policyBookFor(address)": {
+        "params": {
+          "_contract": "is contract address to lookup for created IPolicyBook"
+        },
+        "returns": {
+          "_policyBook": "is policy book address if exists for passed contract address, if not it will return address(0)"
+        }
+      },
+      "policyBooks(uint256,uint256)": {
+        "params": {
+          "_limit": "is number of policy books to returns from _offset",
+          "_offset": "is starting item in array to return array from"
+        },
+        "returns": {
+          "_policyBooks": "is array of contract addresses",
+          "_policyBooksCount": "is updated number of policy books"
+        }
+      },
+      "policyBooksCount()": {
+        "returns": {
+          "_policyBookCount": "is number of created policy books"
+        }
+      }
+    },
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {
+      "create(address,uint8)": {
+        "notice": "Create new Policy Book contract, access: ANY"
+      },
+      "policyBookFor(address)": {
+        "notice": "Return created Policy Book contract, access: ANY"
+      },
+      "policyBooks(uint256,uint256)": {
+        "notice": "Returns number of created Policy Book contracts address, access: ANY"
+      },
+      "policyBooksCount()": {
+        "notice": "Returns number of created Policy Book contracts, access: ANY"
+      }
+    },
+    "version": 1
+  }
+}
