@@ -13,8 +13,8 @@ contract PolicyBookRegistry is IPolicyBookRegistry, Ownable {
   address public policyFabricAddress;
   uint256 private policyBooksCount;
 
-  address[] private policies;
-  mapping(address => address) private policiesByAddress;
+  address[] public policies;
+  mapping(address => address) public policiesByAddress;
 
   event Added(address insured, address at);
 

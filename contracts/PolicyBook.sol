@@ -90,62 +90,6 @@ contract PolicyBook is IPolicyBook, ERC20 {
     return 0;
   }
 
-  function policies(uint256 _offset, uint256 _limit)
-    external
-    view
-    override
-    returns (uint256 _policiesCount, Policy[] memory _policies)
-  {
-    Policy[] memory temp;
-    return (0, temp);
-  }
-
-  function policiesCount() external view override returns (uint256 _policiesCount) {
-    return 0;
-  }
-
-  function policies(uint256[] memory _policiesIds) external view override returns (Policy[] memory _policies) {
-    Policy[] memory temp;
-    return temp;
-  }
-
-  function policy(uint256 _policyId) external view override returns (Policy memory _policy) {
-    Policy memory temp;
-    return temp;
-  }
-
-  function balanceOf(uint256 _offset, uint256 _limit)
-    external
-    view
-    override
-    returns (
-      uint256 _holdersCount,
-      address[] memory _holders,
-      uint256[] memory _balances
-    )
-  {
-    address[] memory temp1;
-    uint256[] memory temp2;
-    return (0, temp1, temp2);
-  }
-
-  function balanceOf(address[] memory _holders) external view override returns (uint256[] memory _balances) {
-    uint256[] memory temp;
-    return temp;
-  }
-
-  function holdersCount() external view override returns (uint256 _count) {
-    return 0;
-  }
-
-  function totalLiquidityDAI() external view override returns (uint256 _daiTokens) {
-    return 0;
-  }
-
-  function totalPoliciesDAI() external view override returns (uint256 _daiTokens) {
-    return 0;
-  }
-
   function addShieldTokens(address _tokenAddress, uint256 _tokensAmount) external override returns (bool _success) {
     return false;
   }

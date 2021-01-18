@@ -60,62 +60,6 @@ interface IPolicyBook is IERC20 {
   /// @return _shieldAssetsCount is number of added shield assets
   function shieldAssetsCount() external view returns (uint256 _shieldAssetsCount);
 
-  /// @notice Returns list of policies, access: ANY
-  /// @param _offset is starting item in array to return array from
-  /// @param _limit is number of policies to returns from _offset
-  /// @return _policiesCount is number of added policies
-  /// @return _policies is array of active & inactive policies
-  function policies(uint256 _offset, uint256 _limit)
-    external
-    view
-    returns (uint256 _policiesCount, Policy[] memory _policies);
-
-  /// @notice Returns number of policies added, access: ANY
-  /// @return _policiesCount is number of all added policies
-  function policiesCount() external view returns (uint256 _policiesCount);
-
-  /// @notice Returns list of policies, access: ANY
-  /// @param _policiesIds is array of policy ids to return
-  /// @return _policies is array of active & inactive policies
-  function policies(uint256[] memory _policiesIds) external view returns (Policy[] memory _policies);
-
-  /// @notice Returns policy by supplied id, access: ANY
-  /// @param _policyId is id of policy to return
-  /// @return _policy is policy corresponding to supplied id
-  function policy(uint256 _policyId) external view returns (Policy memory _policy);
-
-  /// @notice Returns list of liquidity providers, access: ANY
-  /// @param _offset is starting item in array to return array from
-  /// @param _limit is number of securities to returns from _offset
-  /// @return _holdersCount is total number of liquidity providers
-  /// @return _holders is array of liquidity providers addresses
-  /// @return _balances is array of liquidity balances of Policy Book (BMI X) token
-  function balanceOf(uint256 _offset, uint256 _limit)
-    external
-    view
-    returns (
-      uint256 _holdersCount,
-      address[] memory _holders,
-      uint256[] memory _balances
-    );
-
-  /// @notice Returns liquidity providers balances for specific liquidity providers, access: ANY
-  /// @param _holders is array of liquidity providers addresses to return balances for
-  /// @return _balances is array of liquidity balances of Policy Book (BMI X) token
-  function balanceOf(address[] memory _holders) external view returns (uint256[] memory _balances);
-
-  /// @notice Returns number of liquidity providers, access: ANY
-  /// @return _count is total number of liquidity providers
-  function holdersCount() external view returns (uint256 _count);
-
-  /// @notice Returns total amount of secured DAI, access: ANY
-  /// @return _daiTokens is secured amount of DAI by liquidity providers
-  function totalLiquidityDAI() external view returns (uint256 _daiTokens);
-
-  /// @notice Returns total amount of paid DAI for Policies, access: ANY
-  /// @return _daiTokens is paid amount of DAI for Policy coverage
-  function totalPoliciesDAI() external view returns (uint256 _daiTokens);
-
   /// @notice Adds shield tokens to contract, access: ANY
   /// @param _tokenAddress is address of reward token to add
   /// @param _tokensAmount is max amount of reward to operate on

@@ -5,7 +5,6 @@ const Reverter = require('./helpers/reverter');
 const BigNumber = require('bignumber.js');
 const truffleAssert = require('truffle-assertions');
 const setCurrentTime = require('./helpers/ganacheTimeTraveler');
-const {assert} = require('chai');
 
 const ContractType = {
   STABLECOIN: 0,

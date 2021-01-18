@@ -2,7 +2,6 @@ const PolicyBookRegistry = artifacts.require('PolicyBookRegistry');
 
 const Reverter = require('./helpers/reverter');
 const truffleAssert = require('truffle-assertions');
-const {assert} = require('chai');
 
 contract('PolicyBookFabric', async (accounts) => {
   const zeroAddress = '0x0000000000000000000000000000000000000000';

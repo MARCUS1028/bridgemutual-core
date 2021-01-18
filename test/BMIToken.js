@@ -2,7 +2,6 @@ const BMIToken = artifacts.require('BMIToken.sol');
 
 const Reverter = require('./helpers/reverter');
 const BigNumber = require('bignumber.js');
-const {assert} = require('chai');
 
 contract('BMIToken', async (accounts) => {
   const reverter = new Reverter(web3);
