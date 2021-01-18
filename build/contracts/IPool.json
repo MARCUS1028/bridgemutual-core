@@ -1,0 +1,1137 @@
+{
+  "contractName": "IPool",
+  "abi": [
+    {
+      "inputs": [],
+      "name": "token",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "_token",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_tokensAmount",
+          "type": "uint256"
+        }
+      ],
+      "name": "capture",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_tokensAmount",
+          "type": "uint256"
+        }
+      ],
+      "name": "release",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_address",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_tokensAmount",
+          "type": "uint256"
+        }
+      ],
+      "name": "captureFor",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_address",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_tokensAmount",
+          "type": "uint256"
+        }
+      ],
+      "name": "releaseFor",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_address",
+          "type": "address"
+        }
+      ],
+      "name": "balanceOf",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "_tokensAmount",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.7.4+commit.3f05b770\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_address\",\"type\":\"address\"}],\"name\":\"balanceOf\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"_tokensAmount\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_tokensAmount\",\"type\":\"uint256\"}],\"name\":\"capture\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_address\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"_tokensAmount\",\"type\":\"uint256\"}],\"name\":\"captureFor\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_tokensAmount\",\"type\":\"uint256\"}],\"name\":\"release\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_address\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"_tokensAmount\",\"type\":\"uint256\"}],\"name\":\"releaseFor\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"token\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"_token\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{\"balanceOf(address)\":{\"params\":{\"_address\":\"address of account/contract to return balance of\"},\"returns\":{\"_tokensAmount\":\"is number of tokens stored in Pool\"}},\"capture(uint256)\":{\"params\":{\"_tokensAmount\":\"number of tokens that should be added to Pool\"}},\"captureFor(address,uint256)\":{\"params\":{\"_address\":\"address of account/contract that is willing to put tokens to Pool\",\"_tokensAmount\":\"number of tokens that should be added to Pool\"}},\"release(uint256)\":{\"params\":{\"_tokensAmount\":\"number of tokens that should be release from Pool\"}},\"releaseFor(address,uint256)\":{\"params\":{\"_address\":\"address of account/contract that Pool has to transfer tokens to\",\"_tokensAmount\":\"number of tokens that should be release from Pool\"}},\"token()\":{\"returns\":{\"_token\":\"address of token this pool created for\"}}},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"balanceOf(address)\":{\"notice\":\"Returns tokens balance of passed address in Pool, access: ANY\"},\"capture(uint256)\":{\"notice\":\"Store tokens to pool, access: ANY\"},\"captureFor(address,uint256)\":{\"notice\":\"Store tokens to pool and assign it to passed address, access: ANY\"},\"release(uint256)\":{\"notice\":\"Release tokens from pool, access: ANY\"},\"releaseFor(address,uint256)\":{\"notice\":\"Release tokens from pool and transfer them to assigned address, access: ANY\"},\"token()\":{\"notice\":\"Returns token this Pool is operating with access: ANY\"}},\"version\":1}},\"settings\":{\"compilationTarget\":{\"/Users/armenarakelian/Documents/GitHub/bridgemutual-core/contracts/interfaces/IPool.sol\":\"IPool\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":10000},\"remappings\":[]},\"sources\":{\"/Users/armenarakelian/Documents/GitHub/bridgemutual-core/contracts/interfaces/IPool.sol\":{\"keccak256\":\"0x1ca7ceab36cbc3af1f29e2f1d6d0894688b7db8d90539957a70dbc08fd797ba8\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://9446978ff8c5fe12f09421c075bc7471f743cfde6ddb650c98ba11260ad595c5\",\"dweb:/ipfs/QmQY866ogLcEdp3rDqjbqbkKjK5JjDSzNWiuskHqmoH52o\"]}},\"version\":1}",
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "immutableReferences": {},
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "// SPDX-License-Identifier: MIT\npragma solidity =0.7.4;\n\ninterface IPool {\n  /// @notice Returns token this Pool is operating with access: ANY\n  /// @return _token address of token this pool created for\n  function token() external view returns (address _token);\n\n  /// @notice Store tokens to pool, access: ANY\n  /// @param _tokensAmount number of tokens that should be added to Pool\n  function capture(uint256 _tokensAmount) external;\n\n  /// @notice Release tokens from pool, access: ANY\n  /// @param _tokensAmount number of tokens that should be release from Pool\n  function release(uint256 _tokensAmount) external;\n\n  /// @notice Store tokens to pool and assign it to passed address, access: ANY\n  /// @param _address address of account/contract that is willing to put tokens to Pool\n  /// @param _tokensAmount number of tokens that should be added to Pool\n  function captureFor(address _address, uint256 _tokensAmount) external;\n\n  // @TODO: verify that msg.sender is allowed to call releaseFor, it can be same who added tokens\n  /// @notice Release tokens from pool and transfer them to assigned address, access: ANY\n  /// @param _address address of account/contract that Pool has to transfer tokens to\n  /// @param _tokensAmount number of tokens that should be release from Pool\n  function releaseFor(address _address, uint256 _tokensAmount) external;\n\n  /// @notice Returns tokens balance of passed address in Pool, access: ANY\n  /// @param _address address of account/contract to return balance of\n  /// @return _tokensAmount is number of tokens stored in Pool\n  function balanceOf(address _address) external view returns (uint256 _tokensAmount);\n}\n",
+  "sourcePath": "/Users/armenarakelian/Documents/GitHub/bridgemutual-core/contracts/interfaces/IPool.sol",
+  "ast": {
+    "absolutePath": "/Users/armenarakelian/Documents/GitHub/bridgemutual-core/contracts/interfaces/IPool.sol",
+    "exportedSymbols": {
+      "IPool": [
+        2126
+      ]
+    },
+    "id": 2127,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 2083,
+        "literals": [
+          "solidity",
+          "=",
+          "0.7",
+          ".4"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "32:23:11"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "fullyImplemented": false,
+        "id": 2126,
+        "linearizedBaseContracts": [
+          2126
+        ],
+        "name": "IPool",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "documentation": {
+              "id": 2084,
+              "nodeType": "StructuredDocumentation",
+              "src": "77:125:11",
+              "text": "@notice Returns token this Pool is operating with access: ANY\n @return _token address of token this pool created for"
+            },
+            "functionSelector": "fc0c546a",
+            "id": 2089,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "token",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 2085,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "219:2:11"
+            },
+            "returnParameters": {
+              "id": 2088,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 2087,
+                  "mutability": "mutable",
+                  "name": "_token",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 2089,
+                  "src": "245:14:11",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 2086,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "245:7:11",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "244:16:11"
+            },
+            "scope": 2126,
+            "src": "205:56:11",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 2090,
+              "nodeType": "StructuredDocumentation",
+              "src": "265:118:11",
+              "text": "@notice Store tokens to pool, access: ANY\n @param _tokensAmount number of tokens that should be added to Pool"
+            },
+            "functionSelector": "b5c3e81a",
+            "id": 2095,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "capture",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 2093,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 2092,
+                  "mutability": "mutable",
+                  "name": "_tokensAmount",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 2095,
+                  "src": "403:21:11",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 2091,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "403:7:11",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "402:23:11"
+            },
+            "returnParameters": {
+              "id": 2094,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "434:0:11"
+            },
+            "scope": 2126,
+            "src": "386:49:11",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 2096,
+              "nodeType": "StructuredDocumentation",
+              "src": "439:126:11",
+              "text": "@notice Release tokens from pool, access: ANY\n @param _tokensAmount number of tokens that should be release from Pool"
+            },
+            "functionSelector": "37bdc99b",
+            "id": 2101,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "release",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 2099,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 2098,
+                  "mutability": "mutable",
+                  "name": "_tokensAmount",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 2101,
+                  "src": "585:21:11",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 2097,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "585:7:11",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "584:23:11"
+            },
+            "returnParameters": {
+              "id": 2100,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "616:0:11"
+            },
+            "scope": 2126,
+            "src": "568:49:11",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 2102,
+              "nodeType": "StructuredDocumentation",
+              "src": "621:238:11",
+              "text": "@notice Store tokens to pool and assign it to passed address, access: ANY\n @param _address address of account/contract that is willing to put tokens to Pool\n @param _tokensAmount number of tokens that should be added to Pool"
+            },
+            "functionSelector": "96e798c8",
+            "id": 2109,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "captureFor",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 2107,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 2104,
+                  "mutability": "mutable",
+                  "name": "_address",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 2109,
+                  "src": "882:16:11",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 2103,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "882:7:11",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 2106,
+                  "mutability": "mutable",
+                  "name": "_tokensAmount",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 2109,
+                  "src": "900:21:11",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 2105,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "900:7:11",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "881:41:11"
+            },
+            "returnParameters": {
+              "id": 2108,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "931:0:11"
+            },
+            "scope": 2126,
+            "src": "862:70:11",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 2110,
+              "nodeType": "StructuredDocumentation",
+              "src": "1034:250:11",
+              "text": "@notice Release tokens from pool and transfer them to assigned address, access: ANY\n @param _address address of account/contract that Pool has to transfer tokens to\n @param _tokensAmount number of tokens that should be release from Pool"
+            },
+            "functionSelector": "beb96be5",
+            "id": 2117,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "releaseFor",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 2115,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 2112,
+                  "mutability": "mutable",
+                  "name": "_address",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 2117,
+                  "src": "1307:16:11",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 2111,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1307:7:11",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 2114,
+                  "mutability": "mutable",
+                  "name": "_tokensAmount",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 2117,
+                  "src": "1325:21:11",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 2113,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1325:7:11",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1306:41:11"
+            },
+            "returnParameters": {
+              "id": 2116,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1356:0:11"
+            },
+            "scope": 2126,
+            "src": "1287:70:11",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 2118,
+              "nodeType": "StructuredDocumentation",
+              "src": "1361:207:11",
+              "text": "@notice Returns tokens balance of passed address in Pool, access: ANY\n @param _address address of account/contract to return balance of\n @return _tokensAmount is number of tokens stored in Pool"
+            },
+            "functionSelector": "70a08231",
+            "id": 2125,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "balanceOf",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 2121,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 2120,
+                  "mutability": "mutable",
+                  "name": "_address",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 2125,
+                  "src": "1590:16:11",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 2119,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1590:7:11",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1589:18:11"
+            },
+            "returnParameters": {
+              "id": 2124,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 2123,
+                  "mutability": "mutable",
+                  "name": "_tokensAmount",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 2125,
+                  "src": "1631:21:11",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 2122,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1631:7:11",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1630:23:11"
+            },
+            "scope": 2126,
+            "src": "1571:83:11",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "scope": 2127,
+        "src": "57:1599:11"
+      }
+    ],
+    "src": "32:1625:11"
+  },
+  "legacyAST": {
+    "absolutePath": "/Users/armenarakelian/Documents/GitHub/bridgemutual-core/contracts/interfaces/IPool.sol",
+    "exportedSymbols": {
+      "IPool": [
+        2126
+      ]
+    },
+    "id": 2127,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 2083,
+        "literals": [
+          "solidity",
+          "=",
+          "0.7",
+          ".4"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "32:23:11"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "fullyImplemented": false,
+        "id": 2126,
+        "linearizedBaseContracts": [
+          2126
+        ],
+        "name": "IPool",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "documentation": {
+              "id": 2084,
+              "nodeType": "StructuredDocumentation",
+              "src": "77:125:11",
+              "text": "@notice Returns token this Pool is operating with access: ANY\n @return _token address of token this pool created for"
+            },
+            "functionSelector": "fc0c546a",
+            "id": 2089,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "token",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 2085,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "219:2:11"
+            },
+            "returnParameters": {
+              "id": 2088,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 2087,
+                  "mutability": "mutable",
+                  "name": "_token",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 2089,
+                  "src": "245:14:11",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 2086,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "245:7:11",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "244:16:11"
+            },
+            "scope": 2126,
+            "src": "205:56:11",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 2090,
+              "nodeType": "StructuredDocumentation",
+              "src": "265:118:11",
+              "text": "@notice Store tokens to pool, access: ANY\n @param _tokensAmount number of tokens that should be added to Pool"
+            },
+            "functionSelector": "b5c3e81a",
+            "id": 2095,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "capture",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 2093,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 2092,
+                  "mutability": "mutable",
+                  "name": "_tokensAmount",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 2095,
+                  "src": "403:21:11",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 2091,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "403:7:11",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "402:23:11"
+            },
+            "returnParameters": {
+              "id": 2094,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "434:0:11"
+            },
+            "scope": 2126,
+            "src": "386:49:11",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 2096,
+              "nodeType": "StructuredDocumentation",
+              "src": "439:126:11",
+              "text": "@notice Release tokens from pool, access: ANY\n @param _tokensAmount number of tokens that should be release from Pool"
+            },
+            "functionSelector": "37bdc99b",
+            "id": 2101,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "release",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 2099,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 2098,
+                  "mutability": "mutable",
+                  "name": "_tokensAmount",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 2101,
+                  "src": "585:21:11",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 2097,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "585:7:11",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "584:23:11"
+            },
+            "returnParameters": {
+              "id": 2100,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "616:0:11"
+            },
+            "scope": 2126,
+            "src": "568:49:11",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 2102,
+              "nodeType": "StructuredDocumentation",
+              "src": "621:238:11",
+              "text": "@notice Store tokens to pool and assign it to passed address, access: ANY\n @param _address address of account/contract that is willing to put tokens to Pool\n @param _tokensAmount number of tokens that should be added to Pool"
+            },
+            "functionSelector": "96e798c8",
+            "id": 2109,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "captureFor",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 2107,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 2104,
+                  "mutability": "mutable",
+                  "name": "_address",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 2109,
+                  "src": "882:16:11",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 2103,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "882:7:11",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 2106,
+                  "mutability": "mutable",
+                  "name": "_tokensAmount",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 2109,
+                  "src": "900:21:11",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 2105,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "900:7:11",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "881:41:11"
+            },
+            "returnParameters": {
+              "id": 2108,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "931:0:11"
+            },
+            "scope": 2126,
+            "src": "862:70:11",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 2110,
+              "nodeType": "StructuredDocumentation",
+              "src": "1034:250:11",
+              "text": "@notice Release tokens from pool and transfer them to assigned address, access: ANY\n @param _address address of account/contract that Pool has to transfer tokens to\n @param _tokensAmount number of tokens that should be release from Pool"
+            },
+            "functionSelector": "beb96be5",
+            "id": 2117,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "releaseFor",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 2115,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 2112,
+                  "mutability": "mutable",
+                  "name": "_address",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 2117,
+                  "src": "1307:16:11",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 2111,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1307:7:11",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 2114,
+                  "mutability": "mutable",
+                  "name": "_tokensAmount",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 2117,
+                  "src": "1325:21:11",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 2113,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1325:7:11",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1306:41:11"
+            },
+            "returnParameters": {
+              "id": 2116,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1356:0:11"
+            },
+            "scope": 2126,
+            "src": "1287:70:11",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "documentation": {
+              "id": 2118,
+              "nodeType": "StructuredDocumentation",
+              "src": "1361:207:11",
+              "text": "@notice Returns tokens balance of passed address in Pool, access: ANY\n @param _address address of account/contract to return balance of\n @return _tokensAmount is number of tokens stored in Pool"
+            },
+            "functionSelector": "70a08231",
+            "id": 2125,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "balanceOf",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 2121,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 2120,
+                  "mutability": "mutable",
+                  "name": "_address",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 2125,
+                  "src": "1590:16:11",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 2119,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1590:7:11",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1589:18:11"
+            },
+            "returnParameters": {
+              "id": 2124,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 2123,
+                  "mutability": "mutable",
+                  "name": "_tokensAmount",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 2125,
+                  "src": "1631:21:11",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 2122,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1631:7:11",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1630:23:11"
+            },
+            "scope": 2126,
+            "src": "1571:83:11",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "scope": 2127,
+        "src": "57:1599:11"
+      }
+    ],
+    "src": "32:1625:11"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.7.4+commit.3f05b770.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.2.0-tezos.1",
+  "updatedAt": "2021-01-18T12:01:15.916Z",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {
+      "balanceOf(address)": {
+        "params": {
+          "_address": "address of account/contract to return balance of"
+        },
+        "returns": {
+          "_tokensAmount": "is number of tokens stored in Pool"
+        }
+      },
+      "capture(uint256)": {
+        "params": {
+          "_tokensAmount": "number of tokens that should be added to Pool"
+        }
+      },
+      "captureFor(address,uint256)": {
+        "params": {
+          "_address": "address of account/contract that is willing to put tokens to Pool",
+          "_tokensAmount": "number of tokens that should be added to Pool"
+        }
+      },
+      "release(uint256)": {
+        "params": {
+          "_tokensAmount": "number of tokens that should be release from Pool"
+        }
+      },
+      "releaseFor(address,uint256)": {
+        "params": {
+          "_address": "address of account/contract that Pool has to transfer tokens to",
+          "_tokensAmount": "number of tokens that should be release from Pool"
+        }
+      },
+      "token()": {
+        "returns": {
+          "_token": "address of token this pool created for"
+        }
+      }
+    },
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {
+      "balanceOf(address)": {
+        "notice": "Returns tokens balance of passed address in Pool, access: ANY"
+      },
+      "capture(uint256)": {
+        "notice": "Store tokens to pool, access: ANY"
+      },
+      "captureFor(address,uint256)": {
+        "notice": "Store tokens to pool and assign it to passed address, access: ANY"
+      },
+      "release(uint256)": {
+        "notice": "Release tokens from pool, access: ANY"
+      },
+      "releaseFor(address,uint256)": {
+        "notice": "Release tokens from pool and transfer them to assigned address, access: ANY"
+      },
+      "token()": {
+        "notice": "Returns token this Pool is operating with access: ANY"
+      }
+    },
+    "version": 1
+  }
+}

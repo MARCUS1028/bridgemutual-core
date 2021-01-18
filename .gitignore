@@ -6,6 +6,5 @@
 node_modules
 .DS_Store
 coverage
-build
 coverage.json
 yarn-error.log
