@@ -479,6 +479,18 @@ contract('PolicyBook', async (accounts) => {
       await truffleAssert.reverts(policyBook.getQuote(days, myMoney),
         'The pool is empty');
     });
+
+    it("forcing overflow (should revert)", async () => {
+      days = 365;
+      myMoney = toBN(4).times(toBN(10).pow(toBN(76)));
+      total = toBN(10).times(toBN(10).pow(toBN(76)));
+      bought = toBN(5).times(toBN(10).pow(toBN(76)));
+
+      await policyBook.setTotalLiquidity(total);
+      await policyBook.setTotalCoverTokens(bought);
+
+      await truffleAssert.reverts(policyBook.getQuote(days, myMoney), "SafeMath: multiplication overflow");
+    });
   });
 });
 
