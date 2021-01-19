@@ -7,8 +7,15 @@ interface IPolicyBookFabric {
   /// @notice Create new Policy Book contract, access: ANY
   /// @param _contract is Contract to create policy book for
   /// @param _contractType is Contract to create policy book for
+  /// @param _description is bmiDAIx token desription for this policy book
+  /// @param _projectSymbol replaces x in bmiDAIx token symbol  
   /// @return _policyBook is address of created contract
-  function create(address _contract, ContractType _contractType) external returns (address _policyBook);
+  function create(
+    address _contract,
+    ContractType _contractType,
+    string memory _description,
+    string memory _projectSymbol
+  ) external returns (address _policyBook);
 
   /// @notice Return created Policy Book contract, access: ANY
   /// @param _contract is contract address to lookup for created IPolicyBook

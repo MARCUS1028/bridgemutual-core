@@ -14,17 +14,12 @@ contract PolicyBook is IPolicyBook, ERC20 {
   using SafeMath for uint256;
   using Math for uint256;
 
-  address contractAddress;
-  IPolicyBookFabric.ContractType contractType;
-  address daiAddr;
+  address public override contractAddress;
+  IPolicyBookFabric.ContractType public override contractType;
+  IERC20 daiToken;
 
   uint256 public totalLiquidity;
   uint256 public totalCoverTokens;
-
-  struct LiquidityHolder {
-    uint256 depositedAmount;
-    uint256 lastUpdate;
-  }
 
   struct PolicyHolder {
     uint256 coverTokens;
@@ -32,30 +27,25 @@ contract PolicyBook is IPolicyBook, ERC20 {
     uint256 maxDaiTokens;
   }
 
-  mapping(address => LiquidityHolder) public liquidityHolders;
   mapping(address => PolicyHolder) public policyHolders;
 
   event AddLiquidity(address _liquidityHolder, uint256 _liqudityAmount, uint256 _newTotalLiquidity);
   event WithdrawLiquidity(address _liquidityHolder, uint256 _tokensToWithdraw, uint256 _newTotalLiquidity);
   event BuyPolicy(address _policyHolder, uint256 _coverTokens, uint256 _price, uint256 _newTotalCoverTokens);
 
-  constructor(address _contract, IPolicyBookFabric.ContractType _contractType, address _daiAddr)
-    ERC20("BridgeMutual Insurance", "bmiDAIx")
-  {
+  constructor(
+    address _contract,
+    IPolicyBookFabric.ContractType _contractType,
+    address _daiAddr,
+    string memory _description,
+    string memory _projectSymbol
+  ) ERC20(_description, string(abi.encodePacked("bmiDAI", _projectSymbol))) {
     contractAddress = _contract;
     contractType = _contractType;
-    daiAddr = _daiAddr;
+    daiToken = IERC20(_daiAddr);
   }
 
   receive() external payable {}
-
-  function getContractAddress() external view override returns (address _contract) {
-    _contract = contractAddress;
-  }
-
-  function getContractType() external view override returns (IPolicyBookFabric.ContractType _type) {
-    _type = contractType;
-  }
 
   function quoteStrategy() external view override returns (address _quoteStrategy) {
     return address(0);
@@ -130,7 +120,6 @@ contract PolicyBook is IPolicyBook, ERC20 {
     policyHolders[_policyHolderAddr] = _policyHolder;
     totalCoverTokens = totalCoverTokens.add(_coverTokens);
 
-    IERC20 daiToken = IERC20(daiAddr);
     bool _success = daiToken.transferFrom(_policyHolderAddr, address(this), _price);
     require(_success, "Failed to transfer tokens");
 
@@ -146,55 +135,27 @@ contract PolicyBook is IPolicyBook, ERC20 {
   }
 
   function _addLiquidityFor(address _liquidityHolderAddr, uint256 _liqudityAmount) internal {
-    LiquidityHolder memory _liquidityHolder = liquidityHolders[_liquidityHolderAddr];
-
-    uint256 _calculatedInterest;
-    if (_liquidityHolder.lastUpdate > 0) {
-      _calculatedInterest = _calculateInterest(_liquidityHolderAddr);
-    }
-
-    uint256 _tokensToAdd = _liqudityAmount.add(_calculatedInterest);
-
-    _liquidityHolder.depositedAmount = _liquidityHolder.depositedAmount.add(_tokensToAdd);
-    _liquidityHolder.lastUpdate = block.timestamp;
-
-    liquidityHolders[_liquidityHolderAddr] = _liquidityHolder;
-
-    totalLiquidity = totalLiquidity.add(_tokensToAdd);
-
-    IERC20 daiToken = IERC20(daiAddr);
     bool _success = daiToken.transferFrom(_liquidityHolderAddr, address(this), _liqudityAmount);
     require(_success, "Failed to transfer tokens");
+
+    totalLiquidity = totalLiquidity.add(_liqudityAmount);
+    _mint(_liquidityHolderAddr, _liqudityAmount);
 
     emit AddLiquidity(_liquidityHolderAddr, _liqudityAmount, totalLiquidity);
   }
 
   function withdrawLiquidity(uint256 _tokensToWithdraw) external override {
-    LiquidityHolder memory _liquidityHolder = liquidityHolders[msg.sender];
-
-    require(_liquidityHolder.lastUpdate > 0, "Liquidity holder does not exists");
-
-    uint256 _calculatedInterest = _calculateInterest(msg.sender);
-    _liquidityHolder.depositedAmount = _liquidityHolder.depositedAmount.add(_calculatedInterest);
-    totalLiquidity = totalLiquidity.add(_calculatedInterest);
-
     require(
-      _liquidityHolder.depositedAmount >= _tokensToWithdraw,
+      balanceOf(msg.sender) >= _tokensToWithdraw,
       "The amount to be withdrawn is greater than the deposited amount"
     );
-
     require(totalLiquidity.sub(_tokensToWithdraw) >= totalCoverTokens, "Not enough available liquidity");
 
-    _liquidityHolder.depositedAmount = _liquidityHolder.depositedAmount.sub(_tokensToWithdraw);
-    _liquidityHolder.lastUpdate = block.timestamp;
-
-    liquidityHolders[msg.sender] = _liquidityHolder;
-
-    totalLiquidity = totalLiquidity.sub(_tokensToWithdraw);
-
-    IERC20 daiToken = IERC20(daiAddr);
     bool _success = daiToken.transfer(msg.sender, _tokensToWithdraw);
     require(_success, "Failed to transfer tokens");
+
+    totalLiquidity = totalLiquidity.sub(_tokensToWithdraw);
+    _burn(msg.sender, _tokensToWithdraw);
 
     emit WithdrawLiquidity(msg.sender, _tokensToWithdraw, totalLiquidity);
   }

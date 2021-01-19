@@ -20,8 +20,13 @@ contract PolicyBookFabric is IPolicyBookFabric {
     daiAddr = _daiAddr;
   }
 
-  function create(address _contract, ContractType _contractType) external override returns (address _policyBook) {
-    PolicyBook _newPolicyBook = new PolicyBook(_contract, _contractType, daiAddr);
+  function create(
+    address _contract,
+    ContractType _contractType,
+    string memory _description,
+    string memory _projectSymbol
+  ) external override returns (address _policyBook) {
+    PolicyBook _newPolicyBook = new PolicyBook(_contract, _contractType, daiAddr, _description, _projectSymbol);
     registry.add(_contract, address(_newPolicyBook));
 
     emit Created(_contract, _contractType, address(_newPolicyBook));
