@@ -28,7 +28,7 @@ contract PolicyBook is IPolicyBook, ERC20 {
 
   struct PolicyHolder {
     uint256 coverTokens;
-    uint256 durationDays;
+    uint256 durationSeconds;
     uint256 maxDaiTokens;
   }
 
@@ -95,36 +95,36 @@ contract PolicyBook is IPolicyBook, ERC20 {
   }
 
   function buyPolicy(
-    uint256 _durationDays,
+    uint256 _durationSeconds,
     uint256 _coverTokens,
     uint256 _maxDaiTokens
   ) external override {
-    _buyPolicyFor(msg.sender, _durationDays, _coverTokens, _maxDaiTokens);
+    _buyPolicyFor(msg.sender, _durationSeconds, _coverTokens, _maxDaiTokens);
   }
 
   function buyPolicyFor(
     address _policyHolderAddr,
-    uint256 _durationDays,
+    uint256 _durationSeconds,
     uint256 _coverTokens,
     uint256 _maxDaiTokens
   ) external override {
-    _buyPolicyFor(_policyHolderAddr, _durationDays, _coverTokens, _maxDaiTokens);
+    _buyPolicyFor(_policyHolderAddr, _durationSeconds, _coverTokens, _maxDaiTokens);
   }
 
   function _buyPolicyFor(
     address _policyHolderAddr,
-    uint256 _durationDays,
+    uint256 _durationSeconds,
     uint256 _coverTokens,
     uint256 _maxDaiTokens
   ) internal {
     PolicyHolder memory _policyHolder = policyHolders[_policyHolderAddr];
-    require(_policyHolder.durationDays == 0, "The policy holder already exists");
+    require(_policyHolder.durationSeconds == 0, "The policy holder already exists");
     require(totalLiquidity >= totalCoverTokens.add(_coverTokens), "Not enough available liquidity");
 
-    uint256 _price = _getQuote(_durationDays, _coverTokens);
+    uint256 _price = _getQuote(_durationSeconds, _coverTokens);
 
     _policyHolder.coverTokens = _coverTokens;
-    _policyHolder.durationDays = _durationDays;
+    _policyHolder.durationSeconds = _durationSeconds;
     _policyHolder.maxDaiTokens = _maxDaiTokens;
 
     policyHolders[_policyHolderAddr] = _policyHolder;
@@ -218,7 +218,7 @@ contract PolicyBook is IPolicyBook, ERC20 {
     return (0, 0, 0, 0);
   }
 
-  uint256 public constant DAYS_IN_THE_YEAR = 365;
+  uint256 public constant SECONDS_IN_THE_YEAR = 365 * 24 * 60 * 60; // 365 days * 24 hours * 60 minutes * 60 seconds
   uint256 public constant PRECISION = 10**10;
   uint256 public constant PERCENTAGE_100 = 100 * PRECISION;
 
@@ -245,11 +245,11 @@ contract PolicyBook is IPolicyBook, ERC20 {
       );
   }
 
-  function getQuote(uint256 _durationDays, uint256 _tokens) external view override returns (uint256 _daiTokens) {
-    _daiTokens = _getQuote(_durationDays, _tokens);
+  function getQuote(uint256 _durationSeconds, uint256 _tokens) external view override returns (uint256 _daiTokens) {
+    _daiTokens = _getQuote(_durationSeconds, _tokens);
   }
 
-  function _getQuote(uint256 _durationDays, uint256 _tokens) internal view returns (uint256) {
+  function _getQuote(uint256 _durationSeconds, uint256 _tokens) internal view returns (uint256) {
     require(totalCoverTokens.add(_tokens) <= totalLiquidity, "Requiring more than there exists");
     require(totalLiquidity > 0, "The pool is empty");
 
@@ -265,7 +265,7 @@ contract PolicyBook is IPolicyBook, ERC20 {
 
     annualInsuranceCostPercentage = Math.max(annualInsuranceCostPercentage, MINIMUM_COST_PERCENTAGE);
 
-    uint256 actualInsuranceCostPercentage = (_durationDays.mul(annualInsuranceCostPercentage)).div(DAYS_IN_THE_YEAR);
+    uint256 actualInsuranceCostPercentage = (_durationSeconds.mul(annualInsuranceCostPercentage)).div(SECONDS_IN_THE_YEAR);
 
     return (_tokens.mul(actualInsuranceCostPercentage)).div(PERCENTAGE_100);
   }
