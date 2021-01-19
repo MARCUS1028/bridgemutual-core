@@ -170,8 +170,7 @@ contract('PolicyBook', async (accounts) => {
       await policyBook.addLiquidity(amount, {from: USER1});
 
       assert.equal(await policyBook.totalLiquidity(), amount.toString());
-      assert.equal((await policyBook.liquidityHolders(USER1)).depositedAmount, amount.toString());
-      assert.equal((await policyBook.liquidityHolders(USER1)).lastUpdate, 1);
+      assert.equal(await policyBook.methods['balanceOf(address)'](USER1), amount.toString());
       assert.equal(await dai.balanceOf(policyBook.address), amount.toString());
       assert.equal(await dai.balanceOf(USER1), daiAmount.minus(amount).toString());
     });
@@ -181,8 +180,7 @@ contract('PolicyBook', async (accounts) => {
       await policyBook.addLiquidity(amount, {from: USER1});
 
       assert.equal(await policyBook.totalLiquidity(), amount.toString());
-      assert.equal((await policyBook.liquidityHolders(USER1)).depositedAmount, amount.toString());
-      assert.equal((await policyBook.liquidityHolders(USER1)).lastUpdate, 1);
+      assert.equal(await policyBook.methods['balanceOf(address)'](USER1), amount.toString());
       assert.equal(await dai.balanceOf(policyBook.address), amount.toString());
       assert.equal(await dai.balanceOf(USER1), daiAmount.minus(amount).toString());
 
@@ -190,8 +188,7 @@ contract('PolicyBook', async (accounts) => {
       await policyBook.addLiquidity(amount, {from: USER1});
 
       assert.equal(await policyBook.totalLiquidity(), amount.times(2).toString());
-      assert.equal((await policyBook.liquidityHolders(USER1)).depositedAmount, amount.times(2).toString());
-      assert.equal((await policyBook.liquidityHolders(USER1)).lastUpdate, 100);
+      assert.equal(await policyBook.methods['balanceOf(address)'](USER1), amount.times(2).toString());
       assert.equal(await dai.balanceOf(policyBook.address), amount.times(2).toString());
       assert.equal(await dai.balanceOf(USER1), daiAmount.minus(amount.times(2)).toString());
     });
@@ -211,8 +208,7 @@ contract('PolicyBook', async (accounts) => {
       await policyBook.addLiquidityFor(USER1, amount);
 
       assert.equal(await policyBook.totalLiquidity(), amount.toString());
-      assert.equal((await policyBook.liquidityHolders(USER1)).depositedAmount, amount.toString());
-      assert.equal((await policyBook.liquidityHolders(USER1)).lastUpdate, 1);
+      assert.equal(await policyBook.methods['balanceOf(address)'](USER1), amount.toString());
       assert.equal(await dai.balanceOf(policyBook.address), amount.toString());
       assert.equal(await dai.balanceOf(USER1), daiAmount.minus(amount).toString());
     });
@@ -222,8 +218,7 @@ contract('PolicyBook', async (accounts) => {
       await policyBook.addLiquidityFor(USER1, amount);
 
       assert.equal(await policyBook.totalLiquidity(), amount.toString());
-      assert.equal((await policyBook.liquidityHolders(USER1)).depositedAmount, amount.toString());
-      assert.equal((await policyBook.liquidityHolders(USER1)).lastUpdate, 1);
+      assert.equal(await policyBook.methods['balanceOf(address)'](USER1), amount.toString());
       assert.equal(await dai.balanceOf(policyBook.address), amount.toString());
       assert.equal(await dai.balanceOf(USER1), daiAmount.minus(amount).toString());
 
@@ -231,8 +226,7 @@ contract('PolicyBook', async (accounts) => {
       await policyBook.addLiquidityFor(USER1, amount);
 
       assert.equal(await policyBook.totalLiquidity(), amount.times(2).toString());
-      assert.equal((await policyBook.liquidityHolders(USER1)).depositedAmount, amount.times(2).toString());
-      assert.equal((await policyBook.liquidityHolders(USER1)).lastUpdate, 100);
+      assert.equal(await policyBook.methods['balanceOf(address)'](USER1), amount.times(2).toString());
       assert.equal(await dai.balanceOf(policyBook.address), amount.times(2).toString());
       assert.equal(await dai.balanceOf(USER1), daiAmount.minus(amount.times(2)).toString());
     });
@@ -272,9 +266,8 @@ contract('PolicyBook', async (accounts) => {
       assert.equal(toBN(await policyBook.totalLiquidity()).toString(),
         liquidityAmount.minus(amountToWithdraw).toString());
 
-      assert.equal((await policyBook.liquidityHolders(USER1)).depositedAmount,
+      assert.equal(await policyBook.methods['balanceOf(address)'](USER1),
         liquidityAmount.minus(amountToWithdraw).toString());
-      assert.equal((await policyBook.liquidityHolders(USER1)).lastUpdate, 10);
 
       assert.equal(await dai.balanceOf(policyBook.address),
         liquidityAmount.plus(price).minus(amountToWithdraw).toString());
@@ -285,10 +278,11 @@ contract('PolicyBook', async (accounts) => {
     it('should get exception, amount to be withdrawn is greater than the deposited amount', async () => {
       await setCurrentTime(1);
       await policyBook.addLiquidity(liquidityAmount, {from: USER1});
-      assert.equal(toBN(await policyBook.totalLiquidity()).toString(), liquidityAmount.toString());
+      await policyBook.addLiquidity(liquidityAmount, {from: USER2});
+      assert.equal(toBN(await policyBook.totalLiquidity()).toString(), liquidityAmount.times(2).toString());
 
       const reason = 'The amount to be withdrawn is greater than the deposited amount';
-      await truffleAssert.reverts(policyBook.withdrawLiquidity(amountToWithdraw.times(10), {from: USER1}), reason);
+      await truffleAssert.reverts(policyBook.withdrawLiquidity(liquidityAmount.plus(1), {from: USER1}), reason);
     });
 
     it('should get exception, not enough available liquidity', async () => {
@@ -303,9 +297,16 @@ contract('PolicyBook', async (accounts) => {
       await truffleAssert.reverts(policyBook.withdrawLiquidity(amountToWithdraw.times(3), {from: USER1}), reason);
     });
 
-    it('should get exception, liquidity holder does not exist', async () => {
-      const reason = 'Liquidity holder does not exists';
-      await truffleAssert.reverts(policyBook.withdrawLiquidity(amountToWithdraw, {from: USER1}), reason);
+    it('should be allowed to withdraw liquidity after token transfer', async () => {
+      await policyBook.addLiquidity(liquidityAmount, {from: USER1});
+      const bmiDaibalance = await policyBook.methods['balanceOf(address)'](USER1);
+      await policyBook.transfer(USER2, bmiDaibalance, {from: USER1});
+      await policyBook.withdrawLiquidity(bmiDaibalance, {from: USER2});
+
+      assert.equal(await dai.balanceOf(policyBook.address), toBN(0).toString());
+      assert.equal(await dai.balanceOf(USER1), daiAmount.minus(liquidityAmount).toString());
+      assert.equal(await dai.balanceOf(USER2), daiAmount.plus(liquidityAmount).toString());
+      assert.equal(await policyBook.totalSupply(), toBN(0).toString());
     });
   });
 
