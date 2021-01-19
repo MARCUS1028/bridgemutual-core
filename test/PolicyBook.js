@@ -170,7 +170,7 @@ contract('PolicyBook', async (accounts) => {
       await policyBook.addLiquidity(amount, {from: USER1});
 
       assert.equal(await policyBook.totalLiquidity(), amount.toString());
-      assert.equal(await policyBook.methods['balanceOf(address)'](USER1), amount.toString());
+      assert.equal(await policyBook.balanceOf(USER1), amount.toString());
       assert.equal(await dai.balanceOf(policyBook.address), amount.toString());
       assert.equal(await dai.balanceOf(USER1), daiAmount.minus(amount).toString());
     });
@@ -180,7 +180,7 @@ contract('PolicyBook', async (accounts) => {
       await policyBook.addLiquidity(amount, {from: USER1});
 
       assert.equal(await policyBook.totalLiquidity(), amount.toString());
-      assert.equal(await policyBook.methods['balanceOf(address)'](USER1), amount.toString());
+      assert.equal(await policyBook.balanceOf(USER1), amount.toString());
       assert.equal(await dai.balanceOf(policyBook.address), amount.toString());
       assert.equal(await dai.balanceOf(USER1), daiAmount.minus(amount).toString());
 
@@ -188,7 +188,7 @@ contract('PolicyBook', async (accounts) => {
       await policyBook.addLiquidity(amount, {from: USER1});
 
       assert.equal(await policyBook.totalLiquidity(), amount.times(2).toString());
-      assert.equal(await policyBook.methods['balanceOf(address)'](USER1), amount.times(2).toString());
+      assert.equal(await policyBook.balanceOf(USER1), amount.times(2).toString());
       assert.equal(await dai.balanceOf(policyBook.address), amount.times(2).toString());
       assert.equal(await dai.balanceOf(USER1), daiAmount.minus(amount.times(2)).toString());
     });
@@ -208,7 +208,7 @@ contract('PolicyBook', async (accounts) => {
       await policyBook.addLiquidityFor(USER1, amount);
 
       assert.equal(await policyBook.totalLiquidity(), amount.toString());
-      assert.equal(await policyBook.methods['balanceOf(address)'](USER1), amount.toString());
+      assert.equal(await policyBook.balanceOf(USER1), amount.toString());
       assert.equal(await dai.balanceOf(policyBook.address), amount.toString());
       assert.equal(await dai.balanceOf(USER1), daiAmount.minus(amount).toString());
     });
@@ -218,7 +218,7 @@ contract('PolicyBook', async (accounts) => {
       await policyBook.addLiquidityFor(USER1, amount);
 
       assert.equal(await policyBook.totalLiquidity(), amount.toString());
-      assert.equal(await policyBook.methods['balanceOf(address)'](USER1), amount.toString());
+      assert.equal(await policyBook.balanceOf(USER1), amount.toString());
       assert.equal(await dai.balanceOf(policyBook.address), amount.toString());
       assert.equal(await dai.balanceOf(USER1), daiAmount.minus(amount).toString());
 
@@ -226,7 +226,7 @@ contract('PolicyBook', async (accounts) => {
       await policyBook.addLiquidityFor(USER1, amount);
 
       assert.equal(await policyBook.totalLiquidity(), amount.times(2).toString());
-      assert.equal(await policyBook.methods['balanceOf(address)'](USER1), amount.times(2).toString());
+      assert.equal(await policyBook.balanceOf(USER1), amount.times(2).toString());
       assert.equal(await dai.balanceOf(policyBook.address), amount.times(2).toString());
       assert.equal(await dai.balanceOf(USER1), daiAmount.minus(amount.times(2)).toString());
     });
@@ -266,7 +266,7 @@ contract('PolicyBook', async (accounts) => {
       assert.equal(toBN(await policyBook.totalLiquidity()).toString(),
         liquidityAmount.minus(amountToWithdraw).toString());
 
-      assert.equal(await policyBook.methods['balanceOf(address)'](USER1),
+      assert.equal(await policyBook.balanceOf(USER1),
         liquidityAmount.minus(amountToWithdraw).toString());
 
       assert.equal(await dai.balanceOf(policyBook.address),
@@ -299,7 +299,7 @@ contract('PolicyBook', async (accounts) => {
 
     it('should be allowed to withdraw liquidity after token transfer', async () => {
       await policyBook.addLiquidity(liquidityAmount, {from: USER1});
-      const bmiDaibalance = await policyBook.methods['balanceOf(address)'](USER1);
+      const bmiDaibalance = await policyBook.balanceOf(USER1);
       await policyBook.transfer(USER2, bmiDaibalance, {from: USER1});
       await policyBook.withdrawLiquidity(bmiDaibalance, {from: USER2});
 
