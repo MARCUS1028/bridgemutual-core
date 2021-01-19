@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity =0.7.4;
+pragma solidity ^0.7.4;
 pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
@@ -10,7 +10,7 @@ interface IPolicyBook is IERC20 {
     uint256 id;
     uint256 holder;
     uint256 daiTokens;
-    uint256 durationDays;
+    uint256 durationSeconds;
     uint256 coveredTokens;
     uint256 createdAt;
     bool claimed;
@@ -30,7 +30,8 @@ interface IPolicyBook is IERC20 {
   /// @return _quoteStrategy is address of Quote strategy contract used to calculate quote
   function quoteStrategy() external view returns (address _quoteStrategy);
 
-  // @TODO: Vector Attack - Hacker? can add too many shield tokens, that will be impossible to calculate tokens portion to give to Policy giver
+  // @TODO: Vector Attack - Hacker? can add too many shield tokens, 
+  // that will be impossible to calculate tokens portion to give to Policy giver
   /// @notice Returns list of shield assets added to PolicyBook, access: ANY
   /// @param _offset is starting item in array to return array from
   /// @param _limit is number of policy books to returns from _offset
@@ -46,7 +47,8 @@ interface IPolicyBook is IERC20 {
   /// @param _limit is number of policy books to returns from _offset
   /// @return _shieldAssetsCount is number of added shield assets
   /// @return _shieldAssets is addresses of shield assets, that will be distributed to Policy givers
-  /// @return _shieldAssetBalance is tokens amount of shield assets allocated to Policy Book, to get specific shield asset balance lookup _shieldAssetBalances by same index as of shield asset
+  /// @return _shieldAssetBalance is tokens amount of shield assets allocated to Policy Book, 
+  /// to get specific shield asset balance lookup _shieldAssetBalances by same index as of shield asset
   function shieldAssetsWithBalance(uint256 _offset, uint256 _limit)
     external
     view
@@ -123,23 +125,23 @@ interface IPolicyBook is IERC20 {
   function addShieldTokens(address _tokenAddress, uint256 _tokensAmount) external returns (bool _success);
 
   /// @notice Let user to buy policy by supplying DAI, access: ANY
-  /// @param _durationDays is number of days to cover
+  /// @param _durationSeconds is number of seconds to cover
   /// @param _coverTokens is number of tokens to cover
   /// @param _maxDaiTokens is number of DAI to spend
   function buyPolicy(
-    uint256 _durationDays,
+    uint256 _durationSeconds,
     uint256 _coverTokens,
     uint256 _maxDaiTokens
   ) external;
 
   /// @notice Let user to buy policy for another user by supplying DAI, access: ANY
   /// @param _policyHolderAddr is address of address to assign cover
-  /// @param _durationDays is number of days to cover
+  /// @param _durationSeconds is number of seconds to cover
   /// @param _coverTokens is number of tokens to cover
   /// @param _maxDaiTokens is number of DAI to spend
   function buyPolicyFor(
     address _policyHolderAddr,
-    uint256 _durationDays,
+    uint256 _durationSeconds,
     uint256 _coverTokens,
     uint256 _maxDaiTokens
   ) external;
@@ -158,10 +160,10 @@ interface IPolicyBook is IERC20 {
   function withdrawLiquidity(uint256 _tokensToWithdraw) external;
 
   /// @notice Let user to calculate policy cost in DAI, access: ANY
-  /// @param _durationDays is number of days to cover
+  /// @param _durationSeconds is number of seconds to cover
   /// @param _tokens is number of tokens to cover
   /// @return _daiTokens is amount of DAI policy costs
-  function getQuote(uint256 _durationDays, uint256 _tokens) external view returns (uint256 _daiTokens);
+  function getQuote(uint256 _durationSeconds, uint256 _tokens) external view returns (uint256 _daiTokens);
 
   /// @notice Let user to claim rewards for unclaimed policy cost in DAI, access: ANY
   /// @param _policyId is id of policy to get reward for, reward will be sent to policy holder
