@@ -265,7 +265,8 @@ contract PolicyBook is IPolicyBook, ERC20 {
 
     annualInsuranceCostPercentage = Math.max(annualInsuranceCostPercentage, MINIMUM_COST_PERCENTAGE);
 
-    uint256 actualInsuranceCostPercentage = (_durationSeconds.mul(annualInsuranceCostPercentage)).div(SECONDS_IN_THE_YEAR);
+    uint256 actualInsuranceCostPercentage = 
+      (_durationSeconds.mul(annualInsuranceCostPercentage)).div(SECONDS_IN_THE_YEAR);
 
     return (_tokens.mul(actualInsuranceCostPercentage)).div(PERCENTAGE_100);
   }
