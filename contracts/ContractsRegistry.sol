@@ -5,12 +5,12 @@ pragma experimental ABIEncoderV2;
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract ContractsRegistry is Ownable, AccessControl{
+contract ContractsRegistry is Ownable, AccessControl {
     mapping (bytes32 => address) private _contracts;
 
     bytes32 public constant REGISTRY_ADMIN_ROLE = keccak256("REGISTRY_ADMIN_ROLE");
 
-    modifier onlyAdder() {
+    modifier onlyAdmin() {
         require(hasRole(REGISTRY_ADMIN_ROLE, msg.sender), "Caller is not an adder");
         _;
     }
@@ -28,7 +28,7 @@ contract ContractsRegistry is Ownable, AccessControl{
         return _contracts[bytesName];
     }
 
-    function addContractRegistry(string memory _name, address _contractAddress) public onlyAdder {
+    function addContractRegistry(string memory _name, address _contractAddress) public onlyAdmin {
         require(_contractAddress != address(0), "Null address is forbidden");        
 
         bytes32 bytesName = keccak256(abi.encodePacked(_name));
@@ -38,7 +38,7 @@ contract ContractsRegistry is Ownable, AccessControl{
         _contracts[bytesName] = _contractAddress;
     }
 
-    function modifyContractRegistry(string memory _name, address _contractAddress) public onlyAdder {
+    function modifyContractRegistry(string memory _name, address _contractAddress) public onlyAdmin {
         require(_contractAddress != address(0), "Null address is forbidden");        
 
         bytes32 bytesName = keccak256(abi.encodePacked(_name));
@@ -48,7 +48,7 @@ contract ContractsRegistry is Ownable, AccessControl{
         _contracts[bytesName] = _contractAddress;
     }
 
-    function deleteContractRegistry(string memory _name) public onlyAdder {
+    function deleteContractRegistry(string memory _name) public onlyAdmin {
         bytes32 bytesName = keccak256(abi.encodePacked(_name));
 
         require(_contracts[bytesName] != address(0), "This mapping doesn't exist");
