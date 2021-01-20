@@ -20,11 +20,11 @@ interface IPolicyBook is IERC20 {
   // @TODO: should we let DAO to change contract address?
   /// @notice Returns address of contract this PolicyBook covers, access: ANY
   /// @return _contract is address of covered contract
-  function getContractAddress() external view returns (address _contract);
+  function contractAddress() external view returns (address _contract);
 
   /// @notice Returns type of contract this PolicyBook covers, access: ANY
   /// @return _type is type of contract
-  function getContractType() external view returns (IPolicyBookFabric.ContractType _type);
+  function contractType() external view returns (IPolicyBookFabric.ContractType _type);
 
   /// @notice Returns quote strategy defined during creation of PolicyBook, access: ANY
   /// @return _quoteStrategy is address of Quote strategy contract used to calculate quote

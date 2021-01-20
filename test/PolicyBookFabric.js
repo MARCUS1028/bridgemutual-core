@@ -37,15 +37,18 @@ contract('PolicyBookFabric', async (accounts) => {
 
   describe('create', async () => {
     it('should instantiate contract at saved address', async () => {
-      await policyBookFabric.create(CONTRACT1, ContractType.DEFI);
+      await policyBookFabric.create(CONTRACT1, ContractType.DEFI, 'Test description', 'TEST');
       const address = await policyBookFabric.policyBookFor(CONTRACT1);
       const book = await PolicyBook.at(address);
-      assert.equal(await book.getContractAddress(), CONTRACT1);
-      assert.equal(await book.getContractType(), ContractType.DEFI);
+
+      assert.equal(await book.contractAddress(), CONTRACT1);
+      assert.equal(await book.contractType(), ContractType.DEFI);
+      assert.equal(await book.name(), 'Test description');
+      assert.equal(await book.symbol(), 'bmiDAITEST');
     });
 
     it('should emit created event', async () => {
-      const result = await policyBookFabric.create(CONTRACT1, ContractType.DEFI);
+      const result = await policyBookFabric.create(CONTRACT1, ContractType.DEFI, '', '');
       const address = await policyBookFabric.policyBookFor(CONTRACT1);
 
       assert.equal(result.logs.length, 1);
@@ -56,20 +59,20 @@ contract('PolicyBookFabric', async (accounts) => {
     });
 
     it('should not allow to create dublicate by the same address', async () => {
-      await policyBookFabric.create(CONTRACT1, ContractType.DEFI);
-      await truffleAssert.reverts(policyBookFabric.create(CONTRACT1, ContractType.DEFI),
+      await policyBookFabric.create(CONTRACT1, ContractType.DEFI, '', '');
+      await truffleAssert.reverts(policyBookFabric.create(CONTRACT1, ContractType.DEFI, '', ''),
         'PolicyBook for the contract is already created');
     });
 
     it('should add policy to registry', async () => {
-      const result = await policyBookFabric.create(CONTRACT1, 1);
+      const result = await policyBookFabric.create(CONTRACT1, 1, '', '');
       const bookAddress = result.logs[0].args.at;
       assert.equal(await policyBookRegistry.policyBookFor(CONTRACT1), bookAddress);
     });
 
     it('should increase count of books', async () => {
       assert.equal(await policyBookFabric.policyBooksCount(), 0);
-      await policyBookFabric.create(CONTRACT1, ContractType.STABLECOIN);
+      await policyBookFabric.create(CONTRACT1, ContractType.STABLECOIN, '', '');
       assert.equal(await policyBookFabric.policyBooksCount(), 1);
     });
   });
@@ -78,9 +81,9 @@ contract('PolicyBookFabric', async (accounts) => {
     let bookAddrArr;
 
     beforeEach('setup', async () => {
-      const book1 = await policyBookFabric.create(CONTRACT1, ContractType.STABLECOIN);
-      const book2 = await policyBookFabric.create(CONTRACT2, ContractType.DEFI);
-      const book3 = await policyBookFabric.create(CONTRACT3, ContractType.CONTRACT);
+      const book1 = await policyBookFabric.create(CONTRACT1, ContractType.STABLECOIN, '', '');
+      const book2 = await policyBookFabric.create(CONTRACT2, ContractType.DEFI, '', '');
+      const book3 = await policyBookFabric.create(CONTRACT3, ContractType.CONTRACT, '', '');
       assert.equal(await policyBookFabric.policyBooksCount(), 3);
 
       bookAddrArr = [book1.logs[0].args.at, book2.logs[0].args.at, book3.logs[0].args.at];
