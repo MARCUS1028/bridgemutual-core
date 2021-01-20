@@ -21,15 +21,15 @@ contract PolicyBookFabric is IPolicyBookFabric {
   }
 
   function create(
-    address _contract,
+    address _insuranceContract,
     ContractType _contractType,
     string memory _description,
     string memory _projectSymbol
   ) external override returns (address _policyBook) {
-    PolicyBook _newPolicyBook = new PolicyBook(_contract, _contractType, daiAddr, _description, _projectSymbol);
-    registry.add(_contract, address(_newPolicyBook));
+    PolicyBook _newPolicyBook = new PolicyBook(_insuranceContract, _contractType, daiAddr, _description, _projectSymbol);
+    registry.add(_insuranceContract, address(_newPolicyBook));
 
-    emit Created(_contract, _contractType, address(_newPolicyBook));
+    emit Created(_insuranceContract, _contractType, address(_newPolicyBook));
 
     return address(_newPolicyBook);
   }

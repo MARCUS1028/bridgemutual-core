@@ -1,7 +1,7 @@
 const PolicyBookFabric = artifacts.require('PolicyBookFabric');
 const PolicyBook = artifacts.require('PolicyBook');
 const PolicyBookRegistry = artifacts.require('PolicyBookRegistry');
-const DAI = artifacts.require('DAIMock');
+const DAI = artifacts.require('./mock/DAIMock');
 
 const Reverter = require('./helpers/reverter');
 const truffleAssert = require('truffle-assertions');
@@ -41,7 +41,7 @@ contract('PolicyBookFabric', async (accounts) => {
       const address = await policyBookFabric.policyBookFor(CONTRACT1);
       const book = await PolicyBook.at(address);
 
-      assert.equal(await book.contractAddress(), CONTRACT1);
+      assert.equal(await book.insuranceContractAddress(), CONTRACT1);
       assert.equal(await book.contractType(), ContractType.DEFI);
       assert.equal(await book.name(), 'Test description');
       assert.equal(await book.symbol(), 'bmiDAITEST');

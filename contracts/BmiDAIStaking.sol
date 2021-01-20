@@ -12,45 +12,45 @@ contract BmiDAIStaking is ERC721 {
         address policyBookAddress;
     }
     
-    mapping(uint256 => StakingInfo) stakersPool; // NFT => INFO
+    mapping(uint256 => StakingInfo) private _stakersPool; // NFT => INFO
     
-    uint256 currentNFTMintID = 1;
+    uint256 private _currentNFTMintID = 1;
 
     constructor() ERC721("BridgeMutual staking", "BMS") {
     }
 
     function mintNFT(
-        address staker,        
-        uint256 amount,
-        address policyBookAddress
+        address _staker,        
+        uint256 _amount,
+        address _policyBookAddress
     ) private {                
-        uint256 stakerBalance = balanceOf(staker);
-        uint256 totalAmount = amount;
+        uint256 stakerBalance = balanceOf(_staker);
+        uint256 totalAmount = _amount;
 
         for (uint256 i = 0; i < stakerBalance; i++) {
-            uint256 tokenIndex = tokenOfOwnerByIndex(staker, i);            
+            uint256 tokenIndex = tokenOfOwnerByIndex(_staker, i);            
 
-            if (stakersPool[tokenIndex].policyBookAddress == policyBookAddress) {
-                totalAmount += stakersPool[tokenIndex].bmiDAIAmount;
+            if (_stakersPool[tokenIndex].policyBookAddress == _policyBookAddress) {
+                totalAmount += _stakersPool[tokenIndex].bmiDAIAmount;
                 
                 _burn(tokenIndex);
-                delete stakersPool[tokenIndex];
+                delete _stakersPool[tokenIndex];
             }
         }
 
-        _safeMint(staker, currentNFTMintID);
-        stakersPool[currentNFTMintID] = StakingInfo(block.timestamp, totalAmount, policyBookAddress); 
+        _safeMint(_staker, _currentNFTMintID);
+        _stakersPool[_currentNFTMintID] = StakingInfo(block.timestamp, totalAmount, _policyBookAddress); 
 
-        currentNFTMintID++;
+        _currentNFTMintID++;
     }    
 
-    function stakeDAIx(uint256 amount, PolicyBook policyBook) external {
+    function stakeDAIx(uint256 _amount, address _policyBookAddress) external {
         require(
-            amount <= policyBook.balanceOf(_msgSender()),
+            _amount <= IERC20(_policyBookAddress).balanceOf(_msgSender()),
             "Insufficient funds"
         );        
        
-        mintNFT(_msgSender(), amount, address(policyBook));
+        mintNFT(_msgSender(), _amount, _policyBookAddress);
 
         // transfer dai to yield generator
     }

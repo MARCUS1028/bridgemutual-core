@@ -14,7 +14,7 @@ contract PolicyBook is IPolicyBook, ERC20 {
   using SafeMath for uint256;
   using Math for uint256;
 
-  address public override contractAddress;
+  address public override insuranceContractAddress;
   IPolicyBookFabric.ContractType public override contractType;
   IERC20 daiToken;
 
@@ -34,13 +34,13 @@ contract PolicyBook is IPolicyBook, ERC20 {
   event BuyPolicy(address _policyHolder, uint256 _coverTokens, uint256 _price, uint256 _newTotalCoverTokens);
 
   constructor(
-    address _contract,
+    address _insuranceContract,
     IPolicyBookFabric.ContractType _contractType,
     address _daiAddr,
     string memory _description,
     string memory _projectSymbol
   ) ERC20(_description, string(abi.encodePacked("bmiDAI", _projectSymbol))) {
-    contractAddress = _contract;
+    insuranceContractAddress = _insuranceContract;
     contractType = _contractType;
     daiToken = IERC20(_daiAddr);
   }

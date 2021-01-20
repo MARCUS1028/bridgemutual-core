@@ -1,5 +1,5 @@
-const PolicyBook = artifacts.require('./Mock/MockPolicyBook');
-const DAI = artifacts.require('./Mock/DAIMock');
+const PolicyBook = artifacts.require('./mock/MockPolicyBook');
+const DAI = artifacts.require('./mock/DAIMock');
 
 const Reverter = require('./helpers/reverter');
 const BigNumber = require('bignumber.js');
