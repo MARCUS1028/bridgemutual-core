@@ -2,10 +2,10 @@
 pragma solidity ^0.7.4;
 pragma experimental ABIEncoderV2;
 
-import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "./tokens/CustomERC1155.sol";
 import "./PolicyBook.sol";
 
-contract BmiDAIStaking is ERC721 {
+contract BmiDAIStaking is CustomERC1155 {
     struct StakingInfo {
         uint256 stakingStartTime;        
         uint256 bmiDAIAmount;
@@ -16,15 +16,15 @@ contract BmiDAIStaking is ERC721 {
     
     uint256 private _currentNFTMintID = 1;
 
-    constructor() ERC721("BridgeMutual staking", "BMS") {
+    constructor() CustomERC1155("") {
     }
 
-    function mintNFT(
+    function _mintNFT(
         address _staker,        
         uint256 _amount,
         address _policyBookAddress
     ) private {                
-        uint256 stakerBalance = balanceOf(_staker);
+        uint256 stakerBalance = totalBalanceOf(_staker);
         uint256 totalAmount = _amount;
 
         for (uint256 i = 0; i < stakerBalance; i++) {
@@ -33,12 +33,12 @@ contract BmiDAIStaking is ERC721 {
             if (_stakersPool[tokenIndex].policyBookAddress == _policyBookAddress) {
                 totalAmount += _stakersPool[tokenIndex].bmiDAIAmount;
                 
-                _burn(tokenIndex);
+                _burn(_staker, tokenIndex, 1);
                 delete _stakersPool[tokenIndex];
             }
         }
 
-        _safeMint(_staker, _currentNFTMintID);
+        _mint(_staker, _currentNFTMintID, 1, "");
         _stakersPool[_currentNFTMintID] = StakingInfo(block.timestamp, totalAmount, _policyBookAddress); 
 
         _currentNFTMintID++;
@@ -50,7 +50,7 @@ contract BmiDAIStaking is ERC721 {
             "Insufficient funds"
         );        
        
-        mintNFT(_msgSender(), _amount, _policyBookAddress);
+        _mintNFT(_msgSender(), _amount, _policyBookAddress);
 
         // transfer dai to yield generator
     }
