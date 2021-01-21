@@ -2,15 +2,15 @@
 pragma solidity ^0.7.4;
 pragma experimental ABIEncoderV2;
 
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/math/SafeMath.sol";
 import "@openzeppelin/contracts/math/Math.sol";
 
 import "./interfaces/IPolicyBook.sol";
 import "./interfaces/IPolicyBookFabric.sol";
+import "./erc20permit/ERC20Permit.sol";
 
-contract PolicyBook is IPolicyBook, ERC20 {
+contract PolicyBook is IPolicyBook, ERC20Permit {
   using SafeMath for uint256;
   using Math for uint256;
 
@@ -39,7 +39,10 @@ contract PolicyBook is IPolicyBook, ERC20 {
     address _daiAddr,
     string memory _description,
     string memory _projectSymbol
-  ) ERC20(_description, string(abi.encodePacked("bmiDAI", _projectSymbol))) {
+  ) 
+  ERC20Permit(string(abi.encodePacked("bmiDAI", _projectSymbol))) 
+  ERC20(_description, string(abi.encodePacked("bmiDAI", _projectSymbol))) 
+  {
     contractAddress = _contract;
     contractType = _contractType;
     daiToken = IERC20(_daiAddr);

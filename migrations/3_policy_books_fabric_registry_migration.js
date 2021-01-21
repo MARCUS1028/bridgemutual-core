@@ -17,9 +17,9 @@ module.exports = async (deployer, network, accounts) => {
   await deployer.deploy(DAI, 'dai', 'dai');
   const dai = await DAI.deployed();
 
-  await deployer.deploy(PolicyBook, BOOK, ContractType.DEFI, dai.address);
-  await deployer.deploy(PolicyBook, BOOK, ContractType.CONTRACT, dai.address);
-  await deployer.deploy(PolicyBook, BOOK, ContractType.EXCHANGE, dai.address);
+  await deployer.deploy(PolicyBook, BOOK, ContractType.DEFI, dai.address, 'Test project 1', 'TEST1');
+  await deployer.deploy(PolicyBook, BOOK, ContractType.CONTRACT, dai.address, 'Test project 2', 'TEST2');
+  await deployer.deploy(PolicyBook, BOOK, ContractType.EXCHANGE, dai.address, 'Test project 3', 'TEST3');
 
   await deployer.deploy(PolicyBookRegistry);
   const policyBookRegistry = await PolicyBookRegistry.deployed();
