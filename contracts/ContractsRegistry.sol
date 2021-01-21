@@ -10,14 +10,35 @@ contract ContractsRegistry is Ownable, AccessControl {
 
     bytes32 public constant REGISTRY_ADMIN_ROLE = keccak256("REGISTRY_ADMIN_ROLE");
 
+    string constant private POLICY_BOOK_REGISTRY_NAME = "POLICY_BOOK_REGISTRY";        
+    string constant private BMI_DAI_STAKING_NAME = "BMI_DAI_STAKING";
+    string constant private YIELD_GENERATOR_NAME = "YIELD_GENERATOR";
+    string constant private DAI_NAME = "DAI";
+
     modifier onlyAdmin() {
-        require(hasRole(REGISTRY_ADMIN_ROLE, msg.sender), "Caller is not an adder");
+        require(hasRole(REGISTRY_ADMIN_ROLE, msg.sender), "Caller is not an admin");
         _;
     }
 
     constructor() {
         _setupRole(REGISTRY_ADMIN_ROLE, owner());        
         _setRoleAdmin(REGISTRY_ADMIN_ROLE, REGISTRY_ADMIN_ROLE);
+    }
+
+    function getDAIName() external pure returns (string memory) {
+        return DAI_NAME;
+    }
+
+    function getPolicyBookRegistryName() external pure returns (string memory) {
+        return POLICY_BOOK_REGISTRY_NAME;
+    }
+
+    function getBmiDAIStakingName() external pure returns (string memory) {
+        return BMI_DAI_STAKING_NAME;
+    }
+
+    function getYieldGeneratorName() external pure returns (string memory) {
+        return YIELD_GENERATOR_NAME;
     }
 
     function getContract(string memory _name) public view returns (address) {
@@ -54,5 +75,5 @@ contract ContractsRegistry is Ownable, AccessControl {
         require(_contracts[bytesName] != address(0), "This mapping doesn't exist");
 
         delete _contracts[bytesName];
-    }
+    }    
 }

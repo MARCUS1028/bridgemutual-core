@@ -10,12 +10,19 @@ import "@openzeppelin/contracts/math/Math.sol";
 import "./interfaces/IPolicyBook.sol";
 import "./interfaces/IPolicyBookFabric.sol";
 
+import "./ContractsRegistry.sol";
+
 contract PolicyBook is IPolicyBook, ERC20 {
   using SafeMath for uint256;
-  using Math for uint256;
+  using Math for uint256;  
+
+  uint256 MAX_INT = 2**256 - 1;
+
+  ContractsRegistry public contractsRegistry;
 
   address public override insuranceContractAddress;
   IPolicyBookFabric.ContractType public override contractType;
+  
   IERC20 daiToken;
 
   uint256 public totalLiquidity;
@@ -34,15 +41,26 @@ contract PolicyBook is IPolicyBook, ERC20 {
   event BuyPolicy(address _policyHolder, uint256 _coverTokens, uint256 _price, uint256 _newTotalCoverTokens);
 
   constructor(
+    ContractsRegistry _contractsRegistry,
     address _insuranceContract,
-    IPolicyBookFabric.ContractType _contractType,
-    address _daiAddr,
+    IPolicyBookFabric.ContractType _contractType,    
     string memory _description,
     string memory _projectSymbol
   ) ERC20(_description, string(abi.encodePacked("bmiDAI", _projectSymbol))) {
+    contractsRegistry = _contractsRegistry;
     insuranceContractAddress = _insuranceContract;
     contractType = _contractType;
-    daiToken = IERC20(_daiAddr);
+    daiToken = IERC20(_contractsRegistry.getContract(_contractsRegistry.getDAIName()));
+
+    approveAllDaiTokensForStaking();
+  }
+
+  function approveAllDaiTokensForStaking() internal {
+    address bmiDaiStakingAddress = contractsRegistry.getContract(contractsRegistry.getBmiDAIStakingName());
+
+    bool _success = daiToken.approve(bmiDaiStakingAddress, MAX_INT);
+
+    require(_success, "Failed to approve DAI tokens");
   }
 
   receive() external payable {}
@@ -121,7 +139,7 @@ contract PolicyBook is IPolicyBook, ERC20 {
     totalCoverTokens = totalCoverTokens.add(_coverTokens);
 
     bool _success = daiToken.transferFrom(_policyHolderAddr, address(this), _price);
-    require(_success, "Failed to transfer tokens");
+    require(_success, "Failed to transfer DAI tokens");
 
     emit BuyPolicy(_policyHolderAddr, _coverTokens, _price, totalCoverTokens);
   }
@@ -136,7 +154,7 @@ contract PolicyBook is IPolicyBook, ERC20 {
 
   function _addLiquidityFor(address _liquidityHolderAddr, uint256 _liqudityAmount) internal {
     bool _success = daiToken.transferFrom(_liquidityHolderAddr, address(this), _liqudityAmount);
-    require(_success, "Failed to transfer tokens");
+    require(_success, "Failed to transfer DAI tokens");
 
     totalLiquidity = totalLiquidity.add(_liqudityAmount);
     _mint(_liquidityHolderAddr, _liqudityAmount);
@@ -152,7 +170,7 @@ contract PolicyBook is IPolicyBook, ERC20 {
     require(totalLiquidity.sub(_tokensToWithdraw) >= totalCoverTokens, "Not enough available liquidity");
 
     bool _success = daiToken.transfer(msg.sender, _tokensToWithdraw);
-    require(_success, "Failed to transfer tokens");
+    require(_success, "Failed to transfer DAI tokens");
 
     totalLiquidity = totalLiquidity.sub(_tokensToWithdraw);
     _burn(msg.sender, _tokensToWithdraw);

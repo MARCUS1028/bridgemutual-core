@@ -2,21 +2,31 @@
 pragma solidity ^0.7.4;
 pragma experimental ABIEncoderV2;
 
+import "./interfaces/IPolicyBook.sol";
+
 import "./tokens/CustomERC1155.sol";
 import "./PolicyBook.sol";
+import "./ContractsRegistry.sol";
 
 contract BmiDAIStaking is CustomERC1155 {
     struct StakingInfo {
         uint256 stakingStartTime;        
         uint256 bmiDAIAmount;
         address policyBookAddress;
-    }
+    }    
+
+    ContractsRegistry public contractsRegistry;
+
+    IERC20 daiToken;
     
     mapping(uint256 => StakingInfo) private _stakersPool; // NFT => INFO
     
     uint256 private _currentNFTMintID = 1;
 
-    constructor() CustomERC1155("") {
+    constructor(ContractsRegistry _contractsRegistry) CustomERC1155("") {
+        contractsRegistry = _contractsRegistry;
+
+        daiToken = IERC20(_contractsRegistry.getContract(_contractsRegistry.getDAIName()));
     }
 
     function _mintNFT(
@@ -44,15 +54,23 @@ contract BmiDAIStaking is CustomERC1155 {
         _currentNFTMintID++;
     }    
 
-    function stakeDAIx(uint256 _amount, address _policyBookAddress) external {
+    function stakeDAIx(uint256 _amount, IPolicyBook _policyBook) external {
         require(
-            _amount <= IERC20(_policyBookAddress).balanceOf(_msgSender()),
+            _amount <= _policyBook.balanceOf(_msgSender()),
             "Insufficient funds"
         );        
        
-        _mintNFT(_msgSender(), _amount, _policyBookAddress);
+        _mintNFT(_msgSender(), _amount, address(_policyBook));
 
-        // transfer dai to yield generator
+        address yieldGeneratorAddress = contractsRegistry.getContract(contractsRegistry.getYieldGeneratorName());
+
+        // transfer DAI from PolicyBook to yield generator
+        bool success = daiToken.transferFrom(address(_policyBook), yieldGeneratorAddress, _amount);        
+        require(success, "Failed to transfer DAI tokens");
+
+        // transfer bmiDAIx from user to staking
+        success = _policyBook.transferFrom(msg.sender, address(this), _amount);        
+        require(success, "Failed to transfer bmiDAIx tokens");
     }
 
     function withdrawProfit() external {
