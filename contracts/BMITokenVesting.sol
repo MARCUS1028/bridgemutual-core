@@ -11,6 +11,12 @@ contract BMITokenVesting is Ownable {
   using SafeMath for uint256;
   using SafeERC20 for IERC20;
 
+  enum VestingSchedule {
+    ANGELROUND, SEEDROUND, PRIVATEROUND, LISTINGS, LIQUIDITYMINING, 
+    GROWTH, STAFFING, OPERATIONAL, MARKETING, DISCRETIONARY, 
+    PROTECTION, FOUNDERS, DEVELOPERS, ADVISORS, BUGFINDING, VAULT
+  }
+
   struct Vesting {
     bool isValid;
     address beneficiary;
@@ -23,15 +29,22 @@ contract BMITokenVesting is Ownable {
     bool isCancelable;
   }
 
+  uint256 public constant SECONDS_IN_MONTH = 60 * 60 * 24 * 30; 
+
   IERC20 public token;
   mapping(uint256 => Vesting) private vestings;
   uint256 public vestingCount;
   uint256 public amountInVestings;
+  uint256 public tgeTimestamp;
 
   event TokenSet(IERC20 token);
-  event VestingAdded(uint256 vestingId);
+  event VestingAdded(uint256 vestingId, address beneficiary);
   event VestingCanceled(uint256 vestingId);
   event VestingWithdraw(uint256 vestingId, uint256 amount);
+
+  constructor(uint256 _tgeTimestamp) {
+    tgeTimestamp = _tgeTimestamp;
+  }
 
   function setToken(IERC20 _token) external onlyOwner {
     require(address(token) == address(0), "token is already set");
@@ -39,7 +52,19 @@ contract BMITokenVesting is Ownable {
     emit TokenSet(token);
   }
 
-  function createVesting(
+  function createVesting(address _beneficiary, uint256 _amount, VestingSchedule _vestingSchedule) public onlyOwner {
+    require(getTokensAvailable() >= _amount, "Not enough tokens");
+
+    if (_vestingSchedule == VestingSchedule.ANGELROUND) {
+      _createVesting(_beneficiary, _amount, tgeTimestamp.sub(SECONDS_IN_MONTH), 1, _amount.div(2), 0, false);
+    }
+    else if (_vestingSchedule == VestingSchedule.SEEDROUND) {
+      _createVesting(_beneficiary, _amount.div(2), tgeTimestamp.sub(SECONDS_IN_MONTH), 2, _amount.div(2), 0, false);
+      _createVesting(_beneficiary, _amount.div(2), tgeTimestamp, 1, _amount.div(2), 0, false);
+    }
+  }
+
+  function _createVesting(
     address _beneficiary,
     uint256 _amount,
     uint256 _startDate,
@@ -47,9 +72,7 @@ contract BMITokenVesting is Ownable {
     uint256 _amountPerPeriod,
     uint256 _cliffInPeriods,
     bool _isCancelable
-  ) external onlyOwner returns (uint256 vestingId) {
-    require(getTokensAvailable() >= _amount, "Not enough tokens");
-
+  ) internal {
     amountInVestings += _amount;
 
     vestingId = vestingCount;
@@ -66,7 +89,7 @@ contract BMITokenVesting is Ownable {
     });
     vestingCount += 1;
 
-    emit VestingAdded(vestingId);
+    emit VestingAdded(vestingId, beneficiary);
   }
 
   function cancelVesting(uint256 _vestingId) external onlyOwner {
