@@ -114,14 +114,17 @@ interface IPolicyBook is IERC20 {
   function rewardForUnclaimedExpiredPolicy(uint256 _policyId) external;
 
   /// @notice Getting stats, access: ANY
-  /// @return _yearlyCost
-  /// @return _maxCapacities is max DAI amount to be covered at now
-  /// @return _totalDaiLiquidity is DAI amount placed by Policy providers
-  /// @return _annualProfitYields is current annual profit yield
+  /// @return _name is the name of PolicyBook
+  /// @return _contractType is a type of insured contract
+  /// @return _maxCapacities is a max token amount that a user can buy
+  /// @return _totalDaiLiquidity is PolicyBook's liquidity
+  /// @return _annualProfitYields is its APY
   function stats()
     external
+    view
     returns (
-      uint256 _yearlyCost,
+      string memory _name,
+      IPolicyBookFabric.ContractType _contractType,
       uint256 _maxCapacities,
       uint256 _totalDaiLiquidity,
       uint256 _annualProfitYields

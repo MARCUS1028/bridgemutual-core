@@ -30,9 +30,9 @@ module.exports = async (deployer, network, accounts) => {
 
   await policyBookRegistry.setPolicyFabricAddress(policyBookFabric.address);
 
-  const emptyPolicyBookAddress = (await policyBookFabric.create(mockInsuranceContractAddress1, ContractType.DEFI, 'mock', '1')).logs[0].args.at;
-  const smallPolicyBookAddress = (await policyBookFabric.create(mockInsuranceContractAddress2, ContractType.CONTRACT, 'mock', '2')).logs[0].args.at;
-  const bigPolicyBookAddress = (await policyBookFabric.create(mockInsuranceContractAddress3, ContractType.EXCHANGE, 'mock', '3')).logs[0].args.at;
+  const emptyPolicyBookAddress = (await policyBookFabric.create(mockInsuranceContractAddress1, ContractType.DEFI, 'mock1', '1')).logs[0].args.at;
+  const smallPolicyBookAddress = (await policyBookFabric.create(mockInsuranceContractAddress2, ContractType.CONTRACT, 'mock2', '2')).logs[0].args.at;
+  const bigPolicyBookAddress = (await policyBookFabric.create(mockInsuranceContractAddress3, ContractType.EXCHANGE, 'mock3', '3')).logs[0].args.at;
   
   const emptyPolicyBook = await PolicyBook.at(emptyPolicyBookAddress);
   const smallPolicyBook = await PolicyBook.at(smallPolicyBookAddress);

@@ -168,15 +168,18 @@ contract PolicyBook is IPolicyBook, ERC20 {
 
   function stats()
     external
+    view
     override
     returns (
-      uint256 _yearlyCost,
+      string memory _name,
+      IPolicyBookFabric.ContractType _contractType,
       uint256 _maxCapacities,
       uint256 _totalDaiLiquidity,
       uint256 _annualProfitYields
     )
   {
-    return (0, 0, 0, 0);
+    // TODO APY
+    return (name(), contractType, totalLiquidity - totalCoverTokens, totalLiquidity, 0);
   }
 
   uint256 public constant SECONDS_IN_THE_YEAR = 365 * 24 * 60 * 60; // 365 days * 24 hours * 60 minutes * 60 seconds

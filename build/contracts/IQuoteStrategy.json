@@ -45,15 +45,15 @@
     "absolutePath": "/home/artem/Projects/Distributed_Lab/Applicature/bridgemutual-core/contracts/interfaces/IQuoteStrategy.sol",
     "exportedSymbols": {
       "IQuoteStrategy": [
-        2402
+        2557
       ]
     },
-    "id": 2403,
+    "id": 2558,
     "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 2389,
+        "id": 2544,
         "literals": [
           "solidity",
           "=",
@@ -69,38 +69,38 @@
         "contractDependencies": [],
         "contractKind": "interface",
         "fullyImplemented": false,
-        "id": 2402,
+        "id": 2557,
         "linearizedBaseContracts": [
-          2402
+          2557
         ],
         "name": "IQuoteStrategy",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "documentation": {
-              "id": 2390,
+              "id": 2545,
               "nodeType": "StructuredDocumentation",
               "src": "86:286:14",
               "text": "@notice Calculate amount of Token to pay for coverage (calculates by DAI and then convert to final token), access: ANY\n @param _durationDays is number of days to cover\n @param _coverTokens is number of tokens to cover\n @return _tokens is number of tokens policy costs"
             },
             "functionSelector": "8954d007",
-            "id": 2401,
+            "id": 2556,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "calculate",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 2397,
+              "id": 2552,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2392,
+                  "id": 2547,
                   "mutability": "mutable",
                   "name": "_policyBook",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2401,
+                  "scope": 2556,
                   "src": "399:19:14",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -109,7 +109,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 2391,
+                    "id": 2546,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "399:7:14",
@@ -123,11 +123,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 2394,
+                  "id": 2549,
                   "mutability": "mutable",
                   "name": "_durationDays",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2401,
+                  "scope": 2556,
                   "src": "424:21:14",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -136,7 +136,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 2393,
+                    "id": 2548,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "424:7:14",
@@ -149,11 +149,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 2396,
+                  "id": 2551,
                   "mutability": "mutable",
                   "name": "_coverTokens",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2401,
+                  "scope": 2556,
                   "src": "451:20:14",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -162,7 +162,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 2395,
+                    "id": 2550,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "451:7:14",
@@ -177,16 +177,16 @@
               "src": "393:82:14"
             },
             "returnParameters": {
-              "id": 2400,
+              "id": 2555,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2399,
+                  "id": 2554,
                   "mutability": "mutable",
                   "name": "_tokens",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2401,
+                  "scope": 2556,
                   "src": "499:15:14",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -195,7 +195,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 2398,
+                    "id": 2553,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "499:7:14",
@@ -209,14 +209,14 @@
               ],
               "src": "498:17:14"
             },
-            "scope": 2402,
+            "scope": 2557,
             "src": "375:141:14",
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
           }
         ],
-        "scope": 2403,
+        "scope": 2558,
         "src": "57:461:14"
       }
     ],
@@ -227,7 +227,7 @@
       "absolutePath": "/home/artem/Projects/Distributed_Lab/Applicature/bridgemutual-core/contracts/interfaces/IQuoteStrategy.sol",
       "exportedSymbols": {
         "IQuoteStrategy": [
-          2402
+          2557
         ]
       },
       "license": "MIT"
@@ -242,7 +242,7 @@
             ".4"
           ]
         },
-        "id": 2389,
+        "id": 2544,
         "name": "PragmaDirective",
         "src": "32:23:14"
       },
@@ -258,10 +258,10 @@
           "contractKind": "interface",
           "fullyImplemented": false,
           "linearizedBaseContracts": [
-            2402
+            2557
           ],
           "name": "IQuoteStrategy",
-          "scope": 2403
+          "scope": 2558
         },
         "children": [
           {
@@ -274,7 +274,7 @@
                 null
               ],
               "name": "calculate",
-              "scope": 2402,
+              "scope": 2557,
               "stateMutability": "view",
               "virtual": false,
               "visibility": "external"
@@ -284,7 +284,7 @@
                 "attributes": {
                   "text": "@notice Calculate amount of Token to pay for coverage (calculates by DAI and then convert to final token), access: ANY\n @param _durationDays is number of days to cover\n @param _coverTokens is number of tokens to cover\n @return _tokens is number of tokens policy costs"
                 },
-                "id": 2390,
+                "id": 2545,
                 "name": "StructuredDocumentation",
                 "src": "86:286:14"
               },
@@ -295,7 +295,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_policyBook",
-                      "scope": 2401,
+                      "scope": 2556,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -308,12 +308,12 @@
                           "stateMutability": "nonpayable",
                           "type": "address"
                         },
-                        "id": 2391,
+                        "id": 2546,
                         "name": "ElementaryTypeName",
                         "src": "399:7:14"
                       }
                     ],
-                    "id": 2392,
+                    "id": 2547,
                     "name": "VariableDeclaration",
                     "src": "399:19:14"
                   },
@@ -322,7 +322,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_durationDays",
-                      "scope": 2401,
+                      "scope": 2556,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -334,12 +334,12 @@
                           "name": "uint256",
                           "type": "uint256"
                         },
-                        "id": 2393,
+                        "id": 2548,
                         "name": "ElementaryTypeName",
                         "src": "424:7:14"
                       }
                     ],
-                    "id": 2394,
+                    "id": 2549,
                     "name": "VariableDeclaration",
                     "src": "424:21:14"
                   },
@@ -348,7 +348,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_coverTokens",
-                      "scope": 2401,
+                      "scope": 2556,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -360,17 +360,17 @@
                           "name": "uint256",
                           "type": "uint256"
                         },
-                        "id": 2395,
+                        "id": 2550,
                         "name": "ElementaryTypeName",
                         "src": "451:7:14"
                       }
                     ],
-                    "id": 2396,
+                    "id": 2551,
                     "name": "VariableDeclaration",
                     "src": "451:20:14"
                   }
                 ],
-                "id": 2397,
+                "id": 2552,
                 "name": "ParameterList",
                 "src": "393:82:14"
               },
@@ -381,7 +381,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_tokens",
-                      "scope": 2401,
+                      "scope": 2556,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -393,32 +393,32 @@
                           "name": "uint256",
                           "type": "uint256"
                         },
-                        "id": 2398,
+                        "id": 2553,
                         "name": "ElementaryTypeName",
                         "src": "499:7:14"
                       }
                     ],
-                    "id": 2399,
+                    "id": 2554,
                     "name": "VariableDeclaration",
                     "src": "499:15:14"
                   }
                 ],
-                "id": 2400,
+                "id": 2555,
                 "name": "ParameterList",
                 "src": "498:17:14"
               }
             ],
-            "id": 2401,
+            "id": 2556,
             "name": "FunctionDefinition",
             "src": "375:141:14"
           }
         ],
-        "id": 2402,
+        "id": 2557,
         "name": "ContractDefinition",
         "src": "57:461:14"
       }
     ],
-    "id": 2403,
+    "id": 2558,
     "name": "SourceUnit",
     "src": "32:487:14"
   },
@@ -428,7 +428,7 @@
   },
   "networks": {},
   "schemaVersion": "3.3.3",
-  "updatedAt": "2021-01-20T19:02:06.615Z",
+  "updatedAt": "2021-01-21T13:29:38.915Z",
   "devdoc": {
     "kind": "dev",
     "methods": {

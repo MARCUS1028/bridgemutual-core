@@ -20,6 +20,8 @@ contract CustomERC1155 is Context, ERC165, IERC1155, IERC1155MetadataURI {
     mapping (uint256 => mapping(address => uint256)) private _balances;    
     mapping (address => mapping(address => bool)) private _operatorApprovals;
 
+    mapping (uint256 => uint256) _mintedTokens;
+
     using EnumerableSet for EnumerableSet.UintSet;
     using EnumerableMap for EnumerableMap.UintToAddressMap;    
 
@@ -42,17 +44,17 @@ contract CustomERC1155 is Context, ERC165, IERC1155, IERC1155MetadataURI {
         return _uri;
     }
 
-    function totalBalanceOf(address owner) public view returns (uint256) {
+    function balanceOfNFT(address owner) public view returns (uint256) {
         require(owner != address(0), "ERC1155: balance query for the zero address");
 
         return _holderTokens[owner].length();
     }
 
-    function ownerOf(uint256 tokenId) public view returns (address) {
+    function ownerOfNFT(uint256 tokenId) public view returns (address) {
         return _tokenOwners.get(tokenId, "ERC1155: owner query for nonexistent token");
     }
 
-    function tokenOfOwnerByIndex(address owner, uint256 index) public view returns (uint256) {
+    function tokenOfOwnerByIndexNFT(address owner, uint256 index) public view returns (uint256) {
         return _holderTokens[owner].at(index);
     }
 
@@ -118,10 +120,12 @@ contract CustomERC1155 is Context, ERC165, IERC1155, IERC1155MetadataURI {
 
         _beforeTokenTransfer(operator, from, to, _asSingletonArray(id), _asSingletonArray(amount), data);
 
-        _holderTokens[from].remove(id);
-        _holderTokens[to].add(id);
+        if (_existsNFT(id)) {
+            _holderTokens[from].remove(id);
+            _holderTokens[to].add(id);
 
-        _tokenOwners.set(id, to);
+            _tokenOwners.set(id, to);
+        }
 
         _balances[id][from] = _balances[id][from].sub(amount, "ERC1155: insufficient balance for transfer");
         _balances[id][to] = _balances[id][to].add(amount);
@@ -157,10 +161,12 @@ contract CustomERC1155 is Context, ERC165, IERC1155, IERC1155MetadataURI {
             uint256 id = ids[i];
             uint256 amount = amounts[i];
 
-            _holderTokens[from].remove(id);
-            _holderTokens[to].add(id);
+            if (_existsNFT(id)) {
+                _holderTokens[from].remove(id);
+                _holderTokens[to].add(id);
 
-            _tokenOwners.set(id, to);
+                _tokenOwners.set(id, to);
+            }
 
             _balances[id][from] = _balances[id][from].sub(
                 amount,
@@ -178,23 +184,30 @@ contract CustomERC1155 is Context, ERC165, IERC1155, IERC1155MetadataURI {
         _uri = newuri;
     }
 
-    function _exists(uint256 tokenId) internal view returns (bool) {
-        return _tokenOwners.contains(tokenId);
+    function _existsToken(uint256 id) internal view returns (bool) {
+        return _mintedTokens[id] > 0;
+    }
+
+    function _existsNFT(uint256 id) internal view returns (bool) {
+        return _tokenOwners.contains(id);
     }
    
     function _mint(address account, uint256 id, uint256 amount, bytes memory data) internal virtual {
         require(account != address(0), "ERC1155: mint to the zero address");
-        require(!_exists(id), "ERC1155: token already minted");
-        require(amount <= 1, "ERC1155: NFTs are singletons");
+        require(amount == 0 || !_existsNFT(id), "ERC1155: NFT token already minted");                
 
         address operator = _msgSender();
 
         _beforeTokenTransfer(operator, address(0), account, _asSingletonArray(id), _asSingletonArray(amount), data);
 
-        _holderTokens[account].add(id);
-        _tokenOwners.set(id, account);
+        if (amount == 1 && !_existsToken(id)) {
+            _holderTokens[account].add(id);
+            _tokenOwners.set(id, account);
+        }
 
         _balances[id][account] = _balances[id][account].add(amount);
+        _mintedTokens[id] = _mintedTokens[id].add(amount);
+        
         emit TransferSingle(operator, address(0), account, id, amount);
 
         _doSafeTransferAcceptanceCheck(operator, address(0), account, id, amount, data);
@@ -209,13 +222,17 @@ contract CustomERC1155 is Context, ERC165, IERC1155, IERC1155MetadataURI {
         _beforeTokenTransfer(operator, address(0), to, ids, amounts, data);
 
         for (uint i = 0; i < ids.length; i++) {
-            require(!_exists(ids[i]), "ERC1155: token already minted");
-            require(amounts[i] <= 1, "ERC1155: NFTs are singletons");
+            uint256 id = ids[i];
 
-            _holderTokens[to].add(ids[i]);
-            _tokenOwners.set(ids[i], to);
+            require(amounts[i] == 0 || !_existsNFT(id), "ERC1155: NFT token already minted");
 
-            _balances[ids[i]][to] = amounts[i].add(_balances[ids[i]][to]);
+            if (amounts[i] == 1 && !_existsToken(id)) {
+                _holderTokens[to].add(id);
+                _tokenOwners.set(id, to);
+            }
+
+            _balances[id][to] = amounts[i].add(_balances[id][to]);
+            _mintedTokens[id] = _mintedTokens[id].add(amounts[i]);
         }
 
         emit TransferBatch(operator, address(0), to, ids, amounts);
@@ -228,15 +245,19 @@ contract CustomERC1155 is Context, ERC165, IERC1155, IERC1155MetadataURI {
 
         address operator = _msgSender();
 
-        _beforeTokenTransfer(operator, account, address(0), _asSingletonArray(id), _asSingletonArray(amount), "");        
-        
-        _holderTokens[account].remove(id);
-        _tokenOwners.remove(id);
+        _beforeTokenTransfer(operator, account, address(0), _asSingletonArray(id), _asSingletonArray(amount), "");                
+
+        if (amount > 0) {
+            _holderTokens[account].remove(id);
+            _tokenOwners.remove(id);
+        }
 
         _balances[id][account] = _balances[id][account].sub(
             amount,
             "ERC1155: burn amount exceeds balance"
-        );
+        );     
+
+        _mintedTokens[id] = _mintedTokens[id].sub(amount);
 
         emit TransferSingle(operator, account, address(0), id, amount);
     }
@@ -250,13 +271,17 @@ contract CustomERC1155 is Context, ERC165, IERC1155, IERC1155MetadataURI {
         _beforeTokenTransfer(operator, account, address(0), ids, amounts, "");
 
         for (uint i = 0; i < ids.length; i++) {
-            _holderTokens[account].remove(ids[i]);
-            _tokenOwners.remove(ids[i]);
+            uint256 id = ids[i];
+            
+            _holderTokens[account].remove(id);
+            _tokenOwners.remove(id);
 
-            _balances[ids[i]][account] = _balances[ids[i]][account].sub(
+            _balances[id][account] = _balances[id][account].sub(
                 amounts[i],
                 "ERC1155: burn amount exceeds balance"
-            );
+            );            
+
+            _mintedTokens[id] = _mintedTokens[id].sub(amounts[i]);
         }
 
         emit TransferBatch(operator, account, address(0), ids, amounts);

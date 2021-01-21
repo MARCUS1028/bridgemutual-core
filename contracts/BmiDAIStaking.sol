@@ -24,11 +24,11 @@ contract BmiDAIStaking is CustomERC1155 {
         uint256 _amount,
         address _policyBookAddress
     ) private {                
-        uint256 stakerBalance = totalBalanceOf(_staker);
+        uint256 stakerBalance = balanceOfNFT(_staker);
         uint256 totalAmount = _amount;
 
         for (uint256 i = 0; i < stakerBalance; i++) {
-            uint256 tokenIndex = tokenOfOwnerByIndex(_staker, i);            
+            uint256 tokenIndex = tokenOfOwnerByIndexNFT(_staker, i);            
 
             if (_stakersPool[tokenIndex].policyBookAddress == _policyBookAddress) {
                 totalAmount += _stakersPool[tokenIndex].bmiDAIAmount;

@@ -89,7 +89,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [],
@@ -102,7 +103,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [],
@@ -122,7 +124,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -148,7 +151,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -256,7 +260,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -315,7 +320,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     }
   ],
   "metadata": "{\"compiler\":{\"version\":\"0.7.4+commit.3f05b770\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"contract IERC20\",\"name\":\"token\",\"type\":\"address\"}],\"name\":\"TokenSet\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"vestingId\",\"type\":\"uint256\"}],\"name\":\"VestingAdded\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"vestingId\",\"type\":\"uint256\"}],\"name\":\"VestingCanceled\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"vestingId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"VestingWithdraw\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"amountInVestings\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_vestingId\",\"type\":\"uint256\"}],\"name\":\"cancelVesting\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_beneficiary\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"_amount\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_startDate\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_periodInMonth\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_amountPerPeriod\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_cliffInPeriods\",\"type\":\"uint256\"},{\"internalType\":\"bool\",\"name\":\"_isCancelable\",\"type\":\"bool\"}],\"name\":\"createVesting\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"vestingId\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getTokensAvailable\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_vestingId\",\"type\":\"uint256\"}],\"name\":\"getVestingById\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"isValid\",\"type\":\"bool\"},{\"internalType\":\"address\",\"name\":\"beneficiary\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"startDate\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"periodInMonth\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amountPerPeriod\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"cliffInPeriods\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"paidAmount\",\"type\":\"uint256\"},{\"internalType\":\"bool\",\"name\":\"isCancelable\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"contract IERC20\",\"name\":\"_token\",\"type\":\"address\"}],\"name\":\"setToken\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"token\",\"outputs\":[{\"internalType\":\"contract IERC20\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"vestingCount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"withdrawExcessiveTokens\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_vestingId\",\"type\":\"uint256\"}],\"name\":\"withdrawFromVesting\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{\"owner()\":{\"details\":\"Returns the address of the current owner.\"},\"renounceOwnership()\":{\"details\":\"Leaves the contract without owner. It will not be possible to call `onlyOwner` functions anymore. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby removing any functionality that is only available to the owner.\"},\"transferOwnership(address)\":{\"details\":\"Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner.\"}},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"/home/artem/Projects/Distributed_Lab/Applicature/bridgemutual-core/contracts/BMITokenVesting.sol\":\"BMITokenVesting\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":10000},\"remappings\":[]},\"sources\":{\"/home/artem/Projects/Distributed_Lab/Applicature/bridgemutual-core/contracts/BMITokenVesting.sol\":{\"keccak256\":\"0x116c10fa5d172239366884e65c1119eac127a50eae0fa055d60c91d681d50ff5\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://fac9b0aff9e64af1dae14aaf13ec2bb242b0ce35d9f4c557e42ec2f0b7e3742b\",\"dweb:/ipfs/QmTiBNrWJUGwFMPPLH2Cn99LpMv2thX8xzJWm4WgipBrpy\"]},\"@openzeppelin/contracts/GSN/Context.sol\":{\"keccak256\":\"0x8d3cb350f04ff49cfb10aef08d87f19dcbaecc8027b0bed12f3275cd12f38cf0\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://ded47ec7c96750f9bd04bbbc84f659992d4ba901cb7b532a52cd468272cf378f\",\"dweb:/ipfs/QmfBrGtQP7rZEqEg6Wz6jh2N2Kukpj1z5v3CGWmAqrzm96\"]},\"@openzeppelin/contracts/access/Ownable.sol\":{\"keccak256\":\"0xf7c39c7e6d06ed3bda90cfefbcbf2ddc32c599c3d6721746546ad64946efccaa\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://cb57a28e189cd8b05748db44bdd51d608e6f1364dd1b35ad921e1bc82c10631e\",\"dweb:/ipfs/QmaWWTBbVu2pRR9XUbE4iC159NoP59cRF9ZJwhf4ghFN9i\"]},\"@openzeppelin/contracts/math/Math.sol\":{\"keccak256\":\"0x363bd3b45201f07c9b71c2edc96533468cf14a3d029fabd82fddceb1eb3ebd9c\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://d676d5c3a72e5fea8364a1e3e5b488a959aae08d069995b1274027f3845e6521\",\"dweb:/ipfs/Qma7DL738Wje4G9kcwW9bXwTGY4ePR7SMmsMhbULWqmixE\"]},\"@openzeppelin/contracts/math/SafeMath.sol\":{\"keccak256\":\"0x3b21f2c8d626de3b9925ae33e972d8bf5c8b1bffb3f4ee94daeed7d0679036e6\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://7f8d45329fecbf0836ad7543330c3ecd0f8d0ffa42d4016278c3eb2215fdcdfe\",\"dweb:/ipfs/QmXWLT7GcnHtA5NiD6MFi2CV3EWJY4wv5mLNnypqYDrxL3\"]},\"@openzeppelin/contracts/token/ERC20/IERC20.sol\":{\"keccak256\":\"0x5f02220344881ce43204ae4a6281145a67bc52c2bb1290a791857df3d19d78f5\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://24427744bd3e6cb73c17010119af12a318289c0253a4d9acb8576c9fb3797b08\",\"dweb:/ipfs/QmTLDqpKRBuxGxRAmjgXt9AkXyACW3MtKzi7PYjm5iMfGC\"]},\"@openzeppelin/contracts/token/ERC20/SafeERC20.sol\":{\"keccak256\":\"0xf12dfbe97e6276980b83d2830bb0eb75e0cf4f3e626c2471137f82158ae6a0fc\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://b3a849c2d95e85463909e5b5c920b13e7a11216ca14127085e16d22b9379d52a\",\"dweb:/ipfs/QmUg3CZDbCCcQdroEpexBy5ZFd5vD1UWijWQq9qHZjtJNQ\"]},\"@openzeppelin/contracts/utils/Address.sol\":{\"keccak256\":\"0xa6a15ddddcbf29d2922a1e0d4151b5d2d33da24b93cc9ebc12390e0d855532f8\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://7c119bcaecfa853d564ac88d312777f75fa1126a3bca88a3371adb0ad9f35cb0\",\"dweb:/ipfs/QmY9UPuXeSKq86Zh38fE43VGQPhKMN34mkuFSFqPcr6nvZ\"]}},\"version\":1}",
@@ -332,28 +338,28 @@
     "absolutePath": "/home/artem/Projects/Distributed_Lab/Applicature/bridgemutual-core/contracts/BMITokenVesting.sol",
     "exportedSymbols": {
       "Address": [
-        5696
+        5942
       ],
       "BMITokenVesting": [
         473
       ],
       "Context": [
-        3750
+        3996
       ],
       "IERC20": [
-        5239
+        5485
       ],
       "Math": [
-        4284
+        4530
       ],
       "Ownable": [
-        4142
+        4388
       ],
       "SafeERC20": [
-        5452
+        5698
       ],
       "SafeMath": [
-        4480
+        4726
       ]
     },
     "id": 474,
@@ -377,7 +383,7 @@
         "id": 36,
         "nodeType": "ImportDirective",
         "scope": 474,
-        "sourceUnit": 5453,
+        "sourceUnit": 5699,
         "src": "57:59:1",
         "symbolAliases": [],
         "unitAlias": ""
@@ -388,7 +394,7 @@
         "id": 37,
         "nodeType": "ImportDirective",
         "scope": 474,
-        "sourceUnit": 4143,
+        "sourceUnit": 4389,
         "src": "117:52:1",
         "symbolAliases": [],
         "unitAlias": ""
@@ -399,7 +405,7 @@
         "id": 38,
         "nodeType": "ImportDirective",
         "scope": 474,
-        "sourceUnit": 4285,
+        "sourceUnit": 4531,
         "src": "170:47:1",
         "symbolAliases": [],
         "unitAlias": ""
@@ -410,7 +416,7 @@
         "id": 39,
         "nodeType": "ImportDirective",
         "scope": 474,
-        "sourceUnit": 4481,
+        "sourceUnit": 4727,
         "src": "218:51:1",
         "symbolAliases": [],
         "unitAlias": ""
@@ -423,10 +429,10 @@
               "id": 40,
               "name": "Ownable",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 4142,
+              "referencedDeclaration": 4388,
               "src": "299:7:1",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_Ownable_$4142",
+                "typeIdentifier": "t_contract$_Ownable_$4388",
                 "typeString": "contract Ownable"
               }
             },
@@ -436,16 +442,16 @@
           }
         ],
         "contractDependencies": [
-          3750,
-          4142
+          3996,
+          4388
         ],
         "contractKind": "contract",
         "fullyImplemented": true,
         "id": 473,
         "linearizedBaseContracts": [
           473,
-          4142,
-          3750
+          4388,
+          3996
         ],
         "name": "BMITokenVesting",
         "nodeType": "ContractDefinition",
@@ -456,10 +462,10 @@
               "id": 42,
               "name": "Math",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 4284,
+              "referencedDeclaration": 4530,
               "src": "317:4:1",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_Math_$4284",
+                "typeIdentifier": "t_contract$_Math_$4530",
                 "typeString": "library Math"
               }
             },
@@ -482,10 +488,10 @@
               "id": 45,
               "name": "SafeMath",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 4480,
+              "referencedDeclaration": 4726,
               "src": "343:8:1",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_SafeMath_$4480",
+                "typeIdentifier": "t_contract$_SafeMath_$4726",
                 "typeString": "library SafeMath"
               }
             },
@@ -508,10 +514,10 @@
               "id": 48,
               "name": "SafeERC20",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 5452,
+              "referencedDeclaration": 5698,
               "src": "373:9:1",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_SafeERC20_$5452",
+                "typeIdentifier": "t_contract$_SafeERC20_$5698",
                 "typeString": "library SafeERC20"
               }
             },
@@ -521,10 +527,10 @@
               "id": 49,
               "name": "IERC20",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 5239,
+              "referencedDeclaration": 5485,
               "src": "387:6:1",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_IERC20_$5239",
+                "typeIdentifier": "t_contract$_IERC20_$5485",
                 "typeString": "contract IERC20"
               }
             }
@@ -787,17 +793,17 @@
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_contract$_IERC20_$5239",
+              "typeIdentifier": "t_contract$_IERC20_$5485",
               "typeString": "contract IERC20"
             },
             "typeName": {
               "id": 70,
               "name": "IERC20",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 5239,
+              "referencedDeclaration": 5485,
               "src": "639:6:1",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_IERC20_$5239",
+                "typeIdentifier": "t_contract$_IERC20_$5485",
                 "typeString": "contract IERC20"
               }
             },
@@ -924,17 +930,17 @@
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_contract$_IERC20_$5239",
+                    "typeIdentifier": "t_contract$_IERC20_$5485",
                     "typeString": "contract IERC20"
                   },
                   "typeName": {
                     "id": 80,
                     "name": "IERC20",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 5239,
+                    "referencedDeclaration": 5485,
                     "src": "792:6:1",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_IERC20_$5239",
+                      "typeIdentifier": "t_contract$_IERC20_$5485",
                       "typeString": "contract IERC20"
                     }
                   },
@@ -1124,7 +1130,7 @@
                               "referencedDeclaration": 71,
                               "src": "1029:5:1",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_contract$_IERC20_$5239",
+                                "typeIdentifier": "t_contract$_IERC20_$5485",
                                 "typeString": "contract IERC20"
                               }
                             }
@@ -1132,7 +1138,7 @@
                           "expression": {
                             "argumentTypes": [
                               {
-                                "typeIdentifier": "t_contract$_IERC20_$5239",
+                                "typeIdentifier": "t_contract$_IERC20_$5485",
                                 "typeString": "contract IERC20"
                               }
                             ],
@@ -1314,7 +1320,7 @@
                       "referencedDeclaration": 71,
                       "src": "1080:5:1",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_IERC20_$5239",
+                        "typeIdentifier": "t_contract$_IERC20_$5485",
                         "typeString": "contract IERC20"
                       }
                     },
@@ -1328,13 +1334,13 @@
                       "referencedDeclaration": 99,
                       "src": "1088:6:1",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_IERC20_$5239",
+                        "typeIdentifier": "t_contract$_IERC20_$5485",
                         "typeString": "contract IERC20"
                       }
                     },
                     "src": "1080:14:1",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_IERC20_$5239",
+                      "typeIdentifier": "t_contract$_IERC20_$5485",
                       "typeString": "contract IERC20"
                     }
                   },
@@ -1353,7 +1359,7 @@
                         "referencedDeclaration": 71,
                         "src": "1114:5:1",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_contract$_IERC20_$5239",
+                          "typeIdentifier": "t_contract$_IERC20_$5485",
                           "typeString": "contract IERC20"
                         }
                       }
@@ -1361,7 +1367,7 @@
                     "expression": {
                       "argumentTypes": [
                         {
-                          "typeIdentifier": "t_contract$_IERC20_$5239",
+                          "typeIdentifier": "t_contract$_IERC20_$5485",
                           "typeString": "contract IERC20"
                         }
                       ],
@@ -1372,7 +1378,7 @@
                       "referencedDeclaration": 83,
                       "src": "1105:8:1",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_function_event_nonpayable$_t_contract$_IERC20_$5239_$returns$__$",
+                        "typeIdentifier": "t_function_event_nonpayable$_t_contract$_IERC20_$5485_$returns$__$",
                         "typeString": "function (contract IERC20)"
                       }
                     },
@@ -1409,7 +1415,7 @@
                   "name": "onlyOwner",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 4091,
+                  "referencedDeclaration": 4337,
                   "src": "997:9:1",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
@@ -1437,17 +1443,17 @@
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_contract$_IERC20_$5239",
+                    "typeIdentifier": "t_contract$_IERC20_$5485",
                     "typeString": "contract IERC20"
                   },
                   "typeName": {
                     "id": 98,
                     "name": "IERC20",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 5239,
+                    "referencedDeclaration": 5485,
                     "src": "973:6:1",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_IERC20_$5239",
+                      "typeIdentifier": "t_contract$_IERC20_$5485",
                       "typeString": "contract IERC20"
                     }
                   },
@@ -2048,7 +2054,7 @@
                   "name": "onlyOwner",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 4091,
+                  "referencedDeclaration": 4337,
                   "src": "1347:9:1",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
@@ -2718,7 +2724,7 @@
                       "lValueRequested": false,
                       "memberName": "sub",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 4330,
+                      "referencedDeclaration": 4576,
                       "src": "2211:18:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_pure$_t_uint256_$_t_uint256_$returns$_t_uint256_$bound_to$_t_uint256_$",
@@ -2805,7 +2811,7 @@
                         "lValueRequested": false,
                         "memberName": "sub",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 4330,
+                        "referencedDeclaration": 4576,
                         "src": "2274:20:1",
                         "typeDescriptions": {
                           "typeIdentifier": "t_function_internal_pure$_t_uint256_$_t_uint256_$returns$_t_uint256_$bound_to$_t_uint256_$",
@@ -2904,7 +2910,7 @@
                   "name": "onlyOwner",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 4091,
+                  "referencedDeclaration": 4337,
                   "src": "1958:9:1",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
@@ -3258,7 +3264,7 @@
                       "lValueRequested": false,
                       "memberName": "sub",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 4330,
+                      "referencedDeclaration": 4576,
                       "src": "2563:37:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_pure$_t_uint256_$_t_uint256_$returns$_t_uint256_$bound_to$_t_uint256_$",
@@ -3403,7 +3409,7 @@
                         "lValueRequested": false,
                         "memberName": "sub",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 4330,
+                        "referencedDeclaration": 4576,
                         "src": "2684:20:1",
                         "typeDescriptions": {
                           "typeIdentifier": "t_function_internal_pure$_t_uint256_$_t_uint256_$returns$_t_uint256_$bound_to$_t_uint256_$",
@@ -3497,7 +3503,7 @@
                         "referencedDeclaration": 71,
                         "src": "2723:5:1",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_contract$_IERC20_$5239",
+                          "typeIdentifier": "t_contract$_IERC20_$5485",
                           "typeString": "contract IERC20"
                         }
                       },
@@ -3508,7 +3514,7 @@
                       "lValueRequested": false,
                       "memberName": "transfer",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 5188,
+                      "referencedDeclaration": 5434,
                       "src": "2723:14:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_external_nonpayable$_t_address_$_t_uint256_$returns$_t_bool_$",
@@ -3920,7 +3926,7 @@
                       "lValueRequested": false,
                       "memberName": "mul",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 4393,
+                      "referencedDeclaration": 4639,
                       "src": "3080:28:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_pure$_t_uint256_$_t_uint256_$returns$_t_uint256_$bound_to$_t_uint256_$",
@@ -4002,7 +4008,7 @@
                       "lValueRequested": false,
                       "memberName": "min",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 4250,
+                      "referencedDeclaration": 4496,
                       "src": "3137:19:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_pure$_t_uint256_$_t_uint256_$returns$_t_uint256_$bound_to$_t_uint256_$",
@@ -4342,7 +4348,7 @@
                       "lValueRequested": false,
                       "memberName": "mul",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 4393,
+                      "referencedDeclaration": 4639,
                       "src": "3360:26:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_pure$_t_uint256_$_t_uint256_$returns$_t_uint256_$bound_to$_t_uint256_$",
@@ -4460,7 +4466,7 @@
                           "lValueRequested": false,
                           "memberName": "sub",
                           "nodeType": "MemberAccess",
-                          "referencedDeclaration": 4330,
+                          "referencedDeclaration": 4576,
                           "src": "3412:19:1",
                           "typeDescriptions": {
                             "typeIdentifier": "t_function_internal_pure$_t_uint256_$_t_uint256_$returns$_t_uint256_$bound_to$_t_uint256_$",
@@ -4489,7 +4495,7 @@
                       "lValueRequested": false,
                       "memberName": "div",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 4410,
+                      "referencedDeclaration": 4656,
                       "src": "3412:43:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_pure$_t_uint256_$_t_uint256_$returns$_t_uint256_$bound_to$_t_uint256_$",
@@ -4614,7 +4620,7 @@
                           "name": "owner",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 4078,
+                          "referencedDeclaration": 4324,
                           "src": "3556:5:1",
                           "typeDescriptions": {
                             "typeIdentifier": "t_function_internal_view$__$returns$_t_address_$",
@@ -4686,7 +4692,7 @@
                         "referencedDeclaration": 71,
                         "src": "3541:5:1",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_contract$_IERC20_$5239",
+                          "typeIdentifier": "t_contract$_IERC20_$5485",
                           "typeString": "contract IERC20"
                         }
                       },
@@ -4697,7 +4703,7 @@
                       "lValueRequested": false,
                       "memberName": "transfer",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 5188,
+                      "referencedDeclaration": 5434,
                       "src": "3541:14:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_external_nonpayable$_t_address_$_t_uint256_$returns$_t_bool_$",
@@ -4737,7 +4743,7 @@
                   "name": "onlyOwner",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 4091,
+                  "referencedDeclaration": 4337,
                   "src": "3525:9:1",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
@@ -4871,7 +4877,7 @@
                             "referencedDeclaration": 71,
                             "src": "3668:5:1",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_contract$_IERC20_$5239",
+                              "typeIdentifier": "t_contract$_IERC20_$5485",
                               "typeString": "contract IERC20"
                             }
                           },
@@ -4882,7 +4888,7 @@
                           "lValueRequested": false,
                           "memberName": "balanceOf",
                           "nodeType": "MemberAccess",
-                          "referencedDeclaration": 5178,
+                          "referencedDeclaration": 5424,
                           "src": "3668:15:1",
                           "typeDescriptions": {
                             "typeIdentifier": "t_function_external_view$_t_address_$returns$_t_uint256_$",
@@ -4911,7 +4917,7 @@
                       "lValueRequested": false,
                       "memberName": "sub",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 4330,
+                      "referencedDeclaration": 4576,
                       "src": "3668:34:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_pure$_t_uint256_$_t_uint256_$returns$_t_uint256_$bound_to$_t_uint256_$",
@@ -5896,28 +5902,28 @@
       "absolutePath": "/home/artem/Projects/Distributed_Lab/Applicature/bridgemutual-core/contracts/BMITokenVesting.sol",
       "exportedSymbols": {
         "Address": [
-          5696
+          5942
         ],
         "BMITokenVesting": [
           473
         ],
         "Context": [
-          3750
+          3996
         ],
         "IERC20": [
-          5239
+          5485
         ],
         "Math": [
-          4284
+          4530
         ],
         "Ownable": [
-          4142
+          4388
         ],
         "SafeERC20": [
-          5452
+          5698
         ],
         "SafeMath": [
-          4480
+          4726
         ]
       },
       "license": "MIT"
@@ -5938,7 +5944,7 @@
       },
       {
         "attributes": {
-          "SourceUnit": 5453,
+          "SourceUnit": 5699,
           "absolutePath": "@openzeppelin/contracts/token/ERC20/SafeERC20.sol",
           "file": "@openzeppelin/contracts/token/ERC20/SafeERC20.sol",
           "scope": 474,
@@ -5953,7 +5959,7 @@
       },
       {
         "attributes": {
-          "SourceUnit": 4143,
+          "SourceUnit": 4389,
           "absolutePath": "@openzeppelin/contracts/access/Ownable.sol",
           "file": "@openzeppelin/contracts/access/Ownable.sol",
           "scope": 474,
@@ -5968,7 +5974,7 @@
       },
       {
         "attributes": {
-          "SourceUnit": 4285,
+          "SourceUnit": 4531,
           "absolutePath": "@openzeppelin/contracts/math/Math.sol",
           "file": "@openzeppelin/contracts/math/Math.sol",
           "scope": 474,
@@ -5983,7 +5989,7 @@
       },
       {
         "attributes": {
-          "SourceUnit": 4481,
+          "SourceUnit": 4727,
           "absolutePath": "@openzeppelin/contracts/math/SafeMath.sol",
           "file": "@openzeppelin/contracts/math/SafeMath.sol",
           "scope": 474,
@@ -6000,15 +6006,15 @@
         "attributes": {
           "abstract": false,
           "contractDependencies": [
-            3750,
-            4142
+            3996,
+            4388
           ],
           "contractKind": "contract",
           "fullyImplemented": true,
           "linearizedBaseContracts": [
             473,
-            4142,
-            3750
+            4388,
+            3996
           ],
           "name": "BMITokenVesting",
           "scope": 474
@@ -6020,7 +6026,7 @@
               {
                 "attributes": {
                   "name": "Ownable",
-                  "referencedDeclaration": 4142,
+                  "referencedDeclaration": 4388,
                   "type": "contract Ownable"
                 },
                 "id": 40,
@@ -6037,7 +6043,7 @@
               {
                 "attributes": {
                   "name": "Math",
-                  "referencedDeclaration": 4284,
+                  "referencedDeclaration": 4530,
                   "type": "library Math"
                 },
                 "id": 42,
@@ -6063,7 +6069,7 @@
               {
                 "attributes": {
                   "name": "SafeMath",
-                  "referencedDeclaration": 4480,
+                  "referencedDeclaration": 4726,
                   "type": "library SafeMath"
                 },
                 "id": 45,
@@ -6089,7 +6095,7 @@
               {
                 "attributes": {
                   "name": "SafeERC20",
-                  "referencedDeclaration": 5452,
+                  "referencedDeclaration": 5698,
                   "type": "library SafeERC20"
                 },
                 "id": 48,
@@ -6099,7 +6105,7 @@
               {
                 "attributes": {
                   "name": "IERC20",
-                  "referencedDeclaration": 5239,
+                  "referencedDeclaration": 5485,
                   "type": "contract IERC20"
                 },
                 "id": 49,
@@ -6375,7 +6381,7 @@
               {
                 "attributes": {
                   "name": "IERC20",
-                  "referencedDeclaration": 5239,
+                  "referencedDeclaration": 5485,
                   "type": "contract IERC20"
                 },
                 "id": 70,
@@ -6511,7 +6517,7 @@
                       {
                         "attributes": {
                           "name": "IERC20",
-                          "referencedDeclaration": 5239,
+                          "referencedDeclaration": 5485,
                           "type": "contract IERC20"
                         },
                         "id": 80,
@@ -6725,7 +6731,7 @@
                       {
                         "attributes": {
                           "name": "IERC20",
-                          "referencedDeclaration": 5239,
+                          "referencedDeclaration": 5485,
                           "type": "contract IERC20"
                         },
                         "id": 98,
@@ -6761,7 +6767,7 @@
                       "overloadedDeclarations": [
                         null
                       ],
-                      "referencedDeclaration": 4091,
+                      "referencedDeclaration": 4337,
                       "type": "modifier ()",
                       "value": "onlyOwner"
                     },
@@ -6850,7 +6856,7 @@
                                     "attributes": {
                                       "argumentTypes": [
                                         {
-                                          "typeIdentifier": "t_contract$_IERC20_$5239",
+                                          "typeIdentifier": "t_contract$_IERC20_$5485",
                                           "typeString": "contract IERC20"
                                         }
                                       ],
@@ -7054,7 +7060,7 @@
                             "attributes": {
                               "argumentTypes": [
                                 {
-                                  "typeIdentifier": "t_contract$_IERC20_$5239",
+                                  "typeIdentifier": "t_contract$_IERC20_$5485",
                                   "typeString": "contract IERC20"
                                 }
                               ],
@@ -7346,7 +7352,7 @@
                       "overloadedDeclarations": [
                         null
                       ],
-                      "referencedDeclaration": 4091,
+                      "referencedDeclaration": 4337,
                       "type": "modifier ()",
                       "value": "onlyOwner"
                     },
@@ -8040,7 +8046,7 @@
                       "overloadedDeclarations": [
                         null
                       ],
-                      "referencedDeclaration": 4091,
+                      "referencedDeclaration": 4337,
                       "type": "modifier ()",
                       "value": "onlyOwner"
                     },
@@ -8451,7 +8457,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "sub",
-                              "referencedDeclaration": 4330,
+                              "referencedDeclaration": 4576,
                               "type": "function (uint256,uint256) pure returns (uint256)"
                             },
                             "children": [
@@ -8581,7 +8587,7 @@
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "member_name": "sub",
-                                  "referencedDeclaration": 4330,
+                                  "referencedDeclaration": 4576,
                                   "type": "function (uint256,uint256) pure returns (uint256)"
                                 },
                                 "children": [
@@ -8997,7 +9003,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "sub",
-                              "referencedDeclaration": 4330,
+                              "referencedDeclaration": 4576,
                               "type": "function (uint256,uint256) pure returns (uint256)"
                             },
                             "children": [
@@ -9214,7 +9220,7 @@
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "member_name": "sub",
-                                  "referencedDeclaration": 4330,
+                                  "referencedDeclaration": 4576,
                                   "type": "function (uint256,uint256) pure returns (uint256)"
                                 },
                                 "children": [
@@ -9298,7 +9304,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "transfer",
-                              "referencedDeclaration": 5188,
+                              "referencedDeclaration": 5434,
                               "type": "function (address,uint256) external returns (bool)"
                             },
                             "children": [
@@ -9787,7 +9793,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "mul",
-                              "referencedDeclaration": 4393,
+                              "referencedDeclaration": 4639,
                               "type": "function (uint256,uint256) pure returns (uint256)"
                             },
                             "children": [
@@ -9881,7 +9887,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "min",
-                              "referencedDeclaration": 4250,
+                              "referencedDeclaration": 4496,
                               "type": "function (uint256,uint256) pure returns (uint256)"
                             },
                             "children": [
@@ -10206,7 +10212,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "mul",
-                              "referencedDeclaration": 4393,
+                              "referencedDeclaration": 4639,
                               "type": "function (uint256,uint256) pure returns (uint256)"
                             },
                             "children": [
@@ -10337,7 +10343,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "div",
-                              "referencedDeclaration": 4410,
+                              "referencedDeclaration": 4656,
                               "type": "function (uint256,uint256) pure returns (uint256)"
                             },
                             "children": [
@@ -10369,7 +10375,7 @@
                                       "isPure": false,
                                       "lValueRequested": false,
                                       "member_name": "sub",
-                                      "referencedDeclaration": 4330,
+                                      "referencedDeclaration": 4576,
                                       "type": "function (uint256,uint256) pure returns (uint256)"
                                     },
                                     "children": [
@@ -10521,7 +10527,7 @@
                       "overloadedDeclarations": [
                         null
                       ],
-                      "referencedDeclaration": 4091,
+                      "referencedDeclaration": 4337,
                       "type": "modifier ()",
                       "value": "onlyOwner"
                     },
@@ -10570,7 +10576,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "transfer",
-                              "referencedDeclaration": 5188,
+                              "referencedDeclaration": 5434,
                               "type": "function (address,uint256) external returns (bool)"
                             },
                             "children": [
@@ -10618,7 +10624,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 4078,
+                                  "referencedDeclaration": 4324,
                                   "type": "function () view returns (address)",
                                   "value": "owner"
                                 },
@@ -10785,7 +10791,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "sub",
-                              "referencedDeclaration": 4330,
+                              "referencedDeclaration": 4576,
                               "type": "function (uint256,uint256) pure returns (uint256)"
                             },
                             "children": [
@@ -10817,7 +10823,7 @@
                                       "isPure": false,
                                       "lValueRequested": false,
                                       "member_name": "balanceOf",
-                                      "referencedDeclaration": 5178,
+                                      "referencedDeclaration": 5424,
                                       "type": "function (address) view external returns (uint256)"
                                     },
                                     "children": [
@@ -11915,9 +11921,431 @@
     "name": "solc",
     "version": "0.7.4+commit.3f05b770.Emscripten.clang"
   },
-  "networks": {},
+  "networks": {
+    "1611235811828": {
+      "events": {
+        "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "previousOwner",
+              "type": "address"
+            },
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "newOwner",
+              "type": "address"
+            }
+          ],
+          "name": "OwnershipTransferred",
+          "type": "event"
+        },
+        "0xa07c91c183e42229e705a9795a1c06d76528b673788b849597364528c96eefb7": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "contract IERC20",
+              "name": "token",
+              "type": "address"
+            }
+          ],
+          "name": "TokenSet",
+          "type": "event"
+        },
+        "0x7fc35119d3b3c2716103649a77c63b4a0062583d6c5dff44606e5333ba40771b": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "vestingId",
+              "type": "uint256"
+            }
+          ],
+          "name": "VestingAdded",
+          "type": "event"
+        },
+        "0xd148b0dd94807c97b817d5020a2f49c1908f919b9a57633081d9d6d11ba99be0": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "vestingId",
+              "type": "uint256"
+            }
+          ],
+          "name": "VestingCanceled",
+          "type": "event"
+        },
+        "0x00e5b3e20f5be59dfdc5df050a8674b471b4f787e3d8c23c5504fd5438f891b7": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "vestingId",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "amount",
+              "type": "uint256"
+            }
+          ],
+          "name": "VestingWithdraw",
+          "type": "event"
+        }
+      },
+      "links": {},
+      "address": "0x0eB9975E0f591724380D96DE31ECA8F5F78fc5B6",
+      "transactionHash": "0xad0eae7680594707fd56ef787278bbfc25032336fa24897634a473a4db9d3426"
+    },
+    "1611237280138": {
+      "events": {
+        "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "previousOwner",
+              "type": "address"
+            },
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "newOwner",
+              "type": "address"
+            }
+          ],
+          "name": "OwnershipTransferred",
+          "type": "event"
+        },
+        "0xa07c91c183e42229e705a9795a1c06d76528b673788b849597364528c96eefb7": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "contract IERC20",
+              "name": "token",
+              "type": "address"
+            }
+          ],
+          "name": "TokenSet",
+          "type": "event"
+        },
+        "0x7fc35119d3b3c2716103649a77c63b4a0062583d6c5dff44606e5333ba40771b": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "vestingId",
+              "type": "uint256"
+            }
+          ],
+          "name": "VestingAdded",
+          "type": "event"
+        },
+        "0xd148b0dd94807c97b817d5020a2f49c1908f919b9a57633081d9d6d11ba99be0": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "vestingId",
+              "type": "uint256"
+            }
+          ],
+          "name": "VestingCanceled",
+          "type": "event"
+        },
+        "0x00e5b3e20f5be59dfdc5df050a8674b471b4f787e3d8c23c5504fd5438f891b7": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "vestingId",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "amount",
+              "type": "uint256"
+            }
+          ],
+          "name": "VestingWithdraw",
+          "type": "event"
+        }
+      },
+      "links": {},
+      "address": "0x5DE6932832a29CBF5b4052DF4C51cc6bE9a737e7",
+      "transactionHash": "0x42557561826e6b4d4b7bcfde6169602753d09d6c562c1f0c028ede2ab7ab3b8e"
+    },
+    "1611237580112": {
+      "events": {
+        "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "previousOwner",
+              "type": "address"
+            },
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "newOwner",
+              "type": "address"
+            }
+          ],
+          "name": "OwnershipTransferred",
+          "type": "event"
+        },
+        "0xa07c91c183e42229e705a9795a1c06d76528b673788b849597364528c96eefb7": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "contract IERC20",
+              "name": "token",
+              "type": "address"
+            }
+          ],
+          "name": "TokenSet",
+          "type": "event"
+        },
+        "0x7fc35119d3b3c2716103649a77c63b4a0062583d6c5dff44606e5333ba40771b": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "vestingId",
+              "type": "uint256"
+            }
+          ],
+          "name": "VestingAdded",
+          "type": "event"
+        },
+        "0xd148b0dd94807c97b817d5020a2f49c1908f919b9a57633081d9d6d11ba99be0": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "vestingId",
+              "type": "uint256"
+            }
+          ],
+          "name": "VestingCanceled",
+          "type": "event"
+        },
+        "0x00e5b3e20f5be59dfdc5df050a8674b471b4f787e3d8c23c5504fd5438f891b7": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "vestingId",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "amount",
+              "type": "uint256"
+            }
+          ],
+          "name": "VestingWithdraw",
+          "type": "event"
+        }
+      },
+      "links": {},
+      "address": "0x3AB06748d92a6F1799E2e85c8fdf2581Df6Dd04a",
+      "transactionHash": "0xd14643c1994a69f6b6bff645b9539c2a68e5b5f5bc53611c457b331d43b29aa5"
+    },
+    "1611237669086": {
+      "events": {
+        "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "previousOwner",
+              "type": "address"
+            },
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "newOwner",
+              "type": "address"
+            }
+          ],
+          "name": "OwnershipTransferred",
+          "type": "event"
+        },
+        "0xa07c91c183e42229e705a9795a1c06d76528b673788b849597364528c96eefb7": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "contract IERC20",
+              "name": "token",
+              "type": "address"
+            }
+          ],
+          "name": "TokenSet",
+          "type": "event"
+        },
+        "0x7fc35119d3b3c2716103649a77c63b4a0062583d6c5dff44606e5333ba40771b": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "vestingId",
+              "type": "uint256"
+            }
+          ],
+          "name": "VestingAdded",
+          "type": "event"
+        },
+        "0xd148b0dd94807c97b817d5020a2f49c1908f919b9a57633081d9d6d11ba99be0": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "vestingId",
+              "type": "uint256"
+            }
+          ],
+          "name": "VestingCanceled",
+          "type": "event"
+        },
+        "0x00e5b3e20f5be59dfdc5df050a8674b471b4f787e3d8c23c5504fd5438f891b7": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "vestingId",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "amount",
+              "type": "uint256"
+            }
+          ],
+          "name": "VestingWithdraw",
+          "type": "event"
+        }
+      },
+      "links": {},
+      "address": "0xB24139Ee7bBfED8683968e741943e90053a182d7",
+      "transactionHash": "0x565296a74855b08e328f648f2605bcd531d512d332d8b45792599166631ba80b"
+    },
+    "1611237889406": {
+      "events": {
+        "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "previousOwner",
+              "type": "address"
+            },
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "newOwner",
+              "type": "address"
+            }
+          ],
+          "name": "OwnershipTransferred",
+          "type": "event"
+        },
+        "0xa07c91c183e42229e705a9795a1c06d76528b673788b849597364528c96eefb7": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "contract IERC20",
+              "name": "token",
+              "type": "address"
+            }
+          ],
+          "name": "TokenSet",
+          "type": "event"
+        },
+        "0x7fc35119d3b3c2716103649a77c63b4a0062583d6c5dff44606e5333ba40771b": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "vestingId",
+              "type": "uint256"
+            }
+          ],
+          "name": "VestingAdded",
+          "type": "event"
+        },
+        "0xd148b0dd94807c97b817d5020a2f49c1908f919b9a57633081d9d6d11ba99be0": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "vestingId",
+              "type": "uint256"
+            }
+          ],
+          "name": "VestingCanceled",
+          "type": "event"
+        },
+        "0x00e5b3e20f5be59dfdc5df050a8674b471b4f787e3d8c23c5504fd5438f891b7": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "vestingId",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "amount",
+              "type": "uint256"
+            }
+          ],
+          "name": "VestingWithdraw",
+          "type": "event"
+        }
+      },
+      "links": {},
+      "address": "0x40787B1F489d75F6A21D2a2EF491ff658e1EF6f7",
+      "transactionHash": "0xfa998548a86a519fa2947ec9d22a7f0e453f61ae5bd49f9f51dde81e8e45afd0"
+    }
+  },
   "schemaVersion": "3.3.3",
-  "updatedAt": "2021-01-20T19:02:06.548Z",
+  "updatedAt": "2021-01-21T14:05:09.422Z",
+  "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",
     "methods": {
