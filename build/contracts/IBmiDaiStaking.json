@@ -1,0 +1,1274 @@
+{
+  "contractName": "IBmiDaiStaking",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_amount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "contract IPolicyBook",
+          "name": "_policyBook",
+          "type": "address"
+        }
+      ],
+      "name": "stakeDAIx",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "tokenID",
+          "type": "uint256"
+        }
+      ],
+      "name": "withdrawBMIProfit",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "tokenID",
+          "type": "uint256"
+        }
+      ],
+      "name": "withdrawFundsWithProfit",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "tokenID",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "increaseBmiProfit",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "tokenID",
+          "type": "uint256"
+        }
+      ],
+      "name": "getStakingInfoByTokenID",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "stakingStartTime",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "stakedDaiAmount",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "policyBookAddress",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "bmiProfit",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct IBmiDaiStaking.StakingInfo",
+          "name": "_stakingInfo",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.7.4+commit.3f05b770\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"tokenID\",\"type\":\"uint256\"}],\"name\":\"getStakingInfoByTokenID\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"stakingStartTime\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"stakedDaiAmount\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"policyBookAddress\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"bmiProfit\",\"type\":\"uint256\"}],\"internalType\":\"struct IBmiDaiStaking.StakingInfo\",\"name\":\"_stakingInfo\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"tokenID\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"increaseBmiProfit\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_amount\",\"type\":\"uint256\"},{\"internalType\":\"contract IPolicyBook\",\"name\":\"_policyBook\",\"type\":\"address\"}],\"name\":\"stakeDAIx\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"tokenID\",\"type\":\"uint256\"}],\"name\":\"withdrawBMIProfit\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"tokenID\",\"type\":\"uint256\"}],\"name\":\"withdrawFundsWithProfit\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"/home/artem/Projects/Distributed_Lab/Applicature/bridgemutual-core/contracts/interfaces/IBmiDaiStaking.sol\":\"IBmiDaiStaking\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":10000},\"remappings\":[]},\"sources\":{\"/home/artem/Projects/Distributed_Lab/Applicature/bridgemutual-core/contracts/interfaces/IBmiDaiStaking.sol\":{\"keccak256\":\"0x34502897414f2a033f6b63a1ab6bfd0bf95d28a0b96ad8e1f20c7c8298882115\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://bd54b297c8662239c9a8115c07144b2176518394dde5b8b90e55a9873b2af63e\",\"dweb:/ipfs/QmZrzbwxnkCxB9ifW8KqZL95Mw3UEgJQBsXdCWaW26JmCV\"]},\"/home/artem/Projects/Distributed_Lab/Applicature/bridgemutual-core/contracts/interfaces/IPolicyBook.sol\":{\"keccak256\":\"0x783163967130219e112777f0f5a42e1bdafad6f8ef31c14a559f4e3880ef7e3e\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://9eb53118a776b2e05e349de00b8a9b0c62b6d1e59e6160e298e3b176b70ebcca\",\"dweb:/ipfs/QmQw8yc7Y4CmJzBs5N49N6JAkoKgCzMLweHSrngmhKhqCw\"]},\"/home/artem/Projects/Distributed_Lab/Applicature/bridgemutual-core/contracts/interfaces/IPolicyBookFabric.sol\":{\"keccak256\":\"0x5dffaaf6e0ece56b03c76eb5d57e758485fc2cca0c46913a2ee2135a5c518493\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://ff2aca8141f40390bbd21022d61fac04651cb3ff91dc7702c2654d36d79b188c\",\"dweb:/ipfs/Qmf6xXSP2yasVTD9RaG1rgnY85bPCAtNnBsXxzA1bvHgJa\"]},\"@openzeppelin/contracts/token/ERC20/IERC20.sol\":{\"keccak256\":\"0x5f02220344881ce43204ae4a6281145a67bc52c2bb1290a791857df3d19d78f5\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://24427744bd3e6cb73c17010119af12a318289c0253a4d9acb8576c9fb3797b08\",\"dweb:/ipfs/QmTLDqpKRBuxGxRAmjgXt9AkXyACW3MtKzi7PYjm5iMfGC\"]}},\"version\":1}",
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "immutableReferences": {},
+  "generatedSources": [],
+  "deployedGeneratedSources": [],
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "// SPDX-License-Identifier: MIT\npragma solidity ^0.7.4;\npragma experimental ABIEncoderV2;\n\nimport \"./IPolicyBook.sol\";\n\ninterface IBmiDaiStaking {\n    struct StakingInfo {\n        uint256 stakingStartTime;        \n        uint256 stakedDaiAmount;\n        address policyBookAddress;\n\n        uint256 bmiProfit;\n    }   \n\n    function stakeDAIx(uint256 _amount, IPolicyBook _policyBook) external;\n\n    function withdrawBMIProfit(uint256 tokenID) external;\n        \n    function withdrawFundsWithProfit(uint256 tokenID) external;\n\n    function increaseBmiProfit(uint256 tokenID, uint256 amount) external;\n\n    function getStakingInfoByTokenID(uint256 tokenID) external view returns (IBmiDaiStaking.StakingInfo memory _stakingInfo);\n}",
+  "sourcePath": "/home/artem/Projects/Distributed_Lab/Applicature/bridgemutual-core/contracts/interfaces/IBmiDaiStaking.sol",
+  "ast": {
+    "absolutePath": "/home/artem/Projects/Distributed_Lab/Applicature/bridgemutual-core/contracts/interfaces/IBmiDaiStaking.sol",
+    "exportedSymbols": {
+      "IBmiDaiStaking": [
+        2852
+      ],
+      "IERC20": [
+        6288
+      ],
+      "IPolicyBook": [
+        3012
+      ],
+      "IPolicyBookFabric": [
+        3061
+      ]
+    },
+    "id": 2853,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 2809,
+        "literals": [
+          "solidity",
+          "^",
+          "0.7",
+          ".4"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "32:23:9"
+      },
+      {
+        "id": 2810,
+        "literals": [
+          "experimental",
+          "ABIEncoderV2"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "56:33:9"
+      },
+      {
+        "absolutePath": "/home/artem/Projects/Distributed_Lab/Applicature/bridgemutual-core/contracts/interfaces/IPolicyBook.sol",
+        "file": "./IPolicyBook.sol",
+        "id": 2811,
+        "nodeType": "ImportDirective",
+        "scope": 2853,
+        "sourceUnit": 3013,
+        "src": "91:27:9",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "fullyImplemented": false,
+        "id": 2852,
+        "linearizedBaseContracts": [
+          2852
+        ],
+        "name": "IBmiDaiStaking",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "canonicalName": "IBmiDaiStaking.StakingInfo",
+            "id": 2820,
+            "members": [
+              {
+                "constant": false,
+                "id": 2813,
+                "mutability": "mutable",
+                "name": "stakingStartTime",
+                "nodeType": "VariableDeclaration",
+                "scope": 2820,
+                "src": "180:24:9",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 2812,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "180:7:9",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 2815,
+                "mutability": "mutable",
+                "name": "stakedDaiAmount",
+                "nodeType": "VariableDeclaration",
+                "scope": 2820,
+                "src": "222:23:9",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 2814,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "222:7:9",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 2817,
+                "mutability": "mutable",
+                "name": "policyBookAddress",
+                "nodeType": "VariableDeclaration",
+                "scope": 2820,
+                "src": "255:25:9",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                },
+                "typeName": {
+                  "id": 2816,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "255:7:9",
+                  "stateMutability": "nonpayable",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 2819,
+                "mutability": "mutable",
+                "name": "bmiProfit",
+                "nodeType": "VariableDeclaration",
+                "scope": 2820,
+                "src": "291:17:9",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 2818,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "291:7:9",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              }
+            ],
+            "name": "StakingInfo",
+            "nodeType": "StructDefinition",
+            "scope": 2852,
+            "src": "151:164:9",
+            "visibility": "public"
+          },
+          {
+            "functionSelector": "81927714",
+            "id": 2827,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "stakeDAIx",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 2825,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 2822,
+                  "mutability": "mutable",
+                  "name": "_amount",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 2827,
+                  "src": "343:15:9",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 2821,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "343:7:9",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 2824,
+                  "mutability": "mutable",
+                  "name": "_policyBook",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 2827,
+                  "src": "360:23:9",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_contract$_IPolicyBook_$3012",
+                    "typeString": "contract IPolicyBook"
+                  },
+                  "typeName": {
+                    "id": 2823,
+                    "name": "IPolicyBook",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 3012,
+                    "src": "360:11:9",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_IPolicyBook_$3012",
+                      "typeString": "contract IPolicyBook"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "342:42:9"
+            },
+            "returnParameters": {
+              "id": 2826,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "393:0:9"
+            },
+            "scope": 2852,
+            "src": "324:70:9",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "functionSelector": "cd30a976",
+            "id": 2832,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "withdrawBMIProfit",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 2830,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 2829,
+                  "mutability": "mutable",
+                  "name": "tokenID",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 2832,
+                  "src": "427:15:9",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 2828,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "427:7:9",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "426:17:9"
+            },
+            "returnParameters": {
+              "id": 2831,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "452:0:9"
+            },
+            "scope": 2852,
+            "src": "400:53:9",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "functionSelector": "a7fa3c7f",
+            "id": 2837,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "withdrawFundsWithProfit",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 2835,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 2834,
+                  "mutability": "mutable",
+                  "name": "tokenID",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 2837,
+                  "src": "500:15:9",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 2833,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "500:7:9",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "499:17:9"
+            },
+            "returnParameters": {
+              "id": 2836,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "525:0:9"
+            },
+            "scope": 2852,
+            "src": "467:59:9",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "functionSelector": "cc199391",
+            "id": 2844,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "increaseBmiProfit",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 2842,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 2839,
+                  "mutability": "mutable",
+                  "name": "tokenID",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 2844,
+                  "src": "559:15:9",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 2838,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "559:7:9",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 2841,
+                  "mutability": "mutable",
+                  "name": "amount",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 2844,
+                  "src": "576:14:9",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 2840,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "576:7:9",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "558:33:9"
+            },
+            "returnParameters": {
+              "id": 2843,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "600:0:9"
+            },
+            "scope": 2852,
+            "src": "532:69:9",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "functionSelector": "076befe7",
+            "id": 2851,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getStakingInfoByTokenID",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 2847,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 2846,
+                  "mutability": "mutable",
+                  "name": "tokenID",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 2851,
+                  "src": "640:15:9",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 2845,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "640:7:9",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "639:17:9"
+            },
+            "returnParameters": {
+              "id": 2850,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 2849,
+                  "mutability": "mutable",
+                  "name": "_stakingInfo",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 2851,
+                  "src": "680:46:9",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_StakingInfo_$2820_memory_ptr",
+                    "typeString": "struct IBmiDaiStaking.StakingInfo"
+                  },
+                  "typeName": {
+                    "id": 2848,
+                    "name": "IBmiDaiStaking.StakingInfo",
+                    "nodeType": "UserDefinedTypeName",
+                    "referencedDeclaration": 2820,
+                    "src": "680:26:9",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_StakingInfo_$2820_storage_ptr",
+                      "typeString": "struct IBmiDaiStaking.StakingInfo"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "679:48:9"
+            },
+            "scope": 2852,
+            "src": "607:121:9",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "scope": 2853,
+        "src": "120:610:9"
+      }
+    ],
+    "src": "32:698:9"
+  },
+  "legacyAST": {
+    "attributes": {
+      "absolutePath": "/home/artem/Projects/Distributed_Lab/Applicature/bridgemutual-core/contracts/interfaces/IBmiDaiStaking.sol",
+      "exportedSymbols": {
+        "IBmiDaiStaking": [
+          2852
+        ],
+        "IERC20": [
+          6288
+        ],
+        "IPolicyBook": [
+          3012
+        ],
+        "IPolicyBookFabric": [
+          3061
+        ]
+      },
+      "license": "MIT"
+    },
+    "children": [
+      {
+        "attributes": {
+          "literals": [
+            "solidity",
+            "^",
+            "0.7",
+            ".4"
+          ]
+        },
+        "id": 2809,
+        "name": "PragmaDirective",
+        "src": "32:23:9"
+      },
+      {
+        "attributes": {
+          "literals": [
+            "experimental",
+            "ABIEncoderV2"
+          ]
+        },
+        "id": 2810,
+        "name": "PragmaDirective",
+        "src": "56:33:9"
+      },
+      {
+        "attributes": {
+          "SourceUnit": 3013,
+          "absolutePath": "/home/artem/Projects/Distributed_Lab/Applicature/bridgemutual-core/contracts/interfaces/IPolicyBook.sol",
+          "file": "./IPolicyBook.sol",
+          "scope": 2853,
+          "symbolAliases": [
+            null
+          ],
+          "unitAlias": ""
+        },
+        "id": 2811,
+        "name": "ImportDirective",
+        "src": "91:27:9"
+      },
+      {
+        "attributes": {
+          "abstract": false,
+          "baseContracts": [
+            null
+          ],
+          "contractDependencies": [
+            null
+          ],
+          "contractKind": "interface",
+          "fullyImplemented": false,
+          "linearizedBaseContracts": [
+            2852
+          ],
+          "name": "IBmiDaiStaking",
+          "scope": 2853
+        },
+        "children": [
+          {
+            "attributes": {
+              "canonicalName": "IBmiDaiStaking.StakingInfo",
+              "name": "StakingInfo",
+              "scope": 2852,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "stakingStartTime",
+                  "scope": 2820,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "uint256",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint256",
+                      "type": "uint256"
+                    },
+                    "id": 2812,
+                    "name": "ElementaryTypeName",
+                    "src": "180:7:9"
+                  }
+                ],
+                "id": 2813,
+                "name": "VariableDeclaration",
+                "src": "180:24:9"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "stakedDaiAmount",
+                  "scope": 2820,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "uint256",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint256",
+                      "type": "uint256"
+                    },
+                    "id": 2814,
+                    "name": "ElementaryTypeName",
+                    "src": "222:7:9"
+                  }
+                ],
+                "id": 2815,
+                "name": "VariableDeclaration",
+                "src": "222:23:9"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "policyBookAddress",
+                  "scope": 2820,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "address",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "address",
+                      "stateMutability": "nonpayable",
+                      "type": "address"
+                    },
+                    "id": 2816,
+                    "name": "ElementaryTypeName",
+                    "src": "255:7:9"
+                  }
+                ],
+                "id": 2817,
+                "name": "VariableDeclaration",
+                "src": "255:25:9"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "mutability": "mutable",
+                  "name": "bmiProfit",
+                  "scope": 2820,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "uint256",
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint256",
+                      "type": "uint256"
+                    },
+                    "id": 2818,
+                    "name": "ElementaryTypeName",
+                    "src": "291:7:9"
+                  }
+                ],
+                "id": 2819,
+                "name": "VariableDeclaration",
+                "src": "291:17:9"
+              }
+            ],
+            "id": 2820,
+            "name": "StructDefinition",
+            "src": "151:164:9"
+          },
+          {
+            "attributes": {
+              "functionSelector": "81927714",
+              "implemented": false,
+              "isConstructor": false,
+              "kind": "function",
+              "modifiers": [
+                null
+              ],
+              "name": "stakeDAIx",
+              "scope": 2852,
+              "stateMutability": "nonpayable",
+              "virtual": false,
+              "visibility": "external"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "mutability": "mutable",
+                      "name": "_amount",
+                      "scope": 2827,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 2821,
+                        "name": "ElementaryTypeName",
+                        "src": "343:7:9"
+                      }
+                    ],
+                    "id": 2822,
+                    "name": "VariableDeclaration",
+                    "src": "343:15:9"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "mutability": "mutable",
+                      "name": "_policyBook",
+                      "scope": 2827,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "contract IPolicyBook",
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "IPolicyBook",
+                          "referencedDeclaration": 3012,
+                          "type": "contract IPolicyBook"
+                        },
+                        "id": 2823,
+                        "name": "UserDefinedTypeName",
+                        "src": "360:11:9"
+                      }
+                    ],
+                    "id": 2824,
+                    "name": "VariableDeclaration",
+                    "src": "360:23:9"
+                  }
+                ],
+                "id": 2825,
+                "name": "ParameterList",
+                "src": "342:42:9"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 2826,
+                "name": "ParameterList",
+                "src": "393:0:9"
+              }
+            ],
+            "id": 2827,
+            "name": "FunctionDefinition",
+            "src": "324:70:9"
+          },
+          {
+            "attributes": {
+              "functionSelector": "cd30a976",
+              "implemented": false,
+              "isConstructor": false,
+              "kind": "function",
+              "modifiers": [
+                null
+              ],
+              "name": "withdrawBMIProfit",
+              "scope": 2852,
+              "stateMutability": "nonpayable",
+              "virtual": false,
+              "visibility": "external"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "mutability": "mutable",
+                      "name": "tokenID",
+                      "scope": 2832,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 2828,
+                        "name": "ElementaryTypeName",
+                        "src": "427:7:9"
+                      }
+                    ],
+                    "id": 2829,
+                    "name": "VariableDeclaration",
+                    "src": "427:15:9"
+                  }
+                ],
+                "id": 2830,
+                "name": "ParameterList",
+                "src": "426:17:9"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 2831,
+                "name": "ParameterList",
+                "src": "452:0:9"
+              }
+            ],
+            "id": 2832,
+            "name": "FunctionDefinition",
+            "src": "400:53:9"
+          },
+          {
+            "attributes": {
+              "functionSelector": "a7fa3c7f",
+              "implemented": false,
+              "isConstructor": false,
+              "kind": "function",
+              "modifiers": [
+                null
+              ],
+              "name": "withdrawFundsWithProfit",
+              "scope": 2852,
+              "stateMutability": "nonpayable",
+              "virtual": false,
+              "visibility": "external"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "mutability": "mutable",
+                      "name": "tokenID",
+                      "scope": 2837,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 2833,
+                        "name": "ElementaryTypeName",
+                        "src": "500:7:9"
+                      }
+                    ],
+                    "id": 2834,
+                    "name": "VariableDeclaration",
+                    "src": "500:15:9"
+                  }
+                ],
+                "id": 2835,
+                "name": "ParameterList",
+                "src": "499:17:9"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 2836,
+                "name": "ParameterList",
+                "src": "525:0:9"
+              }
+            ],
+            "id": 2837,
+            "name": "FunctionDefinition",
+            "src": "467:59:9"
+          },
+          {
+            "attributes": {
+              "functionSelector": "cc199391",
+              "implemented": false,
+              "isConstructor": false,
+              "kind": "function",
+              "modifiers": [
+                null
+              ],
+              "name": "increaseBmiProfit",
+              "scope": 2852,
+              "stateMutability": "nonpayable",
+              "virtual": false,
+              "visibility": "external"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "mutability": "mutable",
+                      "name": "tokenID",
+                      "scope": 2844,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 2838,
+                        "name": "ElementaryTypeName",
+                        "src": "559:7:9"
+                      }
+                    ],
+                    "id": 2839,
+                    "name": "VariableDeclaration",
+                    "src": "559:15:9"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "mutability": "mutable",
+                      "name": "amount",
+                      "scope": 2844,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 2840,
+                        "name": "ElementaryTypeName",
+                        "src": "576:7:9"
+                      }
+                    ],
+                    "id": 2841,
+                    "name": "VariableDeclaration",
+                    "src": "576:14:9"
+                  }
+                ],
+                "id": 2842,
+                "name": "ParameterList",
+                "src": "558:33:9"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 2843,
+                "name": "ParameterList",
+                "src": "600:0:9"
+              }
+            ],
+            "id": 2844,
+            "name": "FunctionDefinition",
+            "src": "532:69:9"
+          },
+          {
+            "attributes": {
+              "functionSelector": "076befe7",
+              "implemented": false,
+              "isConstructor": false,
+              "kind": "function",
+              "modifiers": [
+                null
+              ],
+              "name": "getStakingInfoByTokenID",
+              "scope": 2852,
+              "stateMutability": "view",
+              "virtual": false,
+              "visibility": "external"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "mutability": "mutable",
+                      "name": "tokenID",
+                      "scope": 2851,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 2845,
+                        "name": "ElementaryTypeName",
+                        "src": "640:7:9"
+                      }
+                    ],
+                    "id": 2846,
+                    "name": "VariableDeclaration",
+                    "src": "640:15:9"
+                  }
+                ],
+                "id": 2847,
+                "name": "ParameterList",
+                "src": "639:17:9"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "mutability": "mutable",
+                      "name": "_stakingInfo",
+                      "scope": 2851,
+                      "stateVariable": false,
+                      "storageLocation": "memory",
+                      "type": "struct IBmiDaiStaking.StakingInfo",
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "IBmiDaiStaking.StakingInfo",
+                          "referencedDeclaration": 2820,
+                          "type": "struct IBmiDaiStaking.StakingInfo"
+                        },
+                        "id": 2848,
+                        "name": "UserDefinedTypeName",
+                        "src": "680:26:9"
+                      }
+                    ],
+                    "id": 2849,
+                    "name": "VariableDeclaration",
+                    "src": "680:46:9"
+                  }
+                ],
+                "id": 2850,
+                "name": "ParameterList",
+                "src": "679:48:9"
+              }
+            ],
+            "id": 2851,
+            "name": "FunctionDefinition",
+            "src": "607:121:9"
+          }
+        ],
+        "id": 2852,
+        "name": "ContractDefinition",
+        "src": "120:610:9"
+      }
+    ],
+    "id": 2853,
+    "name": "SourceUnit",
+    "src": "32:698:9"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.7.4+commit.3f05b770.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.3.3",
+  "updatedAt": "2021-01-22T14:04:33.329Z",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  }
+}

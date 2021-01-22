@@ -8,10 +8,14 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "./interfaces/IPolicyBook.sol";
 import "./interfaces/IPolicyBookRegistry.sol";
 
+import "./ContractsRegistry.sol";
+
 contract PolicyBookRegistry is IPolicyBookRegistry, Ownable {
   using Math for uint256;
 
-  address public policyFabricAddress;
+  ContractsRegistry public contractsRegistry;
+
+  address public policyBookFabricAddress;
   uint256 private policyBooksCount;
 
   address[] public policies;
@@ -19,16 +23,18 @@ contract PolicyBookRegistry is IPolicyBookRegistry, Ownable {
 
   event Added(address insured, address at);
 
-  modifier onlyPolicyFabric() {
-    require(msg.sender == policyFabricAddress, "Caller is not a policyFabric contract");
+  modifier onlyPolicyBookFabric() {
+    require(msg.sender == policyBookFabricAddress, "Caller is not a PolicyBookFabric contract");
     _;
   }
 
-  function setPolicyFabricAddress(address _policyFabricAddress) external onlyOwner {
-    policyFabricAddress = _policyFabricAddress;
+  function initRegistry(ContractsRegistry _contractsRegistry) external onlyOwner {
+    contractsRegistry = _contractsRegistry;
+
+    policyBookFabricAddress = contractsRegistry.getContract(contractsRegistry.getPolicyBookFabricName());
   }
 
-  function add(address _insuredContract, address _policyBook) external override onlyPolicyFabric() {
+  function add(address _insuredContract, address _policyBook) external override onlyPolicyBookFabric {
     require(policiesByAddress[_insuredContract] == address(0), "PolicyBook for the contract is already created");
 
     policies.push(_policyBook);

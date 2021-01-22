@@ -10,13 +10,15 @@ contract ContractsRegistry is Ownable, AccessControl {
 
     bytes32 public constant REGISTRY_ADMIN_ROLE = keccak256("REGISTRY_ADMIN_ROLE");
 
-    string constant private POLICY_BOOK_REGISTRY_NAME = "POLICY_BOOK_REGISTRY";        
+    string constant private POLICY_BOOK_REGISTRY_NAME = "POLICY_BOOK_REGISTRY";  
+    string constant private POLICY_BOOK_FABRIC_NAME = "POLICY_BOOK_FABRIC";        
     string constant private BMI_DAI_STAKING_NAME = "BMI_DAI_STAKING";
-    string constant private YIELD_GENERATOR_NAME = "YIELD_GENERATOR";
+    string constant private YIELD_GENERATOR_NAME = "DEFI_YIELD_GENERATOR";
     string constant private DAI_NAME = "DAI";
+    string constant private BMI_NAME = "BMI";
 
     modifier onlyAdmin() {
-        require(hasRole(REGISTRY_ADMIN_ROLE, msg.sender), "Caller is not an admin");
+        require(hasRole(REGISTRY_ADMIN_ROLE, msg.sender), "ContractsRegistry: Caller is not an admin");
         _;
     }
 
@@ -29,8 +31,16 @@ contract ContractsRegistry is Ownable, AccessControl {
         return DAI_NAME;
     }
 
+    function getBMIName() external pure returns (string memory) {
+        return BMI_NAME;
+    }
+
     function getPolicyBookRegistryName() external pure returns (string memory) {
         return POLICY_BOOK_REGISTRY_NAME;
+    }
+
+    function getPolicyBookFabricName() external pure returns (string memory) {
+        return POLICY_BOOK_FABRIC_NAME;
     }
 
     function getBmiDAIStakingName() external pure returns (string memory) {
@@ -44,27 +54,24 @@ contract ContractsRegistry is Ownable, AccessControl {
     function getContract(string memory _name) public view returns (address) {
         bytes32 bytesName = keccak256(abi.encodePacked(_name));
 
-        require(_contracts[bytesName] != address(0), "This mapping doesn't exist");
+        require(_contracts[bytesName] != address(0), "ContractsRegistry: This mapping doesn't exist");
 
         return _contracts[bytesName];
     }
 
     function addContractRegistry(string memory _name, address _contractAddress) public onlyAdmin {
-        require(_contractAddress != address(0), "Null address is forbidden");        
+        require(_contractAddress != address(0), "ContractsRegistry: Null address is forbidden");        
 
         bytes32 bytesName = keccak256(abi.encodePacked(_name));
-
-        require(_contracts[bytesName] == address(0), "This mapping already exists");
-
         _contracts[bytesName] = _contractAddress;
     }
 
     function modifyContractRegistry(string memory _name, address _contractAddress) public onlyAdmin {
-        require(_contractAddress != address(0), "Null address is forbidden");        
+        require(_contractAddress != address(0), "ContractsRegistry: Null address is forbidden");        
 
         bytes32 bytesName = keccak256(abi.encodePacked(_name));
 
-        require(_contracts[bytesName] != address(0), "This mapping doesn't exist");
+        require(_contracts[bytesName] != address(0), "ContractsRegistry: This mapping doesn't exist");
 
         _contracts[bytesName] = _contractAddress;
     }
@@ -72,7 +79,7 @@ contract ContractsRegistry is Ownable, AccessControl {
     function deleteContractRegistry(string memory _name) public onlyAdmin {
         bytes32 bytesName = keccak256(abi.encodePacked(_name));
 
-        require(_contracts[bytesName] != address(0), "This mapping doesn't exist");
+        require(_contracts[bytesName] != address(0), "ContractsRegistry: This mapping doesn't exist");
 
         delete _contracts[bytesName];
     }    

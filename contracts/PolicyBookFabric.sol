@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.7.4;
 
+import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/math/Math.sol";
 
 import "./interfaces/IPolicyBookFabric.sol";
@@ -9,20 +10,18 @@ import "./interfaces/IPolicyBookRegistry.sol";
 import "./ContractsRegistry.sol";
 import "./PolicyBook.sol";
 
-contract PolicyBookFabric is IPolicyBookFabric {
+contract PolicyBookFabric is IPolicyBookFabric, Ownable {
   using Math for uint256;
 
   ContractsRegistry public contractsRegistry;
-  IPolicyBookRegistry public policyRegistry;
-  
-  address public daiAddr;
+  IPolicyBookRegistry public policyRegistry;  
 
   event Created(address insured, ContractType contractType, address at);
 
-  constructor(ContractsRegistry _contractsRegistry) {
+  function initRegistry(ContractsRegistry _contractsRegistry) external onlyOwner {
     contractsRegistry = _contractsRegistry;
-    policyRegistry = IPolicyBookRegistry(_contractsRegistry.getContract(_contractsRegistry.getPolicyBookRegistryName()));
-    daiAddr = _contractsRegistry.getContract(_contractsRegistry.getDAIName());
+    
+    policyRegistry = IPolicyBookRegistry(_contractsRegistry.getContract(_contractsRegistry.getPolicyBookRegistryName()));    
   }
 
   function create(
@@ -31,7 +30,10 @@ contract PolicyBookFabric is IPolicyBookFabric {
     string memory _description,
     string memory _projectSymbol
   ) external override returns (address _policyBook) {
-    PolicyBook _newPolicyBook = new PolicyBook(contractsRegistry, _insuranceContract, _contractType, _description, _projectSymbol);
+    PolicyBook _newPolicyBook = new PolicyBook(_insuranceContract, _contractType, _description, _projectSymbol);
+    _newPolicyBook.initRegistry(contractsRegistry);
+    _newPolicyBook.approveAllDaiTokensForStaking();
+    
     policyRegistry.add(_insuranceContract, address(_newPolicyBook));
 
     emit Created(_insuranceContract, _contractType, address(_newPolicyBook));

@@ -1,8 +1,6 @@
-const fs = require('fs');
-
 const MockDAI = artifacts.require('mock/DAIMock');
 
-const MockPolicyBook = artifacts.require('mock/MockPolicyBook');
+const ContractsRegistry = artifacts.require('ContractsRegistry');
 const PolicyBook = artifacts.require('PolicyBook');
 const PolicyBookFabric = artifacts.require('PolicyBookFabric');
 const PolicyBookRegistry = artifacts.require('PolicyBookRegistry');
@@ -19,20 +17,27 @@ module.exports = async (deployer, network, accounts) => {
   const mockInsuranceContractAddress2 = '0x0000000000000000000000000000000000000002';
   const mockInsuranceContractAddress3 = '0x0000000000000000000000000000000000000003';
 
+  const contractsRegistry = await ContractsRegistry.deployed();  
+
   await deployer.deploy(MockDAI, 'mockDAI', 'MDAI');
   const mockDai = await MockDAI.deployed();
 
   await deployer.deploy(PolicyBookRegistry);
-  const policyBookRegistry = await PolicyBookRegistry.deployed();  
+  const policyBookRegistry = await PolicyBookRegistry.deployed();   
 
-  await deployer.deploy(PolicyBookFabric, policyBookRegistry.address, mockDai.address);
+  await deployer.deploy(PolicyBookFabric);
   const policyBookFabric = await PolicyBookFabric.deployed();
 
-  await policyBookRegistry.setPolicyFabricAddress(policyBookFabric.address);
+  await contractsRegistry.addContractRegistry((await contractsRegistry.getDAIName.call()), mockDai.address);
+  await contractsRegistry.addContractRegistry((await contractsRegistry.getPolicyBookRegistryName.call()), policyBookRegistry.address);  
+  await contractsRegistry.addContractRegistry((await contractsRegistry.getPolicyBookFabricName.call()), policyBookFabric.address);  
 
-  const emptyPolicyBookAddress = (await policyBookFabric.create(mockInsuranceContractAddress1, ContractType.DEFI, 'mock1', '1')).logs[0].args.at;
-  const smallPolicyBookAddress = (await policyBookFabric.create(mockInsuranceContractAddress2, ContractType.CONTRACT, 'mock2', '2')).logs[0].args.at;
-  const bigPolicyBookAddress = (await policyBookFabric.create(mockInsuranceContractAddress3, ContractType.EXCHANGE, 'mock3', '3')).logs[0].args.at;
+  await policyBookFabric.initRegistry(contractsRegistry.address);
+  await policyBookRegistry.initRegistry(contractsRegistry.address);
+
+  const emptyPolicyBookAddress = (await policyBookFabric.create(mockInsuranceContractAddress1, ContractType.DEFI, 'mock1', '1')).logs[1].args.at;  
+  const smallPolicyBookAddress = (await policyBookFabric.create(mockInsuranceContractAddress2, ContractType.CONTRACT, 'mock2', '2')).logs[1].args.at;  
+  const bigPolicyBookAddress = (await policyBookFabric.create(mockInsuranceContractAddress3, ContractType.EXCHANGE, 'mock3', '3')).logs[1].args.at;
   
   const emptyPolicyBook = await PolicyBook.at(emptyPolicyBookAddress);
   const smallPolicyBook = await PolicyBook.at(smallPolicyBookAddress);

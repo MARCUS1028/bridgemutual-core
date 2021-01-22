@@ -2,31 +2,44 @@
 pragma solidity ^0.7.4;
 pragma experimental ABIEncoderV2;
 
+import "@openzeppelin/contracts/access/Ownable.sol";
+
+import "./interfaces/IBmiDaiStaking.sol";
 import "./interfaces/IPolicyBook.sol";
 
-import "./tokens/CustomERC1155.sol";
+import "./tokens/ERC1155.sol";
 import "./PolicyBook.sol";
 import "./ContractsRegistry.sol";
+import "./DefiYieldGenerator.sol";
 
-contract BmiDAIStaking is CustomERC1155 {
-    struct StakingInfo {
-        uint256 stakingStartTime;        
-        uint256 bmiDAIAmount;
-        address policyBookAddress;
-    }    
-
+contract BmiDAIStaking is IBmiDaiStaking, ERC1155, Ownable {     
+    uint256 constant private THREE_MONTH = 3 * 30 days;
+    
     ContractsRegistry public contractsRegistry;
 
-    IERC20 daiToken;
+    IERC20 public daiToken;
+    IERC20 public bmiToken;
+    DefiYieldGenerator public defiYieldGenerator;
     
     mapping(uint256 => StakingInfo) private _stakersPool; // NFT => INFO
     
     uint256 private _currentNFTMintID = 1;
 
-    constructor(ContractsRegistry _contractsRegistry) CustomERC1155("") {
+    event NFTMinted(uint256 id, address to);
+
+    modifier onlyDefiYieldGenerator() {
+        require (_msgSender() == address(defiYieldGenerator), "Only generator is allowed to increase profit");
+        _;
+    }
+
+    constructor() ERC1155("") {}
+
+    function initRegistry(ContractsRegistry _contractsRegistry) external onlyOwner {
         contractsRegistry = _contractsRegistry;
 
         daiToken = IERC20(_contractsRegistry.getContract(_contractsRegistry.getDAIName()));
+        bmiToken = IERC20(_contractsRegistry.getContract(_contractsRegistry.getBMIName()));
+        defiYieldGenerator = DefiYieldGenerator(contractsRegistry.getContract(contractsRegistry.getYieldGeneratorName()));
     }
 
     function _mintNFT(
@@ -38,42 +51,78 @@ contract BmiDAIStaking is CustomERC1155 {
         uint256 totalAmount = _amount;
 
         for (uint256 i = 0; i < stakerBalance; i++) {
-            uint256 tokenIndex = tokenOfOwnerByIndexNFT(_staker, i);            
+            uint256 tokenID = tokenOfOwnerByIndexNFT(_staker, i);            
 
-            if (_stakersPool[tokenIndex].policyBookAddress == _policyBookAddress) {
-                totalAmount += _stakersPool[tokenIndex].bmiDAIAmount;
+            if (_stakersPool[tokenID].policyBookAddress == _policyBookAddress) {
+                totalAmount += _stakersPool[tokenID].stakedDaiAmount;
                 
-                _burn(_staker, tokenIndex, 1);
-                delete _stakersPool[tokenIndex];
+                _burn(_staker, tokenID, 1);
+                delete _stakersPool[tokenID];
             }
         }
 
         _mint(_staker, _currentNFTMintID, 1, "");
-        _stakersPool[_currentNFTMintID] = StakingInfo(block.timestamp, totalAmount, _policyBookAddress); 
+        _stakersPool[_currentNFTMintID] = StakingInfo(block.timestamp, totalAmount, _policyBookAddress, 0); 
+
+        emit NFTMinted(_currentNFTMintID, _staker);
 
         _currentNFTMintID++;
     }    
 
-    function stakeDAIx(uint256 _amount, IPolicyBook _policyBook) external {
+    function stakeDAIx(uint256 _amount, IPolicyBook _policyBook) external override {
         require(
             _amount <= _policyBook.balanceOf(_msgSender()),
             "Insufficient funds"
-        );        
-       
-        _mintNFT(_msgSender(), _amount, address(_policyBook));
-
-        address yieldGeneratorAddress = contractsRegistry.getContract(contractsRegistry.getYieldGeneratorName());
+        );                    
 
         // transfer DAI from PolicyBook to yield generator
-        bool success = daiToken.transferFrom(address(_policyBook), yieldGeneratorAddress, _amount);        
+        bool success = daiToken.transferFrom(address(_policyBook), address(defiYieldGenerator), _amount);        
         require(success, "Failed to transfer DAI tokens");
 
         // transfer bmiDAIx from user to staking
-        success = _policyBook.transferFrom(msg.sender, address(this), _amount);        
+        success = _policyBook.transferFrom(_msgSender(), address(this), _amount);        
         require(success, "Failed to transfer bmiDAIx tokens");
+
+        _mintNFT(_msgSender(), _amount, address(_policyBook));
     }
 
-    function withdrawProfit() external {
-        // from the mock Yield Generator
+    function withdrawBMIProfit(uint256 tokenID) external override {
+        require (ownerOfNFT(tokenID) == _msgSender(), "Not an NFT token owner");
+
+        // transfer bmi profit from YieldGenerator to user
+        bool success = bmiToken.transferFrom(address(defiYieldGenerator), _msgSender(), _stakersPool[tokenID].bmiProfit);
+        require(success, "Failed to transfer BMI tokens");
+    }
+
+    function withdrawFundsWithProfit(uint256 tokenID) external override {
+        require (block.timestamp > _stakersPool[tokenID].stakingStartTime + THREE_MONTH, "Funds are locked for 3 month");
+        require (ownerOfNFT(tokenID) == _msgSender(), "Not an NFT token owner");
+       
+        IBmiDaiStaking.StakingInfo memory stakingInfo = _stakersPool[tokenID];
+
+        // transfer bmi profit from YieldGenerator to the user
+        bool success = bmiToken.transferFrom(address(defiYieldGenerator), _msgSender(), _stakersPool[tokenID].bmiProfit);
+        require(success, "Failed to transfer BMI tokens");
+
+        // transfer DAI from YieldGenerator to PolicyBook
+        success = daiToken.transferFrom(address(defiYieldGenerator), stakingInfo.policyBookAddress, stakingInfo.stakedDaiAmount);
+        require(success, "Failed to transfer DAI tokens");   
+
+        // transfer bmiDAIx from staking to the user
+        success = IERC20(stakingInfo.policyBookAddress).transfer(_msgSender(), stakingInfo.stakedDaiAmount);
+        require(success, "Failed to transfer bmiDAIx tokens");
+
+        _burn(_msgSender(), tokenID, 1);
+        delete _stakersPool[tokenID];
+    }
+
+    function increaseBmiProfit(uint256 tokenID, uint256 amount) external override onlyDefiYieldGenerator {        
+        _stakersPool[tokenID].bmiProfit = _stakersPool[tokenID].bmiProfit + amount;
+    }
+
+    function getStakingInfoByTokenID(uint256 tokenID) external view override returns (IBmiDaiStaking.StakingInfo memory _stakingInfo) {
+        require (_existsNFT(tokenID), "NFT with such ID doesn't exist");
+
+        return _stakersPool[tokenID];
     }
 }

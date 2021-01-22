@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity =0.7.4;
+pragma solidity ^0.7.4;
 
 interface IQuoteStrategy {
   /// @notice Calculate amount of Token to pay for coverage (calculates by DAI and then convert to final token), access: ANY

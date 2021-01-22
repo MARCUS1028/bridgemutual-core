@@ -2,6 +2,7 @@
 pragma solidity ^0.7.4;
 pragma experimental ABIEncoderV2;
 
+import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/math/SafeMath.sol";
@@ -12,18 +13,19 @@ import "./interfaces/IPolicyBookFabric.sol";
 
 import "./ContractsRegistry.sol";
 
-contract PolicyBook is IPolicyBook, ERC20 {
+contract PolicyBook is IPolicyBook, ERC20, Ownable {
   using SafeMath for uint256;
   using Math for uint256;  
 
-  uint256 MAX_INT = 2**256 - 1;
+  uint256 constant private MAX_INT = 2**256 - 1;
 
   ContractsRegistry public contractsRegistry;
 
   address public override insuranceContractAddress;
   IPolicyBookFabric.ContractType public override contractType;
   
-  IERC20 daiToken;
+  IERC20 public daiToken;
+  address public bmiDaiStakingAddress;
 
   uint256 public totalLiquidity;
   uint256 public totalCoverTokens;
@@ -40,24 +42,25 @@ contract PolicyBook is IPolicyBook, ERC20 {
   event WithdrawLiquidity(address _liquidityHolder, uint256 _tokensToWithdraw, uint256 _newTotalLiquidity);
   event BuyPolicy(address _policyHolder, uint256 _coverTokens, uint256 _price, uint256 _newTotalCoverTokens);
 
-  constructor(
-    ContractsRegistry _contractsRegistry,
+  constructor(    
     address _insuranceContract,
     IPolicyBookFabric.ContractType _contractType,    
     string memory _description,
     string memory _projectSymbol
-  ) ERC20(_description, string(abi.encodePacked("bmiDAI", _projectSymbol))) {
-    contractsRegistry = _contractsRegistry;
+  ) ERC20(_description, string(abi.encodePacked("bmiDAI", _projectSymbol))) {    
     insuranceContractAddress = _insuranceContract;
-    contractType = _contractType;
-    daiToken = IERC20(_contractsRegistry.getContract(_contractsRegistry.getDAIName()));
-
-    approveAllDaiTokensForStaking();
+    contractType = _contractType;    
   }
 
-  function approveAllDaiTokensForStaking() internal {
-    address bmiDaiStakingAddress = contractsRegistry.getContract(contractsRegistry.getBmiDAIStakingName());
+  function initRegistry(ContractsRegistry _contractsRegistry) external onlyOwner {
+    contractsRegistry = _contractsRegistry;
+    
+    daiToken = IERC20(_contractsRegistry.getContract(_contractsRegistry.getDAIName()));
+    bmiDaiStakingAddress = contractsRegistry.getContract(contractsRegistry.getBmiDAIStakingName());
+  }
 
+  function approveAllDaiTokensForStaking() external onlyOwner {
+    
     bool _success = daiToken.approve(bmiDaiStakingAddress, MAX_INT);
 
     require(_success, "Failed to approve DAI tokens");
@@ -201,7 +204,7 @@ contract PolicyBook is IPolicyBook, ERC20 {
   }
 
   uint256 public constant SECONDS_IN_THE_YEAR = 365 * 24 * 60 * 60; // 365 days * 24 hours * 60 minutes * 60 seconds
-  uint256 public constant PRECISION = 10**10;
+  uint256 public constant PRECISION = 10**25;
   uint256 public constant PERCENTAGE_100 = 100 * PRECISION;
 
   uint256 public constant MINIMUM_COST_PERCENTAGE = 5 * PRECISION;
