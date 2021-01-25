@@ -11922,6 +11922,90 @@
     "version": "0.7.4+commit.3f05b770.Emscripten.clang"
   },
   "networks": {
+    "3": {
+      "events": {
+        "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "previousOwner",
+              "type": "address"
+            },
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "newOwner",
+              "type": "address"
+            }
+          ],
+          "name": "OwnershipTransferred",
+          "type": "event"
+        },
+        "0xa07c91c183e42229e705a9795a1c06d76528b673788b849597364528c96eefb7": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "contract IERC20",
+              "name": "token",
+              "type": "address"
+            }
+          ],
+          "name": "TokenSet",
+          "type": "event"
+        },
+        "0x7fc35119d3b3c2716103649a77c63b4a0062583d6c5dff44606e5333ba40771b": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "vestingId",
+              "type": "uint256"
+            }
+          ],
+          "name": "VestingAdded",
+          "type": "event"
+        },
+        "0xd148b0dd94807c97b817d5020a2f49c1908f919b9a57633081d9d6d11ba99be0": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "vestingId",
+              "type": "uint256"
+            }
+          ],
+          "name": "VestingCanceled",
+          "type": "event"
+        },
+        "0x00e5b3e20f5be59dfdc5df050a8674b471b4f787e3d8c23c5504fd5438f891b7": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "vestingId",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "amount",
+              "type": "uint256"
+            }
+          ],
+          "name": "VestingWithdraw",
+          "type": "event"
+        }
+      },
+      "links": {},
+      "address": "0x179f262777Dc03b1CD8891D6d3Fa091DE337D308",
+      "transactionHash": "0x3bac0c8cab96e4611c461fd6d3f6fd35c3982719059442129329f42b471cfa12"
+    },
     "1611235811828": {
       "events": {
         "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
@@ -12425,10 +12509,262 @@
       "links": {},
       "address": "0x1197EE04CfF95A0204a0B2966aE5737f691AB36c",
       "transactionHash": "0x68afeff99a84161b9e0f8fd8be7425282851aac94eb35d3a19e9a9fc39ffb416"
+    },
+    "1611567605761": {
+      "events": {
+        "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "previousOwner",
+              "type": "address"
+            },
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "newOwner",
+              "type": "address"
+            }
+          ],
+          "name": "OwnershipTransferred",
+          "type": "event"
+        },
+        "0xa07c91c183e42229e705a9795a1c06d76528b673788b849597364528c96eefb7": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "contract IERC20",
+              "name": "token",
+              "type": "address"
+            }
+          ],
+          "name": "TokenSet",
+          "type": "event"
+        },
+        "0x7fc35119d3b3c2716103649a77c63b4a0062583d6c5dff44606e5333ba40771b": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "vestingId",
+              "type": "uint256"
+            }
+          ],
+          "name": "VestingAdded",
+          "type": "event"
+        },
+        "0xd148b0dd94807c97b817d5020a2f49c1908f919b9a57633081d9d6d11ba99be0": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "vestingId",
+              "type": "uint256"
+            }
+          ],
+          "name": "VestingCanceled",
+          "type": "event"
+        },
+        "0x00e5b3e20f5be59dfdc5df050a8674b471b4f787e3d8c23c5504fd5438f891b7": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "vestingId",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "amount",
+              "type": "uint256"
+            }
+          ],
+          "name": "VestingWithdraw",
+          "type": "event"
+        }
+      },
+      "links": {},
+      "address": "0x060688032FF113b213D42E5e819475fa0017Dc1C",
+      "transactionHash": "0x8169d6bcd4aef6a3904b0e96511b8b30f81457506f0d51659b27d48f9a9638a1"
+    },
+    "1611595333470": {
+      "events": {
+        "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "previousOwner",
+              "type": "address"
+            },
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "newOwner",
+              "type": "address"
+            }
+          ],
+          "name": "OwnershipTransferred",
+          "type": "event"
+        },
+        "0xa07c91c183e42229e705a9795a1c06d76528b673788b849597364528c96eefb7": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "contract IERC20",
+              "name": "token",
+              "type": "address"
+            }
+          ],
+          "name": "TokenSet",
+          "type": "event"
+        },
+        "0x7fc35119d3b3c2716103649a77c63b4a0062583d6c5dff44606e5333ba40771b": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "vestingId",
+              "type": "uint256"
+            }
+          ],
+          "name": "VestingAdded",
+          "type": "event"
+        },
+        "0xd148b0dd94807c97b817d5020a2f49c1908f919b9a57633081d9d6d11ba99be0": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "vestingId",
+              "type": "uint256"
+            }
+          ],
+          "name": "VestingCanceled",
+          "type": "event"
+        },
+        "0x00e5b3e20f5be59dfdc5df050a8674b471b4f787e3d8c23c5504fd5438f891b7": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "vestingId",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "amount",
+              "type": "uint256"
+            }
+          ],
+          "name": "VestingWithdraw",
+          "type": "event"
+        }
+      },
+      "links": {},
+      "address": "0xfd71a9568f47C63B483B1688191bBb31d9aBbe1A",
+      "transactionHash": "0xe0f021a49c6eb157acc766d64907d7fccbbfa80ced70e48d61a6d64e20f3a56f"
+    },
+    "1611598410813": {
+      "events": {
+        "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "previousOwner",
+              "type": "address"
+            },
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "newOwner",
+              "type": "address"
+            }
+          ],
+          "name": "OwnershipTransferred",
+          "type": "event"
+        },
+        "0xa07c91c183e42229e705a9795a1c06d76528b673788b849597364528c96eefb7": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "contract IERC20",
+              "name": "token",
+              "type": "address"
+            }
+          ],
+          "name": "TokenSet",
+          "type": "event"
+        },
+        "0x7fc35119d3b3c2716103649a77c63b4a0062583d6c5dff44606e5333ba40771b": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "vestingId",
+              "type": "uint256"
+            }
+          ],
+          "name": "VestingAdded",
+          "type": "event"
+        },
+        "0xd148b0dd94807c97b817d5020a2f49c1908f919b9a57633081d9d6d11ba99be0": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "vestingId",
+              "type": "uint256"
+            }
+          ],
+          "name": "VestingCanceled",
+          "type": "event"
+        },
+        "0x00e5b3e20f5be59dfdc5df050a8674b471b4f787e3d8c23c5504fd5438f891b7": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "vestingId",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "amount",
+              "type": "uint256"
+            }
+          ],
+          "name": "VestingWithdraw",
+          "type": "event"
+        }
+      },
+      "links": {},
+      "address": "0xf0aAF09848cf2cFd0B71899a5E922CD6BE62E17d",
+      "transactionHash": "0x7bf9a606ff93d7fd11b567c187eef01b7cd4a0093cab927368c7b4d323a08681"
     }
   },
   "schemaVersion": "3.3.3",
-  "updatedAt": "2021-01-22T16:22:25.188Z",
+  "updatedAt": "2021-01-25T19:56:39.096Z",
   "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",

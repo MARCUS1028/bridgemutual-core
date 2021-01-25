@@ -10,10 +10,10 @@ contract ContractsRegistry is Ownable, AccessControl {
 
     bytes32 public constant REGISTRY_ADMIN_ROLE = keccak256("REGISTRY_ADMIN_ROLE");
 
-    string constant private POLICY_BOOK_REGISTRY_NAME = "POLICY_BOOK_REGISTRY";  
-    string constant private POLICY_BOOK_FABRIC_NAME = "POLICY_BOOK_FABRIC";        
-    string constant private BMI_DAI_STAKING_NAME = "BMI_DAI_STAKING";
-    string constant private YIELD_GENERATOR_NAME = "DEFI_YIELD_GENERATOR";
+    string constant private POLICY_BOOK_REGISTRY_NAME = "REGISTRY";  
+    string constant private POLICY_BOOK_FABRIC_NAME = "FABRIC";        
+    string constant private BMI_DAI_STAKING_NAME = "STAKING";
+    string constant private YIELD_GENERATOR_NAME = "YIELD_GENERATOR";
     string constant private DAI_NAME = "DAI";
     string constant private BMI_NAME = "BMI";
 

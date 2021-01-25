@@ -2,7 +2,6 @@
 pragma solidity ^0.7.4;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/math/Math.sol";
 
 import "./interfaces/IPolicyBookFabric.sol";
 import "./interfaces/IPolicyBookRegistry.sol";
@@ -11,10 +10,8 @@ import "./ContractsRegistry.sol";
 import "./PolicyBook.sol";
 
 contract PolicyBookFabric is IPolicyBookFabric, Ownable {
-  using Math for uint256;
-
   ContractsRegistry public contractsRegistry;
-  IPolicyBookRegistry public policyRegistry;  
+  IPolicyBookRegistry public policyRegistry;
 
   event Created(address insured, ContractType contractType, address at);
 
@@ -32,6 +29,7 @@ contract PolicyBookFabric is IPolicyBookFabric, Ownable {
   ) external override returns (address _policyBook) {
     PolicyBook _newPolicyBook = new PolicyBook(_insuranceContract, _contractType, _description, _projectSymbol);
     _newPolicyBook.initRegistry(contractsRegistry);
+    _newPolicyBook.transferNFTMintingAndBurningOwnershipToStaking();
     _newPolicyBook.approveAllDaiTokensForStaking();
     
     policyRegistry.add(_insuranceContract, address(_newPolicyBook));

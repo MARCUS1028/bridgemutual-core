@@ -5,8 +5,6 @@ pragma experimental ABIEncoderV2;
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
-import "./interfaces/IBmiDaiStaking.sol";
-
 import "./ContractsRegistry.sol";
 
 contract DefiYieldGenerator is Ownable {
@@ -16,34 +14,35 @@ contract DefiYieldGenerator is Ownable {
 
     IERC20 public daiToken;
     IERC20 public bmiToken;
-    IBmiDaiStaking public bmiDaiStaking;
+    address public bmiDaiStakingAddress;
+
+    modifier onlyStaking() {
+        require (msg.sender == bmiDaiStakingAddress, "DefiYieldGenerator: caller is not a staking");
+        _;
+    }
 
     function initRegistry(ContractsRegistry _contractsRegistry) external onlyOwner {
         contractsRegistry = _contractsRegistry;
         
         daiToken = IERC20(_contractsRegistry.getContract(_contractsRegistry.getDAIName()));
         bmiToken = IERC20(_contractsRegistry.getContract(_contractsRegistry.getBMIName()));
-        bmiDaiStaking = IBmiDaiStaking(_contractsRegistry.getContract(_contractsRegistry.getBmiDAIStakingName()));
+        bmiDaiStakingAddress = _contractsRegistry.getContract(_contractsRegistry.getBmiDAIStakingName());
     }
 
     function approveAllDaiTokensForStakingWithdrowal() external onlyOwner {
-        bool success = daiToken.approve(address(bmiDaiStaking), MAX_INT);
+        bool success = daiToken.approve(bmiDaiStakingAddress, MAX_INT);
 
         require(success, "Failed to approve DAI tokens");
     }
 
     function approveAllBMITokensForStakingWithdrowal() external onlyOwner {
-        bool success = bmiToken.approve(address(bmiDaiStaking), MAX_INT);
+        bool success = bmiToken.approve(bmiDaiStakingAddress, MAX_INT);
 
         require(success, "Failed to approve BMI tokens");
     }
     
 // TODO
-    function getProfit(uint256 tokenID) external returns (uint256) {
-        // Add bmi tokens to this address, then =>
-
-        IBmiDaiStaking.StakingInfo memory stakingInfo = bmiDaiStaking.getStakingInfoByTokenID(tokenID);
-
+    function getProfit(uint256 stakingStartTime, uint256 stakedDAIAmount) external onlyStaking returns (uint256) {        
         return 0;
     }
 }

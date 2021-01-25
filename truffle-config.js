@@ -47,8 +47,8 @@ module.exports = {
       host: 'localhost', // Localhost (default: none)
       port: 8545, // Standard Ethereum port (default: none)
       network_id: '*', // Any network (default: none)
-      gas: 6721975,
-      gasLimit: 6721975, // <-- Use this high gas value
+      gas: 10000000,
+      gasLimit: 10000000, // <-- Use this high gas value
       gasPrice: 1,
     },
     ropsten: {

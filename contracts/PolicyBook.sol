@@ -4,7 +4,6 @@ pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/math/SafeMath.sol";
 import "@openzeppelin/contracts/math/Math.sol";
 
@@ -13,6 +12,8 @@ import "./interfaces/IPolicyBookFabric.sol";
 
 import "./ContractsRegistry.sol";
 
+import "./tokens/ERC1155MintableBurnable.sol";
+
 contract PolicyBook is IPolicyBook, ERC20, Ownable {
   using SafeMath for uint256;
   using Math for uint256;  
@@ -20,6 +21,8 @@ contract PolicyBook is IPolicyBook, ERC20, Ownable {
   uint256 constant private MAX_INT = 2**256 - 1;
 
   ContractsRegistry public contractsRegistry;
+
+  ERC1155MintableBurnable public stakingTokens;
 
   address public override insuranceContractAddress;
   IPolicyBookFabric.ContractType public override contractType;
@@ -32,8 +35,7 @@ contract PolicyBook is IPolicyBook, ERC20, Ownable {
 
   struct PolicyHolder {
     uint256 coverTokens;
-    uint256 durationSeconds;
-    uint256 maxDaiTokens;
+    uint256 durationSeconds;    
   }
 
   mapping(address => PolicyHolder) public policyHolders;
@@ -50,17 +52,22 @@ contract PolicyBook is IPolicyBook, ERC20, Ownable {
   ) ERC20(_description, string(abi.encodePacked("bmiDAI", _projectSymbol))) {    
     insuranceContractAddress = _insuranceContract;
     contractType = _contractType;    
+
+    stakingTokens = new ERC1155MintableBurnable(""); 
   }
 
   function initRegistry(ContractsRegistry _contractsRegistry) external onlyOwner {
     contractsRegistry = _contractsRegistry;
     
     daiToken = IERC20(_contractsRegistry.getContract(_contractsRegistry.getDAIName()));
-    bmiDaiStakingAddress = contractsRegistry.getContract(contractsRegistry.getBmiDAIStakingName());
+    bmiDaiStakingAddress = contractsRegistry.getContract(contractsRegistry.getBmiDAIStakingName());    
+  }
+
+  function transferNFTMintingAndBurningOwnershipToStaking() external onlyOwner {
+    stakingTokens.transferOwnership(bmiDaiStakingAddress);
   }
 
   function approveAllDaiTokensForStaking() external onlyOwner {
-    
     bool _success = daiToken.approve(bmiDaiStakingAddress, MAX_INT);
 
     require(_success, "Failed to approve DAI tokens");
@@ -107,26 +114,23 @@ contract PolicyBook is IPolicyBook, ERC20, Ownable {
 
   function buyPolicy(
     uint256 _durationSeconds,
-    uint256 _coverTokens,
-    uint256 _maxDaiTokens
+    uint256 _coverTokens   
   ) external override {
-    _buyPolicyFor(msg.sender, _durationSeconds, _coverTokens, _maxDaiTokens);
+    _buyPolicyFor(msg.sender, _durationSeconds, _coverTokens);
   }
 
   function buyPolicyFor(
     address _policyHolderAddr,
     uint256 _durationSeconds,
-    uint256 _coverTokens,
-    uint256 _maxDaiTokens
+    uint256 _coverTokens    
   ) external override {
-    _buyPolicyFor(_policyHolderAddr, _durationSeconds, _coverTokens, _maxDaiTokens);
+    _buyPolicyFor(_policyHolderAddr, _durationSeconds, _coverTokens);
   }
 
   function _buyPolicyFor(
     address _policyHolderAddr,
     uint256 _durationSeconds,
-    uint256 _coverTokens,
-    uint256 _maxDaiTokens
+    uint256 _coverTokens
   ) internal {
     PolicyHolder memory _policyHolder = policyHolders[_policyHolderAddr];
     require(_policyHolder.durationSeconds == 0, "The policy holder already exists");
@@ -135,8 +139,7 @@ contract PolicyBook is IPolicyBook, ERC20, Ownable {
     uint256 _price = _getQuote(_durationSeconds, _coverTokens);
 
     _policyHolder.coverTokens = _coverTokens;
-    _policyHolder.durationSeconds = _durationSeconds;
-    _policyHolder.maxDaiTokens = _maxDaiTokens;
+    _policyHolder.durationSeconds = _durationSeconds;    
 
     policyHolders[_policyHolderAddr] = _policyHolder;
     totalCoverTokens = totalCoverTokens.add(_coverTokens);

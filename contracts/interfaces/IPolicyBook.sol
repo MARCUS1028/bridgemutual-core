@@ -3,20 +3,11 @@ pragma solidity ^0.7.4;
 pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
+
 import "./IPolicyBookFabric.sol";
 
 interface IPolicyBook is IERC20 {
-  struct Policy {
-    uint256 id;
-    uint256 holder;
-    uint256 daiTokens;
-    uint256 durationSeconds;
-    uint256 coveredTokens;
-    uint256 createdAt;
-    bool claimed;
-    bool rewarded;
-  }
-
   // @TODO: should we let DAO to change contract address?
   /// @notice Returns address of contract this PolicyBook covers, access: ANY
   /// @return _contract is address of covered contract
@@ -70,24 +61,20 @@ interface IPolicyBook is IERC20 {
 
   /// @notice Let user to buy policy by supplying DAI, access: ANY
   /// @param _durationSeconds is number of seconds to cover
-  /// @param _coverTokens is number of tokens to cover
-  /// @param _maxDaiTokens is number of DAI to spend
+  /// @param _coverTokens is number of tokens to cover  
   function buyPolicy(
     uint256 _durationSeconds,
-    uint256 _coverTokens,
-    uint256 _maxDaiTokens
+    uint256 _coverTokens
   ) external;
 
   /// @notice Let user to buy policy for another user by supplying DAI, access: ANY
   /// @param _policyHolderAddr is address of address to assign cover
   /// @param _durationSeconds is number of seconds to cover
-  /// @param _coverTokens is number of tokens to cover
-  /// @param _maxDaiTokens is number of DAI to spend
+  /// @param _coverTokens is number of tokens to cover  
   function buyPolicyFor(
     address _policyHolderAddr,
     uint256 _durationSeconds,
-    uint256 _coverTokens,
-    uint256 _maxDaiTokens
+    uint256 _coverTokens
   ) external;
 
   /// @notice Let user to add liquidity by supplying DAI, access: ANY

@@ -213,13 +213,13 @@ contract ERC1155 is Context, ERC165, IERC1155, IERC1155MetadataURI {
         _doSafeTransferAcceptanceCheck(operator, address(0), account, id, amount, data);
     }
    
-    function _mintBatch(address to, uint256[] memory ids, uint256[] memory amounts, bytes memory data) internal virtual {
-        require(to != address(0), "ERC1155: mint to the zero address");
+    function _mintBatch(address account, uint256[] memory ids, uint256[] memory amounts, bytes memory data) internal virtual {
+        require(account != address(0), "ERC1155: mint to the zero address");
         require(ids.length == amounts.length, "ERC1155: ids and amounts length mismatch");
 
         address operator = _msgSender();
 
-        _beforeTokenTransfer(operator, address(0), to, ids, amounts, data);
+        _beforeTokenTransfer(operator, address(0), account, ids, amounts, data);
 
         for (uint i = 0; i < ids.length; i++) {
             uint256 id = ids[i];
@@ -227,17 +227,17 @@ contract ERC1155 is Context, ERC165, IERC1155, IERC1155MetadataURI {
             require(amounts[i] == 0 || !_existsNFT(id), "ERC1155: NFT token already minted");
 
             if (amounts[i] == 1 && !_existsToken(id)) {
-                _holderTokens[to].add(id);
-                _tokenOwners.set(id, to);
+                _holderTokens[account].add(id);
+                _tokenOwners.set(id, account);
             }
 
-            _balances[id][to] = amounts[i].add(_balances[id][to]);
+            _balances[id][account] = amounts[i].add(_balances[id][account]);
             _mintedTokens[id] = _mintedTokens[id].add(amounts[i]);
         }
 
-        emit TransferBatch(operator, address(0), to, ids, amounts);
+        emit TransferBatch(operator, address(0), account, ids, amounts);
 
-        _doSafeBatchTransferAcceptanceCheck(operator, address(0), to, ids, amounts, data);
+        _doSafeBatchTransferAcceptanceCheck(operator, address(0), account, ids, amounts, data);
     }
   
     function _burn(address account, uint256 id, uint256 amount) internal virtual {

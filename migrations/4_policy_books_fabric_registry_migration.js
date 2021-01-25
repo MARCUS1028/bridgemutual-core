@@ -1,4 +1,4 @@
-const MockDAI = artifacts.require('mock/DAIMock');
+const DAIMock = artifacts.require('mock/DAIMock');
 
 const ContractsRegistry = artifacts.require('ContractsRegistry');
 const PolicyBook = artifacts.require('PolicyBook');
@@ -19,8 +19,7 @@ module.exports = async (deployer, network, accounts) => {
 
   const contractsRegistry = await ContractsRegistry.deployed();  
 
-  await deployer.deploy(MockDAI, 'mockDAI', 'MDAI');
-  const mockDai = await MockDAI.deployed();
+  const daiMock = await DAIMock.deployed();
 
   await deployer.deploy(PolicyBookRegistry);
   const policyBookRegistry = await PolicyBookRegistry.deployed();   
@@ -28,7 +27,6 @@ module.exports = async (deployer, network, accounts) => {
   await deployer.deploy(PolicyBookFabric);
   const policyBookFabric = await PolicyBookFabric.deployed();
 
-  await contractsRegistry.addContractRegistry((await contractsRegistry.getDAIName.call()), mockDai.address);
   await contractsRegistry.addContractRegistry((await contractsRegistry.getPolicyBookRegistryName.call()), policyBookRegistry.address);  
   await contractsRegistry.addContractRegistry((await contractsRegistry.getPolicyBookFabricName.call()), policyBookFabric.address);  
 
@@ -46,9 +44,9 @@ module.exports = async (deployer, network, accounts) => {
   const smallLiquidity = 100;
   const bigLiquidity = 1000000;
 
-  await mockDai.approve(emptyPolicyBookAddress, 0);
-  await mockDai.approve(smallPolicyBookAddress, smallLiquidity);
-  await mockDai.approve(bigPolicyBookAddress, bigLiquidity);
+  await daiMock.approve(emptyPolicyBookAddress, 0);
+  await daiMock.approve(smallPolicyBookAddress, smallLiquidity);
+  await daiMock.approve(bigPolicyBookAddress, bigLiquidity);
 
   await emptyPolicyBook.addLiquidity(0); // just to show
   await smallPolicyBook.addLiquidity(smallLiquidity);

@@ -6,7 +6,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "private-network": "ganache-cli -e 1000000 --time 1970-01-01T00:00:00Z",
+    "private-network": "ganache-cli -e 1000000 -l 10000000 --time 1970-01-01T00:00:00Z",
     "deploy-ropsten": "truffle deploy --network ropsten --reset",
     "deploy-dev": "truffle deploy --network development --reset",
     "truffle": "truffle",
