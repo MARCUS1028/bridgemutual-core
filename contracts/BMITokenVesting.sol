@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity =0.7.4;
+pragma solidity ^0.7.4;
 
 import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
@@ -12,30 +12,48 @@ contract BMITokenVesting is Ownable {
   using SafeERC20 for IERC20;
 
   enum VestingSchedule {
-    ANGELROUND, SEEDROUND, PRIVATEROUND, LISTINGS, LIQUIDITYMINING, 
-    GROWTH, STAFFING, OPERATIONAL, MARKETING, DISCRETIONARY, 
-    PROTECTION, FOUNDERS, DEVELOPERS, ADVISORS, BUGFINDING, VAULT
+    ANGELROUND,
+    SEEDROUND,
+    PRIVATEROUND,
+    LISTINGS,
+    LIQUIDITYMINING,
+    GROWTH,
+    OPERATIONAL,
+    FOUNDERS,
+    DEVELOPERS,
+    ADVISORS,
+    BUGFINDING,
+    VAULT
   }
 
   struct Vesting {
     bool isValid;
     address beneficiary;
     uint256 amount;
-    uint256 startDate;
-    uint256 periodInMonth;
-    uint256 amountPerPeriod;
-    uint256 cliffInPeriods;
+    VestingSchedule vestingSchedule;
     uint256 paidAmount;
     bool isCancelable;
   }
 
-  uint256 public constant SECONDS_IN_MONTH = 60 * 60 * 24 * 30; 
+  struct LinearVestingSchedule {
+    uint256 portionOfTotal;
+    uint256 startDate;
+    uint256 periodInMonth;
+    uint256 portionPerPeriod;
+    uint256 cliffInPeriods;
+  }
+
+  uint256 public constant SECONDS_IN_MONTH = 60 * 60 * 24 * 30;
+  uint256 public constant PORTION_OF_TOTAL_PRECISION = 100;
+  uint256 public constant PORTION_PER_PERIOD_PRECISION = 10**4;
 
   IERC20 public token;
-  mapping(uint256 => Vesting) private vestings;
+  mapping(uint256 => Vesting) public vestings;
   uint256 public vestingCount;
   uint256 public amountInVestings;
   uint256 public tgeTimestamp;
+  mapping(VestingSchedule => LinearVestingSchedule[]) public vestingSchedules;
+  mapping(VestingSchedule => uint256) public lengthsBySchedule;
 
   event TokenSet(IERC20 token);
   event VestingAdded(uint256 vestingId, address beneficiary);
@@ -44,6 +62,187 @@ contract BMITokenVesting is Ownable {
 
   constructor(uint256 _tgeTimestamp) {
     tgeTimestamp = _tgeTimestamp;
+
+    initializeVestingSchedules();
+  }
+
+  function initializeVestingSchedules() internal {
+    addLinearVestingSchedule(
+      VestingSchedule.ANGELROUND,
+      LinearVestingSchedule({
+        portionOfTotal: 100,
+        startDate: tgeTimestamp,
+        periodInMonth: 1,
+        portionPerPeriod: PORTION_PER_PERIOD_PRECISION.div(4),
+        cliffInPeriods: 0
+      })
+    );
+
+    addLinearVestingSchedule(
+      VestingSchedule.SEEDROUND,
+      LinearVestingSchedule({
+        portionOfTotal: 50,
+        startDate: tgeTimestamp.sub(SECONDS_IN_MONTH.mul(2)),
+        periodInMonth: 2,
+        portionPerPeriod: PORTION_PER_PERIOD_PRECISION.div(2),
+        cliffInPeriods: 0
+      })
+    );
+    addLinearVestingSchedule(
+      VestingSchedule.SEEDROUND,
+      LinearVestingSchedule({
+        portionOfTotal: 50,
+        startDate: tgeTimestamp,
+        periodInMonth: 1,
+        portionPerPeriod: PORTION_PER_PERIOD_PRECISION,
+        cliffInPeriods: 0
+      })
+    );
+
+    addLinearVestingSchedule(
+      VestingSchedule.PRIVATEROUND,
+      LinearVestingSchedule({
+        portionOfTotal: 100,
+        startDate: tgeTimestamp.sub(SECONDS_IN_MONTH),
+        periodInMonth: 1,
+        portionPerPeriod: PORTION_PER_PERIOD_PRECISION.div(4),
+        cliffInPeriods: 0
+      })
+    );
+
+    addLinearVestingSchedule(
+      VestingSchedule.LISTINGS,
+      LinearVestingSchedule({
+        portionOfTotal: 60,
+        startDate: tgeTimestamp.sub(SECONDS_IN_MONTH),
+        periodInMonth: 1,
+        portionPerPeriod: PORTION_PER_PERIOD_PRECISION,
+        cliffInPeriods: 0
+      })
+    );
+    addLinearVestingSchedule(
+      VestingSchedule.LISTINGS,
+      LinearVestingSchedule({
+        portionOfTotal: 40,
+        startDate: tgeTimestamp,
+        periodInMonth: 1,
+        portionPerPeriod: PORTION_PER_PERIOD_PRECISION,
+        cliffInPeriods: 0
+      })
+    );
+
+    addLinearVestingSchedule(
+      VestingSchedule.LIQUIDITYMINING,
+      LinearVestingSchedule({
+        portionOfTotal: 100,
+        startDate: tgeTimestamp,
+        periodInMonth: 1,
+        portionPerPeriod: PORTION_PER_PERIOD_PRECISION.div(10),
+        cliffInPeriods: 0
+      })
+    );
+
+    addLinearVestingSchedule(
+      VestingSchedule.GROWTH,
+      LinearVestingSchedule({
+        portionOfTotal: 100,
+        startDate: tgeTimestamp.add(SECONDS_IN_MONTH.mul(2)),
+        periodInMonth: 1,
+        portionPerPeriod: PORTION_PER_PERIOD_PRECISION.div(100).mul(5),
+        cliffInPeriods: 0
+      })
+    );
+
+    addLinearVestingSchedule(
+      VestingSchedule.OPERATIONAL,
+      LinearVestingSchedule({
+        portionOfTotal: 100,
+        startDate: tgeTimestamp,
+        periodInMonth: 1,
+        portionPerPeriod: PORTION_PER_PERIOD_PRECISION.div(100).mul(5),
+        cliffInPeriods: 0
+      })
+    );
+
+    addLinearVestingSchedule(
+      VestingSchedule.FOUNDERS,
+      LinearVestingSchedule({
+        portionOfTotal: 100,
+        startDate: tgeTimestamp.sub(SECONDS_IN_MONTH),
+        periodInMonth: 1,
+        portionPerPeriod: PORTION_PER_PERIOD_PRECISION.div(100).mul(4),
+        cliffInPeriods: 0
+      })
+    );
+
+    addLinearVestingSchedule(
+      VestingSchedule.DEVELOPERS,
+      LinearVestingSchedule({
+        portionOfTotal: 100,
+        startDate: tgeTimestamp.sub(SECONDS_IN_MONTH),
+        periodInMonth: 1,
+        portionPerPeriod: PORTION_PER_PERIOD_PRECISION.div(100).mul(4),
+        cliffInPeriods: 0
+      })
+    );
+
+    addLinearVestingSchedule(
+      VestingSchedule.ADVISORS,
+      LinearVestingSchedule({
+        portionOfTotal: 60,
+        startDate: tgeTimestamp.sub(SECONDS_IN_MONTH),
+        periodInMonth: 1,
+        portionPerPeriod: PORTION_PER_PERIOD_PRECISION.div(5),
+        cliffInPeriods: 0
+      })
+    );
+    addLinearVestingSchedule(
+      VestingSchedule.ADVISORS,
+      LinearVestingSchedule({
+        portionOfTotal: 40,
+        startDate: tgeTimestamp.add(SECONDS_IN_MONTH.mul(4)),
+        periodInMonth: 1,
+        portionPerPeriod: PORTION_PER_PERIOD_PRECISION.div(6),
+        cliffInPeriods: 0
+      })
+    );
+
+    addLinearVestingSchedule(
+      VestingSchedule.BUGFINDING,
+      LinearVestingSchedule({
+        portionOfTotal: 50,
+        startDate: tgeTimestamp,
+        periodInMonth: 1,
+        portionPerPeriod: PORTION_PER_PERIOD_PRECISION,
+        cliffInPeriods: 0
+      })
+    );
+    addLinearVestingSchedule(
+      VestingSchedule.BUGFINDING,
+      LinearVestingSchedule({
+        portionOfTotal: 50,
+        startDate: tgeTimestamp,
+        periodInMonth: 3,
+        portionPerPeriod: PORTION_PER_PERIOD_PRECISION,
+        cliffInPeriods: 0
+      })
+    );
+
+    addLinearVestingSchedule(
+      VestingSchedule.VAULT,
+      LinearVestingSchedule({
+        portionOfTotal: 100,
+        startDate: tgeTimestamp,
+        periodInMonth: 1,
+        portionPerPeriod: PORTION_PER_PERIOD_PRECISION.div(100).mul(5),
+        cliffInPeriods: 0
+      })
+    );
+  }
+
+  function addLinearVestingSchedule(VestingSchedule _type, LinearVestingSchedule memory _schedule) internal {
+    vestingSchedules[_type].push(_schedule);
+    lengthsBySchedule[_type]++;
   }
 
   function setToken(IERC20 _token) external onlyOwner {
@@ -52,27 +251,35 @@ contract BMITokenVesting is Ownable {
     emit TokenSet(token);
   }
 
-  function createVesting(address _beneficiary, uint256 _amount, VestingSchedule _vestingSchedule) public onlyOwner {
-    require(getTokensAvailable() >= _amount, "Not enough tokens");
+  function createVestingBulk(
+    uint256 count,
+    address[] calldata _beneficiary,
+    uint256[] calldata _amount,
+    VestingSchedule[] calldata _vestingSchedule,
+    bool[] calldata _isCancelable
+  ) external onlyOwner {
+    for (uint256 i = 0; i < count; i++) {
+      _createVesting(_beneficiary[i], _amount[i], _vestingSchedule[i], _isCancelable[i]);
+    }
+  }
 
-    if (_vestingSchedule == VestingSchedule.ANGELROUND) {
-      _createVesting(_beneficiary, _amount, tgeTimestamp.sub(SECONDS_IN_MONTH), 1, _amount.div(2), 0, false);
-    }
-    else if (_vestingSchedule == VestingSchedule.SEEDROUND) {
-      _createVesting(_beneficiary, _amount.div(2), tgeTimestamp.sub(SECONDS_IN_MONTH), 2, _amount.div(2), 0, false);
-      _createVesting(_beneficiary, _amount.div(2), tgeTimestamp, 1, _amount.div(2), 0, false);
-    }
+  function createVesting(
+    address _beneficiary,
+    uint256 _amount,
+    VestingSchedule _vestingSchedule,
+    bool _isCancelable
+  ) external onlyOwner returns (uint256 vestingId) {
+    return _createVesting(_beneficiary, _amount, _vestingSchedule, _isCancelable);
   }
 
   function _createVesting(
     address _beneficiary,
     uint256 _amount,
-    uint256 _startDate,
-    uint256 _periodInMonth,
-    uint256 _amountPerPeriod,
-    uint256 _cliffInPeriods,
+    VestingSchedule _vestingSchedule,
     bool _isCancelable
-  ) internal {
+  ) internal returns (uint256 vestingId) {
+    require(getTokensAvailable() >= _amount, "Not enough tokens");
+
     amountInVestings += _amount;
 
     vestingId = vestingCount;
@@ -80,16 +287,13 @@ contract BMITokenVesting is Ownable {
       isValid: true,
       beneficiary: _beneficiary,
       amount: _amount,
-      startDate: _startDate,
-      periodInMonth: _periodInMonth,
-      amountPerPeriod: _amountPerPeriod,
-      cliffInPeriods: _cliffInPeriods,
+      vestingSchedule: _vestingSchedule,
       paidAmount: 0,
       isCancelable: _isCancelable
     });
     vestingCount += 1;
 
-    emit VestingAdded(vestingId, beneficiary);
+    emit VestingAdded(vestingId, _beneficiary);
   }
 
   function cancelVesting(uint256 _vestingId) external onlyOwner {
@@ -117,16 +321,33 @@ contract BMITokenVesting is Ownable {
   }
 
   function calculateAvailableAmount(Vesting storage _vesting) private view returns (uint256) {
-    uint256 elapsedPeriods = calculateElapsedPeriods(_vesting);
-    if (elapsedPeriods <= _vesting.cliffInPeriods) return 0;
-    uint256 amountAvailable = _vesting.amountPerPeriod.mul(elapsedPeriods);
-    return amountAvailable.min(_vesting.amount);
+    LinearVestingSchedule[] storage vestingSchedule = vestingSchedules[_vesting.vestingSchedule];
+    uint256 amountAvailable = 0;
+    for (uint256 i = 0; i < lengthsBySchedule[_vesting.vestingSchedule]; i++) {
+      LinearVestingSchedule storage linearSchedule = vestingSchedule[i];
+      uint256 amountThisLinearSchedule = calculateLinearVestingAvailableAmount(linearSchedule, _vesting.amount);
+      amountAvailable = amountAvailable.add(amountThisLinearSchedule);
+    }
+    return amountAvailable;
   }
 
-  function calculateElapsedPeriods(Vesting storage _vesting) private view returns (uint256) {
-    if (_vesting.startDate > block.timestamp) return 0;
-    uint256 periodInSeconds = _vesting.periodInMonth.mul(1 days * 30);
-    return block.timestamp.sub(_vesting.startDate).div(periodInSeconds);
+  function calculateLinearVestingAvailableAmount(LinearVestingSchedule storage _linearVesting, uint256 _amount)
+    private
+    view
+    returns (uint256)
+  {
+    uint256 elapsedPeriods = calculateElapsedPeriods(_linearVesting);
+    if (elapsedPeriods <= _linearVesting.cliffInPeriods) return 0;
+    uint256 amountThisVestingSchedule = _amount.mul(_linearVesting.portionOfTotal).div(PORTION_OF_TOTAL_PRECISION);
+    uint256 amountPerPeriod =
+      amountThisVestingSchedule.mul(_linearVesting.portionPerPeriod).div(PORTION_PER_PERIOD_PRECISION);
+    return amountPerPeriod.mul(elapsedPeriods).min(amountThisVestingSchedule);
+  }
+
+  function calculateElapsedPeriods(LinearVestingSchedule storage _linearVesting) private view returns (uint256) {
+    if (_linearVesting.startDate > block.timestamp) return 0;
+    uint256 periodInSeconds = _linearVesting.periodInMonth.mul(SECONDS_IN_MONTH);
+    return block.timestamp.sub(_linearVesting.startDate).div(periodInSeconds);
   }
 
   function withdrawExcessiveTokens() external onlyOwner {
@@ -144,10 +365,7 @@ contract BMITokenVesting is Ownable {
       bool isValid,
       address beneficiary,
       uint256 amount,
-      uint256 startDate,
-      uint256 periodInMonth,
-      uint256 amountPerPeriod,
-      uint256 cliffInPeriods,
+      VestingSchedule vestingSchedule,
       uint256 paidAmount,
       bool isCancelable
     )
@@ -156,10 +374,7 @@ contract BMITokenVesting is Ownable {
     isValid = vesting.isValid;
     beneficiary = vesting.beneficiary;
     amount = vesting.amount;
-    startDate = vesting.startDate;
-    periodInMonth = vesting.periodInMonth;
-    amountPerPeriod = vesting.amountPerPeriod;
-    cliffInPeriods = vesting.cliffInPeriods;
+    vestingSchedule = vesting.vestingSchedule;
     paidAmount = vesting.paidAmount;
     isCancelable = vesting.isCancelable;
   }
