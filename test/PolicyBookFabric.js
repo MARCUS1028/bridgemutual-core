@@ -26,13 +26,13 @@ contract('PolicyBookFabric', async (accounts) => {
 
   const CONTRACT1 = accounts[0];
   const CONTRACT2 = accounts[1];
-  const CONTRACT3 = accounts[2];  
+  const CONTRACT3 = accounts[2];
 
   before('setup', async () => {
     dai = await MockDAI.new('dai', 'dai');
     contractsRegistry = await ContractsRegistry.new();
     policyBookRegistry = await PolicyBookRegistry.new();
-    policyBookFabric = await PolicyBookFabric.new();    
+    policyBookFabric = await PolicyBookFabric.new();
     bmiDaiStaking = await BmiDAIStaking.new();
 
     await contractsRegistry.addContractRegistry((await contractsRegistry.getDAIName.call()), dai.address);

@@ -9,8 +9,6 @@ interface IBmiDaiStaking {
         uint256 stakingStartTime;        
         uint256 stakedDaiAmount;
         address policyBookAddress;
-
-        uint256 bmiProfit;
     }   
 
     function stakeDAIx(uint256 _amount, IPolicyBook _policyBook) external;
@@ -18,8 +16,6 @@ interface IBmiDaiStaking {
     function withdrawBMIProfit(uint256 tokenID) external;
         
     function withdrawFundsWithProfit(uint256 tokenID) external;
-
-    function increaseBmiProfit(uint256 tokenID, uint256 amount) external;
 
     function getStakingInfoByTokenID(uint256 tokenID) external view returns (IBmiDaiStaking.StakingInfo memory _stakingInfo);
 }

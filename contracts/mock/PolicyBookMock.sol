@@ -4,7 +4,7 @@ pragma experimental ABIEncoderV2;
 
 import "../PolicyBook.sol";
 
-contract MockPolicyBook is PolicyBook {
+contract PolicyBookMock is PolicyBook {
   constructor(address _insuranceContract, IPolicyBookFabric.ContractType _contractType)
     PolicyBook(_insuranceContract, _contractType, "", "") {}
 

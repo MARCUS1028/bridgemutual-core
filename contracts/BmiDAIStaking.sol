@@ -62,7 +62,7 @@ contract BmiDAIStaking is IBmiDaiStaking, ERC1155, Ownable {
         }
 
         _mint(_staker, _currentNFTMintID, 1, "");
-        _stakersPool[_currentNFTMintID] = StakingInfo(block.timestamp, totalAmount, _policyBookAddress, 0); 
+        _stakersPool[_currentNFTMintID] = StakingInfo(block.timestamp, totalAmount, _policyBookAddress); 
 
         emit NFTMinted(_currentNFTMintID, _staker);
 
@@ -90,7 +90,7 @@ contract BmiDAIStaking is IBmiDaiStaking, ERC1155, Ownable {
         require (ownerOfNFT(tokenID) == _msgSender(), "Not an NFT token owner");
 
         // transfer bmi profit from YieldGenerator to user
-        bool success = bmiToken.transferFrom(address(defiYieldGenerator), _msgSender(), _stakersPool[tokenID].bmiProfit);
+        bool success = bmiToken.transferFrom(address(defiYieldGenerator), _msgSender(), defiYieldGenerator.getProfit(tokenID));
         require(success, "Failed to transfer BMI tokens");
     }
 
@@ -100,8 +100,8 @@ contract BmiDAIStaking is IBmiDaiStaking, ERC1155, Ownable {
        
         IBmiDaiStaking.StakingInfo memory stakingInfo = _stakersPool[tokenID];
 
-        // transfer bmi profit from YieldGenerator to the user
-        bool success = bmiToken.transferFrom(address(defiYieldGenerator), _msgSender(), _stakersPool[tokenID].bmiProfit);
+        // transfer bmi profit from YieldGenerator to user
+        bool success = bmiToken.transferFrom(address(defiYieldGenerator), _msgSender(), defiYieldGenerator.getProfit(tokenID));
         require(success, "Failed to transfer BMI tokens");
 
         // transfer DAI from YieldGenerator to PolicyBook
@@ -114,11 +114,7 @@ contract BmiDAIStaking is IBmiDaiStaking, ERC1155, Ownable {
 
         _burn(_msgSender(), tokenID, 1);
         delete _stakersPool[tokenID];
-    }
-
-    function increaseBmiProfit(uint256 tokenID, uint256 amount) external override onlyDefiYieldGenerator {        
-        _stakersPool[tokenID].bmiProfit = _stakersPool[tokenID].bmiProfit + amount;
-    }
+    }   
 
     function getStakingInfoByTokenID(uint256 tokenID) external view override returns (IBmiDaiStaking.StakingInfo memory _stakingInfo) {
         require (_existsNFT(tokenID), "NFT with such ID doesn't exist");

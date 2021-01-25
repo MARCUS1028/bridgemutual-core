@@ -17,8 +17,8 @@ contract('PolicyBookRegistry', async (accounts) => {
   const NON_FABRIC = accounts[3];
 
   before('setup', async () => {
-    contractsRegistry = await ContractsRegistry.new();  
-    policyBookRegistry = await PolicyBookRegistry.new();    
+    contractsRegistry = await ContractsRegistry.new();
+    policyBookRegistry = await PolicyBookRegistry.new();
 
     await contractsRegistry.addContractRegistry((await contractsRegistry.getPolicyBookRegistryName.call()), policyBookRegistry.address);
     await contractsRegistry.addContractRegistry((await contractsRegistry.getPolicyBookFabricName.call()), FABRIC);
@@ -32,13 +32,13 @@ contract('PolicyBookRegistry', async (accounts) => {
 
   describe('setPolicyBookFabricAddress', async () => {
     it('should not allow not owner to set', async () => {
-      await contractsRegistry.addContractRegistry((await contractsRegistry.getPolicyBookFabricName.call()), FABRIC);  
+      await contractsRegistry.addContractRegistry((await contractsRegistry.getPolicyBookFabricName.call()), FABRIC);
       await truffleAssert.reverts(policyBookRegistry.initRegistry(contractsRegistry.address, {from: NON_OWNER}),
         'Ownable: caller is not the owner');
     });
 
     it('should actually set address', async () => {
-      await contractsRegistry.addContractRegistry((await contractsRegistry.getPolicyBookFabricName.call()), NON_FABRIC);  
+      await contractsRegistry.addContractRegistry((await contractsRegistry.getPolicyBookFabricName.call()), NON_FABRIC);
       await policyBookRegistry.initRegistry(contractsRegistry.address);
       await assert.equal(await policyBookRegistry.policyBookFabricAddress(), NON_FABRIC);
     });

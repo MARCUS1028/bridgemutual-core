@@ -39,16 +39,11 @@ contract DefiYieldGenerator is Ownable {
     }
     
 // TODO
-    function updateProfitBMITokensFor(uint256 tokenID) external {
+    function getProfit(uint256 tokenID) external returns (uint256) {
         // Add bmi tokens to this address, then =>
 
         IBmiDaiStaking.StakingInfo memory stakingInfo = bmiDaiStaking.getStakingInfoByTokenID(tokenID);
 
-        bmiDaiStaking.increaseBmiProfit(tokenID, generateProfit(stakingInfo));
-    }
-
-// TODO
-    function generateProfit(IBmiDaiStaking.StakingInfo memory stakingInfo) private pure returns (uint256) {        
         return 0;
     }
 }
