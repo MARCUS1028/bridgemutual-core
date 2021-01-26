@@ -4,6 +4,7 @@ pragma solidity ^0.7.4;
 import "@openzeppelin/contracts/math/SafeMath.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC1155/ERC1155Receiver.sol";
+import "./interfaces/IPolicyBook.sol";
 import "./LiquidityMiningNFT.sol";
 
 contract LiquidityMining is ERC1155Receiver {
@@ -47,14 +48,16 @@ contract LiquidityMining is ERC1155Receiver {
     event DAIInvested(uint256 _groupID, uint256 _tokensAmount, uint256 _newTotalGroupAmount);
     event LeaderboardUpdated(uint256 _index, uint256 _prevGroupIndex, uint256 _newGroupIndex);
     event RewardInfoUpdated(uint256 _groupID, address _address, uint256 _newCountOfMonth, uint256 _newLastUpdate);
-    event RewardSended(uint256 _groupID, address _address, uint256 _reward);
-    event NFTSended(address _address, uint256 _nftIndex);
+    event RewardSent(uint256 _groupID, address _address, uint256 _reward);
+    event NFTSent(address _address, uint256 _nftIndex);
 
     function getLeaderboardSize() external view returns (uint256) {
         return leaderboard.length;
     }
 
-    function investDAI(uint256 _groupID, uint256 _tokensAmount) external {
+    function investDAI(uint256 _groupID, uint256 _tokensAmount, address _policyBookAddr) external {
+        require(block.timestamp < getEndLMTime(),
+            "It is impossible to invest in DAI after the end of the liquidity mining event");
         uint256 _id = _groupID;
         if (_groupID == 0) {
             _id = groupsCount++;
@@ -69,6 +72,7 @@ contract LiquidityMining is ERC1155Receiver {
         _updateGroupLeaders(_id);
 
         emit DAIInvested(_id, _tokensAmount, _totalGroupAmount);
+        IPolicyBook(_policyBookAddr).addLiquidityFromLM(msg.sender, _tokensAmount);
     }
 
     function distributeAllNFT() external {
@@ -82,7 +86,7 @@ contract LiquidityMining is ERC1155Receiver {
     }
 
     function distributeNFT(uint256 _groupID) public returns (bool){
-        require(block.timestamp > startLiquidityMiningTime.add(2 weeks),
+        require(block.timestamp > getEndLMTime(),
             "2 weeks after liquidity mining time has not expire");
 
         if (_getIndexInTheLeaderboard(_groupID) == maxLeaderboardSize) {
@@ -122,7 +126,7 @@ contract LiquidityMining is ERC1155Receiver {
     }
 
     function getRewardFromGroup(uint256 _groupID) public returns (uint256) {
-        require(block.timestamp > startLiquidityMiningTime.add(2 weeks),
+        require(block.timestamp > getEndLMTime(),
             "2 weeks after liquidity mining time has not expire");
         
         if(!checkAvailableReward(_groupID)) {
@@ -137,7 +141,7 @@ contract LiquidityMining is ERC1155Receiver {
         uint256 _userReward = _totalReward.mul(_userRewardPer).div(decimal);
 
         require(bmiToken.transfer(msg.sender, _userReward), "Failed to transfer tokens");
-        emit RewardSended(_groupID, msg.sender, _userReward);
+        emit RewardSent(_groupID, msg.sender, _userReward);
 
         _rewardInfo.countOfMonth = 0;
         _rewardInfo.lastUpdate = block.timestamp;
@@ -166,6 +170,10 @@ contract LiquidityMining is ERC1155Receiver {
         return true;
     }
 
+    function getEndLMTime() public view returns (uint256) {
+        return startLiquidityMiningTime.add(2 weeks);
+    }
+
     function _sendNFT(uint256 _index) internal {
         uint256 _nftIndex;
 
@@ -180,7 +188,7 @@ contract LiquidityMining is ERC1155Receiver {
         }
         nft.safeTransferFrom(address(this), msg.sender, _nftIndex, 1, "");
 
-        emit NFTSended(msg.sender, _nftIndex);
+        emit NFTSent(msg.sender, _nftIndex);
     }
 
     function _calculatePercentage(uint256 _part, uint256 _amount) internal view returns (uint256) {
@@ -208,7 +216,7 @@ contract LiquidityMining is ERC1155Receiver {
     function _updateRewardInfo(uint256 _groupID) internal {
         RewardInfo memory _rewardInfo = rewardInfos[_groupID][msg.sender];
         uint256 _oneMonth = 30 days;
-        uint256 _startRewardTime = startLiquidityMiningTime.add(2 weeks);
+        uint256 _startRewardTime = getEndLMTime();
 
         uint256 _countOfRewardedMonth;
         for(uint256 i = 0; i < maxMonthToGetReward; i++) {
