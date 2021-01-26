@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.7.4;
+pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 
@@ -29,9 +30,8 @@ contract PolicyBookFabric is IPolicyBookFabric, Ownable {
   ) external override returns (address _policyBook) {
     PolicyBook _newPolicyBook = new PolicyBook(_insuranceContract, _contractType, _description, _projectSymbol);
     _newPolicyBook.initRegistry(contractsRegistry);
-    _newPolicyBook.transferNFTMintingAndBurningOwnershipToStaking();
-    _newPolicyBook.approveAllDaiTokensForStaking();
-    
+    _newPolicyBook.approveAllDaiTokensForStakingAndTransferOwnership();  
+
     policyRegistry.add(_insuranceContract, address(_newPolicyBook));
 
     emit Created(_insuranceContract, _contractType, address(_newPolicyBook));

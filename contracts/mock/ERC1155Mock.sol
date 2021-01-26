@@ -6,7 +6,7 @@ import "../tokens/ERC1155.sol";
 
 contract ERC1155Mock is ERC1155 {
 
-    constructor() ERC1155("") {}
+    constructor() ERC1155("ERC1155Mock", "M1155") {}
 
     function mint(uint256 id, uint256 amount) public {
         _mint(_msgSender(), id, amount, "");

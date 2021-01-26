@@ -64,11 +64,11 @@ contract('PolicyBookFabric', async (accounts) => {
       const result = await policyBookFabric.create(CONTRACT1, ContractType.DEFI, '', '');
       const address = await policyBookFabric.policyBookFor(CONTRACT1);
 
-      assert.equal(result.logs.length, 2); // 2 because of ownership
-      assert.equal(result.logs[1].event, 'Created');
-      assert.equal(result.logs[1].args.insured, CONTRACT1);
-      assert.equal(result.logs[1].args.contractType, ContractType.DEFI);
-      assert.equal(result.logs[1].args.at, address);
+      assert.equal(result.logs.length, 3); // 3 because of ownership
+      assert.equal(result.logs[2].event, 'Created');
+      assert.equal(result.logs[2].args.insured, CONTRACT1);
+      assert.equal(result.logs[2].args.contractType, ContractType.DEFI);
+      assert.equal(result.logs[2].args.at, address);
     });
 
     it('should not allow to create dublicate by the same address', async () => {
@@ -79,7 +79,7 @@ contract('PolicyBookFabric', async (accounts) => {
 
     it('should add policy to registry', async () => {
       const result = await policyBookFabric.create(CONTRACT1, 1, '', '');
-      const bookAddress = result.logs[1].args.at;
+      const bookAddress = result.logs[2].args.at;
       assert.equal(await policyBookRegistry.policyBookFor(CONTRACT1), bookAddress);
     });
 

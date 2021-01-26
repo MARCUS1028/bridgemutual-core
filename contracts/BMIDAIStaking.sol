@@ -5,9 +5,6 @@ pragma experimental ABIEncoderV2;
 import "@openzeppelin/contracts/utils/EnumerableSet.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-import "./interfaces/IPolicyBook.sol";
-
-import "./tokens/ERC1155MintableBurnable.sol";
 import "./PolicyBook.sol";
 import "./ContractsRegistry.sol";
 import "./DefiYieldGenerator.sol";
@@ -32,7 +29,8 @@ contract BMIDAIStaking is Ownable {
     mapping (address => EnumerableSet.UintSet) private _holderTokens;
     mapping(uint256 => StakingInfo) private _stakersPool; // NFT => INFO
     
-    uint256 private _currentNFTMintID = 1;
+    /// @dev cruсial to start from 2
+    uint256 private _currentNFTMintID = 2; 
 
     event StakingNFTMinted(uint256 id, address policyBookAddress, address to);
     event StakingNFTBurned(uint256 id, address policyBookAddress);
@@ -55,22 +53,21 @@ contract BMIDAIStaking is Ownable {
         uint256 _amount,
         PolicyBook _policyBook
     ) private {             
-        ERC1155MintableBurnable stakingTokens = _policyBook.stakingTokens();
-
-        uint256 stakerBalance = stakingTokens.balanceOfNFT(_staker);
+        uint256 stakerBalance = _policyBook.balanceOfNFT(_staker);
         uint256 totalAmount = _amount;
 
         for (uint256 i = 0; i < stakerBalance; i++) {
-            uint256 tokenID = stakingTokens.tokenOfOwnerByIndexNFT(_staker, i);            
+            uint256 tokenID = _policyBook.tokenOfOwnerByIndexNFT(_staker, i);            
             
             totalAmount += _stakersPool[tokenID].stakedDaiAmount;
                 
-            stakingTokens.burn(_staker, tokenID, 1);
+            _policyBook.burnNFT(_staker, tokenID, 1);
             _holderTokens[_staker].remove(tokenID);
             delete _stakersPool[tokenID];
         }
 
-        stakingTokens.mint(_staker, _currentNFTMintID, 1, "");
+        _policyBook.mintNFT(_staker, _currentNFTMintID, 1, "");
+
         _stakersPool[_currentNFTMintID] = StakingInfo(block.timestamp, totalAmount, _policyBook);
         _holderTokens[_staker].add(_currentNFTMintID);
 
@@ -92,9 +89,7 @@ contract BMIDAIStaking is Ownable {
     }
 
     function withdrawBMIProfit(uint256 tokenID) external {
-        ERC1155MintableBurnable stakingTokens = _stakersPool[tokenID].policyBook.stakingTokens();
-
-        require (stakingTokens.ownerOfNFT(tokenID) == _msgSender(), "Not an NFT token owner");
+        require (_stakersPool[tokenID].policyBook.ownerOfNFT(tokenID) == _msgSender(), "Not an NFT token owner");
 
         // transfer bmi profit from YieldGenerator to user
         bool success = bmiToken.transferFrom(address(defiYieldGenerator), _msgSender(), defiYieldGenerator.getProfit(_stakersPool[tokenID].stakingStartTime, _stakersPool[tokenID].stakedDaiAmount));
@@ -103,10 +98,7 @@ contract BMIDAIStaking is Ownable {
 
     function withdrawFundsWithProfit(uint256 tokenID) external {
         require (block.timestamp > _stakersPool[tokenID].stakingStartTime + THREE_MONTH, "Funds are locked for 3 month");
-        
-        ERC1155MintableBurnable stakingTokens = _stakersPool[tokenID].policyBook.stakingTokens();
-
-        require (stakingTokens.ownerOfNFT(tokenID) == _msgSender(), "Not an NFT token owner");
+        require (_stakersPool[tokenID].policyBook.ownerOfNFT(tokenID) == _msgSender(), "Not an NFT token owner");
        
         StakingInfo memory stakingInfo = _stakersPool[tokenID];
 
@@ -122,7 +114,8 @@ contract BMIDAIStaking is Ownable {
         success = stakingInfo.policyBook.transfer(_msgSender(), stakingInfo.stakedDaiAmount);
         require(success, "Failed to transfer bmiDAIx tokens");
 
-        stakingTokens.burn(_msgSender(), tokenID, 1);
+        _stakersPool[tokenID].policyBook.burnNFT(_msgSender(), tokenID, 1);
+
         _holderTokens[_msgSender()].remove(tokenID);
 
         emit StakingNFTBurned(tokenID, address(_stakersPool[tokenID].policyBook));

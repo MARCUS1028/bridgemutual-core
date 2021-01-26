@@ -66,16 +66,6 @@ contract ContractsRegistry is Ownable, AccessControl {
         _contracts[bytesName] = _contractAddress;
     }
 
-    function modifyContractRegistry(string memory _name, address _contractAddress) public onlyAdmin {
-        require(_contractAddress != address(0), "ContractsRegistry: Null address is forbidden");        
-
-        bytes32 bytesName = keccak256(abi.encodePacked(_name));
-
-        require(_contracts[bytesName] != address(0), "ContractsRegistry: This mapping doesn't exist");
-
-        _contracts[bytesName] = _contractAddress;
-    }
-
     function deleteContractRegistry(string memory _name) public onlyAdmin {
         bytes32 bytesName = keccak256(abi.encodePacked(_name));
 

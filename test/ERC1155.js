@@ -14,7 +14,8 @@ contract('ERC1155', async (accounts) => {
       erc1155Mock = await ERC1155Mock.new();
     });
 
-    const tokenID = 1;
+    const tokenID = 2;
+    const firstReg = 1;
 
     it('should mint new ERC721 token', async () => {
       assert.equal(await erc1155Mock.balanceOfNFT(MAIN), 0);
@@ -28,6 +29,12 @@ contract('ERC1155', async (accounts) => {
 
     it('shouldn\'t mint the same ERC721 token', async () => {
       await truffleAssert.reverts(erc1155Mock.mint(tokenID, 1), 'ERC1155: NFT token already minted');
+    });
+
+    it('shouldn\'t mint the ERC721 token on 1 registry', async () => {
+      await erc1155Mock.mint(firstReg, 1);
+      assert.equal(await erc1155Mock.balanceOfNFT(MAIN), 1);
+      assert.equal(await erc1155Mock.balanceOf(MAIN), 1);
     });
 
     it('shouldn\'t mint ERC20 when ERC721 is minted', async () => {
@@ -50,7 +57,7 @@ contract('ERC1155', async (accounts) => {
       erc1155Mock = await ERC1155Mock.new();
     });
 
-    const tokenID = 1;
+    const tokenID = 2;
 
     it('should mint new ERC20 tokens', async () => {
       assert.equal(await erc1155Mock.balanceOf(MAIN, tokenID), 0);
@@ -87,8 +94,10 @@ contract('ERC1155', async (accounts) => {
       erc1155Mock = await ERC1155Mock.new();
     });
 
-    const tokenID1 = 1;
-    const tokenID2 = 2;
+    const firstReg = 1;
+    const tokenID1 = 2;
+    const tokenID2 = 3;
+    const tokenID3 = 4;
 
     it('should mint new ERC721 token', async () => {
       assert.equal(await erc1155Mock.balanceOfNFT(MAIN), 0);
@@ -110,18 +119,25 @@ contract('ERC1155', async (accounts) => {
       await truffleAssert.reverts(erc1155Mock.mintBatch([tokenID1, tokenID2], [1, 1]), 'ERC1155: NFT token already minted');
     });
 
+    it('shouldn\'t mint the ERC721 tokens on 1 registry', async () => {
+      await erc1155Mock.mintBatch([firstReg, tokenID3], [1, 1]);
+
+      assert.equal(await erc1155Mock.balanceOfNFT(MAIN), 3);
+      assert.equal(await erc1155Mock.balanceOf(MAIN), 1);
+    });
+
     it('shouldn\'t mint ERC20 when ERC721 is minted', async () => {
       await truffleAssert.reverts(erc1155Mock.mintBatch([tokenID1, tokenID2], [100, 100]), 'ERC1155: NFT token already minted');
     });
 
     it('shouldn\'t revert when ERC721 is minted, but minting 0 tokens', async () => {
-      assert.equal(await erc1155Mock.balanceOfNFT(MAIN), 2);
+      assert.equal(await erc1155Mock.balanceOfNFT(MAIN), 3);
       assert.equal(await erc1155Mock.ownerOfNFT(tokenID1), MAIN);
       assert.equal(await erc1155Mock.ownerOfNFT(tokenID2), MAIN);
 
       await erc1155Mock.mintBatch([tokenID1, tokenID2], [0, 0]);
 
-      assert.equal(await erc1155Mock.balanceOfNFT(MAIN), 2);
+      assert.equal(await erc1155Mock.balanceOfNFT(MAIN), 3);
       assert.equal(await erc1155Mock.ownerOfNFT(tokenID1), MAIN);
       assert.equal(await erc1155Mock.ownerOfNFT(tokenID2), MAIN);
     });
@@ -132,8 +148,8 @@ contract('ERC1155', async (accounts) => {
       erc1155Mock = await ERC1155Mock.new();
     });
 
-    const tokenID1 = 1;
-    const tokenID2 = 2;
+    const tokenID1 = 2;
+    const tokenID2 = 3;
 
     it('should mint new ERC20 tokens', async () => {
       assert.equal(await erc1155Mock.balanceOf(MAIN, tokenID1), 0);
@@ -176,7 +192,7 @@ contract('ERC1155', async (accounts) => {
       erc1155Mock = await ERC1155Mock.new();
     });
 
-    const tokenID = 1;
+    const tokenID = 2;
 
     it('should mint and burn ERC721', async () => {      
       await erc1155Mock.mint(tokenID, 1);
@@ -205,6 +221,20 @@ contract('ERC1155', async (accounts) => {
       await truffleAssert.reverts(erc1155Mock.ownerOfNFT(tokenID), 'ERC1155: owner query for nonexistent token');
       assert.equal(await erc1155Mock.balanceOf(MAIN, tokenID), 0);
     });
+
+    it('should mint and not burn ERC721', async () => {
+      await erc1155Mock.mint(tokenID, 1);
+
+      assert.equal(await erc1155Mock.balanceOfNFT(MAIN), 1);
+      assert.equal(await erc1155Mock.ownerOfNFT(tokenID), MAIN);
+      assert.equal(await erc1155Mock.balanceOf(MAIN, tokenID), 1);
+
+      await erc1155Mock.burn(tokenID, 0);
+
+      assert.equal(await erc1155Mock.balanceOfNFT(MAIN), 1);
+      assert.equal(await erc1155Mock.ownerOfNFT(tokenID), MAIN);
+      assert.equal(await erc1155Mock.balanceOf(MAIN, tokenID), 1);
+    });
   });
 
   describe('burnBatch', async () => {
@@ -212,8 +242,8 @@ contract('ERC1155', async (accounts) => {
       erc1155Mock = await ERC1155Mock.new();
     });
 
-    const tokenID1 = 1;
-    const tokenID2 = 2;
+    const tokenID1 = 2;
+    const tokenID2 = 3;
 
     it('should mint and burn ERC721s', async () => {
       await erc1155Mock.mintBatch([tokenID1, tokenID2], [1, 1]);
@@ -258,6 +288,27 @@ contract('ERC1155', async (accounts) => {
       assert.equal(await erc1155Mock.balanceOf(MAIN, tokenID1), 0);
       assert.equal(await erc1155Mock.balanceOf(MAIN, tokenID2), 0);
     });
+
+    it('should mint and not burn ERC721s', async () => {
+      await erc1155Mock.mint(tokenID1, 1);
+      await erc1155Mock.mint(tokenID2, 1);
+
+      assert.equal(await erc1155Mock.balanceOfNFT(MAIN), 2);
+      
+      assert.equal(await erc1155Mock.ownerOfNFT(tokenID1), MAIN);
+      assert.equal(await erc1155Mock.balanceOf(MAIN, tokenID1), 1);
+      assert.equal(await erc1155Mock.ownerOfNFT(tokenID2), MAIN);
+      assert.equal(await erc1155Mock.balanceOf(MAIN, tokenID2), 1);
+
+      await erc1155Mock.burnBatch([tokenID1, tokenID2], [0, 0]);      
+
+      assert.equal(await erc1155Mock.balanceOfNFT(MAIN), 2);
+
+      assert.equal(await erc1155Mock.ownerOfNFT(tokenID1), MAIN);
+      assert.equal(await erc1155Mock.balanceOf(MAIN, tokenID1), 1);
+      assert.equal(await erc1155Mock.ownerOfNFT(tokenID2), MAIN);
+      assert.equal(await erc1155Mock.balanceOf(MAIN, tokenID2), 1);
+    });
   });
 
   describe('transferFrom', async () => {
@@ -265,7 +316,7 @@ contract('ERC1155', async (accounts) => {
       erc1155Mock = await ERC1155Mock.new();
     });
 
-    const tokenID = 1;
+    const tokenID = 2;
 
     it('should mint new ERC721 and transfer it', async () => {
       await erc1155Mock.mint(tokenID, 1);
@@ -309,8 +360,8 @@ contract('ERC1155', async (accounts) => {
       erc1155Mock = await ERC1155Mock.new();
     });
 
-    const tokenID1 = 1;
-    const tokenID2 = 2;
+    const tokenID1 = 2;
+    const tokenID2 = 3;
 
     it('should mint new ERC721s and transfer them', async () => {
       await erc1155Mock.mintBatch([tokenID1, tokenID2], [1, 1]);

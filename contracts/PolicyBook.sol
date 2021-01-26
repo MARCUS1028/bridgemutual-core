@@ -3,7 +3,6 @@ pragma solidity ^0.7.4;
 pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/math/SafeMath.sol";
 import "@openzeppelin/contracts/math/Math.sol";
 
@@ -11,18 +10,15 @@ import "./interfaces/IPolicyBook.sol";
 import "./interfaces/IPolicyBookFabric.sol";
 
 import "./ContractsRegistry.sol";
+import "./tokens/ERC1155NFTMintableBurnable.sol";
 
-import "./tokens/ERC1155MintableBurnable.sol";
-
-contract PolicyBook is IPolicyBook, ERC20, Ownable {
+contract PolicyBook is IPolicyBook, ERC1155NFTMintableBurnable {
   using SafeMath for uint256;
-  using Math for uint256;  
+  using Math for uint256;
 
   uint256 constant private MAX_INT = 2**256 - 1;
 
   ContractsRegistry public contractsRegistry;
-
-  ERC1155MintableBurnable public stakingTokens;
 
   address public override insuranceContractAddress;
   IPolicyBookFabric.ContractType public override contractType;
@@ -49,11 +45,9 @@ contract PolicyBook is IPolicyBook, ERC20, Ownable {
     IPolicyBookFabric.ContractType _contractType,    
     string memory _description,
     string memory _projectSymbol
-  ) ERC20(_description, string(abi.encodePacked("bmiDAI", _projectSymbol))) {    
+  ) ERC1155NFTMintableBurnable(_description, string(abi.encodePacked("bmiDAI", _projectSymbol))) {    
     insuranceContractAddress = _insuranceContract;
-    contractType = _contractType;    
-
-    stakingTokens = new ERC1155MintableBurnable(""); 
+    contractType = _contractType;       
   }
 
   function initRegistry(ContractsRegistry _contractsRegistry) external onlyOwner {
@@ -61,16 +55,13 @@ contract PolicyBook is IPolicyBook, ERC20, Ownable {
     
     daiToken = IERC20(_contractsRegistry.getContract(_contractsRegistry.getDAIName()));
     bmiDaiStakingAddress = contractsRegistry.getContract(contractsRegistry.getBmiDAIStakingName());    
-  }
+  }  
 
-  function transferNFTMintingAndBurningOwnershipToStaking() external onlyOwner {
-    stakingTokens.transferOwnership(bmiDaiStakingAddress);
-  }
-
-  function approveAllDaiTokensForStaking() external onlyOwner {
+  function approveAllDaiTokensForStakingAndTransferOwnership() external onlyOwner {
     bool _success = daiToken.approve(bmiDaiStakingAddress, MAX_INT);
-
     require(_success, "Failed to approve DAI tokens");
+
+    transferOwnership(bmiDaiStakingAddress);
   }
 
   receive() external payable {}
@@ -163,7 +154,7 @@ contract PolicyBook is IPolicyBook, ERC20, Ownable {
     require(_success, "Failed to transfer DAI tokens");
 
     totalLiquidity = totalLiquidity.add(_liqudityAmount);
-    _mint(_liquidityHolderAddr, _liqudityAmount);
+    _mintERC20(_liquidityHolderAddr, _liqudityAmount);
 
     emit AddLiquidity(_liquidityHolderAddr, _liqudityAmount, totalLiquidity);
   }
@@ -179,7 +170,7 @@ contract PolicyBook is IPolicyBook, ERC20, Ownable {
     require(_success, "Failed to transfer DAI tokens");
 
     totalLiquidity = totalLiquidity.sub(_tokensToWithdraw);
-    _burn(msg.sender, _tokensToWithdraw);
+    _burnERC20(msg.sender, _tokensToWithdraw);
 
     emit WithdrawLiquidity(msg.sender, _tokensToWithdraw, totalLiquidity);
   }
@@ -203,7 +194,7 @@ contract PolicyBook is IPolicyBook, ERC20, Ownable {
     )
   {
     // TODO APY
-    return (name(), contractType, totalLiquidity - totalCoverTokens, totalLiquidity, 0);
+    return (name, contractType, totalLiquidity - totalCoverTokens, totalLiquidity, 0);
   }
 
   uint256 public constant SECONDS_IN_THE_YEAR = 365 * 24 * 60 * 60; // 365 days * 24 hours * 60 minutes * 60 seconds

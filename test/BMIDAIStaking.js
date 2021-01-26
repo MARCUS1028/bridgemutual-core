@@ -11,6 +11,13 @@ const VestingContract = artifacts.require('BMITokenVesting');
 const { assert } = require('chai');
 const truffleAssert = require('truffle-assertions');
 
+const ContractType = {
+    STABLECOIN: 0,
+    DEFI: 1,
+    CONTRACT: 2,
+    EXCHANGE: 3,
+};
+
 contract.only('BMIDAIStaking', async (accounts) => {
 
     const MAIN = accounts[0];
@@ -33,7 +40,7 @@ contract.only('BMIDAIStaking', async (accounts) => {
             daiMock = await DAIMock.new('mockDAI', 'MDAI');
             bmiDaiStaking = await BMIDAIStaking.new();
 
-            await vesting.setToken(token.address);
+            await vesting.setToken(bmiToken.address);
 
             await contractsRegistry.addContractRegistry((await contractsRegistry.getDAIName.call()), daiMock.address);
             await contractsRegistry.addContractRegistry((await contractsRegistry.getBMIName.call()), bmiToken.address);  
@@ -47,7 +54,7 @@ contract.only('BMIDAIStaking', async (accounts) => {
             await bmiDaiStaking.initRegistry(contractsRegistry.address);
             await defiYieldGenerator.initRegistry(contractsRegistry.address);
 
-            const policyBookAddress = (await policyBookFabric.create(mockInsuranceContractAddress1, ContractType.DEFI, 'mock1', '1')).logs[1].args.at;
+            const policyBookAddress = (await policyBookFabric.create(mockInsuranceContractAddress1, ContractType.DEFI, 'mock1', '1')).logs[2].args.at;
             policyBook = await PolicyBookMock.at(policyBookAddress);
             
             const liquidity = 1000000;
@@ -57,7 +64,17 @@ contract.only('BMIDAIStaking', async (accounts) => {
         });    
         
         it('should fail due to insufficient balance', async () => {
-            await truffleAssert.reverts(bmiDaiStaking.stakeDAIx(1000, policyBook, { from: HELP }), "Failed to transfer DAI tokens");
+            await truffleAssert.reverts(bmiDaiStaking.stakeDAIx(1000, policyBook.address, { from: HELP }), "ERC20: transfer amount exceeds balance");
+        });
+
+        it('should mint new NFT', async () => {
+            await policyBook.approve(bmiDaiStaking.address, 1000);
+
+            await bmiDaiStaking.stakeDAIx(1000, policyBook.address);            
+
+            assert.equal(await bmiDaiStaking.howManyStakings(MAIN), 1);
+            assert.equal(await policyBook.balanceOfNFT(MAIN), 1);
+            assert.equal(await policyBook.ownerOfNFT(2), MAIN);
         });
     });
 });

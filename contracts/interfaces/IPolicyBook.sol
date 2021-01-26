@@ -2,12 +2,9 @@
 pragma solidity ^0.7.4;
 pragma experimental ABIEncoderV2;
 
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
-
 import "./IPolicyBookFabric.sol";
 
-interface IPolicyBook is IERC20 {
+interface IPolicyBook {
   // @TODO: should we let DAO to change contract address?
   /// @notice Returns address of contract this PolicyBook covers, access: ANY
   /// @return _contract is address of covered contract
