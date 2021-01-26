@@ -9,6 +9,7 @@ import "@openzeppelin/contracts/math/Math.sol";
 
 import "./interfaces/IPolicyBook.sol";
 import "./interfaces/IPolicyBookFabric.sol";
+import "./LiquidityMining.sol";
 
 contract PolicyBook is IPolicyBook, ERC20 {
   using SafeMath for uint256;
@@ -17,6 +18,7 @@ contract PolicyBook is IPolicyBook, ERC20 {
   address public override contractAddress;
   IPolicyBookFabric.ContractType public override contractType;
   IERC20 daiToken;
+  address liquidityMiningAddr;
 
   uint256 public totalLiquidity;
   uint256 public totalCoverTokens;
@@ -28,6 +30,7 @@ contract PolicyBook is IPolicyBook, ERC20 {
   }
 
   mapping(address => PolicyHolder) public policyHolders;
+  mapping(address => uint256) public liquidityFromLM;
 
   event AddLiquidity(address _liquidityHolder, uint256 _liqudityAmount, uint256 _newTotalLiquidity);
   event WithdrawLiquidity(address _liquidityHolder, uint256 _tokensToWithdraw, uint256 _newTotalLiquidity);
@@ -37,12 +40,14 @@ contract PolicyBook is IPolicyBook, ERC20 {
     address _contract,
     IPolicyBookFabric.ContractType _contractType,
     address _daiAddr,
+    address _liquidityMiningAddr,
     string memory _description,
     string memory _projectSymbol
   ) ERC20(_description, string(abi.encodePacked("bmiDAI", _projectSymbol))) {
     contractAddress = _contract;
     contractType = _contractType;
     daiToken = IERC20(_daiAddr);
+    liquidityMiningAddr = _liquidityMiningAddr;
   }
 
   receive() external payable {}
@@ -127,27 +132,42 @@ contract PolicyBook is IPolicyBook, ERC20 {
   }
 
   function addLiquidity(uint256 _liqudityAmount) external override {
-    _addLiquidityFor(msg.sender, _liqudityAmount);
+    _addLiquidityFor(msg.sender, _liqudityAmount, false);
   }
 
   function addLiquidityFor(address _liquidityHolderAddr, uint256 _liqudityAmount) external override {
-    _addLiquidityFor(_liquidityHolderAddr, _liqudityAmount);
+    _addLiquidityFor(_liquidityHolderAddr, _liqudityAmount, false);
   }
 
-  function _addLiquidityFor(address _liquidityHolderAddr, uint256 _liqudityAmount) internal {
+  function addLiquidityFromLM(address _liquidityHolderAddr, uint256 _liqudityAmount) external override {
+    _addLiquidityFor(_liquidityHolderAddr, _liqudityAmount, true);
+  }
+
+  function _addLiquidityFor(address _liquidityHolderAddr, uint256 _liqudityAmount, bool _isLM)
+  onliLiquidityMining internal
+  {
     bool _success = daiToken.transferFrom(_liquidityHolderAddr, address(this), _liqudityAmount);
     require(_success, "Failed to transfer tokens");
 
     totalLiquidity = totalLiquidity.add(_liqudityAmount);
     _mint(_liquidityHolderAddr, _liqudityAmount);
 
+    if(_isLM) {
+      liquidityFromLM[_liquidityHolderAddr] = liquidityFromLM[_liquidityHolderAddr].add(_liqudityAmount);
+    }
+
     emit AddLiquidity(_liquidityHolderAddr, _liqudityAmount, totalLiquidity);
   }
 
   function withdrawLiquidity(uint256 _tokensToWithdraw) external override {
+    uint256 _availableBalance = balanceOf(msg.sender);
+    if (block.timestamp < LiquidityMining(liquidityMiningAddr).getEndLMTime()) {
+      _availableBalance = _availableBalance.sub(liquidityFromLM[msg.sender]);
+    }
+
     require(
-      balanceOf(msg.sender) >= _tokensToWithdraw,
-      "The amount to be withdrawn is greater than the deposited amount"
+      _availableBalance >= _tokensToWithdraw,
+      "The amount to be withdrawn is greater than the available amount"
     );
     require(totalLiquidity.sub(_tokensToWithdraw) >= totalCoverTokens, "Not enough available liquidity");
 
@@ -226,8 +246,15 @@ contract PolicyBook is IPolicyBook, ERC20 {
 
     annualInsuranceCostPercentage = Math.max(annualInsuranceCostPercentage, MINIMUM_COST_PERCENTAGE);
 
-    uint256 actualInsuranceCostPercentage = (_durationSeconds.mul(annualInsuranceCostPercentage)).div(SECONDS_IN_THE_YEAR);
+    uint256 actualInsuranceCostPercentage = (_durationSeconds.mul(annualInsuranceCostPercentage))
+      .div(SECONDS_IN_THE_YEAR);
 
     return (_tokens.mul(actualInsuranceCostPercentage)).div(PERCENTAGE_100);
+  }
+
+  modifier onliLiquidityMining() {
+    require(msg.sender == liquidityMiningAddr,
+      "The caller does not have access, only liquidity mining have access.");
+    _;
   }
 }
