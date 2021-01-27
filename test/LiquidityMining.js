@@ -49,10 +49,10 @@ contract.skip('LiquidityMining', async (accounts) => {
     liquidityMining = await LiquidityMining.new(registry.address);
     policyBook = await PolicyBook.new(BOOK, ContractType.CONTRACT, registry.address);
 
-    await registry.addContractRegistry("DAI", dai.address);
-    await registry.addContractRegistry("BMI", bmiToken.address);
-    await registry.addContractRegistry("LIQUIDITY_MINING_NFT", liquidityMiningNFT.address);
-    await registry.addContractRegistry("LIQUIDITY_MINING", liquidityMining.address);
+    await registry.addContractRegistry('DAI', dai.address);
+    await registry.addContractRegistry('BMI', bmiToken.address);
+    await registry.addContractRegistry('LIQUIDITY_MINING_NFT', liquidityMiningNFT.address);
+    await registry.addContractRegistry('LIQUIDITY_MINING', liquidityMining.address);
 
     await liquidityMiningNFT.mintNFTsForLM(liquidityMining.address);
 
@@ -113,6 +113,49 @@ contract.skip('LiquidityMining', async (accounts) => {
       assert.equal(toBN(await policyBook.liquidityFromLM(USER2)).toString(), 22001);
     });
   });
+
+  // Uncomment if you need to check the leaderboard update logic
+  // describe('updateLeaderboard', async () => {
+  //   it('should correct update leaderboard with bigger and bigger values', async () => {
+  //     let amount = toBN(100);
+
+  //     for (let i = 1; i <= 12; i++) {
+  //       await liquidityMining.investDAI(0, amount);
+  //       amount = amount.plus(100);
+  //     }
+
+  //     const firstIndex = toBN(12);
+
+  //     for (let i = 0; i < 10; i++) {
+  //       assert.equal((await liquidityMining.leaderboard(toBN(i))).toString(), firstIndex.minus(i).toString());
+  //     }
+  //   });
+
+  //   it('should correct update leaderboard with smaller and smaller values', async () => {
+  //     let amount = toBN(150);
+
+  //     for (let i = 1; i <= 12; i++) {
+  //       await liquidityMining.investDAI(0, amount);
+  //       amount = amount.minus(5);
+  //     }
+
+  //     for (let i = 0; i < 10; i++) {
+  //       assert.equal((await liquidityMining.leaderboard(toBN(i))).toString(), i + 1);
+  //     }
+  //   });
+
+  //   it('should correct update leaderboard with many same values', async () => {
+  //     const amount = toBN(150);
+
+  //     for (let i = 1; i <= 12; i++) {
+  //       await liquidityMining.investDAI(0, amount);
+  //     }
+
+  //     for (let i = 0; i < 10; i++) {
+  //       assert.equal((await liquidityMining.leaderboard(toBN(i))).toString(), i + 1);
+  //     }
+  //   });
+  // });
 
   describe('distributeAllNFT', async () => {
     const USER4 = accounts[4];

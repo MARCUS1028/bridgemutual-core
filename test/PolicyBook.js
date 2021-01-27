@@ -18,6 +18,7 @@ const ContractType = {
 contract('PolicyBook', async (accounts) => {
   const reverter = new Reverter(web3);
 
+  let liquidityMining;
   let registry;
   let policyBook;
   let dai;
@@ -33,8 +34,8 @@ contract('PolicyBook', async (accounts) => {
     liquidityMining = await LiquidityMining.new(registry.address);
     policyBook = await PolicyBook.new(BOOK, ContractType.CONTRACT, registry.address);
 
-    await registry.addContractRegistry("DAI", dai.address);
-    await registry.addContractRegistry("LIQUIDITY_MINING", liquidityMining.address);
+    await registry.addContractRegistry('DAI', dai.address);
+    await registry.addContractRegistry('LIQUIDITY_MINING', liquidityMining.address);
 
     await reverter.snapshot();
   });

@@ -5,7 +5,7 @@
     "quotes": ["error", "double"],
     "max-line-length": ["error", 120],
     "no-unused-vars": "warn",
-    "reason-string": ["error", {"maxLength": 64}],
+    "reason-string": ["error", {"maxLength": 120}],
     "avoid-call-value": "off",
     "no-complex-fallback": "off",
     "multiple-sends": "off",
