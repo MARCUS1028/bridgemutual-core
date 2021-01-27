@@ -15,7 +15,7 @@ const ContractType = {
   EXCHANGE: 3,
 };
 
-contract.only('PolicyBookFabric', async (accounts) => {
+contract('PolicyBookFabric', async (accounts) => {
   const reverter = new Reverter(web3);
 
   let contractsRegistry;
