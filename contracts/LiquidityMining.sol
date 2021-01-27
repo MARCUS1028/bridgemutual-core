@@ -3,6 +3,7 @@ pragma solidity ^0.7.4;
 
 import "@openzeppelin/contracts/math/SafeMath.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/token/ERC1155/ERC1155Receiver.sol";
 import "./interfaces/IPolicyBook.sol";
 import "./ContractsRegistry.sol";
@@ -87,27 +88,27 @@ contract LiquidityMining is ERC1155Receiver {
 
     function distributeNFT(uint256 _groupID) public returns (bool){
         require(block.timestamp > getEndLMTime(),
-            "2 weeks after liquidity mining time has not expire");
+            "2 weeks after liquidity mining time has not expired");
 
         if (_getIndexInTheLeaderboard(_groupID) == maxLeaderboardSize) {
             return false;
         }
 
-        uint256 _foundedIndex = maxGroupLeadersSize;
+        uint256 _foundIndex = maxGroupLeadersSize;
         address[] memory _addresses = groupsLeaders[_groupID];
 
         for (uint256 i = 0; i < _addresses.length; i++) {
             if (_addresses[i] == msg.sender) {
-                _foundedIndex = i;
+                _foundIndex = i;
                 break;
             }
         }
 
-        if (_foundedIndex == maxGroupLeadersSize) {
+        if (_foundIndex == maxGroupLeadersSize) {
             return false;
         }
 
-        _sendNFT(_foundedIndex);
+        _sendNFT(_foundIndex);
 
         return true;
     }
@@ -129,7 +130,7 @@ contract LiquidityMining is ERC1155Receiver {
         require(block.timestamp > getEndLMTime(),
             "2 weeks after liquidity mining time has not expire");
         
-        if(!checkAvailableReward(_groupID)) {
+        if(!_checkAvailableReward(_groupID)) {
             return 0;
         }
 
@@ -145,14 +146,13 @@ contract LiquidityMining is ERC1155Receiver {
         emit RewardSent(_groupID, msg.sender, _userReward);
 
         _rewardInfo.countOfMonth = 0;
-        _rewardInfo.lastUpdate = block.timestamp;
 
         rewardInfos[_groupID][msg.sender] = _rewardInfo;
 
         return _userReward;
     }
 
-    function checkAvailableReward(uint256 _groupID) public returns (bool) {
+    function _checkAvailableReward(uint256 _groupID) internal returns (bool) {
         uint256 _currentGroupIndex = _getIndexInTheLeaderboard(_groupID);
         if(_currentGroupIndex == maxLeaderboardSize) {
             return false;
@@ -202,6 +202,7 @@ contract LiquidityMining is ERC1155Receiver {
     }
 
     function _getRewardPerMonth(uint256 _groupID) internal view returns (uint256) {
+        uint256 _oneToken = 10 ** ERC20(registry.getContract(registry.getBMIName())).decimals();
         uint256 _indexInTheLeaderboard = _getIndexInTheLeaderboard(_groupID);
         uint256 _rewardPerMonth;
 
@@ -213,7 +214,7 @@ contract LiquidityMining is ERC1155Receiver {
             _rewardPerMonth = 4000;
         }
 
-        return _rewardPerMonth;
+        return _rewardPerMonth.mul(_oneToken);
     }
 
     function _updateRewardInfo(uint256 _groupID) internal {
@@ -245,14 +246,14 @@ contract LiquidityMining is ERC1155Receiver {
     function _getIndexInTheLeaderboard(uint256 _groupID) internal view returns (uint256) {
         uint256 _leaderBoardLength = leaderboard.length;
 
-        uint256 _foundedIndex = maxLeaderboardSize;
+        uint256 _foundIndex = maxLeaderboardSize;
         for(uint256 i = 0; i < _leaderBoardLength; i++) {
             if(_groupID == leaderboard[i]) {
-                _foundedIndex = i;
+                _foundIndex = i;
             }
         }
 
-        return _foundedIndex;
+        return _foundIndex;
     }
 
     function _updateLeaderboard(uint256 _groupID) internal returns (bool) {
@@ -265,11 +266,11 @@ contract LiquidityMining is ERC1155Receiver {
         }
 
         uint256 _currentGroupIndex = _getIndexInTheLeaderboard(_groupID);
-        uint256 _foundedLessIndex = maxLeaderboardSize;
+        uint256 _foundLessIndex = maxLeaderboardSize;
 
         for (uint256 i = 0; i < _leaderBoardLength; i++) {
             if (totalGroupsAmount[_groupID] > totalGroupsAmount[leaderboard[i]]) {
-                _foundedLessIndex = i;
+                _foundLessIndex = i;
                 break;
             }
         }
@@ -279,14 +280,14 @@ contract LiquidityMining is ERC1155Receiver {
             leaderboard.push(_groupID);
         }
 
-        if(_currentGroupIndex < _foundedLessIndex) {
+        if(_currentGroupIndex < _foundLessIndex) {
             return true;
         }
 
-        uint256 _prevID = leaderboard[_foundedLessIndex];
+        uint256 _prevID = leaderboard[_foundLessIndex];
         uint256 _tmpID;
         uint256 _currentID = _groupID;
-        for (uint256 i = _foundedLessIndex; i <= _currentGroupIndex; i++) {
+        for (uint256 i = _foundLessIndex; i <= _currentGroupIndex; i++) {
             _tmpID = leaderboard[i];
             leaderboard[i] = _currentID;
             _currentID = _tmpID;
@@ -296,7 +297,7 @@ contract LiquidityMining is ERC1155Receiver {
             leaderboard.pop();
         }
 
-        emit LeaderboardUpdated(_foundedLessIndex, _prevID, _groupID);
+        emit LeaderboardUpdated(_foundLessIndex, _prevID, _groupID);
         return true;
     }
 
@@ -310,7 +311,7 @@ contract LiquidityMining is ERC1155Receiver {
         }
 
         uint256 _currentIndex = maxGroupLeadersSize;
-        uint256 _foundedLessIndex = maxGroupLeadersSize;
+        uint256 _foundLessIndex = maxGroupLeadersSize;
 
         for (uint256 i = 0; i < _groupLeadersSize; i++) {
             if (_addresses[i] == msg.sender) {
@@ -321,7 +322,7 @@ contract LiquidityMining is ERC1155Receiver {
 
         for (uint256 i = 0; i < _groupLeadersSize; i++) {
             if (groups[_groupID][msg.sender] > groups[_groupID][_addresses[i]]) {
-                _foundedLessIndex = i;
+                _foundLessIndex = i;
                 break;
             }
         }
@@ -331,7 +332,7 @@ contract LiquidityMining is ERC1155Receiver {
             groupsLeaders[_groupID].push(msg.sender);
         }
 
-        if(_currentIndex < _foundedLessIndex) {
+        if(_currentIndex < _foundLessIndex) {
             return true;
         }
 
@@ -339,7 +340,7 @@ contract LiquidityMining is ERC1155Receiver {
 
         address _tmpAddr;
         address _currentAddr = msg.sender;
-        for (uint256 i = _foundedLessIndex; i <= _currentIndex; i++) {
+        for (uint256 i = _foundLessIndex; i <= _currentIndex; i++) {
             _tmpAddr = _addresses[i];
             _addresses[i] = _currentAddr;
             _currentAddr = _tmpAddr;

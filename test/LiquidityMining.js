@@ -30,6 +30,7 @@ contract.skip('LiquidityMining', async (accounts) => {
   const endLiquidityMiningTime = toBN(1).plus(1209600); // Now + 2 weeks
   const oneMonth = toBN(2592000);
   const daiAmount = toBN(100000);
+  const oneBMI = toBN(10).pow(18);
 
   let registry;
   let liquidityMining;
@@ -113,49 +114,6 @@ contract.skip('LiquidityMining', async (accounts) => {
       assert.equal(toBN(await policyBook.liquidityFromLM(USER2)).toString(), 22001);
     });
   });
-
-  // Uncomment if you need to check the leaderboard update logic
-  // describe('updateLeaderboard', async () => {
-  //   it('should correct update leaderboard with bigger and bigger values', async () => {
-  //     let amount = toBN(100);
-
-  //     for (let i = 1; i <= 12; i++) {
-  //       await liquidityMining.investDAI(0, amount);
-  //       amount = amount.plus(100);
-  //     }
-
-  //     const firstIndex = toBN(12);
-
-  //     for (let i = 0; i < 10; i++) {
-  //       assert.equal((await liquidityMining.leaderboard(toBN(i))).toString(), firstIndex.minus(i).toString());
-  //     }
-  //   });
-
-  //   it('should correct update leaderboard with smaller and smaller values', async () => {
-  //     let amount = toBN(150);
-
-  //     for (let i = 1; i <= 12; i++) {
-  //       await liquidityMining.investDAI(0, amount);
-  //       amount = amount.minus(5);
-  //     }
-
-  //     for (let i = 0; i < 10; i++) {
-  //       assert.equal((await liquidityMining.leaderboard(toBN(i))).toString(), i + 1);
-  //     }
-  //   });
-
-  //   it('should correct update leaderboard with many same values', async () => {
-  //     const amount = toBN(150);
-
-  //     for (let i = 1; i <= 12; i++) {
-  //       await liquidityMining.investDAI(0, amount);
-  //     }
-
-  //     for (let i = 0; i < 10; i++) {
-  //       assert.equal((await liquidityMining.leaderboard(toBN(i))).toString(), i + 1);
-  //     }
-  //   });
-  // });
 
   describe('distributeAllNFT', async () => {
     const USER4 = accounts[4];
@@ -300,12 +258,12 @@ contract.skip('LiquidityMining', async (accounts) => {
 
     it('should get exception, 2 weeks has not expire', async () => {
       await truffleAssert.reverts(liquidityMining.distributeNFT(1, {from: USER1}),
-        '2 weeks after liquidity mining time has not expire');
+        '2 weeks after liquidity mining time has not expired');
     });
   });
 
   describe('getRewardFromGroup', async () => {
-    const amountToTransfer = toBN(1000000);
+    const amountToTransfer = oneBMI.times(1000000);
 
     beforeEach('setup', async () => {
       await dai.transfer(USER1, daiAmount);
@@ -316,7 +274,8 @@ contract.skip('LiquidityMining', async (accounts) => {
 
       await bmiToken.transfer(liquidityMining.address, amountToTransfer);
 
-      assert.equal(await bmiToken.balanceOf(liquidityMining.address), amountToTransfer.toString());
+      assert.equal(toBN(await bmiToken.balanceOf(liquidityMining.address)).toString(),
+        amountToTransfer.toString());
     });
 
     it('should get zero if no reward is available', async () => {
@@ -337,7 +296,7 @@ contract.skip('LiquidityMining', async (accounts) => {
       await setCurrentTime(endLiquidityMiningTime.plus(10));
 
       await liquidityMining.getRewardFromGroup(1, {from: USER1});
-      assert.equal(toBN(await bmiToken.balanceOf(USER1)).toString(), 50000);
+      assert.equal(toBN(await bmiToken.balanceOf(USER1)).toString(), oneBMI.times(50000));
     });
 
     it('should correct get reward for different users', async () => {
@@ -353,9 +312,9 @@ contract.skip('LiquidityMining', async (accounts) => {
       await liquidityMining.getRewardFromGroup(1, {from: USER2});
       await liquidityMining.getRewardFromGroup(1, {from: USER3});
 
-      assert.equal(toBN(await bmiToken.balanceOf(USER1)).toString(), 5000);
-      assert.equal(toBN(await bmiToken.balanceOf(USER2)).toString(), 20000);
-      assert.equal(toBN(await bmiToken.balanceOf(USER3)).toString(), 25000);
+      assert.equal(toBN(await bmiToken.balanceOf(USER1)).toString(), oneBMI.times(5000));
+      assert.equal(toBN(await bmiToken.balanceOf(USER2)).toString(), oneBMI.times(20000));
+      assert.equal(toBN(await bmiToken.balanceOf(USER3)).toString(), oneBMI.times(25000));
     });
 
     it('should get 100% of tokens 5 month reward on 2 place', async () => {
@@ -365,7 +324,7 @@ contract.skip('LiquidityMining', async (accounts) => {
       await setCurrentTime(endLiquidityMiningTime.plus(10).plus(oneMonth.times(4)));
 
       await liquidityMining.getRewardFromGroup(2, {from: USER2});
-      assert.equal(toBN(await bmiToken.balanceOf(USER2)).toString(), 50000);
+      assert.equal(toBN(await bmiToken.balanceOf(USER2)).toString(), oneBMI.times(50000));
     });
 
     it('should correct get reward multiple times', async () => {
@@ -373,12 +332,12 @@ contract.skip('LiquidityMining', async (accounts) => {
       await setCurrentTime(endLiquidityMiningTime.plus(10).plus(oneMonth));
 
       await liquidityMining.getRewardFromGroup(1, {from: USER1});
-      assert.equal(toBN(await bmiToken.balanceOf(USER1)).toString(), 100000);
+      assert.equal(toBN(await bmiToken.balanceOf(USER1)).toString(), oneBMI.times(100000));
 
       await setCurrentTime(endLiquidityMiningTime.plus(10).plus(oneMonth.times(7)));
 
       await liquidityMining.getRewardFromGroup(1, {from: USER1});
-      assert.equal(toBN(await bmiToken.balanceOf(USER1)).toString(), 250000);
+      assert.equal(toBN(await bmiToken.balanceOf(USER1)).toString(), oneBMI.times(250000));
     });
 
     it('should correct get reward multiple times with two users', async () => {
@@ -392,7 +351,8 @@ contract.skip('LiquidityMining', async (accounts) => {
       await liquidityMining.investDAI(0, 100, policyBook.address, {from: USER1});
       await liquidityMining.investDAI(8, 100, policyBook.address, {from: USER2});
 
-      let totalTokens = toBN(2000);
+      const oneReward = oneBMI.times(2000);
+      let totalTokens = oneReward;
       for (let i = 0; i < 4; i++) {
         await setCurrentTime(startTime.plus(oneMonth.times(i)));
 
@@ -402,77 +362,13 @@ contract.skip('LiquidityMining', async (accounts) => {
         assert.equal(toBN(await bmiToken.balanceOf(USER1)).toString(), totalTokens.toString());
         assert.equal(toBN(await bmiToken.balanceOf(USER2)).toString(), totalTokens.toString());
 
-        totalTokens = totalTokens.plus(2000);
+        totalTokens = totalTokens.plus(oneReward);
       }
     });
 
     it('should get exception, 2 weeks has not expire', async () => {
       await truffleAssert.reverts(liquidityMining.getRewardFromGroup(3),
         '2 weeks after liquidity mining time has not expire');
-    });
-  });
-
-  describe('checkAvailableReward', async () => {
-    beforeEach('setup', async () => {
-      await dai.transfer(USER1, daiAmount);
-      await dai.approve(policyBook.address, daiAmount, {from: USER1});
-
-      await liquidityMining.investDAI(0, 100, policyBook.address, {from: USER1});
-    });
-
-    it('should return true, user have 2 months reward', async () => {
-      const neededTime = endLiquidityMiningTime.plus(oneMonth).plus(10);
-      await setCurrentTime(neededTime);
-      assert.isTrue(await liquidityMining.checkAvailableReward.call(1, {from: USER1}));
-
-      await setCurrentTime(neededTime);
-      const result = await liquidityMining.checkAvailableReward(1, {from: USER1});
-
-      assert.equal(result.logs.length, 1);
-      assert.equal(result.logs[0].event, 'RewardInfoUpdated');
-      assert.equal(result.logs[0].args._groupID, 1);
-      assert.equal(result.logs[0].args._address, USER1);
-      assert.equal(result.logs[0].args._newCountOfMonth, 2);
-      assert.equal(result.logs[0].args._newLastUpdate, neededTime.toString());
-    });
-
-    it('should return true, user have 1 months reward', async () => {
-      const neededTime = endLiquidityMiningTime.plus(10);
-      await setCurrentTime(neededTime);
-      assert.isTrue(await liquidityMining.checkAvailableReward.call(1, {from: USER1}));
-
-      await setCurrentTime(neededTime);
-      const result = await liquidityMining.checkAvailableReward(1, {from: USER1});
-
-      assert.equal(result.logs[0].args._newCountOfMonth, 1);
-      assert.equal(toBN(result.logs[0].args._newLastUpdate).toString(), neededTime.toString());
-    });
-
-    it('should return true, user have 5 months reward', async () => {
-      const neededTime = endLiquidityMiningTime.plus(oneMonth.times(7));
-      await setCurrentTime(neededTime);
-      assert.isTrue(await liquidityMining.checkAvailableReward.call(1, {from: USER1}));
-
-      await setCurrentTime(neededTime);
-      const result = await liquidityMining.checkAvailableReward(1, {from: USER1});
-
-      assert.equal(result.logs[0].args._newCountOfMonth, 5);
-      assert.equal(toBN(result.logs[0].args._newLastUpdate), neededTime.toString());
-    });
-
-    it('should return false, the group is not in the lead', async () => {
-      for (let i = 0; i < 11; i++) {
-        await liquidityMining.investDAI(0, 50, policyBook.address, {from: USER1});
-      }
-      assert.isFalse(await liquidityMining.checkAvailableReward.call(11, {from: USER1}));
-    });
-
-    it('should return false, the the user is not a member of the group', async () => {
-      assert.isFalse(await liquidityMining.checkAvailableReward.call(1, {from: USER2}));
-    });
-
-    it('should return false, no rewards available', async () => {
-      assert.isFalse(await liquidityMining.checkAvailableReward.call(1, {from: USER1}));
     });
   });
 });
