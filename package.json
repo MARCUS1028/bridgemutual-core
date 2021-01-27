@@ -10,6 +10,7 @@
     "deploy-ropsten": "truffle deploy --network ropsten --reset",
     "truffle": "truffle",
     "test": "truffle test",
+    "test-no-deploy": "truffle test --migrations_directory test",
     "test:coverage": "truffle run coverage",
     "watch": "truffle watch",
     "compile": "truffle compile --all",

@@ -1,3 +1,5 @@
+const LiquidityMining = artifacts.require('LiquidityMining.sol');
+const ContractsRegistry = artifacts.require('ContractsRegistry.sol');
 const PolicyBook = artifacts.require('./Mock/MockPolicyBook');
 const DAI = artifacts.require('./Mock/DAIMock');
 
@@ -16,6 +18,8 @@ const ContractType = {
 contract('PolicyBook', async (accounts) => {
   const reverter = new Reverter(web3);
 
+  let liquidityMining;
+  let registry;
   let policyBook;
   let dai;
 
@@ -25,7 +29,13 @@ contract('PolicyBook', async (accounts) => {
 
   before('setup', async () => {
     dai = await DAI.new('dai', 'dai');
-    policyBook = await PolicyBook.new(BOOK, ContractType.CONTRACT, dai.address);
+    registry = await ContractsRegistry.new();
+
+    liquidityMining = await LiquidityMining.new(registry.address);
+    policyBook = await PolicyBook.new(BOOK, ContractType.CONTRACT, registry.address);
+
+    await registry.addContractRegistry('DAI', dai.address);
+    await registry.addContractRegistry('LIQUIDITY_MINING', liquidityMining.address);
 
     await reverter.snapshot();
   });
@@ -275,13 +285,47 @@ contract('PolicyBook', async (accounts) => {
         daiAmount.minus(liquidityAmount).plus(amountToWithdraw).toString());
     });
 
+    it('should successfully withdraw tokens that 2 weeks has expire', async () => {
+      await setCurrentTime(1);
+      await policyBook.addLiquidity(liquidityAmount, {from: USER1});
+      await liquidityMining.investDAI(0, liquidityAmount.div(2), policyBook.address, {from: USER1});
+      const totalLiquidity = toBN(7500);
+
+      assert.equal(toBN(await policyBook.totalLiquidity()).toString(), totalLiquidity.toString());
+
+      await setCurrentTime(toBN(await liquidityMining.getEndLMTime()).plus(10));
+
+      const amountToWithdraw = liquidityAmount.plus(1000);
+      await policyBook.withdrawLiquidity(amountToWithdraw, {from: USER1});
+
+      assert.equal(toBN(await policyBook.totalLiquidity()).toString(),
+        totalLiquidity.minus(amountToWithdraw).toString());
+
+      assert.equal(toBN(await policyBook.balanceOf(USER1)).toString(),
+        totalLiquidity.minus(amountToWithdraw).toString());
+
+      assert.equal(toBN(await dai.balanceOf(USER1)).toString(),
+        daiAmount.minus(totalLiquidity.minus(amountToWithdraw)).toString());
+    });
+
     it('should get exception, amount to be withdrawn is greater than the deposited amount', async () => {
       await setCurrentTime(1);
       await policyBook.addLiquidity(liquidityAmount, {from: USER1});
       await policyBook.addLiquidity(liquidityAmount, {from: USER2});
       assert.equal(toBN(await policyBook.totalLiquidity()).toString(), liquidityAmount.times(2).toString());
 
-      const reason = 'The amount to be withdrawn is greater than the deposited amount';
+      const reason = 'The amount to be withdrawn is greater than the available amount';
+      await truffleAssert.reverts(policyBook.withdrawLiquidity(liquidityAmount.plus(1), {from: USER1}), reason);
+    });
+
+    it('should get exception, amount to be withdrawn is greater than the deposited amount and 2 weeks has not expire', async () => {
+      await setCurrentTime(1);
+      await policyBook.addLiquidity(liquidityAmount, {from: USER1});
+      await liquidityMining.investDAI(0, liquidityAmount.div(2), policyBook.address, {from: USER1});
+      await policyBook.addLiquidity(liquidityAmount, {from: USER2});
+      assert.equal(toBN(await policyBook.totalLiquidity()).toString(), toBN(12500).toString());
+
+      const reason = 'The amount to be withdrawn is greater than the available amount';
       await truffleAssert.reverts(policyBook.withdrawLiquidity(liquidityAmount.plus(1), {from: USER1}), reason);
     });
 
@@ -480,7 +524,7 @@ contract('PolicyBook', async (accounts) => {
         'The pool is empty');
     });
 
-    it("forcing overflow (should revert)", async () => {
+    it('forcing overflow (should revert)', async () => {
       seconds = 365 * 24 * 60 * 60;
       myMoney = toBN(4).times(toBN(10).pow(toBN(76)));
       total = toBN(10).times(toBN(10).pow(toBN(76)));
@@ -489,7 +533,7 @@ contract('PolicyBook', async (accounts) => {
       await policyBook.setTotalLiquidity(total);
       await policyBook.setTotalCoverTokens(bought);
 
-      await truffleAssert.reverts(policyBook.getQuote(seconds, myMoney), "SafeMath: multiplication overflow");
+      await truffleAssert.reverts(policyBook.getQuote(seconds, myMoney), 'SafeMath: multiplication overflow');
     });
   });
 });

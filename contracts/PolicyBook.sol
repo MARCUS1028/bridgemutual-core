@@ -9,11 +9,14 @@ import "@openzeppelin/contracts/math/Math.sol";
 
 import "./interfaces/IPolicyBook.sol";
 import "./interfaces/IPolicyBookFabric.sol";
+import "./LiquidityMining.sol";
+import "./ContractsRegistry.sol";
 
 contract PolicyBook is IPolicyBook, ERC20 {
   using SafeMath for uint256;
   using Math for uint256;
 
+  ContractsRegistry private registry;
   address public override contractAddress;
   IPolicyBookFabric.ContractType public override contractType;
   IERC20 daiToken;
@@ -28,6 +31,7 @@ contract PolicyBook is IPolicyBook, ERC20 {
   }
 
   mapping(address => PolicyHolder) public policyHolders;
+  mapping(address => uint256) public liquidityFromLM;
 
   event AddLiquidity(address _liquidityHolder, uint256 _liqudityAmount, uint256 _newTotalLiquidity);
   event WithdrawLiquidity(address _liquidityHolder, uint256 _tokensToWithdraw, uint256 _newTotalLiquidity);
@@ -36,13 +40,13 @@ contract PolicyBook is IPolicyBook, ERC20 {
   constructor(
     address _contract,
     IPolicyBookFabric.ContractType _contractType,
-    address _daiAddr,
+    address _registry,
     string memory _description,
     string memory _projectSymbol
   ) ERC20(_description, string(abi.encodePacked("bmiDAI", _projectSymbol))) {
     contractAddress = _contract;
     contractType = _contractType;
-    daiToken = IERC20(_daiAddr);
+    registry = ContractsRegistry(_registry);
   }
 
   receive() external payable {}
@@ -120,38 +124,58 @@ contract PolicyBook is IPolicyBook, ERC20 {
     policyHolders[_policyHolderAddr] = _policyHolder;
     totalCoverTokens = totalCoverTokens.add(_coverTokens);
 
-    bool _success = daiToken.transferFrom(_policyHolderAddr, address(this), _price);
+    bool _success = IERC20(registry.getContract(registry.getDAIName()))
+      .transferFrom(_policyHolderAddr, address(this), _price);
     require(_success, "Failed to transfer tokens");
 
     emit BuyPolicy(_policyHolderAddr, _coverTokens, _price, totalCoverTokens);
   }
 
   function addLiquidity(uint256 _liqudityAmount) external override {
-    _addLiquidityFor(msg.sender, _liqudityAmount);
+    _addLiquidityFor(msg.sender, _liqudityAmount, false);
   }
 
   function addLiquidityFor(address _liquidityHolderAddr, uint256 _liqudityAmount) external override {
-    _addLiquidityFor(_liquidityHolderAddr, _liqudityAmount);
+    _addLiquidityFor(_liquidityHolderAddr, _liqudityAmount, false);
   }
 
-  function _addLiquidityFor(address _liquidityHolderAddr, uint256 _liqudityAmount) internal {
-    bool _success = daiToken.transferFrom(_liquidityHolderAddr, address(this), _liqudityAmount);
+  function addLiquidityFromLM(address _liquidityHolderAddr, uint256 _liqudityAmount)
+  onliLiquidityMining external override
+  {
+    _addLiquidityFor(_liquidityHolderAddr, _liqudityAmount, true);
+  }
+
+  function _addLiquidityFor(address _liquidityHolderAddr, uint256 _liqudityAmount, bool _isLM) internal {
+    bool _success = IERC20(registry.getContract(registry.getDAIName()))
+      .transferFrom(_liquidityHolderAddr, address(this), _liqudityAmount);
     require(_success, "Failed to transfer tokens");
 
     totalLiquidity = totalLiquidity.add(_liqudityAmount);
     _mint(_liquidityHolderAddr, _liqudityAmount);
 
+    if(_isLM) {
+      liquidityFromLM[_liquidityHolderAddr] = liquidityFromLM[_liquidityHolderAddr].add(_liqudityAmount);
+    }
+
     emit AddLiquidity(_liquidityHolderAddr, _liqudityAmount, totalLiquidity);
   }
 
   function withdrawLiquidity(uint256 _tokensToWithdraw) external override {
+    LiquidityMining _liquidityMining = LiquidityMining(registry.getContract(registry.getLiquidityMiningName()));
+
+    uint256 _availableBalance = balanceOf(msg.sender);
+    if (block.timestamp < _liquidityMining.getEndLMTime()) {
+      _availableBalance = _availableBalance.sub(liquidityFromLM[msg.sender]);
+    }
+
     require(
-      balanceOf(msg.sender) >= _tokensToWithdraw,
-      "The amount to be withdrawn is greater than the deposited amount"
+      _availableBalance >= _tokensToWithdraw,
+      "The amount to be withdrawn is greater than the available amount"
     );
     require(totalLiquidity.sub(_tokensToWithdraw) >= totalCoverTokens, "Not enough available liquidity");
 
-    bool _success = daiToken.transfer(msg.sender, _tokensToWithdraw);
+    bool _success = IERC20(registry.getContract(registry.getDAIName()))
+      .transfer(msg.sender, _tokensToWithdraw);
     require(_success, "Failed to transfer tokens");
 
     totalLiquidity = totalLiquidity.sub(_tokensToWithdraw);
@@ -226,8 +250,15 @@ contract PolicyBook is IPolicyBook, ERC20 {
 
     annualInsuranceCostPercentage = Math.max(annualInsuranceCostPercentage, MINIMUM_COST_PERCENTAGE);
 
-    uint256 actualInsuranceCostPercentage = (_durationSeconds.mul(annualInsuranceCostPercentage)).div(SECONDS_IN_THE_YEAR);
+    uint256 actualInsuranceCostPercentage = (_durationSeconds.mul(annualInsuranceCostPercentage))
+      .div(SECONDS_IN_THE_YEAR);
 
     return (_tokens.mul(actualInsuranceCostPercentage)).div(PERCENTAGE_100);
+  }
+
+  modifier onliLiquidityMining() {
+    require(msg.sender == registry.getContract(registry.getLiquidityMiningName()),
+      "The caller does not have access, only liquidity mining have access.");
+    _;
   }
 }

@@ -53,9 +53,9 @@ module.exports = {
     },
     ropsten: {
       provider: () => new HDWalletProvider([process.env.PRIVATE_KEY], `wss://ropsten.infura.io/ws/v3/${process.env.PROJECT_ID}`),
-      network_id: 3,       // Ropsten's id      
-      gas: 6721975,        // Ropsten has a lower block limit than mainnet            
-      skipDryRun: true     // Skip dry run before migrations? (default: false for public nets )
+      network_id: 3, // Ropsten's id
+      gas: 6721975, // Ropsten has a lower block limit than mainnet
+      skipDryRun: true, // Skip dry run before migrations? (default: false for public nets )
     },
     // Useful for testing. The `development` name is special - truffle uses it by default
     // if it's defined here and no other network is specified at the command line.

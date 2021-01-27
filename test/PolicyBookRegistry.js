@@ -3,7 +3,7 @@ const PolicyBookRegistry = artifacts.require('PolicyBookRegistry');
 const Reverter = require('./helpers/reverter');
 const truffleAssert = require('truffle-assertions');
 
-contract('PolicyBookFabric', async (accounts) => {
+contract('PolicyBookRegistry', async (accounts) => {
   const zeroAddress = '0x0000000000000000000000000000000000000000';
   const reverter = new Reverter(web3);
 
