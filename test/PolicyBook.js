@@ -4,7 +4,10 @@ const DAI = artifacts.require('./Mock/DAIMock');
 const Reverter = require('./helpers/reverter');
 const BigNumber = require('bignumber.js');
 const truffleAssert = require('truffle-assertions');
+const Wallet = require('ethereumjs-wallet').default;
 const setCurrentTime = require('./helpers/ganacheTimeTraveler');
+const {sign2612} = require('./helpers/signatures');
+const {MAX_UINT256} = require('./helpers/constants');
 
 const ContractType = {
   STABLECOIN: 0,
@@ -490,6 +493,26 @@ contract('PolicyBook', async (accounts) => {
       await policyBook.setTotalCoverTokens(bought);
 
       await truffleAssert.reverts(policyBook.getQuote(seconds, myMoney), "SafeMath: multiplication overflow");
+    });
+  });
+
+  describe('permit', async () => {
+    it('should change allowance through permit', async () => {
+      const wallet = Wallet.generate();
+      const walletAddress = wallet.getAddressString();
+      const amount = toBN(10).pow(25);
+      const contractData = {name: 'bmiDAI', verifyingContract: policyBook.address};
+      const transactionData = {
+        owner: walletAddress,
+        spender: USER1,
+        value: amount,
+      };
+      const {v, r, s} = sign2612(contractData, transactionData, wallet.getPrivateKey());
+
+      await policyBook.permit(
+        walletAddress, USER1, amount.toString(10), MAX_UINT256.toString(10), v, r, s, {from: USER1},
+      );
+      assert.equal(toBN(await policyBook.allowance(walletAddress, USER1)).toString(), amount.toString());
     });
   });
 });
