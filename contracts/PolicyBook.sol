@@ -10,15 +10,16 @@ import "@openzeppelin/contracts/math/Math.sol";
 import "./interfaces/IPolicyBook.sol";
 import "./interfaces/IPolicyBookFabric.sol";
 import "./LiquidityMining.sol";
+import "./ContractsRegistry.sol";
 
 contract PolicyBook is IPolicyBook, ERC20 {
   using SafeMath for uint256;
   using Math for uint256;
 
+  ContractsRegistry private registry;
   address public override contractAddress;
   IPolicyBookFabric.ContractType public override contractType;
   IERC20 daiToken;
-  address liquidityMiningAddr;
 
   uint256 public totalLiquidity;
   uint256 public totalCoverTokens;
@@ -39,15 +40,13 @@ contract PolicyBook is IPolicyBook, ERC20 {
   constructor(
     address _contract,
     IPolicyBookFabric.ContractType _contractType,
-    address _daiAddr,
-    address _liquidityMiningAddr,
+    address _registry,
     string memory _description,
     string memory _projectSymbol
   ) ERC20(_description, string(abi.encodePacked("bmiDAI", _projectSymbol))) {
     contractAddress = _contract;
     contractType = _contractType;
-    daiToken = IERC20(_daiAddr);
-    liquidityMiningAddr = _liquidityMiningAddr;
+    registry = ContractsRegistry(_registry);
   }
 
   receive() external payable {}
@@ -125,7 +124,8 @@ contract PolicyBook is IPolicyBook, ERC20 {
     policyHolders[_policyHolderAddr] = _policyHolder;
     totalCoverTokens = totalCoverTokens.add(_coverTokens);
 
-    bool _success = daiToken.transferFrom(_policyHolderAddr, address(this), _price);
+    bool _success = IERC20(registry.getContract(registry.getDAIName()))
+      .transferFrom(_policyHolderAddr, address(this), _price);
     require(_success, "Failed to transfer tokens");
 
     emit BuyPolicy(_policyHolderAddr, _coverTokens, _price, totalCoverTokens);
@@ -139,14 +139,15 @@ contract PolicyBook is IPolicyBook, ERC20 {
     _addLiquidityFor(_liquidityHolderAddr, _liqudityAmount, false);
   }
 
-  function addLiquidityFromLM(address _liquidityHolderAddr, uint256 _liqudityAmount) external override {
+  function addLiquidityFromLM(address _liquidityHolderAddr, uint256 _liqudityAmount)
+  onliLiquidityMining external override
+  {
     _addLiquidityFor(_liquidityHolderAddr, _liqudityAmount, true);
   }
 
-  function _addLiquidityFor(address _liquidityHolderAddr, uint256 _liqudityAmount, bool _isLM)
-  onliLiquidityMining internal
-  {
-    bool _success = daiToken.transferFrom(_liquidityHolderAddr, address(this), _liqudityAmount);
+  function _addLiquidityFor(address _liquidityHolderAddr, uint256 _liqudityAmount, bool _isLM) internal {
+    bool _success = IERC20(registry.getContract(registry.getDAIName()))
+      .transferFrom(_liquidityHolderAddr, address(this), _liqudityAmount);
     require(_success, "Failed to transfer tokens");
 
     totalLiquidity = totalLiquidity.add(_liqudityAmount);
@@ -160,8 +161,10 @@ contract PolicyBook is IPolicyBook, ERC20 {
   }
 
   function withdrawLiquidity(uint256 _tokensToWithdraw) external override {
+    LiquidityMining _liquidityMining = LiquidityMining(registry.getContract(registry.getLiquidityMiningName()));
+
     uint256 _availableBalance = balanceOf(msg.sender);
-    if (block.timestamp < LiquidityMining(liquidityMiningAddr).getEndLMTime()) {
+    if (block.timestamp < _liquidityMining.getEndLMTime()) {
       _availableBalance = _availableBalance.sub(liquidityFromLM[msg.sender]);
     }
 
@@ -171,7 +174,8 @@ contract PolicyBook is IPolicyBook, ERC20 {
     );
     require(totalLiquidity.sub(_tokensToWithdraw) >= totalCoverTokens, "Not enough available liquidity");
 
-    bool _success = daiToken.transfer(msg.sender, _tokensToWithdraw);
+    bool _success = IERC20(registry.getContract(registry.getDAIName()))
+      .transfer(msg.sender, _tokensToWithdraw);
     require(_success, "Failed to transfer tokens");
 
     totalLiquidity = totalLiquidity.sub(_tokensToWithdraw);
@@ -253,7 +257,7 @@ contract PolicyBook is IPolicyBook, ERC20 {
   }
 
   modifier onliLiquidityMining() {
-    require(msg.sender == liquidityMiningAddr,
+    require(msg.sender == registry.getContract(registry.getLiquidityMiningName()),
       "The caller does not have access, only liquidity mining have access.");
     _;
   }

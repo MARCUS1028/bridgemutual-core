@@ -1,4 +1,5 @@
 const LiquidityMining = artifacts.require('LiquidityMining.sol');
+const ContractsRegistry = artifacts.require('ContractsRegistry.sol');
 const BMIToken = artifacts.require('BMIToken.sol');
 const DAI = artifacts.require('./Mock/DAIMock');
 const LiquidityMiningNFT = artifacts.require('LiquidityMiningNFT.sol');
@@ -18,7 +19,7 @@ const ContractType = {
   EXCHANGE: 3,
 };
 
-contract.only('LiquidityMining', async (accounts) => {
+contract.skip('LiquidityMining', async (accounts) => {
   const reverter = new Reverter(web3);
 
   const OWNER = accounts[0];
@@ -28,6 +29,9 @@ contract.only('LiquidityMining', async (accounts) => {
   const BOOK = accounts[9];
   const endLiquidityMiningTime = toBN(1).plus(1209600); // Now + 2 weeks
   const oneMonth = toBN(2592000);
+  const daiAmount = toBN(100000);
+
+  let registry;
   let liquidityMining;
   let liquidityMiningNFT;
   let bmiToken;
@@ -35,14 +39,20 @@ contract.only('LiquidityMining', async (accounts) => {
   let policyBook;
 
   before('setup', async () => {
+    registry = await ContractsRegistry.new();
     bmiToken = await BMIToken.new(OWNER);
     dai = await DAI.new('dai', 'dai');
 
     liquidityMiningNFT = await LiquidityMiningNFT.new('LiquidityMiningNFT');
 
     await setCurrentTime(1);
-    liquidityMining = await LiquidityMining.new(bmiToken.address, liquidityMiningNFT.address);
-    policyBook = await PolicyBook.new(BOOK, ContractType.CONTRACT, dai.address, liquidityMining.address);
+    liquidityMining = await LiquidityMining.new(registry.address);
+    policyBook = await PolicyBook.new(BOOK, ContractType.CONTRACT, registry.address);
+
+    await registry.addContractRegistry("DAI", dai.address);
+    await registry.addContractRegistry("BMI", bmiToken.address);
+    await registry.addContractRegistry("LIQUIDITY_MINING_NFT", liquidityMiningNFT.address);
+    await registry.addContractRegistry("LIQUIDITY_MINING", liquidityMining.address);
 
     await liquidityMiningNFT.mintNFTsForLM(liquidityMining.address);
 
@@ -51,8 +61,7 @@ contract.only('LiquidityMining', async (accounts) => {
 
   afterEach('revert', reverter.revert);
 
-  describe.only('investDAI', async () => {
-    const daiAmount = toBN(100000);
+  describe('investDAI', async () => {
     const investAmount = toBN(1000);
 
     beforeEach('setup', async () => {
@@ -105,58 +114,21 @@ contract.only('LiquidityMining', async (accounts) => {
     });
   });
 
-  describe('updateLeaderboard', async () => {
-    it('should correct update leaderboard with bigger and bigger values', async () => {
-      let amount = toBN(100);
-
-      for (let i = 1; i <= 12; i++) {
-        await liquidityMining.investDAI(0, amount);
-        amount = amount.plus(100);
-      }
-
-      const firstIndex = toBN(12);
-
-      for (let i = 0; i < 10; i++) {
-        assert.equal((await liquidityMining.leaderboard(toBN(i))).toString(), firstIndex.minus(i).toString());
-      }
-    });
-
-    it('should correct update leaderboard with smaller and smaller values', async () => {
-      let amount = toBN(150);
-
-      for (let i = 1; i <= 12; i++) {
-        await liquidityMining.investDAI(0, amount);
-        amount = amount.minus(5);
-      }
-
-      for (let i = 0; i < 10; i++) {
-        assert.equal((await liquidityMining.leaderboard(toBN(i))).toString(), i + 1);
-      }
-    });
-
-    it('should correct update leaderboard with many same values', async () => {
-      const amount = toBN(150);
-
-      for (let i = 1; i <= 12; i++) {
-        await liquidityMining.investDAI(0, amount);
-      }
-
-      for (let i = 0; i < 10; i++) {
-        assert.equal((await liquidityMining.leaderboard(toBN(i))).toString(), i + 1);
-      }
-    });
-  });
-
   describe('distributeAllNFT', async () => {
     const USER4 = accounts[4];
-    const USER5 = accounts[5];
 
     it('should send zero nft if the user does not deserve a reward', async () => {
+      await dai.transfer(USER1, daiAmount);
+      await dai.approve(policyBook.address, daiAmount, {from: USER1});
+
+      await dai.transfer(USER2, daiAmount);
+      await dai.approve(policyBook.address, daiAmount, {from: USER2});
+
       for (let i = 0; i < 10; i++) {
-        await liquidityMining.investDAI(0, 100, {from: USER1});
+        await liquidityMining.investDAI(0, 100, policyBook.address, {from: USER1});
       }
 
-      await liquidityMining.investDAI(0, 50, {from: USER2});
+      await liquidityMining.investDAI(0, 50, policyBook.address, {from: USER2});
 
       await setCurrentTime(endLiquidityMiningTime.plus(10));
       await liquidityMining.distributeAllNFT({from: USER2});
@@ -164,15 +136,21 @@ contract.only('LiquidityMining', async (accounts) => {
     });
 
     it('should send the necessary nft if the user is worthy', async () => {
-      for (let i = 0; i < 5; i++) {
-        await liquidityMining.investDAI(0, 1000, {from: USER1});
+      const users = [USER1, USER2, USER3, USER4];
+      for (let i = 0; i < 4; i++) {
+        await dai.transfer(users[i], daiAmount);
+        await dai.approve(policyBook.address, daiAmount, {from: users[i]});
       }
 
-      await liquidityMining.investDAI(2, 2000, {from: USER2});
-      await liquidityMining.investDAI(3, 2000, {from: USER2});
-      await liquidityMining.investDAI(3, 3000, {from: USER3});
-      await liquidityMining.investDAI(3, 4000, {from: USER4});
-      await liquidityMining.investDAI(4, 4000, {from: USER4});
+      for (let i = 0; i < 5; i++) {
+        await liquidityMining.investDAI(0, 1000, policyBook.address, {from: USER1});
+      }
+
+      await liquidityMining.investDAI(2, 2000, policyBook.address, {from: USER2});
+      await liquidityMining.investDAI(3, 2000, policyBook.address, {from: USER2});
+      await liquidityMining.investDAI(3, 3000, policyBook.address, {from: USER3});
+      await liquidityMining.investDAI(3, 4000, policyBook.address, {from: USER4});
+      await liquidityMining.investDAI(4, 4000, policyBook.address, {from: USER4});
 
       await setCurrentTime(endLiquidityMiningTime.plus(10));
       await liquidityMining.distributeAllNFT({from: USER1});
@@ -185,12 +163,18 @@ contract.only('LiquidityMining', async (accounts) => {
     });
 
     it('should send 10 platinum and 5 silver nfts', async () => {
+      await dai.transfer(USER1, daiAmount);
+      await dai.approve(policyBook.address, daiAmount, {from: USER1});
+
+      await dai.transfer(USER2, daiAmount);
+      await dai.approve(policyBook.address, daiAmount, {from: USER2});
+
       for (let i = 0; i < 10; i++) {
-        await liquidityMining.investDAI(0, 1000, {from: USER1});
+        await liquidityMining.investDAI(0, 1000, policyBook.address, {from: USER1});
       }
 
       for (let i = 1; i <= 5; i++) {
-        await liquidityMining.investDAI(i, 500, {from: USER2});
+        await liquidityMining.investDAI(i, 500, policyBook.address, {from: USER2});
       }
 
       await setCurrentTime(endLiquidityMiningTime.plus(10));
@@ -207,15 +191,21 @@ contract.only('LiquidityMining', async (accounts) => {
     const USER5 = accounts[5];
 
     beforeEach('setup', async () => {
-      await liquidityMining.investDAI(0, 100, {from: USER1});
+      const users = [USER1, USER2, USER3, USER4, USER5];
+      for (let i = 0; i < 5; i++) {
+        await dai.transfer(users[i], daiAmount);
+        await dai.approve(policyBook.address, daiAmount, {from: users[i]});
+      }
+
+      await liquidityMining.investDAI(0, 100, policyBook.address, {from: USER1});
     });
 
     it('should correct update accounts leaders', async () => {
-      await liquidityMining.investDAI(1, 200, {from: USER2});
-      await liquidityMining.investDAI(1, 300, {from: USER3});
-      await liquidityMining.investDAI(1, 400, {from: USER4});
-      await liquidityMining.investDAI(1, 300, {from: USER2});
-      await liquidityMining.investDAI(1, 350, {from: USER5});
+      await liquidityMining.investDAI(1, 200, policyBook.address, {from: USER2});
+      await liquidityMining.investDAI(1, 300, policyBook.address, {from: USER3});
+      await liquidityMining.investDAI(1, 400, policyBook.address, {from: USER4});
+      await liquidityMining.investDAI(1, 300, policyBook.address, {from: USER2});
+      await liquidityMining.investDAI(1, 350, policyBook.address, {from: USER5});
 
       const expectedArr = [USER2, USER4, USER5, USER3, USER1];
 
@@ -223,9 +213,9 @@ contract.only('LiquidityMining', async (accounts) => {
     });
 
     it('should send correct nft', async () => {
-      await liquidityMining.investDAI(1, 200, {from: USER2});
-      await liquidityMining.investDAI(1, 300, {from: USER3});
-      await liquidityMining.investDAI(1, 400, {from: USER4});
+      await liquidityMining.investDAI(1, 200, policyBook.address, {from: USER2});
+      await liquidityMining.investDAI(1, 300, policyBook.address, {from: USER3});
+      await liquidityMining.investDAI(1, 400, policyBook.address, {from: USER4});
 
       await setCurrentTime(endLiquidityMiningTime.plus(10));
       await liquidityMining.distributeNFT(1, {from: USER4});
@@ -243,14 +233,14 @@ contract.only('LiquidityMining', async (accounts) => {
       const result = await liquidityMining.distributeNFT(1, {from: USER1});
 
       assert.equal(result.logs.length, 1);
-      assert.equal(result.logs[0].event, 'NFTSended');
+      assert.equal(result.logs[0].event, 'NFTSent');
       assert.equal(result.logs[0].args._address, USER1);
       assert.equal(result.logs[0].args._nftIndex, 1);
     });
 
     it('should not send if the group is not in the lead', async () => {
       for (let i = 0; i < 10; i++) {
-        await liquidityMining.investDAI(0, 100, {from: USER1});
+        await liquidityMining.investDAI(0, 100, policyBook.address, {from: USER1});
       }
 
       await setCurrentTime(endLiquidityMiningTime.plus(10));
@@ -275,6 +265,12 @@ contract.only('LiquidityMining', async (accounts) => {
     const amountToTransfer = toBN(1000000);
 
     beforeEach('setup', async () => {
+      await dai.transfer(USER1, daiAmount);
+      await dai.approve(policyBook.address, daiAmount, {from: USER1});
+
+      await dai.transfer(USER2, daiAmount);
+      await dai.approve(policyBook.address, daiAmount, {from: USER2});
+
       await bmiToken.transfer(liquidityMining.address, amountToTransfer);
 
       assert.equal(await bmiToken.balanceOf(liquidityMining.address), amountToTransfer.toString());
@@ -283,7 +279,7 @@ contract.only('LiquidityMining', async (accounts) => {
     it('should get zero if no reward is available', async () => {
       let amount = toBN(150);
       for (let i = 1; i <= 11; i++) {
-        await liquidityMining.investDAI(0, amount, {from: USER1});
+        await liquidityMining.investDAI(0, amount, policyBook.address, {from: USER1});
         amount = amount.minus(5);
       }
 
@@ -294,7 +290,7 @@ contract.only('LiquidityMining', async (accounts) => {
     });
 
     it('should get 100% of tokens when user invest 100%', async () => {
-      await liquidityMining.investDAI(0, 1000, {from: USER1});
+      await liquidityMining.investDAI(0, 1000, policyBook.address, {from: USER1});
       await setCurrentTime(endLiquidityMiningTime.plus(10));
 
       await liquidityMining.getRewardFromGroup(1, {from: USER1});
@@ -302,9 +298,12 @@ contract.only('LiquidityMining', async (accounts) => {
     });
 
     it('should correct get reward for different users', async () => {
-      await liquidityMining.investDAI(0, 100, {from: USER1});
-      await liquidityMining.investDAI(1, 400, {from: USER2});
-      await liquidityMining.investDAI(1, 500, {from: USER3});
+      await dai.transfer(USER3, daiAmount);
+      await dai.approve(policyBook.address, daiAmount, {from: USER3});
+
+      await liquidityMining.investDAI(0, 100, policyBook.address, {from: USER1});
+      await liquidityMining.investDAI(1, 400, policyBook.address, {from: USER2});
+      await liquidityMining.investDAI(1, 500, policyBook.address, {from: USER3});
       await setCurrentTime(endLiquidityMiningTime.plus(10));
 
       await liquidityMining.getRewardFromGroup(1, {from: USER1});
@@ -317,8 +316,8 @@ contract.only('LiquidityMining', async (accounts) => {
     });
 
     it('should get 100% of tokens 5 month reward on 2 place', async () => {
-      await liquidityMining.investDAI(0, 1000, {from: USER1});
-      await liquidityMining.investDAI(0, 500, {from: USER2});
+      await liquidityMining.investDAI(0, 1000, policyBook.address, {from: USER1});
+      await liquidityMining.investDAI(0, 500, policyBook.address, {from: USER2});
 
       await setCurrentTime(endLiquidityMiningTime.plus(10).plus(oneMonth.times(4)));
 
@@ -327,7 +326,7 @@ contract.only('LiquidityMining', async (accounts) => {
     });
 
     it('should correct get reward multiple times', async () => {
-      await liquidityMining.investDAI(0, 1000, {from: USER1});
+      await liquidityMining.investDAI(0, 1000, policyBook.address, {from: USER1});
       await setCurrentTime(endLiquidityMiningTime.plus(10).plus(oneMonth));
 
       await liquidityMining.getRewardFromGroup(1, {from: USER1});
@@ -344,11 +343,11 @@ contract.only('LiquidityMining', async (accounts) => {
       const amount = toBN(1000);
 
       for (let i = 1; i <= 7; i++) {
-        await liquidityMining.investDAI(0, amount, {from: USER1});
+        await liquidityMining.investDAI(0, amount, policyBook.address, {from: USER1});
       }
 
-      await liquidityMining.investDAI(0, 100, {from: USER1});
-      await liquidityMining.investDAI(8, 100, {from: USER2});
+      await liquidityMining.investDAI(0, 100, policyBook.address, {from: USER1});
+      await liquidityMining.investDAI(8, 100, policyBook.address, {from: USER2});
 
       let totalTokens = toBN(2000);
       for (let i = 0; i < 4; i++) {
@@ -372,7 +371,10 @@ contract.only('LiquidityMining', async (accounts) => {
 
   describe('checkAvailableReward', async () => {
     beforeEach('setup', async () => {
-      await liquidityMining.investDAI(0, 100, {from: USER1});
+      await dai.transfer(USER1, daiAmount);
+      await dai.approve(policyBook.address, daiAmount, {from: USER1});
+
+      await liquidityMining.investDAI(0, 100, policyBook.address, {from: USER1});
     });
 
     it('should return true, user have 2 months reward', async () => {
@@ -417,7 +419,7 @@ contract.only('LiquidityMining', async (accounts) => {
 
     it('should return false, the group is not in the lead', async () => {
       for (let i = 0; i < 11; i++) {
-        await liquidityMining.investDAI(0, 50, {from: USER1});
+        await liquidityMining.investDAI(0, 50, policyBook.address, {from: USER1});
       }
       assert.isFalse(await liquidityMining.checkAvailableReward.call(11, {from: USER1}));
     });

@@ -5,10 +5,13 @@ import "@openzeppelin/contracts/math/SafeMath.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC1155/ERC1155Receiver.sol";
 import "./interfaces/IPolicyBook.sol";
+import "./ContractsRegistry.sol";
 import "./LiquidityMiningNFT.sol";
 
 contract LiquidityMining is ERC1155Receiver {
     using SafeMath for uint256;
+
+    ContractsRegistry private registry;
 
     uint256[] public leaderboard;
     uint256 public groupsCount;
@@ -18,19 +21,15 @@ contract LiquidityMining is ERC1155Receiver {
     uint256 public maxMonthToGetReward = 5;
     uint256 public decimal = 10**27;
 
-    IERC20 bmiToken;
-    LiquidityMiningNFT nft;
-
     struct RewardInfo {
         uint256 countOfMonth;
         uint256 lastUpdate;
     }
 
-    constructor (IERC20 _bmiToken, LiquidityMiningNFT _nft) {
+    constructor (address _registry) {
         groupsCount = 1;
         startLiquidityMiningTime = block.timestamp;
-        bmiToken = _bmiToken;
-        nft = _nft;
+        registry = ContractsRegistry(_registry);
     }
 
     // ID => Address => InvestedAmount
@@ -58,6 +57,7 @@ contract LiquidityMining is ERC1155Receiver {
     function investDAI(uint256 _groupID, uint256 _tokensAmount, address _policyBookAddr) external {
         require(block.timestamp < getEndLMTime(),
             "It is impossible to invest in DAI after the end of the liquidity mining event");
+
         uint256 _id = _groupID;
         if (_groupID == 0) {
             _id = groupsCount++;
@@ -140,7 +140,8 @@ contract LiquidityMining is ERC1155Receiver {
         uint256 _userRewardPer = _calculatePercentage(groups[_groupID][msg.sender], totalGroupsAmount[_groupID]);
         uint256 _userReward = _totalReward.mul(_userRewardPer).div(decimal);
 
-        require(bmiToken.transfer(msg.sender, _userReward), "Failed to transfer tokens");
+        IERC20 _bmiToken = IERC20(registry.getContract(registry.getBMIName()));
+        require(_bmiToken.transfer(msg.sender, _userReward), "Failed to transfer tokens");
         emit RewardSent(_groupID, msg.sender, _userReward);
 
         _rewardInfo.countOfMonth = 0;
@@ -186,7 +187,9 @@ contract LiquidityMining is ERC1155Receiver {
         } else {
             _nftIndex = 4;
         }
-        nft.safeTransferFrom(address(this), msg.sender, _nftIndex, 1, "");
+
+        LiquidityMiningNFT _nft = LiquidityMiningNFT(registry.getContract(registry.getLiquidityMiningNFTName()));
+        _nft.safeTransferFrom(address(this), msg.sender, _nftIndex, 1, "");
 
         emit NFTSent(msg.sender, _nftIndex);
     }

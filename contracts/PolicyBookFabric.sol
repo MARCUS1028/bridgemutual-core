@@ -6,18 +6,19 @@ import "@openzeppelin/contracts/math/Math.sol";
 import "./interfaces/IPolicyBookFabric.sol";
 import "./interfaces/IPolicyBookRegistry.sol";
 import "./PolicyBook.sol";
+import "./ContractsRegistry.sol";
 
 contract PolicyBookFabric is IPolicyBookFabric {
   using Math for uint256;
 
   IPolicyBookRegistry public registry;
-  address public daiAddr;
+  address private contractRegistry;
 
   event Created(address insured, ContractType contractType, address at);
 
-  constructor(IPolicyBookRegistry _registry, address _daiAddr) {
+  constructor(IPolicyBookRegistry _registry, address _contractRegistry) {
     registry = _registry;
-    daiAddr = _daiAddr;
+    contractRegistry = _contractRegistry;
   }
 
   function create(
@@ -26,7 +27,9 @@ contract PolicyBookFabric is IPolicyBookFabric {
     string memory _description,
     string memory _projectSymbol
   ) external override returns (address _policyBook) {
-    PolicyBook _newPolicyBook = new PolicyBook(_contract, _contractType, daiAddr, address(0), _description, _projectSymbol);
+    PolicyBook _newPolicyBook = new PolicyBook(_contract, _contractType,
+      contractRegistry, _description, _projectSymbol);
+
     registry.add(_contract, address(_newPolicyBook));
 
     emit Created(_contract, _contractType, address(_newPolicyBook));
