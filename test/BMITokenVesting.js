@@ -145,14 +145,25 @@ contract('BMITokenVesting', async (accounts) => {
 
     it('should not allow not owner to call', async () => {
       await truffleAssert.reverts(
-        vesting.createVestingBulk(1, [OTHER_ADDR], [100], [VestingSchedule.ANGELROUND], [false], {from: OTHER_ADDR}),
+        vesting.createVestingBulk([OTHER_ADDR], [100], [VestingSchedule.ANGELROUND], [false], {from: OTHER_ADDR}),
         'Ownable: caller is not the owner -- Reason given: Ownable: caller is not the owner.',
+      );
+    });
+
+    it('should revert with mistatched parameters length', async () => {
+      await truffleAssert.reverts(
+        vesting.createVestingBulk(
+          [OTHER_ADDR, SOME_ADDR_1, SOME_ADDR_2],
+          [100, 200, 300],
+          [VestingSchedule.ANGELROUND, VestingSchedule.SEEDROUND],
+          [false, true, false],
+        ),
+        'Parameters length mismatch',
       );
     });
 
     it('should create valid vesting instance', async () => {
       await vesting.createVestingBulk(
-        3,
         [OTHER_ADDR, SOME_ADDR_1, SOME_ADDR_2],
         [100, 200, 300],
         [VestingSchedule.ANGELROUND, VestingSchedule.SEEDROUND, VestingSchedule.PRIVATEROUND],
@@ -204,12 +215,12 @@ contract('BMITokenVesting', async (accounts) => {
     });
 
     it('should not allow to cancel nonexistent vesting', async () => {
-      await truffleAssert.reverts(vesting.cancelVesting(vestingId + 1), 'Vesting doesnt exist or canceled');
+      await truffleAssert.reverts(vesting.cancelVesting(vestingId + 1), 'No vesting with such id');
     });
 
     it('should not allow to cancel already canceled vesting', async () => {
       await vesting.cancelVesting(vestingId);
-      await truffleAssert.reverts(vesting.cancelVesting(vestingId), 'Vesting doesnt exist or canceled');
+      await truffleAssert.reverts(vesting.cancelVesting(vestingId), 'Vesting is canceled');
     });
 
     it('should not allow to cancel non cancelable vesting', async () => {
@@ -264,7 +275,7 @@ contract('BMITokenVesting', async (accounts) => {
     it('should not allow to withdraw invalid vesting', async () => {
       await truffleAssert.reverts(
         vesting.withdrawFromVesting(vestingId + 1, {from: OTHER_ADDR}),
-        'Vesting doesnt exist or canceled',
+        'No vesting with such id',
       );
     });
 
@@ -272,6 +283,11 @@ contract('BMITokenVesting', async (accounts) => {
       await vesting.withdrawFromVesting(vestingId, {from: OTHER_ADDR});
 
       assert.equal(await token.balanceOf(OTHER_ADDR), 0);
+    });
+
+    it('should not allow to withdraw from canceled vesting', async () => {
+      await vesting.cancelVesting(vestingId);
+      await truffleAssert.reverts(vesting.withdrawFromVesting(vestingId), 'Vesting is canceled');
     });
 
     // No vesting schedules with cliff for now
@@ -394,7 +410,34 @@ contract('BMITokenVesting', async (accounts) => {
     });
   });
 
-  describe('concrete vestings withdrawal', async () => {
+  describe('getWithdrawableAmount', async () => {
+    const vestingId = 0;
+
+    beforeEach('setup', async () => {
+      await vesting.setToken(token.address);
+
+      await vesting.createVesting(OTHER_ADDR, 100, VestingSchedule.ANGELROUND, true);
+    });
+
+    it('should not allow to withdraw from canceled vesting', async () => {
+      await vesting.cancelVesting(vestingId);
+      await truffleAssert.reverts(vesting.getWithdrawableAmount(vestingId), 'Vesting is canceled');
+    });
+
+    it('should return valid amount to withdraw before withdrawal', async () => {
+      await setCurrentTime(tgeTimestamp.plus(secondsInMonth.times(2)).plus(10));
+      assert.equal(await vesting.getWithdrawableAmount(vestingId), 50);
+    });
+
+    it('should return valid amount to withdraw after withdrawal', async () => {
+      await setCurrentTime(tgeTimestamp.plus(secondsInMonth.times(2)).plus(10));
+      await vesting.withdrawFromVesting(0);
+      await setCurrentTime(tgeTimestamp.plus(secondsInMonth.times(3)).plus(10));
+      assert.equal(await vesting.getWithdrawableAmount(vestingId), 25);
+    });
+  });
+
+  describe('concrete vestings schedules withdrawal', async () => {
     beforeEach('setup', async () => {
       await vesting.setToken(token.address);
     });
@@ -527,11 +570,12 @@ contract('BMITokenVesting', async (accounts) => {
         [-1, 0],
         [0, 720000],
         [1, 1440000],
-        [4, 3600000],
-        [5, 3999840],
-        [6, 4399680],
-        [10, 5999040],
-        [11, 6000000],
+        [3, 2880000],
+        [4, 3399792],
+        [5, 3919584],
+        [6, 4439376],
+        [9, 5998752],
+        [10, 6000000],
         [20, 6000000],
       ]);
     });

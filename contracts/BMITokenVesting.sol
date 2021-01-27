@@ -48,12 +48,10 @@ contract BMITokenVesting is Ownable {
   uint256 public constant PORTION_PER_PERIOD_PRECISION = 10**4;
 
   IERC20 public token;
-  mapping(uint256 => Vesting) public vestings;
-  uint256 public vestingCount;
+  Vesting[] public vestings;
   uint256 public amountInVestings;
   uint256 public tgeTimestamp;
   mapping(VestingSchedule => LinearVestingSchedule[]) public vestingSchedules;
-  mapping(VestingSchedule => uint256) public lengthsBySchedule;
 
   event TokenSet(IERC20 token);
   event VestingAdded(uint256 vestingId, address beneficiary);
@@ -189,18 +187,18 @@ contract BMITokenVesting is Ownable {
     addLinearVestingSchedule(
       VestingSchedule.ADVISORS,
       LinearVestingSchedule({
-        portionOfTotal: 60,
+        portionOfTotal: 48,
         startDate: tgeTimestamp.sub(SECONDS_IN_MONTH),
         periodInMonth: 1,
-        portionPerPeriod: PORTION_PER_PERIOD_PRECISION.div(5),
+        portionPerPeriod: PORTION_PER_PERIOD_PRECISION.div(4),
         cliffInPeriods: 0
       })
     );
     addLinearVestingSchedule(
       VestingSchedule.ADVISORS,
       LinearVestingSchedule({
-        portionOfTotal: 40,
-        startDate: tgeTimestamp.add(SECONDS_IN_MONTH.mul(4)),
+        portionOfTotal: 52,
+        startDate: tgeTimestamp.add(SECONDS_IN_MONTH.mul(3)),
         periodInMonth: 1,
         portionPerPeriod: PORTION_PER_PERIOD_PRECISION.div(6),
         cliffInPeriods: 0
@@ -242,7 +240,6 @@ contract BMITokenVesting is Ownable {
 
   function addLinearVestingSchedule(VestingSchedule _type, LinearVestingSchedule memory _schedule) internal {
     vestingSchedules[_type].push(_schedule);
-    lengthsBySchedule[_type]++;
   }
 
   function setToken(IERC20 _token) external onlyOwner {
@@ -252,13 +249,19 @@ contract BMITokenVesting is Ownable {
   }
 
   function createVestingBulk(
-    uint256 count,
     address[] calldata _beneficiary,
     uint256[] calldata _amount,
     VestingSchedule[] calldata _vestingSchedule,
     bool[] calldata _isCancelable
   ) external onlyOwner {
-    for (uint256 i = 0; i < count; i++) {
+    require(
+      _beneficiary.length == _amount.length &&
+        _beneficiary.length == _vestingSchedule.length &&
+        _beneficiary.length == _isCancelable.length,
+      "Parameters length mismatch"
+    );
+
+    for (uint256 i = 0; i < _beneficiary.length; i++) {
       _createVesting(_beneficiary[i], _amount[i], _vestingSchedule[i], _isCancelable[i]);
     }
   }
@@ -282,23 +285,24 @@ contract BMITokenVesting is Ownable {
 
     amountInVestings += _amount;
 
-    vestingId = vestingCount;
-    vestings[vestingId] = Vesting({
-      isValid: true,
-      beneficiary: _beneficiary,
-      amount: _amount,
-      vestingSchedule: _vestingSchedule,
-      paidAmount: 0,
-      isCancelable: _isCancelable
-    });
-    vestingCount += 1;
+    vestingId = vestings.length;
+    vestings.push(
+      Vesting({
+        isValid: true,
+        beneficiary: _beneficiary,
+        amount: _amount,
+        vestingSchedule: _vestingSchedule,
+        paidAmount: 0,
+        isCancelable: _isCancelable
+      })
+    );
 
     emit VestingAdded(vestingId, _beneficiary);
   }
 
   function cancelVesting(uint256 _vestingId) external onlyOwner {
-    Vesting storage vesting = vestings[_vestingId];
-    require(vesting.isValid, "Vesting doesnt exist or canceled");
+    Vesting storage vesting = getVesting(_vestingId);
+    require(vesting.isValid, "Vesting is canceled");
     require(vesting.isCancelable, "Vesting is not cancelable");
 
     vesting.isValid = false;
@@ -309,10 +313,10 @@ contract BMITokenVesting is Ownable {
   }
 
   function withdrawFromVesting(uint256 _vestingId) external {
-    Vesting storage vesting = vestings[_vestingId];
-    require(vesting.isValid, "Vesting doesnt exist or canceled");
+    Vesting storage vesting = getVesting(_vestingId);
+    require(vesting.isValid, "Vesting is canceled");
 
-    uint256 amountToPay = calculateAvailableAmount(vesting).sub(vesting.paidAmount);
+    uint256 amountToPay = _getWithdrawableAmount(vesting);
     vesting.paidAmount += amountToPay;
     amountInVestings = amountInVestings.sub(amountToPay);
     token.transfer(vesting.beneficiary, amountToPay);
@@ -320,11 +324,23 @@ contract BMITokenVesting is Ownable {
     emit VestingWithdraw(_vestingId, amountToPay);
   }
 
-  function calculateAvailableAmount(Vesting storage _vesting) private view returns (uint256) {
+  function getWithdrawableAmount(uint256 _vestingId) external view returns (uint256) {
+    Vesting storage vesting = getVesting(_vestingId);
+    require(vesting.isValid, "Vesting is canceled");
+
+    return _getWithdrawableAmount(vesting);
+  }
+
+  function _getWithdrawableAmount(Vesting storage _vesting) internal view returns (uint256) {
+    return calculateAvailableAmount(_vesting).sub(_vesting.paidAmount);
+  }
+
+  function calculateAvailableAmount(Vesting storage _vesting) internal view returns (uint256) {
     LinearVestingSchedule[] storage vestingSchedule = vestingSchedules[_vesting.vestingSchedule];
     uint256 amountAvailable = 0;
-    for (uint256 i = 0; i < lengthsBySchedule[_vesting.vestingSchedule]; i++) {
+    for (uint256 i = 0; i < vestingSchedule.length; i++) {
       LinearVestingSchedule storage linearSchedule = vestingSchedule[i];
+      if (linearSchedule.startDate > block.timestamp) return amountAvailable;
       uint256 amountThisLinearSchedule = calculateLinearVestingAvailableAmount(linearSchedule, _vesting.amount);
       amountAvailable = amountAvailable.add(amountThisLinearSchedule);
     }
@@ -332,7 +348,7 @@ contract BMITokenVesting is Ownable {
   }
 
   function calculateLinearVestingAvailableAmount(LinearVestingSchedule storage _linearVesting, uint256 _amount)
-    private
+    internal
     view
     returns (uint256)
   {
@@ -345,9 +361,13 @@ contract BMITokenVesting is Ownable {
   }
 
   function calculateElapsedPeriods(LinearVestingSchedule storage _linearVesting) private view returns (uint256) {
-    if (_linearVesting.startDate > block.timestamp) return 0;
     uint256 periodInSeconds = _linearVesting.periodInMonth.mul(SECONDS_IN_MONTH);
     return block.timestamp.sub(_linearVesting.startDate).div(periodInSeconds);
+  }
+
+  function getVesting(uint256 _vestingId) internal view returns (Vesting storage) {
+    require(_vestingId < vestings.length, "No vesting with such id");
+    return vestings[_vestingId];
   }
 
   function withdrawExcessiveTokens() external onlyOwner {
@@ -370,7 +390,7 @@ contract BMITokenVesting is Ownable {
       bool isCancelable
     )
   {
-    Vesting storage vesting = vestings[_vestingId];
+    Vesting storage vesting = getVesting(_vestingId);
     isValid = vesting.isValid;
     beneficiary = vesting.beneficiary;
     amount = vesting.amount;
