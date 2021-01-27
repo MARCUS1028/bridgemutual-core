@@ -41,7 +41,7 @@ contract BMITokenVesting is Initializable, OwnableUpgradeable {
   struct LinearVestingSchedule {
     uint256 portionOfTotal;
     uint256 startDate;
-    uint256 periodInMonth;
+    uint256 periodInSeconds;
     uint256 portionPerPeriod;
     uint256 cliffInPeriods;
   }
@@ -74,7 +74,7 @@ contract BMITokenVesting is Initializable, OwnableUpgradeable {
       LinearVestingSchedule({
         portionOfTotal: 100,
         startDate: tgeTimestamp,
-        periodInMonth: 1,
+        periodInSeconds: SECONDS_IN_MONTH,
         portionPerPeriod: PORTION_PER_PERIOD_PRECISION.div(4),
         cliffInPeriods: 0
       })
@@ -85,7 +85,7 @@ contract BMITokenVesting is Initializable, OwnableUpgradeable {
       LinearVestingSchedule({
         portionOfTotal: 50,
         startDate: tgeTimestamp.sub(SECONDS_IN_MONTH.mul(2)),
-        periodInMonth: 2,
+        periodInSeconds: SECONDS_IN_MONTH.mul(2),
         portionPerPeriod: PORTION_PER_PERIOD_PRECISION.div(2),
         cliffInPeriods: 0
       })
@@ -95,7 +95,7 @@ contract BMITokenVesting is Initializable, OwnableUpgradeable {
       LinearVestingSchedule({
         portionOfTotal: 50,
         startDate: tgeTimestamp,
-        periodInMonth: 1,
+        periodInSeconds: SECONDS_IN_MONTH,
         portionPerPeriod: PORTION_PER_PERIOD_PRECISION,
         cliffInPeriods: 0
       })
@@ -106,7 +106,7 @@ contract BMITokenVesting is Initializable, OwnableUpgradeable {
       LinearVestingSchedule({
         portionOfTotal: 100,
         startDate: tgeTimestamp.sub(SECONDS_IN_MONTH),
-        periodInMonth: 1,
+        periodInSeconds: SECONDS_IN_MONTH,
         portionPerPeriod: PORTION_PER_PERIOD_PRECISION.div(4),
         cliffInPeriods: 0
       })
@@ -117,7 +117,7 @@ contract BMITokenVesting is Initializable, OwnableUpgradeable {
       LinearVestingSchedule({
         portionOfTotal: 60,
         startDate: tgeTimestamp.sub(SECONDS_IN_MONTH),
-        periodInMonth: 1,
+        periodInSeconds: SECONDS_IN_MONTH,
         portionPerPeriod: PORTION_PER_PERIOD_PRECISION,
         cliffInPeriods: 0
       })
@@ -127,7 +127,7 @@ contract BMITokenVesting is Initializable, OwnableUpgradeable {
       LinearVestingSchedule({
         portionOfTotal: 40,
         startDate: tgeTimestamp,
-        periodInMonth: 1,
+        periodInSeconds: SECONDS_IN_MONTH,
         portionPerPeriod: PORTION_PER_PERIOD_PRECISION,
         cliffInPeriods: 0
       })
@@ -138,7 +138,7 @@ contract BMITokenVesting is Initializable, OwnableUpgradeable {
       LinearVestingSchedule({
         portionOfTotal: 100,
         startDate: tgeTimestamp,
-        periodInMonth: 1,
+        periodInSeconds: SECONDS_IN_MONTH,
         portionPerPeriod: PORTION_PER_PERIOD_PRECISION.div(10),
         cliffInPeriods: 0
       })
@@ -149,7 +149,7 @@ contract BMITokenVesting is Initializable, OwnableUpgradeable {
       LinearVestingSchedule({
         portionOfTotal: 100,
         startDate: tgeTimestamp.add(SECONDS_IN_MONTH.mul(2)),
-        periodInMonth: 1,
+        periodInSeconds: SECONDS_IN_MONTH,
         portionPerPeriod: PORTION_PER_PERIOD_PRECISION.div(100).mul(5),
         cliffInPeriods: 0
       })
@@ -160,7 +160,7 @@ contract BMITokenVesting is Initializable, OwnableUpgradeable {
       LinearVestingSchedule({
         portionOfTotal: 100,
         startDate: tgeTimestamp,
-        periodInMonth: 1,
+        periodInSeconds: SECONDS_IN_MONTH,
         portionPerPeriod: PORTION_PER_PERIOD_PRECISION.div(100).mul(5),
         cliffInPeriods: 0
       })
@@ -171,7 +171,7 @@ contract BMITokenVesting is Initializable, OwnableUpgradeable {
       LinearVestingSchedule({
         portionOfTotal: 100,
         startDate: tgeTimestamp.sub(SECONDS_IN_MONTH),
-        periodInMonth: 1,
+        periodInSeconds: SECONDS_IN_MONTH,
         portionPerPeriod: PORTION_PER_PERIOD_PRECISION.div(100).mul(4),
         cliffInPeriods: 0
       })
@@ -182,7 +182,7 @@ contract BMITokenVesting is Initializable, OwnableUpgradeable {
       LinearVestingSchedule({
         portionOfTotal: 100,
         startDate: tgeTimestamp.sub(SECONDS_IN_MONTH),
-        periodInMonth: 1,
+        periodInSeconds: SECONDS_IN_MONTH,
         portionPerPeriod: PORTION_PER_PERIOD_PRECISION.div(100).mul(4),
         cliffInPeriods: 0
       })
@@ -193,7 +193,7 @@ contract BMITokenVesting is Initializable, OwnableUpgradeable {
       LinearVestingSchedule({
         portionOfTotal: 48,
         startDate: tgeTimestamp.sub(SECONDS_IN_MONTH),
-        periodInMonth: 1,
+        periodInSeconds: SECONDS_IN_MONTH,
         portionPerPeriod: PORTION_PER_PERIOD_PRECISION.div(4),
         cliffInPeriods: 0
       })
@@ -203,7 +203,7 @@ contract BMITokenVesting is Initializable, OwnableUpgradeable {
       LinearVestingSchedule({
         portionOfTotal: 52,
         startDate: tgeTimestamp.add(SECONDS_IN_MONTH.mul(3)),
-        periodInMonth: 1,
+        periodInSeconds: SECONDS_IN_MONTH,
         portionPerPeriod: PORTION_PER_PERIOD_PRECISION.div(6),
         cliffInPeriods: 0
       })
@@ -214,7 +214,7 @@ contract BMITokenVesting is Initializable, OwnableUpgradeable {
       LinearVestingSchedule({
         portionOfTotal: 50,
         startDate: tgeTimestamp,
-        periodInMonth: 1,
+        periodInSeconds: SECONDS_IN_MONTH,
         portionPerPeriod: PORTION_PER_PERIOD_PRECISION,
         cliffInPeriods: 0
       })
@@ -224,7 +224,7 @@ contract BMITokenVesting is Initializable, OwnableUpgradeable {
       LinearVestingSchedule({
         portionOfTotal: 50,
         startDate: tgeTimestamp,
-        periodInMonth: 3,
+        periodInSeconds: SECONDS_IN_MONTH.mul(3),
         portionPerPeriod: PORTION_PER_PERIOD_PRECISION,
         cliffInPeriods: 0
       })
@@ -235,7 +235,7 @@ contract BMITokenVesting is Initializable, OwnableUpgradeable {
       LinearVestingSchedule({
         portionOfTotal: 100,
         startDate: tgeTimestamp,
-        periodInMonth: 1,
+        periodInSeconds: SECONDS_IN_MONTH,
         portionPerPeriod: PORTION_PER_PERIOD_PRECISION.div(100).mul(5),
         cliffInPeriods: 0
       })
@@ -365,8 +365,7 @@ contract BMITokenVesting is Initializable, OwnableUpgradeable {
   }
 
   function calculateElapsedPeriods(LinearVestingSchedule storage _linearVesting) private view returns (uint256) {
-    uint256 periodInSeconds = _linearVesting.periodInMonth.mul(SECONDS_IN_MONTH);
-    return block.timestamp.sub(_linearVesting.startDate).div(periodInSeconds);
+    return block.timestamp.sub(_linearVesting.startDate).div(_linearVesting.periodInSeconds);
   }
 
   function getVesting(uint256 _vestingId) internal view returns (Vesting storage) {
