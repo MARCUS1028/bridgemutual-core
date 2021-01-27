@@ -187,14 +187,22 @@ contract PolicyBook is IPolicyBook, ERC1155NFTMintableBurnable {
     override
     returns (
       string memory _name,
+      address _insuredContract,
       IPolicyBookFabric.ContractType _contractType,
       uint256 _maxCapacities,
       uint256 _totalDaiLiquidity,
-      uint256 _annualProfitYields
+      uint256 _annualProfitYields      
     )
   {
     // TODO APY
-    return (name, contractType, totalLiquidity - totalCoverTokens, totalLiquidity, 0);
+    return (
+      name, 
+      insuranceContractAddress,
+      contractType, 
+      totalLiquidity - totalCoverTokens, 
+      totalLiquidity, 
+      0
+    );
   }
 
   uint256 public constant SECONDS_IN_THE_YEAR = 365 * 24 * 60 * 60; // 365 days * 24 hours * 60 minutes * 60 seconds

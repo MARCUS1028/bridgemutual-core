@@ -31,7 +31,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [],
@@ -44,7 +45,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [],
@@ -57,7 +59,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [],
@@ -70,7 +73,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [],
@@ -83,7 +87,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [],
@@ -7626,10 +7631,37 @@
       "links": {},
       "address": "0xf739fa5219FD0bb3Fc92FB8F203d46D7e7D7ACc4",
       "transactionHash": "0x550a3cbbb4f734eb481f9bb67240690e7f7f5cde8eaa30d3631420e868a35f92"
+    },
+    "1611744868100": {
+      "events": {
+        "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "previousOwner",
+              "type": "address"
+            },
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "newOwner",
+              "type": "address"
+            }
+          ],
+          "name": "OwnershipTransferred",
+          "type": "event"
+        }
+      },
+      "links": {},
+      "address": "0xA4261787BAF16829B889e76Dd79039bBdfeA48fa",
+      "transactionHash": "0x6df196657810e56edda98a17fb737dcb0bfa5a72dc1e224d62d2b0f380ffd195"
     }
   },
   "schemaVersion": "3.3.3",
-  "updatedAt": "2021-01-27T14:17:23.959Z",
+  "updatedAt": "2021-01-27T15:34:07.585Z",
+  "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",
     "methods": {

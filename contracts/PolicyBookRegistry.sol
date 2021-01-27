@@ -74,16 +74,18 @@ contract PolicyBookRegistry is IPolicyBookRegistry, Ownable {
       uint256 _policyBooksCount, 
       address[] memory _policyBooks,
       string[] memory _names,
+      address[] memory _insuredContracts,
       IPolicyBookFabric.ContractType[] memory _contractTypes,
       uint256[] memory _maxCapacities,
       uint256[] memory _totalDaiLiquidity,
-      uint256[] memory _annualProfitYields
+      uint256[] memory _annualProfitYields      
     )
   {
     (_policyBooksCount,
     _policyBooks) = list(_offset, _limit);
 
     (_names, 
+    _insuredContracts,
     _contractTypes,
     _maxCapacities,
     _totalDaiLiquidity,
@@ -100,6 +102,7 @@ contract PolicyBookRegistry is IPolicyBookRegistry, Ownable {
     override
     returns (
       string[] memory _names,
+      address[] memory _insuredContracts,
       IPolicyBookFabric.ContractType[] memory _contractTypes,
       uint256[] memory _maxCapacities,
       uint256[] memory _totalDaiLiquidity,
@@ -107,6 +110,7 @@ contract PolicyBookRegistry is IPolicyBookRegistry, Ownable {
     )
   {
     string[] memory names = new string[](_policyBooks.length);
+    address[] memory insuredContracts = new address[](_policyBooks.length);
     IPolicyBookFabric.ContractType[] memory contractTypes = new IPolicyBookFabric.ContractType[](_policyBooks.length);
     uint256[] memory maxCapacities = new uint256[](_policyBooks.length);
     uint256[] memory totalDaiLiquidity = new uint256[](_policyBooks.length);
@@ -115,13 +119,14 @@ contract PolicyBookRegistry is IPolicyBookRegistry, Ownable {
     // TODO APY
     for (uint256 i = 0; i < _policyBooks.length; i++) {      
       (names[i], 
+      insuredContracts[i],
       contractTypes[i],
       maxCapacities[i],
       totalDaiLiquidity[i],
       annualProfitYields[i]) = IPolicyBook(_policyBooks[i]).stats();
     }
 
-    return (names, contractTypes, maxCapacities, totalDaiLiquidity, annualProfitYields);
+    return (names, insuredContracts, contractTypes, maxCapacities, totalDaiLiquidity, annualProfitYields);
   }
 
   function statsByInsuredContracts(address[] memory _insuredContracts)
@@ -136,16 +141,19 @@ contract PolicyBookRegistry is IPolicyBookRegistry, Ownable {
       uint256[] memory _annualProfitYields
     )
   {
-    string[] memory names = new string[](_insuredContracts.length);
+    string[] memory names = new string[](_insuredContracts.length);    
     IPolicyBookFabric.ContractType[] memory contractTypes = 
       new IPolicyBookFabric.ContractType[](_insuredContracts.length);
     uint256[] memory maxCapacities = new uint256[](_insuredContracts.length);
     uint256[] memory totalDaiLiquidity = new uint256[](_insuredContracts.length);
-    uint256[] memory annualProfitYields = new uint256[](_insuredContracts.length);
+    uint256[] memory annualProfitYields = new uint256[](_insuredContracts.length);  
+
+    address nothing;
 
     // TODO APY
     for (uint256 i = 0; i < _insuredContracts.length; i++) {
       (names[i], 
+      nothing, // does nothing, needed not to overcomplicate the method
       contractTypes[i],
       maxCapacities[i],
       totalDaiLiquidity[i],

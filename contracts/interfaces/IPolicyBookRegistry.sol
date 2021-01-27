@@ -24,6 +24,7 @@ interface IPolicyBookRegistry {
   /// @return _policyBooksCount is count of returned registered PolicyBook addresses
   /// @return _policyBooks is array of registered PolicyBook addresses
   /// @return _names is an array of PolicyBooks names
+  /// @return _insuredContracts is array of insured contracts
   /// @return _contractTypes is an array of insured contract types
   /// @return _maxCapacities is an array of max token amount that a user can buy
   /// @return _totalDaiLiquidity is an array of liquidities
@@ -35,10 +36,11 @@ interface IPolicyBookRegistry {
       uint256 _policyBooksCount, 
       address[] memory _policyBooks,
       string[] memory _names,
+      address[] memory _insuredContracts,
       IPolicyBookFabric.ContractType[] memory _contractTypes,
       uint256[] memory _maxCapacities,
       uint256[] memory _totalDaiLiquidity,
-      uint256[] memory _annualProfitYields
+      uint256[] memory _annualProfitYields      
     );
 
   /// @notice Return existing Policy Book contract, access: ANY
@@ -49,6 +51,7 @@ interface IPolicyBookRegistry {
   /// @notice Getting stats from policy books, access: ANY
   /// @param _policyBooks is list of PolicyBooks addresses
   /// @return _names is array of names per PolicyBooks
+  /// @return _insuredContracts is array of insured contracts per PolicyBooks
   /// @return _contractTypes is array of insured contracts per PolicyBooks
   /// @return _maxCapacities is array of max capacities per PolicyBooks
   /// @return _totalDaiLiquidity is array of DAI liquidity per PolicyBooks
@@ -58,10 +61,11 @@ interface IPolicyBookRegistry {
     view
     returns (
       string[] memory _names,
+      address[] memory _insuredContracts,
       IPolicyBookFabric.ContractType[] memory _contractTypes,
       uint256[] memory _maxCapacities,
       uint256[] memory _totalDaiLiquidity,
-      uint256[] memory _annualProfitYields
+      uint256[] memory _annualProfitYields      
     );
 
   /// @notice Getting stats from policy books, access: ANY
@@ -75,10 +79,10 @@ interface IPolicyBookRegistry {
     external
     view
     returns (
-      string[] memory _names,
+      string[] memory _names,      
       IPolicyBookFabric.ContractType[] memory _contractTypes,
       uint256[] memory _maxCapacities,
       uint256[] memory _totalDaiLiquidity,
-      uint256[] memory _annualProfitYields
+      uint256[] memory _annualProfitYields      
     );
 }

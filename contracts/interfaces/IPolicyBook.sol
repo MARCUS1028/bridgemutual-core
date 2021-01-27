@@ -99,18 +99,20 @@ interface IPolicyBook {
 
   /// @notice Getting stats, access: ANY
   /// @return _name is the name of PolicyBook
+  /// @return _insuredContract is an addres of insured contract
   /// @return _contractType is a type of insured contract
   /// @return _maxCapacities is a max token amount that a user can buy
   /// @return _totalDaiLiquidity is PolicyBook's liquidity
-  /// @return _annualProfitYields is its APY
+  /// @return _annualProfitYields is its APY  
   function stats()
     external
     view
     returns (
       string memory _name,
+      address _insuredContract,
       IPolicyBookFabric.ContractType _contractType,
       uint256 _maxCapacities,
       uint256 _totalDaiLiquidity,
-      uint256 _annualProfitYields
+      uint256 _annualProfitYields      
     );
 }
