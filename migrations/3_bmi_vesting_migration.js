@@ -11,12 +11,9 @@ const ownerAddress = '0x0000000000000000000000000000000000000003';
 module.exports = async (deployer) => {
   await deployProxy(VestingContract, [tokenGenerationTimestamp], {deployer});
   const vesting = await VestingContract.deployed();
-  await deployProxy(TokenContract, [ownerAddress], {deployer});
   const token = await TokenContract.deployed();
   await vesting.setToken(token.address);
 
   await vesting.transferOwnership(ownerAddress);
-  await token.transferOwnership(ownerAddress);
   assert((await vesting.owner()) == ownerAddress);
-  assert((await token.owner()) == ownerAddress);
 };
