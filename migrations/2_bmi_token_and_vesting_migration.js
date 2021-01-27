@@ -1,3 +1,5 @@
+const {deployProxy} = require('@openzeppelin/truffle-upgrades');
+
 const TokenContract = artifacts.require('BMIToken');
 const VestingContract = artifacts.require('BMITokenVesting');
 
@@ -5,9 +7,9 @@ const VestingContract = artifacts.require('BMITokenVesting');
 const tokenGenerationTimestamp = 1609325103;
 
 module.exports = async (deployer) => {
-  await deployer.deploy(VestingContract, tokenGenerationTimestamp);
+  await deployProxy(VestingContract, [tokenGenerationTimestamp], {deployer});
   const vesting = await VestingContract.deployed();
-  await deployer.deploy(TokenContract, vesting.address);
+  await deployProxy(TokenContract, [vesting.address], {deployer});
   const token = await TokenContract.deployed();
   await vesting.setToken(token.address);
 };

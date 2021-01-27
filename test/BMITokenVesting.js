@@ -4,6 +4,7 @@ const BMITokenVesting = artifacts.require('BMITokenVesting.sol');
 const Reverter = require('./helpers/reverter');
 const BigNumber = require('bignumber.js');
 const truffleAssert = require('truffle-assertions');
+const {deployProxy} = require('@openzeppelin/truffle-upgrades');
 const setCurrentTime = require('./helpers/ganacheTimeTraveler');
 
 const VestingSchedule = {
@@ -34,8 +35,8 @@ contract('BMITokenVesting', async (accounts) => {
   let vesting;
 
   before('setup', async () => {
-    vesting = await BMITokenVesting.new(tgeTimestamp);
-    token = await BMIToken.new(vesting.address);
+    vesting = await deployProxy(BMITokenVesting, [tgeTimestamp]);
+    token = await deployProxy(BMIToken, [vesting.address]);
 
     await reverter.snapshot();
   });

@@ -1,7 +1,8 @@
-const BMIToken = artifacts.require('BMIToken.sol');
-
 const Reverter = require('./helpers/reverter');
 const BigNumber = require('bignumber.js');
+const {deployProxy} = require('@openzeppelin/truffle-upgrades');
+
+const BMIToken = artifacts.require('BMIToken.sol');
 
 contract('BMIToken', async (accounts) => {
   const reverter = new Reverter(web3);
@@ -10,7 +11,7 @@ contract('BMIToken', async (accounts) => {
   let token;
 
   before('setup', async () => {
-    token = await BMIToken.new(VEST_ADDR);
+    token = await deployProxy(BMIToken, [VEST_ADDR]);
 
     await reverter.snapshot();
   });
