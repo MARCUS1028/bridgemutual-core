@@ -137,7 +137,8 @@ contract PolicyBookRegistry is IPolicyBookRegistry, Ownable {
     )
   {
     string[] memory names = new string[](_insuredContracts.length);
-    IPolicyBookFabric.ContractType[] memory contractTypes = new IPolicyBookFabric.ContractType[](_insuredContracts.length);
+    IPolicyBookFabric.ContractType[] memory contractTypes = 
+      new IPolicyBookFabric.ContractType[](_insuredContracts.length);
     uint256[] memory maxCapacities = new uint256[](_insuredContracts.length);
     uint256[] memory totalDaiLiquidity = new uint256[](_insuredContracts.length);
     uint256[] memory annualProfitYields = new uint256[](_insuredContracts.length);

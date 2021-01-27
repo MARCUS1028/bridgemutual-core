@@ -20,7 +20,7 @@
     "lint:js": "eslint *.js test/*.js",
     "lint:sol": "solhint contracts/*.sol",
     "lint:js-fix": "eslint *.js test/*.js --fix",
-    "lint-sol:fix": "solhint 'contracts/**/*.sol' --fix"
+    "lint:sol-fix": "solhint 'contracts/**/*.sol' --fix"
   },
   "dependencies": {
     "@openzeppelin/contracts": "^3.2.1-solc-0.7",

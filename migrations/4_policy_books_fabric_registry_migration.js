@@ -37,12 +37,23 @@ module.exports = async (deployer, network, accounts) => {
   const smallPolicyBookAddress = (await policyBookFabric.create(mockInsuranceContractAddress2, ContractType.CONTRACT, 'mock2', '2')).logs[2].args.at;  
   const bigPolicyBookAddress = (await policyBookFabric.create(mockInsuranceContractAddress3, ContractType.EXCHANGE, 'mock3', '3')).logs[2].args.at;
   
-  const emptyPolicyBook = await PolicyBook.at(emptyPolicyBookAddress);
-  const smallPolicyBook = await PolicyBook.at(smallPolicyBookAddress);
-  const bigPolicyBook = await PolicyBook.at(bigPolicyBookAddress);
-
   const smallLiquidity = 100;
   const bigLiquidity = 1000000;
+  
+  console.log("Deploying PolicyBook...");
+  const emptyPolicyBook = await PolicyBook.at(emptyPolicyBookAddress);
+
+  console.log(emptyPolicyBookAddress + " - empty PolicyBook\n");
+
+  console.log("Deploying PolicyBook...");
+  const smallPolicyBook = await PolicyBook.at(smallPolicyBookAddress);
+  
+  console.log(smallPolicyBookAddress + " - small PolicyBook with " + smallLiquidity + " DAI\n");
+
+  console.log("Deploying PolicyBook...");
+  const bigPolicyBook = await PolicyBook.at(bigPolicyBookAddress);
+
+  console.log(bigPolicyBookAddress + " - big PolicyBook with " + bigLiquidity + " DAI\n");
 
   await daiMock.approve(emptyPolicyBookAddress, 0);
   await daiMock.approve(smallPolicyBookAddress, smallLiquidity);
@@ -50,9 +61,5 @@ module.exports = async (deployer, network, accounts) => {
 
   await emptyPolicyBook.addLiquidity(0); // just to show
   await smallPolicyBook.addLiquidity(smallLiquidity);
-  await bigPolicyBook.addLiquidity(bigLiquidity);
-
-  console.log(emptyPolicyBookAddress + " - empty PolicyBook\n");
-  console.log(smallPolicyBookAddress + " - small PolicyBook with " + smallLiquidity + " DAI\n");
-  console.log(bigPolicyBookAddress + " - big PolicyBook with " + bigLiquidity + " DAI\n");
+  await bigPolicyBook.addLiquidity(bigLiquidity);  
 };

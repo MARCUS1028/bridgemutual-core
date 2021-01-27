@@ -19,7 +19,8 @@ contract PolicyBookFabric is IPolicyBookFabric, Ownable {
   function initRegistry(ContractsRegistry _contractsRegistry) external onlyOwner {
     contractsRegistry = _contractsRegistry;
     
-    policyRegistry = IPolicyBookRegistry(_contractsRegistry.getContract(_contractsRegistry.getPolicyBookRegistryName()));    
+    policyRegistry = 
+      IPolicyBookRegistry(_contractsRegistry.getContract(_contractsRegistry.getPolicyBookRegistryName()));    
   }
 
   function create(

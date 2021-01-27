@@ -15,7 +15,7 @@ const ContractType = {
   EXCHANGE: 3,
 };
 
-contract('PolicyBookFabric', async (accounts) => {
+contract.only('PolicyBookFabric', async (accounts) => {
   const reverter = new Reverter(web3);
 
   let contractsRegistry;
@@ -35,10 +35,14 @@ contract('PolicyBookFabric', async (accounts) => {
     policyBookFabric = await PolicyBookFabric.new();
     bmiDaiStaking = await BmiDAIStaking.new();
 
-    await contractsRegistry.addContractRegistry((await contractsRegistry.getDAIName.call()), dai.address);
-    await contractsRegistry.addContractRegistry((await contractsRegistry.getBmiDAIStakingName.call()), bmiDaiStaking.address);
-    await contractsRegistry.addContractRegistry((await contractsRegistry.getPolicyBookRegistryName.call()), policyBookRegistry.address);
-    await contractsRegistry.addContractRegistry((await contractsRegistry.getPolicyBookFabricName.call()), policyBookFabric.address);
+    await contractsRegistry.addContractRegistry(
+      (await contractsRegistry.getDAIName.call()), dai.address);
+    await contractsRegistry.addContractRegistry(
+      (await contractsRegistry.getBmiDAIStakingName.call()), bmiDaiStaking.address);
+    await contractsRegistry.addContractRegistry(
+      (await contractsRegistry.getPolicyBookRegistryName.call()), policyBookRegistry.address);
+    await contractsRegistry.addContractRegistry(
+      (await contractsRegistry.getPolicyBookFabricName.call()), policyBookFabric.address);
 
     await policyBookFabric.initRegistry(contractsRegistry.address);
     await policyBookRegistry.initRegistry(contractsRegistry.address);
@@ -99,7 +103,7 @@ contract('PolicyBookFabric', async (accounts) => {
       const book3 = await policyBookFabric.create(CONTRACT3, ContractType.CONTRACT, '', '');
       assert.equal(await policyBookFabric.policyBooksCount(), 3);
 
-      bookAddrArr = [book1.logs[1].args.at, book2.logs[1].args.at, book3.logs[1].args.at];
+      bookAddrArr = [book1.logs[2].args.at, book2.logs[2].args.at, book3.logs[2].args.at];
     });
 
     it('should return valid if inside range', async () => {

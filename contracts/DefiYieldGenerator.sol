@@ -17,7 +17,7 @@ contract DefiYieldGenerator is Ownable {
     address public bmiDaiStakingAddress;
 
     modifier onlyStaking() {
-        require (msg.sender == bmiDaiStakingAddress, "DefiYieldGenerator: caller is not a staking");
+        require (msg.sender == bmiDaiStakingAddress, "DefiYieldGenerator: caller is not a staking contract");
         _;
     }
 
@@ -29,20 +29,23 @@ contract DefiYieldGenerator is Ownable {
         bmiDaiStakingAddress = _contractsRegistry.getContract(_contractsRegistry.getBmiDAIStakingName());
     }
 
-    function approveAllDaiTokensForStakingWithdrowal() external onlyOwner {
-        bool success = daiToken.approve(bmiDaiStakingAddress, MAX_INT);
+    function approveAllDAITokensForStakingWithdrowal() external onlyStaking {
+        bool success = daiToken.approve(_msgSender(), MAX_INT);
 
         require(success, "Failed to approve DAI tokens");
     }
 
-    function approveAllBMITokensForStakingWithdrowal() external onlyOwner {
-        bool success = bmiToken.approve(bmiDaiStakingAddress, MAX_INT);
+    function approveAllBMITokensForStakingWithdrowal() external onlyStaking {
+        bool success = bmiToken.approve(_msgSender(), MAX_INT);
 
         require(success, "Failed to approve BMI tokens");
     }
     
 // TODO
-    function getProfit(uint256 stakingStartTime, uint256 stakedDAIAmount) external onlyStaking returns (uint256) {        
+    function getProfit(
+        uint256 stakingStartTime, 
+        uint256 stakedDAIAmount
+    ) external onlyStaking returns (uint256) {        
         return 0;
     }
 }

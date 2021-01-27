@@ -116,7 +116,8 @@ contract('ERC1155', async (accounts) => {
     });
 
     it('shouldn\'t mint the same ERC721 tokens', async () => {
-      await truffleAssert.reverts(erc1155Mock.mintBatch([tokenID1, tokenID2], [1, 1]), 'ERC1155: NFT token already minted');
+      await truffleAssert.reverts(erc1155Mock.mintBatch([tokenID1, tokenID2], [1, 1]),
+        'ERC1155: NFT token already minted');
     });
 
     it('shouldn\'t mint the ERC721 tokens on 1 registry', async () => {
@@ -127,7 +128,8 @@ contract('ERC1155', async (accounts) => {
     });
 
     it('shouldn\'t mint ERC20 when ERC721 is minted', async () => {
-      await truffleAssert.reverts(erc1155Mock.mintBatch([tokenID1, tokenID2], [100, 100]), 'ERC1155: NFT token already minted');
+      await truffleAssert.reverts(erc1155Mock.mintBatch([tokenID1, tokenID2], [100, 100]),
+        'ERC1155: NFT token already minted');
     });
 
     it('shouldn\'t revert when ERC721 is minted, but minting 0 tokens', async () => {
@@ -194,16 +196,16 @@ contract('ERC1155', async (accounts) => {
 
     const tokenID = 2;
 
-    it('should mint and burn ERC721', async () => {      
+    it('should mint and burn ERC721', async () => {
       await erc1155Mock.mint(tokenID, 1);
-      
+
       assert.equal(await erc1155Mock.balanceOfNFT(MAIN), 1);
       assert.equal(await erc1155Mock.ownerOfNFT(tokenID), MAIN);
       assert.equal(await erc1155Mock.balanceOf(MAIN, tokenID), 1);
 
       await erc1155Mock.burn(tokenID, 1);
 
-      assert.equal(await erc1155Mock.balanceOfNFT(MAIN), 0);      
+      assert.equal(await erc1155Mock.balanceOfNFT(MAIN), 0);
       await truffleAssert.reverts(erc1155Mock.ownerOfNFT(tokenID), 'ERC1155: owner query for nonexistent token');
       assert.equal(await erc1155Mock.balanceOf(MAIN, tokenID), 0);
     });
@@ -252,29 +254,29 @@ contract('ERC1155', async (accounts) => {
 
       assert.equal(await erc1155Mock.ownerOfNFT(tokenID1), MAIN);
       assert.equal(await erc1155Mock.ownerOfNFT(tokenID2), MAIN);
-      
+
       assert.equal(await erc1155Mock.balanceOf(MAIN, tokenID1), 1);
       assert.equal(await erc1155Mock.balanceOf(MAIN, tokenID2), 1);
 
       await erc1155Mock.burnBatch([tokenID1, tokenID2], [1, 1]);
 
       assert.equal(await erc1155Mock.balanceOfNFT(MAIN), 0);
-      
+
       await truffleAssert.reverts(erc1155Mock.ownerOfNFT(tokenID1), 'ERC1155: owner query for nonexistent token');
       await truffleAssert.reverts(erc1155Mock.ownerOfNFT(tokenID2), 'ERC1155: owner query for nonexistent token');
-      
+
       assert.equal(await erc1155Mock.balanceOf(MAIN, tokenID1), 0);
       assert.equal(await erc1155Mock.balanceOf(MAIN, tokenID2), 0);
     });
 
-    it('should mint and burn ERC20s', async () => {      
+    it('should mint and burn ERC20s', async () => {
       await erc1155Mock.mintBatch([tokenID1, tokenID2], [100, 100]);
 
       assert.equal(await erc1155Mock.balanceOfNFT(MAIN), 0);
-      
+
       await truffleAssert.reverts(erc1155Mock.ownerOfNFT(tokenID1), 'ERC1155: owner query for nonexistent token');
       await truffleAssert.reverts(erc1155Mock.ownerOfNFT(tokenID2), 'ERC1155: owner query for nonexistent token');
-      
+
       assert.equal(await erc1155Mock.balanceOf(MAIN, tokenID1), 100);
       assert.equal(await erc1155Mock.balanceOf(MAIN, tokenID2), 100);
 
@@ -284,7 +286,7 @@ contract('ERC1155', async (accounts) => {
 
       await truffleAssert.reverts(erc1155Mock.ownerOfNFT(tokenID1), 'ERC1155: owner query for nonexistent token');
       await truffleAssert.reverts(erc1155Mock.ownerOfNFT(tokenID2), 'ERC1155: owner query for nonexistent token');
-      
+
       assert.equal(await erc1155Mock.balanceOf(MAIN, tokenID1), 0);
       assert.equal(await erc1155Mock.balanceOf(MAIN, tokenID2), 0);
     });
@@ -294,13 +296,13 @@ contract('ERC1155', async (accounts) => {
       await erc1155Mock.mint(tokenID2, 1);
 
       assert.equal(await erc1155Mock.balanceOfNFT(MAIN), 2);
-      
+
       assert.equal(await erc1155Mock.ownerOfNFT(tokenID1), MAIN);
       assert.equal(await erc1155Mock.balanceOf(MAIN, tokenID1), 1);
       assert.equal(await erc1155Mock.ownerOfNFT(tokenID2), MAIN);
       assert.equal(await erc1155Mock.balanceOf(MAIN, tokenID2), 1);
 
-      await erc1155Mock.burnBatch([tokenID1, tokenID2], [0, 0]);      
+      await erc1155Mock.burnBatch([tokenID1, tokenID2], [0, 0]);
 
       assert.equal(await erc1155Mock.balanceOfNFT(MAIN), 2);
 
@@ -341,7 +343,7 @@ contract('ERC1155', async (accounts) => {
 
       assert.equal(await erc1155Mock.balanceOfNFT(MAIN), 0);
       assert.equal(await erc1155Mock.balanceOfNFT(HELP), 0);
-      await truffleAssert.reverts(erc1155Mock.ownerOfNFT(tokenID), 'ERC1155: owner query for nonexistent token');      
+      await truffleAssert.reverts(erc1155Mock.ownerOfNFT(tokenID), 'ERC1155: owner query for nonexistent token');
       assert.equal(await erc1155Mock.balanceOf(MAIN, tokenID), 100);
       assert.equal(await erc1155Mock.balanceOf(HELP, tokenID), 0);
 
@@ -368,7 +370,7 @@ contract('ERC1155', async (accounts) => {
 
       assert.equal(await erc1155Mock.balanceOfNFT(MAIN), 2);
       assert.equal(await erc1155Mock.balanceOfNFT(HELP), 0);
-      
+
       assert.equal(await erc1155Mock.ownerOfNFT(tokenID1), MAIN);
       assert.equal(await erc1155Mock.ownerOfNFT(tokenID2), MAIN);
 
@@ -382,7 +384,7 @@ contract('ERC1155', async (accounts) => {
 
       assert.equal(await erc1155Mock.balanceOfNFT(MAIN), 0);
       assert.equal(await erc1155Mock.balanceOfNFT(HELP), 2);
-      
+
       assert.equal(await erc1155Mock.ownerOfNFT(tokenID1), HELP);
       assert.equal(await erc1155Mock.ownerOfNFT(tokenID2), HELP);
 
@@ -403,7 +405,7 @@ contract('ERC1155', async (accounts) => {
       assert.equal(await erc1155Mock.balanceOf(MAIN, tokenID2), 100);
 
       await truffleAssert.reverts(erc1155Mock.ownerOfNFT(tokenID1), 'ERC1155: owner query for nonexistent token');
-      await truffleAssert.reverts(erc1155Mock.ownerOfNFT(tokenID2), 'ERC1155: owner query for nonexistent token');      
+      await truffleAssert.reverts(erc1155Mock.ownerOfNFT(tokenID2), 'ERC1155: owner query for nonexistent token');
 
       await erc1155Mock.safeBatchTransferFrom(MAIN, HELP, [tokenID1, tokenID2], [50, 50], []);
 

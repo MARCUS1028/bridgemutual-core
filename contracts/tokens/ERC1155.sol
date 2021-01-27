@@ -119,7 +119,8 @@ contract ERC1155 is Context, ERC165, IERC1155, IERC20 {
 
     /// @notice From ERC20
     function decreaseAllowance(address spender, uint256 subtractedValue) public virtual returns (bool) {
-        _approve(_msgSender(), spender, _erc20Allowances[_msgSender()][spender].sub(subtractedValue, "ERC20: decreased allowance below zero"));
+        _approve(_msgSender(), spender, _erc20Allowances[_msgSender()][spender].sub(subtractedValue, 
+            "ERC20: decreased allowance below zero"));
         return true;
     }
 
@@ -143,7 +144,8 @@ contract ERC1155 is Context, ERC165, IERC1155, IERC20 {
     // From ERC20
     function transferFrom(address sender, address recipient, uint256 amount) public virtual override returns (bool) {
         _transfer(sender, recipient, amount);
-        _approve(sender, _msgSender(), _erc20Allowances[sender][_msgSender()].sub(amount, "ERC20: transfer amount exceeds allowance"));
+        _approve(sender, _msgSender(), _erc20Allowances[sender][_msgSender()].sub(amount, 
+            "ERC20: transfer amount exceeds allowance"));
         return true;
     }
 
@@ -288,7 +290,14 @@ contract ERC1155 is Context, ERC165, IERC1155, IERC20 {
 
         address operator = _msgSender();
 
-        _beforeERC1155TokenTransfer(operator, address(0), account, _asSingletonArray(id), _asSingletonArray(amount), data);
+        _beforeERC1155TokenTransfer(
+            operator, 
+            address(0), 
+            account, 
+            _asSingletonArray(id), 
+            _asSingletonArray(amount), 
+            data
+        );
 
         if (amount == 1 && !_existsToken(id) && id != ERC20_ID) {
             _nftHolderTokens[account].add(id);
@@ -303,7 +312,12 @@ contract ERC1155 is Context, ERC165, IERC1155, IERC20 {
         _doSafeTransferAcceptanceCheck(operator, address(0), account, id, amount, data);
     }
    
-    function _mintBatch(address account, uint256[] memory ids, uint256[] memory amounts, bytes memory data) internal virtual {
+    function _mintBatch(
+        address account, 
+        uint256[] memory ids, 
+        uint256[] memory amounts, 
+        bytes memory data
+    ) internal virtual {
         require(account != address(0), "ERC1155: mint to the zero address");
         require(ids.length == amounts.length, "ERC1155: ids and amounts length mismatch");
 
@@ -347,7 +361,14 @@ contract ERC1155 is Context, ERC165, IERC1155, IERC20 {
 
         address operator = _msgSender();
 
-        _beforeERC1155TokenTransfer(operator, account, address(0), _asSingletonArray(id), _asSingletonArray(amount), "");                
+        _beforeERC1155TokenTransfer(
+            operator, 
+            account, 
+            address(0), 
+            _asSingletonArray(id), 
+            _asSingletonArray(amount), 
+            ""
+        );                
 
         if (amount > 0) {
             _nftHolderTokens[account].remove(id);
@@ -440,7 +461,13 @@ contract ERC1155 is Context, ERC165, IERC1155, IERC20 {
         private
     {
         if (to.isContract()) {
-            try IERC1155Receiver(to).onERC1155BatchReceived(operator, from, ids, amounts, data) returns (bytes4 response) {
+            try IERC1155Receiver(to).onERC1155BatchReceived(
+                operator, 
+                from, 
+                ids, 
+                amounts, 
+                data
+            ) returns (bytes4 response) {
                 if (response != IERC1155Receiver(to).onERC1155BatchReceived.selector) {
                     revert("ERC1155: ERC1155Receiver rejected tokens");
                 }

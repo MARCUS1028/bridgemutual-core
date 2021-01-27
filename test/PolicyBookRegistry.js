@@ -10,7 +10,6 @@ contract('PolicyBookRegistry', async (accounts) => {
 
   let policyBookRegistry;
   let contractsRegistry;
-  let policyBookFabric;
 
   const NON_OWNER = accounts[1];
   const FABRIC = accounts[2];
@@ -20,8 +19,10 @@ contract('PolicyBookRegistry', async (accounts) => {
     contractsRegistry = await ContractsRegistry.new();
     policyBookRegistry = await PolicyBookRegistry.new();
 
-    await contractsRegistry.addContractRegistry((await contractsRegistry.getPolicyBookRegistryName.call()), policyBookRegistry.address);
-    await contractsRegistry.addContractRegistry((await contractsRegistry.getPolicyBookFabricName.call()), FABRIC);
+    await contractsRegistry.addContractRegistry(
+      (await contractsRegistry.getPolicyBookRegistryName.call()), policyBookRegistry.address);
+    await contractsRegistry.addContractRegistry(
+      (await contractsRegistry.getPolicyBookFabricName.call()), FABRIC);
 
     await policyBookRegistry.initRegistry(contractsRegistry.address);
 

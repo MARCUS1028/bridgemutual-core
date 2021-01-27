@@ -32,7 +32,8 @@ interface IPoolGateway is IPool {
   /// @return _distributionPoolsCount is total number of distribution pools
   function distributionPoolsCount() external view returns (uint256 _distributionPoolsCount);
 
-  /// @notice Adds distribution to pass captured tokens to, gateway can have multiple records of same pool with different pool strategies, access: DAO
+  /// @notice Adds distribution to pass captured tokens to, 
+  /// gateway can have multiple records of same pool with different pool strategies, access: DAO
   /// @param _pool is address of pool to be added
   /// @param _poolStrategy is pool strategy that pool is assigned to
   /// @return _distributionPoolId is total number of distribution pools

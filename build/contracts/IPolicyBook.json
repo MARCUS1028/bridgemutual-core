@@ -310,18 +310,18 @@
     "absolutePath": "/home/artem/Projects/Distributed_Lab/Applicature/bridgemutual-core/contracts/interfaces/IPolicyBook.sol",
     "exportedSymbols": {
       "IPolicyBook": [
-        2980
+        3051
       ],
       "IPolicyBookFabric": [
-        3029
+        3100
       ]
     },
-    "id": 2981,
+    "id": 3052,
     "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 2846,
+        "id": 2917,
         "literals": [
           "solidity",
           "^",
@@ -332,7 +332,7 @@
         "src": "32:23:9"
       },
       {
-        "id": 2847,
+        "id": 2918,
         "literals": [
           "experimental",
           "ABIEncoderV2"
@@ -343,10 +343,10 @@
       {
         "absolutePath": "/home/artem/Projects/Distributed_Lab/Applicature/bridgemutual-core/contracts/interfaces/IPolicyBookFabric.sol",
         "file": "./IPolicyBookFabric.sol",
-        "id": 2848,
+        "id": 2919,
         "nodeType": "ImportDirective",
-        "scope": 2981,
-        "sourceUnit": 3030,
+        "scope": 3052,
+        "sourceUnit": 3101,
         "src": "91:33:9",
         "symbolAliases": [],
         "unitAlias": ""
@@ -357,44 +357,44 @@
         "contractDependencies": [],
         "contractKind": "interface",
         "fullyImplemented": false,
-        "id": 2980,
+        "id": 3051,
         "linearizedBaseContracts": [
-          2980
+          3051
         ],
         "name": "IPolicyBook",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "documentation": {
-              "id": 2849,
+              "id": 2920,
               "nodeType": "StructuredDocumentation",
               "src": "210:130:9",
               "text": "@notice Returns address of contract this PolicyBook covers, access: ANY\n @return _contract is address of covered contract"
             },
             "functionSelector": "14c179c0",
-            "id": 2854,
+            "id": 2925,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "insuranceContractAddress",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 2850,
+              "id": 2921,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "376:2:9"
             },
             "returnParameters": {
-              "id": 2853,
+              "id": 2924,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2852,
+                  "id": 2923,
                   "mutability": "mutable",
                   "name": "_contract",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2854,
+                  "scope": 2925,
                   "src": "402:17:9",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -403,7 +403,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 2851,
+                    "id": 2922,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "402:7:9",
@@ -418,7 +418,7 @@
               ],
               "src": "401:19:9"
             },
-            "scope": 2980,
+            "scope": 3051,
             "src": "343:78:9",
             "stateMutability": "view",
             "virtual": false,
@@ -426,50 +426,50 @@
           },
           {
             "documentation": {
-              "id": 2855,
+              "id": 2926,
               "nodeType": "StructuredDocumentation",
               "src": "425:112:9",
               "text": "@notice Returns type of contract this PolicyBook covers, access: ANY\n @return _type is type of contract"
             },
             "functionSelector": "cb2ef6f7",
-            "id": 2860,
+            "id": 2931,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "contractType",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 2856,
+              "id": 2927,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "561:2:9"
             },
             "returnParameters": {
-              "id": 2859,
+              "id": 2930,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2858,
+                  "id": 2929,
                   "mutability": "mutable",
                   "name": "_type",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2860,
+                  "scope": 2931,
                   "src": "587:36:9",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_enum$_ContractType_$2987",
+                    "typeIdentifier": "t_enum$_ContractType_$3058",
                     "typeString": "enum IPolicyBookFabric.ContractType"
                   },
                   "typeName": {
-                    "id": 2857,
+                    "id": 2928,
                     "name": "IPolicyBookFabric.ContractType",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 2987,
+                    "referencedDeclaration": 3058,
                     "src": "587:30:9",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_enum$_ContractType_$2987",
+                      "typeIdentifier": "t_enum$_ContractType_$3058",
                       "typeString": "enum IPolicyBookFabric.ContractType"
                     }
                   },
@@ -478,7 +478,7 @@
               ],
               "src": "586:38:9"
             },
-            "scope": 2980,
+            "scope": 3051,
             "src": "540:85:9",
             "stateMutability": "view",
             "virtual": false,
@@ -486,35 +486,35 @@
           },
           {
             "documentation": {
-              "id": 2861,
+              "id": 2932,
               "nodeType": "StructuredDocumentation",
               "src": "629:176:9",
               "text": "@notice Returns quote strategy defined during creation of PolicyBook, access: ANY\n @return _quoteStrategy is address of Quote strategy contract used to calculate quote"
             },
             "functionSelector": "7cd0fc9b",
-            "id": 2866,
+            "id": 2937,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "quoteStrategy",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 2862,
+              "id": 2933,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "830:2:9"
             },
             "returnParameters": {
-              "id": 2865,
+              "id": 2936,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2864,
+                  "id": 2935,
                   "mutability": "mutable",
                   "name": "_quoteStrategy",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2866,
+                  "scope": 2937,
                   "src": "856:22:9",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -523,7 +523,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 2863,
+                    "id": 2934,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "856:7:9",
@@ -538,7 +538,7 @@
               ],
               "src": "855:24:9"
             },
-            "scope": 2980,
+            "scope": 3051,
             "src": "808:72:9",
             "stateMutability": "view",
             "virtual": false,
@@ -546,29 +546,29 @@
           },
           {
             "documentation": {
-              "id": 2867,
+              "id": 2938,
               "nodeType": "StructuredDocumentation",
               "src": "1034:379:9",
               "text": "@notice Returns list of shield assets added to PolicyBook, access: ANY\n @param _offset is starting item in array to return array from\n @param _limit is number of policy books to returns from _offset\n @return _shieldAssetsCount is number of added shield assets\n @return _shieldAssets is addresses of shield assets, that will be distributed to Policy givers"
             },
             "functionSelector": "79fac08c",
-            "id": 2879,
+            "id": 2950,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "shieldAssets",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 2872,
+              "id": 2943,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2869,
+                  "id": 2940,
                   "mutability": "mutable",
                   "name": "_offset",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2879,
+                  "scope": 2950,
                   "src": "1438:15:9",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -577,7 +577,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 2868,
+                    "id": 2939,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "1438:7:9",
@@ -590,11 +590,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 2871,
+                  "id": 2942,
                   "mutability": "mutable",
                   "name": "_limit",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2879,
+                  "scope": 2950,
                   "src": "1455:14:9",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -603,7 +603,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 2870,
+                    "id": 2941,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "1455:7:9",
@@ -618,16 +618,16 @@
               "src": "1437:33:9"
             },
             "returnParameters": {
-              "id": 2878,
+              "id": 2949,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2874,
+                  "id": 2945,
                   "mutability": "mutable",
                   "name": "_shieldAssetsCount",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2879,
+                  "scope": 2950,
                   "src": "1506:26:9",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -636,7 +636,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 2873,
+                    "id": 2944,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "1506:7:9",
@@ -649,11 +649,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 2877,
+                  "id": 2948,
                   "mutability": "mutable",
                   "name": "_shieldAssets",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2879,
+                  "scope": 2950,
                   "src": "1534:30:9",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -663,7 +663,7 @@
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 2875,
+                      "id": 2946,
                       "name": "address",
                       "nodeType": "ElementaryTypeName",
                       "src": "1534:7:9",
@@ -673,7 +673,7 @@
                         "typeString": "address"
                       }
                     },
-                    "id": 2876,
+                    "id": 2947,
                     "nodeType": "ArrayTypeName",
                     "src": "1534:9:9",
                     "typeDescriptions": {
@@ -686,7 +686,7 @@
               ],
               "src": "1505:60:9"
             },
-            "scope": 2980,
+            "scope": 3051,
             "src": "1416:150:9",
             "stateMutability": "view",
             "virtual": false,
@@ -694,29 +694,29 @@
           },
           {
             "documentation": {
-              "id": 2880,
+              "id": 2951,
               "nodeType": "StructuredDocumentation",
               "src": "1570:608:9",
               "text": "@notice Returns list of shield assets added with tokens amount allocated to Policy Book, access: ANY\n @param _offset is starting item in array to return array from\n @param _limit is number of policy books to returns from _offset\n @return _shieldAssetsCount is number of added shield assets\n @return _shieldAssets is addresses of shield assets, that will be distributed to Policy givers\n @return _shieldAssetBalance is tokens amount of shield assets allocated to Policy Book, \n to get specific shield asset balance lookup _shieldAssetBalances by same index as of shield asset"
             },
             "functionSelector": "0e82da53",
-            "id": 2895,
+            "id": 2966,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "shieldAssetsWithBalance",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 2885,
+              "id": 2956,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2882,
+                  "id": 2953,
                   "mutability": "mutable",
                   "name": "_offset",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2895,
+                  "scope": 2966,
                   "src": "2214:15:9",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -725,7 +725,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 2881,
+                    "id": 2952,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "2214:7:9",
@@ -738,11 +738,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 2884,
+                  "id": 2955,
                   "mutability": "mutable",
                   "name": "_limit",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2895,
+                  "scope": 2966,
                   "src": "2231:14:9",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -751,7 +751,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 2883,
+                    "id": 2954,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "2231:7:9",
@@ -766,16 +766,16 @@
               "src": "2213:33:9"
             },
             "returnParameters": {
-              "id": 2894,
+              "id": 2965,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2887,
+                  "id": 2958,
                   "mutability": "mutable",
                   "name": "_shieldAssetsCount",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2895,
+                  "scope": 2966,
                   "src": "2289:26:9",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -784,7 +784,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 2886,
+                    "id": 2957,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "2289:7:9",
@@ -797,11 +797,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 2890,
+                  "id": 2961,
                   "mutability": "mutable",
                   "name": "_shieldAssets",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2895,
+                  "scope": 2966,
                   "src": "2323:30:9",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -811,7 +811,7 @@
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 2888,
+                      "id": 2959,
                       "name": "address",
                       "nodeType": "ElementaryTypeName",
                       "src": "2323:7:9",
@@ -821,7 +821,7 @@
                         "typeString": "address"
                       }
                     },
-                    "id": 2889,
+                    "id": 2960,
                     "nodeType": "ArrayTypeName",
                     "src": "2323:9:9",
                     "typeDescriptions": {
@@ -833,11 +833,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 2893,
+                  "id": 2964,
                   "mutability": "mutable",
                   "name": "_shieldAssetBalance",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2895,
+                  "scope": 2966,
                   "src": "2361:36:9",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -847,7 +847,7 @@
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 2891,
+                      "id": 2962,
                       "name": "uint256",
                       "nodeType": "ElementaryTypeName",
                       "src": "2361:7:9",
@@ -856,7 +856,7 @@
                         "typeString": "uint256"
                       }
                     },
-                    "id": 2892,
+                    "id": 2963,
                     "nodeType": "ArrayTypeName",
                     "src": "2361:9:9",
                     "typeDescriptions": {
@@ -869,7 +869,7 @@
               ],
               "src": "2281:122:9"
             },
-            "scope": 2980,
+            "scope": 3051,
             "src": "2181:223:9",
             "stateMutability": "view",
             "virtual": false,
@@ -877,35 +877,35 @@
           },
           {
             "documentation": {
-              "id": 2896,
+              "id": 2967,
               "nodeType": "StructuredDocumentation",
               "src": "2408:128:9",
               "text": "@notice Returns number of shield assets added, access: ANY\n @return _shieldAssetsCount is number of added shield assets"
             },
             "functionSelector": "2c865d6c",
-            "id": 2901,
+            "id": 2972,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "shieldAssetsCount",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 2897,
+              "id": 2968,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "2565:2:9"
             },
             "returnParameters": {
-              "id": 2900,
+              "id": 2971,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2899,
+                  "id": 2970,
                   "mutability": "mutable",
                   "name": "_shieldAssetsCount",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2901,
+                  "scope": 2972,
                   "src": "2591:26:9",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -914,7 +914,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 2898,
+                    "id": 2969,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "2591:7:9",
@@ -928,7 +928,7 @@
               ],
               "src": "2590:28:9"
             },
-            "scope": 2980,
+            "scope": 3051,
             "src": "2539:80:9",
             "stateMutability": "view",
             "virtual": false,
@@ -936,29 +936,29 @@
           },
           {
             "documentation": {
-              "id": 2902,
+              "id": 2973,
               "nodeType": "StructuredDocumentation",
               "src": "2623:284:9",
               "text": "@notice Adds shield tokens to contract, access: ANY\n @param _tokenAddress is address of reward token to add\n @param _tokensAmount is max amount of reward to operate on\n @return _success is indicator if purchase is successful, it will throw exception if unsuccessful"
             },
             "functionSelector": "188ff854",
-            "id": 2911,
+            "id": 2982,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "addShieldTokens",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 2907,
+              "id": 2978,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2904,
+                  "id": 2975,
                   "mutability": "mutable",
                   "name": "_tokenAddress",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2911,
+                  "scope": 2982,
                   "src": "2935:21:9",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -967,7 +967,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 2903,
+                    "id": 2974,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "2935:7:9",
@@ -981,11 +981,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 2906,
+                  "id": 2977,
                   "mutability": "mutable",
                   "name": "_tokensAmount",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2911,
+                  "scope": 2982,
                   "src": "2958:21:9",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -994,7 +994,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 2905,
+                    "id": 2976,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "2958:7:9",
@@ -1009,16 +1009,16 @@
               "src": "2934:46:9"
             },
             "returnParameters": {
-              "id": 2910,
+              "id": 2981,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2909,
+                  "id": 2980,
                   "mutability": "mutable",
                   "name": "_success",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2911,
+                  "scope": 2982,
                   "src": "2999:13:9",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1027,7 +1027,7 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 2908,
+                    "id": 2979,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
                     "src": "2999:4:9",
@@ -1041,7 +1041,7 @@
               ],
               "src": "2998:15:9"
             },
-            "scope": 2980,
+            "scope": 3051,
             "src": "2910:104:9",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -1049,29 +1049,29 @@
           },
           {
             "documentation": {
-              "id": 2912,
+              "id": 2983,
               "nodeType": "StructuredDocumentation",
               "src": "3018:181:9",
               "text": "@notice Let user to buy policy by supplying DAI, access: ANY\n @param _durationSeconds is number of seconds to cover\n @param _coverTokens is number of tokens to cover  "
             },
             "functionSelector": "5da2460d",
-            "id": 2919,
+            "id": 2990,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "buyPolicy",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 2917,
+              "id": 2988,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2914,
+                  "id": 2985,
                   "mutability": "mutable",
                   "name": "_durationSeconds",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2919,
+                  "scope": 2990,
                   "src": "3226:24:9",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1080,7 +1080,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 2913,
+                    "id": 2984,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "3226:7:9",
@@ -1093,11 +1093,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 2916,
+                  "id": 2987,
                   "mutability": "mutable",
                   "name": "_coverTokens",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2919,
+                  "scope": 2990,
                   "src": "3256:20:9",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1106,7 +1106,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 2915,
+                    "id": 2986,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "3256:7:9",
@@ -1121,12 +1121,12 @@
               "src": "3220:60:9"
             },
             "returnParameters": {
-              "id": 2918,
+              "id": 2989,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "3289:0:9"
             },
-            "scope": 2980,
+            "scope": 3051,
             "src": "3202:88:9",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -1134,29 +1134,29 @@
           },
           {
             "documentation": {
-              "id": 2920,
+              "id": 2991,
               "nodeType": "StructuredDocumentation",
               "src": "3294:267:9",
               "text": "@notice Let user to buy policy for another user by supplying DAI, access: ANY\n @param _policyHolderAddr is address of address to assign cover\n @param _durationSeconds is number of seconds to cover\n @param _coverTokens is number of tokens to cover  "
             },
             "functionSelector": "7234751b",
-            "id": 2929,
+            "id": 3000,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "buyPolicyFor",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 2927,
+              "id": 2998,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2922,
+                  "id": 2993,
                   "mutability": "mutable",
                   "name": "_policyHolderAddr",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2929,
+                  "scope": 3000,
                   "src": "3591:25:9",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1165,7 +1165,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 2921,
+                    "id": 2992,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "3591:7:9",
@@ -1179,11 +1179,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 2924,
+                  "id": 2995,
                   "mutability": "mutable",
                   "name": "_durationSeconds",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2929,
+                  "scope": 3000,
                   "src": "3622:24:9",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1192,7 +1192,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 2923,
+                    "id": 2994,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "3622:7:9",
@@ -1205,11 +1205,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 2926,
+                  "id": 2997,
                   "mutability": "mutable",
                   "name": "_coverTokens",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2929,
+                  "scope": 3000,
                   "src": "3652:20:9",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1218,7 +1218,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 2925,
+                    "id": 2996,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "3652:7:9",
@@ -1233,12 +1233,12 @@
               "src": "3585:91:9"
             },
             "returnParameters": {
-              "id": 2928,
+              "id": 2999,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "3685:0:9"
             },
-            "scope": 2980,
+            "scope": 3051,
             "src": "3564:122:9",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -1246,29 +1246,29 @@
           },
           {
             "documentation": {
-              "id": 2930,
+              "id": 3001,
               "nodeType": "StructuredDocumentation",
               "src": "3690:130:9",
               "text": "@notice Let user to add liquidity by supplying DAI, access: ANY\n @param _liqudityAmount is amount of DAI tokens to secure"
             },
             "functionSelector": "51c6590a",
-            "id": 2935,
+            "id": 3006,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "addLiquidity",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 2933,
+              "id": 3004,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2932,
+                  "id": 3003,
                   "mutability": "mutable",
                   "name": "_liqudityAmount",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2935,
+                  "scope": 3006,
                   "src": "3845:23:9",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1277,7 +1277,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 2931,
+                    "id": 3002,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "3845:7:9",
@@ -1292,12 +1292,12 @@
               "src": "3844:25:9"
             },
             "returnParameters": {
-              "id": 2934,
+              "id": 3005,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "3878:0:9"
             },
-            "scope": 2980,
+            "scope": 3051,
             "src": "3823:56:9",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -1305,29 +1305,29 @@
           },
           {
             "documentation": {
-              "id": 2936,
+              "id": 3007,
               "nodeType": "StructuredDocumentation",
               "src": "3883:219:9",
               "text": "@notice Let user to add liqiudity for another user by supplying DAI, access: ANY\n @param _liquidityHolderAddr is address of address to assign cover\n @param _liqudityAmount is amount of DAI tokens to secure"
             },
             "functionSelector": "efa1f98a",
-            "id": 2943,
+            "id": 3014,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "addLiquidityFor",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 2941,
+              "id": 3012,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2938,
+                  "id": 3009,
                   "mutability": "mutable",
                   "name": "_liquidityHolderAddr",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2943,
+                  "scope": 3014,
                   "src": "4130:28:9",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1336,7 +1336,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 2937,
+                    "id": 3008,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "4130:7:9",
@@ -1350,11 +1350,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 2940,
+                  "id": 3011,
                   "mutability": "mutable",
                   "name": "_liqudityAmount",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2943,
+                  "scope": 3014,
                   "src": "4160:23:9",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1363,7 +1363,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 2939,
+                    "id": 3010,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "4160:7:9",
@@ -1378,12 +1378,12 @@
               "src": "4129:55:9"
             },
             "returnParameters": {
-              "id": 2942,
+              "id": 3013,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "4193:0:9"
             },
-            "scope": 2980,
+            "scope": 3051,
             "src": "4105:89:9",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -1391,29 +1391,29 @@
           },
           {
             "documentation": {
-              "id": 2944,
+              "id": 3015,
               "nodeType": "StructuredDocumentation",
               "src": "4198:132:9",
               "text": "@notice Let user to withdraw deposited liqiudity, access: ANY\n @param _tokensToWithdraw is amount of DAI tokens to withdraw"
             },
             "functionSelector": "0a861f2a",
-            "id": 2949,
+            "id": 3020,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "withdrawLiquidity",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 2947,
+              "id": 3018,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2946,
+                  "id": 3017,
                   "mutability": "mutable",
                   "name": "_tokensToWithdraw",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2949,
+                  "scope": 3020,
                   "src": "4360:25:9",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1422,7 +1422,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 2945,
+                    "id": 3016,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "4360:7:9",
@@ -1437,12 +1437,12 @@
               "src": "4359:27:9"
             },
             "returnParameters": {
-              "id": 2948,
+              "id": 3019,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "4395:0:9"
             },
-            "scope": 2980,
+            "scope": 3051,
             "src": "4333:63:9",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -1450,29 +1450,29 @@
           },
           {
             "documentation": {
-              "id": 2950,
+              "id": 3021,
               "nodeType": "StructuredDocumentation",
               "src": "4400:230:9",
               "text": "@notice Let user to calculate policy cost in DAI, access: ANY\n @param _durationSeconds is number of seconds to cover\n @param _tokens is number of tokens to cover\n @return _daiTokens is amount of DAI policy costs"
             },
             "functionSelector": "758af3ab",
-            "id": 2959,
+            "id": 3030,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "getQuote",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 2955,
+              "id": 3026,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2952,
+                  "id": 3023,
                   "mutability": "mutable",
                   "name": "_durationSeconds",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2959,
+                  "scope": 3030,
                   "src": "4651:24:9",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1481,7 +1481,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 2951,
+                    "id": 3022,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "4651:7:9",
@@ -1494,11 +1494,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 2954,
+                  "id": 3025,
                   "mutability": "mutable",
                   "name": "_tokens",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2959,
+                  "scope": 3030,
                   "src": "4677:15:9",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1507,7 +1507,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 2953,
+                    "id": 3024,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "4677:7:9",
@@ -1522,16 +1522,16 @@
               "src": "4650:43:9"
             },
             "returnParameters": {
-              "id": 2958,
+              "id": 3029,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2957,
+                  "id": 3028,
                   "mutability": "mutable",
                   "name": "_daiTokens",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2959,
+                  "scope": 3030,
                   "src": "4717:18:9",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1540,7 +1540,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 2956,
+                    "id": 3027,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "4717:7:9",
@@ -1554,7 +1554,7 @@
               ],
               "src": "4716:20:9"
             },
-            "scope": 2980,
+            "scope": 3051,
             "src": "4633:104:9",
             "stateMutability": "view",
             "virtual": false,
@@ -1562,29 +1562,29 @@
           },
           {
             "documentation": {
-              "id": 2960,
+              "id": 3031,
               "nodeType": "StructuredDocumentation",
               "src": "4741:178:9",
               "text": "@notice Let user to claim rewards for unclaimed policy cost in DAI, access: ANY\n @param _policyId is id of policy to get reward for, reward will be sent to policy holder"
             },
             "functionSelector": "c18c6057",
-            "id": 2965,
+            "id": 3036,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "rewardForUnclaimedExpiredPolicy",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 2963,
+              "id": 3034,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2962,
+                  "id": 3033,
                   "mutability": "mutable",
                   "name": "_policyId",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2965,
+                  "scope": 3036,
                   "src": "4963:17:9",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1593,7 +1593,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 2961,
+                    "id": 3032,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "4963:7:9",
@@ -1608,12 +1608,12 @@
               "src": "4962:19:9"
             },
             "returnParameters": {
-              "id": 2964,
+              "id": 3035,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "4990:0:9"
             },
-            "scope": 2980,
+            "scope": 3051,
             "src": "4922:69:9",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -1621,35 +1621,35 @@
           },
           {
             "documentation": {
-              "id": 2966,
+              "id": 3037,
               "nodeType": "StructuredDocumentation",
               "src": "4995:317:9",
               "text": "@notice Getting stats, access: ANY\n @return _name is the name of PolicyBook\n @return _contractType is a type of insured contract\n @return _maxCapacities is a max token amount that a user can buy\n @return _totalDaiLiquidity is PolicyBook's liquidity\n @return _annualProfitYields is its APY"
             },
             "functionSelector": "d80528ae",
-            "id": 2979,
+            "id": 3050,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "stats",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 2967,
+              "id": 3038,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "5329:2:9"
             },
             "returnParameters": {
-              "id": 2978,
+              "id": 3049,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2969,
+                  "id": 3040,
                   "mutability": "mutable",
                   "name": "_name",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2979,
+                  "scope": 3050,
                   "src": "5374:19:9",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -1658,7 +1658,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 2968,
+                    "id": 3039,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "5374:6:9",
@@ -1671,26 +1671,26 @@
                 },
                 {
                   "constant": false,
-                  "id": 2971,
+                  "id": 3042,
                   "mutability": "mutable",
                   "name": "_contractType",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2979,
+                  "scope": 3050,
                   "src": "5401:44:9",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_enum$_ContractType_$2987",
+                    "typeIdentifier": "t_enum$_ContractType_$3058",
                     "typeString": "enum IPolicyBookFabric.ContractType"
                   },
                   "typeName": {
-                    "id": 2970,
+                    "id": 3041,
                     "name": "IPolicyBookFabric.ContractType",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 2987,
+                    "referencedDeclaration": 3058,
                     "src": "5401:30:9",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_enum$_ContractType_$2987",
+                      "typeIdentifier": "t_enum$_ContractType_$3058",
                       "typeString": "enum IPolicyBookFabric.ContractType"
                     }
                   },
@@ -1698,11 +1698,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 2973,
+                  "id": 3044,
                   "mutability": "mutable",
                   "name": "_maxCapacities",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2979,
+                  "scope": 3050,
                   "src": "5453:22:9",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1711,7 +1711,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 2972,
+                    "id": 3043,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "5453:7:9",
@@ -1724,11 +1724,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 2975,
+                  "id": 3046,
                   "mutability": "mutable",
                   "name": "_totalDaiLiquidity",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2979,
+                  "scope": 3050,
                   "src": "5483:26:9",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1737,7 +1737,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 2974,
+                    "id": 3045,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "5483:7:9",
@@ -1750,11 +1750,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 2977,
+                  "id": 3048,
                   "mutability": "mutable",
                   "name": "_annualProfitYields",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2979,
+                  "scope": 3050,
                   "src": "5517:27:9",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1763,7 +1763,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 2976,
+                    "id": 3047,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "5517:7:9",
@@ -1777,14 +1777,14 @@
               ],
               "src": "5366:184:9"
             },
-            "scope": 2980,
+            "scope": 3051,
             "src": "5315:236:9",
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
           }
         ],
-        "scope": 2981,
+        "scope": 3052,
         "src": "126:5427:9"
       }
     ],
@@ -1795,10 +1795,10 @@
       "absolutePath": "/home/artem/Projects/Distributed_Lab/Applicature/bridgemutual-core/contracts/interfaces/IPolicyBook.sol",
       "exportedSymbols": {
         "IPolicyBook": [
-          2980
+          3051
         ],
         "IPolicyBookFabric": [
-          3029
+          3100
         ]
       },
       "license": "MIT"
@@ -1813,7 +1813,7 @@
             ".4"
           ]
         },
-        "id": 2846,
+        "id": 2917,
         "name": "PragmaDirective",
         "src": "32:23:9"
       },
@@ -1824,22 +1824,22 @@
             "ABIEncoderV2"
           ]
         },
-        "id": 2847,
+        "id": 2918,
         "name": "PragmaDirective",
         "src": "56:33:9"
       },
       {
         "attributes": {
-          "SourceUnit": 3030,
+          "SourceUnit": 3101,
           "absolutePath": "/home/artem/Projects/Distributed_Lab/Applicature/bridgemutual-core/contracts/interfaces/IPolicyBookFabric.sol",
           "file": "./IPolicyBookFabric.sol",
-          "scope": 2981,
+          "scope": 3052,
           "symbolAliases": [
             null
           ],
           "unitAlias": ""
         },
-        "id": 2848,
+        "id": 2919,
         "name": "ImportDirective",
         "src": "91:33:9"
       },
@@ -1855,10 +1855,10 @@
           "contractKind": "interface",
           "fullyImplemented": false,
           "linearizedBaseContracts": [
-            2980
+            3051
           ],
           "name": "IPolicyBook",
-          "scope": 2981
+          "scope": 3052
         },
         "children": [
           {
@@ -1871,7 +1871,7 @@
                 null
               ],
               "name": "insuranceContractAddress",
-              "scope": 2980,
+              "scope": 3051,
               "stateMutability": "view",
               "virtual": false,
               "visibility": "external"
@@ -1881,7 +1881,7 @@
                 "attributes": {
                   "text": "@notice Returns address of contract this PolicyBook covers, access: ANY\n @return _contract is address of covered contract"
                 },
-                "id": 2849,
+                "id": 2920,
                 "name": "StructuredDocumentation",
                 "src": "210:130:9"
               },
@@ -1892,7 +1892,7 @@
                   ]
                 },
                 "children": [],
-                "id": 2850,
+                "id": 2921,
                 "name": "ParameterList",
                 "src": "376:2:9"
               },
@@ -1903,7 +1903,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_contract",
-                      "scope": 2854,
+                      "scope": 2925,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -1916,22 +1916,22 @@
                           "stateMutability": "nonpayable",
                           "type": "address"
                         },
-                        "id": 2851,
+                        "id": 2922,
                         "name": "ElementaryTypeName",
                         "src": "402:7:9"
                       }
                     ],
-                    "id": 2852,
+                    "id": 2923,
                     "name": "VariableDeclaration",
                     "src": "402:17:9"
                   }
                 ],
-                "id": 2853,
+                "id": 2924,
                 "name": "ParameterList",
                 "src": "401:19:9"
               }
             ],
-            "id": 2854,
+            "id": 2925,
             "name": "FunctionDefinition",
             "src": "343:78:9"
           },
@@ -1945,7 +1945,7 @@
                 null
               ],
               "name": "contractType",
-              "scope": 2980,
+              "scope": 3051,
               "stateMutability": "view",
               "virtual": false,
               "visibility": "external"
@@ -1955,7 +1955,7 @@
                 "attributes": {
                   "text": "@notice Returns type of contract this PolicyBook covers, access: ANY\n @return _type is type of contract"
                 },
-                "id": 2855,
+                "id": 2926,
                 "name": "StructuredDocumentation",
                 "src": "425:112:9"
               },
@@ -1966,7 +1966,7 @@
                   ]
                 },
                 "children": [],
-                "id": 2856,
+                "id": 2927,
                 "name": "ParameterList",
                 "src": "561:2:9"
               },
@@ -1977,7 +1977,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_type",
-                      "scope": 2860,
+                      "scope": 2931,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "enum IPolicyBookFabric.ContractType",
@@ -1987,25 +1987,25 @@
                       {
                         "attributes": {
                           "name": "IPolicyBookFabric.ContractType",
-                          "referencedDeclaration": 2987,
+                          "referencedDeclaration": 3058,
                           "type": "enum IPolicyBookFabric.ContractType"
                         },
-                        "id": 2857,
+                        "id": 2928,
                         "name": "UserDefinedTypeName",
                         "src": "587:30:9"
                       }
                     ],
-                    "id": 2858,
+                    "id": 2929,
                     "name": "VariableDeclaration",
                     "src": "587:36:9"
                   }
                 ],
-                "id": 2859,
+                "id": 2930,
                 "name": "ParameterList",
                 "src": "586:38:9"
               }
             ],
-            "id": 2860,
+            "id": 2931,
             "name": "FunctionDefinition",
             "src": "540:85:9"
           },
@@ -2019,7 +2019,7 @@
                 null
               ],
               "name": "quoteStrategy",
-              "scope": 2980,
+              "scope": 3051,
               "stateMutability": "view",
               "virtual": false,
               "visibility": "external"
@@ -2029,7 +2029,7 @@
                 "attributes": {
                   "text": "@notice Returns quote strategy defined during creation of PolicyBook, access: ANY\n @return _quoteStrategy is address of Quote strategy contract used to calculate quote"
                 },
-                "id": 2861,
+                "id": 2932,
                 "name": "StructuredDocumentation",
                 "src": "629:176:9"
               },
@@ -2040,7 +2040,7 @@
                   ]
                 },
                 "children": [],
-                "id": 2862,
+                "id": 2933,
                 "name": "ParameterList",
                 "src": "830:2:9"
               },
@@ -2051,7 +2051,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_quoteStrategy",
-                      "scope": 2866,
+                      "scope": 2937,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -2064,22 +2064,22 @@
                           "stateMutability": "nonpayable",
                           "type": "address"
                         },
-                        "id": 2863,
+                        "id": 2934,
                         "name": "ElementaryTypeName",
                         "src": "856:7:9"
                       }
                     ],
-                    "id": 2864,
+                    "id": 2935,
                     "name": "VariableDeclaration",
                     "src": "856:22:9"
                   }
                 ],
-                "id": 2865,
+                "id": 2936,
                 "name": "ParameterList",
                 "src": "855:24:9"
               }
             ],
-            "id": 2866,
+            "id": 2937,
             "name": "FunctionDefinition",
             "src": "808:72:9"
           },
@@ -2093,7 +2093,7 @@
                 null
               ],
               "name": "shieldAssets",
-              "scope": 2980,
+              "scope": 3051,
               "stateMutability": "view",
               "virtual": false,
               "visibility": "external"
@@ -2103,7 +2103,7 @@
                 "attributes": {
                   "text": "@notice Returns list of shield assets added to PolicyBook, access: ANY\n @param _offset is starting item in array to return array from\n @param _limit is number of policy books to returns from _offset\n @return _shieldAssetsCount is number of added shield assets\n @return _shieldAssets is addresses of shield assets, that will be distributed to Policy givers"
                 },
-                "id": 2867,
+                "id": 2938,
                 "name": "StructuredDocumentation",
                 "src": "1034:379:9"
               },
@@ -2114,7 +2114,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_offset",
-                      "scope": 2879,
+                      "scope": 2950,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -2126,12 +2126,12 @@
                           "name": "uint256",
                           "type": "uint256"
                         },
-                        "id": 2868,
+                        "id": 2939,
                         "name": "ElementaryTypeName",
                         "src": "1438:7:9"
                       }
                     ],
-                    "id": 2869,
+                    "id": 2940,
                     "name": "VariableDeclaration",
                     "src": "1438:15:9"
                   },
@@ -2140,7 +2140,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_limit",
-                      "scope": 2879,
+                      "scope": 2950,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -2152,17 +2152,17 @@
                           "name": "uint256",
                           "type": "uint256"
                         },
-                        "id": 2870,
+                        "id": 2941,
                         "name": "ElementaryTypeName",
                         "src": "1455:7:9"
                       }
                     ],
-                    "id": 2871,
+                    "id": 2942,
                     "name": "VariableDeclaration",
                     "src": "1455:14:9"
                   }
                 ],
-                "id": 2872,
+                "id": 2943,
                 "name": "ParameterList",
                 "src": "1437:33:9"
               },
@@ -2173,7 +2173,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_shieldAssetsCount",
-                      "scope": 2879,
+                      "scope": 2950,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -2185,12 +2185,12 @@
                           "name": "uint256",
                           "type": "uint256"
                         },
-                        "id": 2873,
+                        "id": 2944,
                         "name": "ElementaryTypeName",
                         "src": "1506:7:9"
                       }
                     ],
-                    "id": 2874,
+                    "id": 2945,
                     "name": "VariableDeclaration",
                     "src": "1506:26:9"
                   },
@@ -2199,7 +2199,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_shieldAssets",
-                      "scope": 2879,
+                      "scope": 2950,
                       "stateVariable": false,
                       "storageLocation": "memory",
                       "type": "address[]",
@@ -2217,27 +2217,27 @@
                               "stateMutability": "nonpayable",
                               "type": "address"
                             },
-                            "id": 2875,
+                            "id": 2946,
                             "name": "ElementaryTypeName",
                             "src": "1534:7:9"
                           }
                         ],
-                        "id": 2876,
+                        "id": 2947,
                         "name": "ArrayTypeName",
                         "src": "1534:9:9"
                       }
                     ],
-                    "id": 2877,
+                    "id": 2948,
                     "name": "VariableDeclaration",
                     "src": "1534:30:9"
                   }
                 ],
-                "id": 2878,
+                "id": 2949,
                 "name": "ParameterList",
                 "src": "1505:60:9"
               }
             ],
-            "id": 2879,
+            "id": 2950,
             "name": "FunctionDefinition",
             "src": "1416:150:9"
           },
@@ -2251,7 +2251,7 @@
                 null
               ],
               "name": "shieldAssetsWithBalance",
-              "scope": 2980,
+              "scope": 3051,
               "stateMutability": "view",
               "virtual": false,
               "visibility": "external"
@@ -2261,7 +2261,7 @@
                 "attributes": {
                   "text": "@notice Returns list of shield assets added with tokens amount allocated to Policy Book, access: ANY\n @param _offset is starting item in array to return array from\n @param _limit is number of policy books to returns from _offset\n @return _shieldAssetsCount is number of added shield assets\n @return _shieldAssets is addresses of shield assets, that will be distributed to Policy givers\n @return _shieldAssetBalance is tokens amount of shield assets allocated to Policy Book, \n to get specific shield asset balance lookup _shieldAssetBalances by same index as of shield asset"
                 },
-                "id": 2880,
+                "id": 2951,
                 "name": "StructuredDocumentation",
                 "src": "1570:608:9"
               },
@@ -2272,7 +2272,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_offset",
-                      "scope": 2895,
+                      "scope": 2966,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -2284,12 +2284,12 @@
                           "name": "uint256",
                           "type": "uint256"
                         },
-                        "id": 2881,
+                        "id": 2952,
                         "name": "ElementaryTypeName",
                         "src": "2214:7:9"
                       }
                     ],
-                    "id": 2882,
+                    "id": 2953,
                     "name": "VariableDeclaration",
                     "src": "2214:15:9"
                   },
@@ -2298,7 +2298,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_limit",
-                      "scope": 2895,
+                      "scope": 2966,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -2310,17 +2310,17 @@
                           "name": "uint256",
                           "type": "uint256"
                         },
-                        "id": 2883,
+                        "id": 2954,
                         "name": "ElementaryTypeName",
                         "src": "2231:7:9"
                       }
                     ],
-                    "id": 2884,
+                    "id": 2955,
                     "name": "VariableDeclaration",
                     "src": "2231:14:9"
                   }
                 ],
-                "id": 2885,
+                "id": 2956,
                 "name": "ParameterList",
                 "src": "2213:33:9"
               },
@@ -2331,7 +2331,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_shieldAssetsCount",
-                      "scope": 2895,
+                      "scope": 2966,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -2343,12 +2343,12 @@
                           "name": "uint256",
                           "type": "uint256"
                         },
-                        "id": 2886,
+                        "id": 2957,
                         "name": "ElementaryTypeName",
                         "src": "2289:7:9"
                       }
                     ],
-                    "id": 2887,
+                    "id": 2958,
                     "name": "VariableDeclaration",
                     "src": "2289:26:9"
                   },
@@ -2357,7 +2357,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_shieldAssets",
-                      "scope": 2895,
+                      "scope": 2966,
                       "stateVariable": false,
                       "storageLocation": "memory",
                       "type": "address[]",
@@ -2375,17 +2375,17 @@
                               "stateMutability": "nonpayable",
                               "type": "address"
                             },
-                            "id": 2888,
+                            "id": 2959,
                             "name": "ElementaryTypeName",
                             "src": "2323:7:9"
                           }
                         ],
-                        "id": 2889,
+                        "id": 2960,
                         "name": "ArrayTypeName",
                         "src": "2323:9:9"
                       }
                     ],
-                    "id": 2890,
+                    "id": 2961,
                     "name": "VariableDeclaration",
                     "src": "2323:30:9"
                   },
@@ -2394,7 +2394,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_shieldAssetBalance",
-                      "scope": 2895,
+                      "scope": 2966,
                       "stateVariable": false,
                       "storageLocation": "memory",
                       "type": "uint256[]",
@@ -2411,27 +2411,27 @@
                               "name": "uint256",
                               "type": "uint256"
                             },
-                            "id": 2891,
+                            "id": 2962,
                             "name": "ElementaryTypeName",
                             "src": "2361:7:9"
                           }
                         ],
-                        "id": 2892,
+                        "id": 2963,
                         "name": "ArrayTypeName",
                         "src": "2361:9:9"
                       }
                     ],
-                    "id": 2893,
+                    "id": 2964,
                     "name": "VariableDeclaration",
                     "src": "2361:36:9"
                   }
                 ],
-                "id": 2894,
+                "id": 2965,
                 "name": "ParameterList",
                 "src": "2281:122:9"
               }
             ],
-            "id": 2895,
+            "id": 2966,
             "name": "FunctionDefinition",
             "src": "2181:223:9"
           },
@@ -2445,7 +2445,7 @@
                 null
               ],
               "name": "shieldAssetsCount",
-              "scope": 2980,
+              "scope": 3051,
               "stateMutability": "view",
               "virtual": false,
               "visibility": "external"
@@ -2455,7 +2455,7 @@
                 "attributes": {
                   "text": "@notice Returns number of shield assets added, access: ANY\n @return _shieldAssetsCount is number of added shield assets"
                 },
-                "id": 2896,
+                "id": 2967,
                 "name": "StructuredDocumentation",
                 "src": "2408:128:9"
               },
@@ -2466,7 +2466,7 @@
                   ]
                 },
                 "children": [],
-                "id": 2897,
+                "id": 2968,
                 "name": "ParameterList",
                 "src": "2565:2:9"
               },
@@ -2477,7 +2477,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_shieldAssetsCount",
-                      "scope": 2901,
+                      "scope": 2972,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -2489,22 +2489,22 @@
                           "name": "uint256",
                           "type": "uint256"
                         },
-                        "id": 2898,
+                        "id": 2969,
                         "name": "ElementaryTypeName",
                         "src": "2591:7:9"
                       }
                     ],
-                    "id": 2899,
+                    "id": 2970,
                     "name": "VariableDeclaration",
                     "src": "2591:26:9"
                   }
                 ],
-                "id": 2900,
+                "id": 2971,
                 "name": "ParameterList",
                 "src": "2590:28:9"
               }
             ],
-            "id": 2901,
+            "id": 2972,
             "name": "FunctionDefinition",
             "src": "2539:80:9"
           },
@@ -2518,7 +2518,7 @@
                 null
               ],
               "name": "addShieldTokens",
-              "scope": 2980,
+              "scope": 3051,
               "stateMutability": "nonpayable",
               "virtual": false,
               "visibility": "external"
@@ -2528,7 +2528,7 @@
                 "attributes": {
                   "text": "@notice Adds shield tokens to contract, access: ANY\n @param _tokenAddress is address of reward token to add\n @param _tokensAmount is max amount of reward to operate on\n @return _success is indicator if purchase is successful, it will throw exception if unsuccessful"
                 },
-                "id": 2902,
+                "id": 2973,
                 "name": "StructuredDocumentation",
                 "src": "2623:284:9"
               },
@@ -2539,7 +2539,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_tokenAddress",
-                      "scope": 2911,
+                      "scope": 2982,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -2552,12 +2552,12 @@
                           "stateMutability": "nonpayable",
                           "type": "address"
                         },
-                        "id": 2903,
+                        "id": 2974,
                         "name": "ElementaryTypeName",
                         "src": "2935:7:9"
                       }
                     ],
-                    "id": 2904,
+                    "id": 2975,
                     "name": "VariableDeclaration",
                     "src": "2935:21:9"
                   },
@@ -2566,883 +2566,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_tokensAmount",
-                      "scope": 2911,
-                      "stateVariable": false,
-                      "storageLocation": "default",
-                      "type": "uint256",
-                      "visibility": "internal"
-                    },
-                    "children": [
-                      {
-                        "attributes": {
-                          "name": "uint256",
-                          "type": "uint256"
-                        },
-                        "id": 2905,
-                        "name": "ElementaryTypeName",
-                        "src": "2958:7:9"
-                      }
-                    ],
-                    "id": 2906,
-                    "name": "VariableDeclaration",
-                    "src": "2958:21:9"
-                  }
-                ],
-                "id": 2907,
-                "name": "ParameterList",
-                "src": "2934:46:9"
-              },
-              {
-                "children": [
-                  {
-                    "attributes": {
-                      "constant": false,
-                      "mutability": "mutable",
-                      "name": "_success",
-                      "scope": 2911,
-                      "stateVariable": false,
-                      "storageLocation": "default",
-                      "type": "bool",
-                      "visibility": "internal"
-                    },
-                    "children": [
-                      {
-                        "attributes": {
-                          "name": "bool",
-                          "type": "bool"
-                        },
-                        "id": 2908,
-                        "name": "ElementaryTypeName",
-                        "src": "2999:4:9"
-                      }
-                    ],
-                    "id": 2909,
-                    "name": "VariableDeclaration",
-                    "src": "2999:13:9"
-                  }
-                ],
-                "id": 2910,
-                "name": "ParameterList",
-                "src": "2998:15:9"
-              }
-            ],
-            "id": 2911,
-            "name": "FunctionDefinition",
-            "src": "2910:104:9"
-          },
-          {
-            "attributes": {
-              "functionSelector": "5da2460d",
-              "implemented": false,
-              "isConstructor": false,
-              "kind": "function",
-              "modifiers": [
-                null
-              ],
-              "name": "buyPolicy",
-              "scope": 2980,
-              "stateMutability": "nonpayable",
-              "virtual": false,
-              "visibility": "external"
-            },
-            "children": [
-              {
-                "attributes": {
-                  "text": "@notice Let user to buy policy by supplying DAI, access: ANY\n @param _durationSeconds is number of seconds to cover\n @param _coverTokens is number of tokens to cover  "
-                },
-                "id": 2912,
-                "name": "StructuredDocumentation",
-                "src": "3018:181:9"
-              },
-              {
-                "children": [
-                  {
-                    "attributes": {
-                      "constant": false,
-                      "mutability": "mutable",
-                      "name": "_durationSeconds",
-                      "scope": 2919,
-                      "stateVariable": false,
-                      "storageLocation": "default",
-                      "type": "uint256",
-                      "visibility": "internal"
-                    },
-                    "children": [
-                      {
-                        "attributes": {
-                          "name": "uint256",
-                          "type": "uint256"
-                        },
-                        "id": 2913,
-                        "name": "ElementaryTypeName",
-                        "src": "3226:7:9"
-                      }
-                    ],
-                    "id": 2914,
-                    "name": "VariableDeclaration",
-                    "src": "3226:24:9"
-                  },
-                  {
-                    "attributes": {
-                      "constant": false,
-                      "mutability": "mutable",
-                      "name": "_coverTokens",
-                      "scope": 2919,
-                      "stateVariable": false,
-                      "storageLocation": "default",
-                      "type": "uint256",
-                      "visibility": "internal"
-                    },
-                    "children": [
-                      {
-                        "attributes": {
-                          "name": "uint256",
-                          "type": "uint256"
-                        },
-                        "id": 2915,
-                        "name": "ElementaryTypeName",
-                        "src": "3256:7:9"
-                      }
-                    ],
-                    "id": 2916,
-                    "name": "VariableDeclaration",
-                    "src": "3256:20:9"
-                  }
-                ],
-                "id": 2917,
-                "name": "ParameterList",
-                "src": "3220:60:9"
-              },
-              {
-                "attributes": {
-                  "parameters": [
-                    null
-                  ]
-                },
-                "children": [],
-                "id": 2918,
-                "name": "ParameterList",
-                "src": "3289:0:9"
-              }
-            ],
-            "id": 2919,
-            "name": "FunctionDefinition",
-            "src": "3202:88:9"
-          },
-          {
-            "attributes": {
-              "functionSelector": "7234751b",
-              "implemented": false,
-              "isConstructor": false,
-              "kind": "function",
-              "modifiers": [
-                null
-              ],
-              "name": "buyPolicyFor",
-              "scope": 2980,
-              "stateMutability": "nonpayable",
-              "virtual": false,
-              "visibility": "external"
-            },
-            "children": [
-              {
-                "attributes": {
-                  "text": "@notice Let user to buy policy for another user by supplying DAI, access: ANY\n @param _policyHolderAddr is address of address to assign cover\n @param _durationSeconds is number of seconds to cover\n @param _coverTokens is number of tokens to cover  "
-                },
-                "id": 2920,
-                "name": "StructuredDocumentation",
-                "src": "3294:267:9"
-              },
-              {
-                "children": [
-                  {
-                    "attributes": {
-                      "constant": false,
-                      "mutability": "mutable",
-                      "name": "_policyHolderAddr",
-                      "scope": 2929,
-                      "stateVariable": false,
-                      "storageLocation": "default",
-                      "type": "address",
-                      "visibility": "internal"
-                    },
-                    "children": [
-                      {
-                        "attributes": {
-                          "name": "address",
-                          "stateMutability": "nonpayable",
-                          "type": "address"
-                        },
-                        "id": 2921,
-                        "name": "ElementaryTypeName",
-                        "src": "3591:7:9"
-                      }
-                    ],
-                    "id": 2922,
-                    "name": "VariableDeclaration",
-                    "src": "3591:25:9"
-                  },
-                  {
-                    "attributes": {
-                      "constant": false,
-                      "mutability": "mutable",
-                      "name": "_durationSeconds",
-                      "scope": 2929,
-                      "stateVariable": false,
-                      "storageLocation": "default",
-                      "type": "uint256",
-                      "visibility": "internal"
-                    },
-                    "children": [
-                      {
-                        "attributes": {
-                          "name": "uint256",
-                          "type": "uint256"
-                        },
-                        "id": 2923,
-                        "name": "ElementaryTypeName",
-                        "src": "3622:7:9"
-                      }
-                    ],
-                    "id": 2924,
-                    "name": "VariableDeclaration",
-                    "src": "3622:24:9"
-                  },
-                  {
-                    "attributes": {
-                      "constant": false,
-                      "mutability": "mutable",
-                      "name": "_coverTokens",
-                      "scope": 2929,
-                      "stateVariable": false,
-                      "storageLocation": "default",
-                      "type": "uint256",
-                      "visibility": "internal"
-                    },
-                    "children": [
-                      {
-                        "attributes": {
-                          "name": "uint256",
-                          "type": "uint256"
-                        },
-                        "id": 2925,
-                        "name": "ElementaryTypeName",
-                        "src": "3652:7:9"
-                      }
-                    ],
-                    "id": 2926,
-                    "name": "VariableDeclaration",
-                    "src": "3652:20:9"
-                  }
-                ],
-                "id": 2927,
-                "name": "ParameterList",
-                "src": "3585:91:9"
-              },
-              {
-                "attributes": {
-                  "parameters": [
-                    null
-                  ]
-                },
-                "children": [],
-                "id": 2928,
-                "name": "ParameterList",
-                "src": "3685:0:9"
-              }
-            ],
-            "id": 2929,
-            "name": "FunctionDefinition",
-            "src": "3564:122:9"
-          },
-          {
-            "attributes": {
-              "functionSelector": "51c6590a",
-              "implemented": false,
-              "isConstructor": false,
-              "kind": "function",
-              "modifiers": [
-                null
-              ],
-              "name": "addLiquidity",
-              "scope": 2980,
-              "stateMutability": "nonpayable",
-              "virtual": false,
-              "visibility": "external"
-            },
-            "children": [
-              {
-                "attributes": {
-                  "text": "@notice Let user to add liquidity by supplying DAI, access: ANY\n @param _liqudityAmount is amount of DAI tokens to secure"
-                },
-                "id": 2930,
-                "name": "StructuredDocumentation",
-                "src": "3690:130:9"
-              },
-              {
-                "children": [
-                  {
-                    "attributes": {
-                      "constant": false,
-                      "mutability": "mutable",
-                      "name": "_liqudityAmount",
-                      "scope": 2935,
-                      "stateVariable": false,
-                      "storageLocation": "default",
-                      "type": "uint256",
-                      "visibility": "internal"
-                    },
-                    "children": [
-                      {
-                        "attributes": {
-                          "name": "uint256",
-                          "type": "uint256"
-                        },
-                        "id": 2931,
-                        "name": "ElementaryTypeName",
-                        "src": "3845:7:9"
-                      }
-                    ],
-                    "id": 2932,
-                    "name": "VariableDeclaration",
-                    "src": "3845:23:9"
-                  }
-                ],
-                "id": 2933,
-                "name": "ParameterList",
-                "src": "3844:25:9"
-              },
-              {
-                "attributes": {
-                  "parameters": [
-                    null
-                  ]
-                },
-                "children": [],
-                "id": 2934,
-                "name": "ParameterList",
-                "src": "3878:0:9"
-              }
-            ],
-            "id": 2935,
-            "name": "FunctionDefinition",
-            "src": "3823:56:9"
-          },
-          {
-            "attributes": {
-              "functionSelector": "efa1f98a",
-              "implemented": false,
-              "isConstructor": false,
-              "kind": "function",
-              "modifiers": [
-                null
-              ],
-              "name": "addLiquidityFor",
-              "scope": 2980,
-              "stateMutability": "nonpayable",
-              "virtual": false,
-              "visibility": "external"
-            },
-            "children": [
-              {
-                "attributes": {
-                  "text": "@notice Let user to add liqiudity for another user by supplying DAI, access: ANY\n @param _liquidityHolderAddr is address of address to assign cover\n @param _liqudityAmount is amount of DAI tokens to secure"
-                },
-                "id": 2936,
-                "name": "StructuredDocumentation",
-                "src": "3883:219:9"
-              },
-              {
-                "children": [
-                  {
-                    "attributes": {
-                      "constant": false,
-                      "mutability": "mutable",
-                      "name": "_liquidityHolderAddr",
-                      "scope": 2943,
-                      "stateVariable": false,
-                      "storageLocation": "default",
-                      "type": "address",
-                      "visibility": "internal"
-                    },
-                    "children": [
-                      {
-                        "attributes": {
-                          "name": "address",
-                          "stateMutability": "nonpayable",
-                          "type": "address"
-                        },
-                        "id": 2937,
-                        "name": "ElementaryTypeName",
-                        "src": "4130:7:9"
-                      }
-                    ],
-                    "id": 2938,
-                    "name": "VariableDeclaration",
-                    "src": "4130:28:9"
-                  },
-                  {
-                    "attributes": {
-                      "constant": false,
-                      "mutability": "mutable",
-                      "name": "_liqudityAmount",
-                      "scope": 2943,
-                      "stateVariable": false,
-                      "storageLocation": "default",
-                      "type": "uint256",
-                      "visibility": "internal"
-                    },
-                    "children": [
-                      {
-                        "attributes": {
-                          "name": "uint256",
-                          "type": "uint256"
-                        },
-                        "id": 2939,
-                        "name": "ElementaryTypeName",
-                        "src": "4160:7:9"
-                      }
-                    ],
-                    "id": 2940,
-                    "name": "VariableDeclaration",
-                    "src": "4160:23:9"
-                  }
-                ],
-                "id": 2941,
-                "name": "ParameterList",
-                "src": "4129:55:9"
-              },
-              {
-                "attributes": {
-                  "parameters": [
-                    null
-                  ]
-                },
-                "children": [],
-                "id": 2942,
-                "name": "ParameterList",
-                "src": "4193:0:9"
-              }
-            ],
-            "id": 2943,
-            "name": "FunctionDefinition",
-            "src": "4105:89:9"
-          },
-          {
-            "attributes": {
-              "functionSelector": "0a861f2a",
-              "implemented": false,
-              "isConstructor": false,
-              "kind": "function",
-              "modifiers": [
-                null
-              ],
-              "name": "withdrawLiquidity",
-              "scope": 2980,
-              "stateMutability": "nonpayable",
-              "virtual": false,
-              "visibility": "external"
-            },
-            "children": [
-              {
-                "attributes": {
-                  "text": "@notice Let user to withdraw deposited liqiudity, access: ANY\n @param _tokensToWithdraw is amount of DAI tokens to withdraw"
-                },
-                "id": 2944,
-                "name": "StructuredDocumentation",
-                "src": "4198:132:9"
-              },
-              {
-                "children": [
-                  {
-                    "attributes": {
-                      "constant": false,
-                      "mutability": "mutable",
-                      "name": "_tokensToWithdraw",
-                      "scope": 2949,
-                      "stateVariable": false,
-                      "storageLocation": "default",
-                      "type": "uint256",
-                      "visibility": "internal"
-                    },
-                    "children": [
-                      {
-                        "attributes": {
-                          "name": "uint256",
-                          "type": "uint256"
-                        },
-                        "id": 2945,
-                        "name": "ElementaryTypeName",
-                        "src": "4360:7:9"
-                      }
-                    ],
-                    "id": 2946,
-                    "name": "VariableDeclaration",
-                    "src": "4360:25:9"
-                  }
-                ],
-                "id": 2947,
-                "name": "ParameterList",
-                "src": "4359:27:9"
-              },
-              {
-                "attributes": {
-                  "parameters": [
-                    null
-                  ]
-                },
-                "children": [],
-                "id": 2948,
-                "name": "ParameterList",
-                "src": "4395:0:9"
-              }
-            ],
-            "id": 2949,
-            "name": "FunctionDefinition",
-            "src": "4333:63:9"
-          },
-          {
-            "attributes": {
-              "functionSelector": "758af3ab",
-              "implemented": false,
-              "isConstructor": false,
-              "kind": "function",
-              "modifiers": [
-                null
-              ],
-              "name": "getQuote",
-              "scope": 2980,
-              "stateMutability": "view",
-              "virtual": false,
-              "visibility": "external"
-            },
-            "children": [
-              {
-                "attributes": {
-                  "text": "@notice Let user to calculate policy cost in DAI, access: ANY\n @param _durationSeconds is number of seconds to cover\n @param _tokens is number of tokens to cover\n @return _daiTokens is amount of DAI policy costs"
-                },
-                "id": 2950,
-                "name": "StructuredDocumentation",
-                "src": "4400:230:9"
-              },
-              {
-                "children": [
-                  {
-                    "attributes": {
-                      "constant": false,
-                      "mutability": "mutable",
-                      "name": "_durationSeconds",
-                      "scope": 2959,
-                      "stateVariable": false,
-                      "storageLocation": "default",
-                      "type": "uint256",
-                      "visibility": "internal"
-                    },
-                    "children": [
-                      {
-                        "attributes": {
-                          "name": "uint256",
-                          "type": "uint256"
-                        },
-                        "id": 2951,
-                        "name": "ElementaryTypeName",
-                        "src": "4651:7:9"
-                      }
-                    ],
-                    "id": 2952,
-                    "name": "VariableDeclaration",
-                    "src": "4651:24:9"
-                  },
-                  {
-                    "attributes": {
-                      "constant": false,
-                      "mutability": "mutable",
-                      "name": "_tokens",
-                      "scope": 2959,
-                      "stateVariable": false,
-                      "storageLocation": "default",
-                      "type": "uint256",
-                      "visibility": "internal"
-                    },
-                    "children": [
-                      {
-                        "attributes": {
-                          "name": "uint256",
-                          "type": "uint256"
-                        },
-                        "id": 2953,
-                        "name": "ElementaryTypeName",
-                        "src": "4677:7:9"
-                      }
-                    ],
-                    "id": 2954,
-                    "name": "VariableDeclaration",
-                    "src": "4677:15:9"
-                  }
-                ],
-                "id": 2955,
-                "name": "ParameterList",
-                "src": "4650:43:9"
-              },
-              {
-                "children": [
-                  {
-                    "attributes": {
-                      "constant": false,
-                      "mutability": "mutable",
-                      "name": "_daiTokens",
-                      "scope": 2959,
-                      "stateVariable": false,
-                      "storageLocation": "default",
-                      "type": "uint256",
-                      "visibility": "internal"
-                    },
-                    "children": [
-                      {
-                        "attributes": {
-                          "name": "uint256",
-                          "type": "uint256"
-                        },
-                        "id": 2956,
-                        "name": "ElementaryTypeName",
-                        "src": "4717:7:9"
-                      }
-                    ],
-                    "id": 2957,
-                    "name": "VariableDeclaration",
-                    "src": "4717:18:9"
-                  }
-                ],
-                "id": 2958,
-                "name": "ParameterList",
-                "src": "4716:20:9"
-              }
-            ],
-            "id": 2959,
-            "name": "FunctionDefinition",
-            "src": "4633:104:9"
-          },
-          {
-            "attributes": {
-              "functionSelector": "c18c6057",
-              "implemented": false,
-              "isConstructor": false,
-              "kind": "function",
-              "modifiers": [
-                null
-              ],
-              "name": "rewardForUnclaimedExpiredPolicy",
-              "scope": 2980,
-              "stateMutability": "nonpayable",
-              "virtual": false,
-              "visibility": "external"
-            },
-            "children": [
-              {
-                "attributes": {
-                  "text": "@notice Let user to claim rewards for unclaimed policy cost in DAI, access: ANY\n @param _policyId is id of policy to get reward for, reward will be sent to policy holder"
-                },
-                "id": 2960,
-                "name": "StructuredDocumentation",
-                "src": "4741:178:9"
-              },
-              {
-                "children": [
-                  {
-                    "attributes": {
-                      "constant": false,
-                      "mutability": "mutable",
-                      "name": "_policyId",
-                      "scope": 2965,
-                      "stateVariable": false,
-                      "storageLocation": "default",
-                      "type": "uint256",
-                      "visibility": "internal"
-                    },
-                    "children": [
-                      {
-                        "attributes": {
-                          "name": "uint256",
-                          "type": "uint256"
-                        },
-                        "id": 2961,
-                        "name": "ElementaryTypeName",
-                        "src": "4963:7:9"
-                      }
-                    ],
-                    "id": 2962,
-                    "name": "VariableDeclaration",
-                    "src": "4963:17:9"
-                  }
-                ],
-                "id": 2963,
-                "name": "ParameterList",
-                "src": "4962:19:9"
-              },
-              {
-                "attributes": {
-                  "parameters": [
-                    null
-                  ]
-                },
-                "children": [],
-                "id": 2964,
-                "name": "ParameterList",
-                "src": "4990:0:9"
-              }
-            ],
-            "id": 2965,
-            "name": "FunctionDefinition",
-            "src": "4922:69:9"
-          },
-          {
-            "attributes": {
-              "functionSelector": "d80528ae",
-              "implemented": false,
-              "isConstructor": false,
-              "kind": "function",
-              "modifiers": [
-                null
-              ],
-              "name": "stats",
-              "scope": 2980,
-              "stateMutability": "view",
-              "virtual": false,
-              "visibility": "external"
-            },
-            "children": [
-              {
-                "attributes": {
-                  "text": "@notice Getting stats, access: ANY\n @return _name is the name of PolicyBook\n @return _contractType is a type of insured contract\n @return _maxCapacities is a max token amount that a user can buy\n @return _totalDaiLiquidity is PolicyBook's liquidity\n @return _annualProfitYields is its APY"
-                },
-                "id": 2966,
-                "name": "StructuredDocumentation",
-                "src": "4995:317:9"
-              },
-              {
-                "attributes": {
-                  "parameters": [
-                    null
-                  ]
-                },
-                "children": [],
-                "id": 2967,
-                "name": "ParameterList",
-                "src": "5329:2:9"
-              },
-              {
-                "children": [
-                  {
-                    "attributes": {
-                      "constant": false,
-                      "mutability": "mutable",
-                      "name": "_name",
-                      "scope": 2979,
-                      "stateVariable": false,
-                      "storageLocation": "memory",
-                      "type": "string",
-                      "visibility": "internal"
-                    },
-                    "children": [
-                      {
-                        "attributes": {
-                          "name": "string",
-                          "type": "string"
-                        },
-                        "id": 2968,
-                        "name": "ElementaryTypeName",
-                        "src": "5374:6:9"
-                      }
-                    ],
-                    "id": 2969,
-                    "name": "VariableDeclaration",
-                    "src": "5374:19:9"
-                  },
-                  {
-                    "attributes": {
-                      "constant": false,
-                      "mutability": "mutable",
-                      "name": "_contractType",
-                      "scope": 2979,
-                      "stateVariable": false,
-                      "storageLocation": "default",
-                      "type": "enum IPolicyBookFabric.ContractType",
-                      "visibility": "internal"
-                    },
-                    "children": [
-                      {
-                        "attributes": {
-                          "name": "IPolicyBookFabric.ContractType",
-                          "referencedDeclaration": 2987,
-                          "type": "enum IPolicyBookFabric.ContractType"
-                        },
-                        "id": 2970,
-                        "name": "UserDefinedTypeName",
-                        "src": "5401:30:9"
-                      }
-                    ],
-                    "id": 2971,
-                    "name": "VariableDeclaration",
-                    "src": "5401:44:9"
-                  },
-                  {
-                    "attributes": {
-                      "constant": false,
-                      "mutability": "mutable",
-                      "name": "_maxCapacities",
-                      "scope": 2979,
-                      "stateVariable": false,
-                      "storageLocation": "default",
-                      "type": "uint256",
-                      "visibility": "internal"
-                    },
-                    "children": [
-                      {
-                        "attributes": {
-                          "name": "uint256",
-                          "type": "uint256"
-                        },
-                        "id": 2972,
-                        "name": "ElementaryTypeName",
-                        "src": "5453:7:9"
-                      }
-                    ],
-                    "id": 2973,
-                    "name": "VariableDeclaration",
-                    "src": "5453:22:9"
-                  },
-                  {
-                    "attributes": {
-                      "constant": false,
-                      "mutability": "mutable",
-                      "name": "_totalDaiLiquidity",
-                      "scope": 2979,
-                      "stateVariable": false,
-                      "storageLocation": "default",
-                      "type": "uint256",
-                      "visibility": "internal"
-                    },
-                    "children": [
-                      {
-                        "attributes": {
-                          "name": "uint256",
-                          "type": "uint256"
-                        },
-                        "id": 2974,
-                        "name": "ElementaryTypeName",
-                        "src": "5483:7:9"
-                      }
-                    ],
-                    "id": 2975,
-                    "name": "VariableDeclaration",
-                    "src": "5483:26:9"
-                  },
-                  {
-                    "attributes": {
-                      "constant": false,
-                      "mutability": "mutable",
-                      "name": "_annualProfitYields",
-                      "scope": 2979,
+                      "scope": 2982,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -3456,30 +2580,906 @@
                         },
                         "id": 2976,
                         "name": "ElementaryTypeName",
-                        "src": "5517:7:9"
+                        "src": "2958:7:9"
                       }
                     ],
                     "id": 2977,
                     "name": "VariableDeclaration",
-                    "src": "5517:27:9"
+                    "src": "2958:21:9"
                   }
                 ],
                 "id": 2978,
                 "name": "ParameterList",
+                "src": "2934:46:9"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "mutability": "mutable",
+                      "name": "_success",
+                      "scope": 2982,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "bool",
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "bool",
+                          "type": "bool"
+                        },
+                        "id": 2979,
+                        "name": "ElementaryTypeName",
+                        "src": "2999:4:9"
+                      }
+                    ],
+                    "id": 2980,
+                    "name": "VariableDeclaration",
+                    "src": "2999:13:9"
+                  }
+                ],
+                "id": 2981,
+                "name": "ParameterList",
+                "src": "2998:15:9"
+              }
+            ],
+            "id": 2982,
+            "name": "FunctionDefinition",
+            "src": "2910:104:9"
+          },
+          {
+            "attributes": {
+              "functionSelector": "5da2460d",
+              "implemented": false,
+              "isConstructor": false,
+              "kind": "function",
+              "modifiers": [
+                null
+              ],
+              "name": "buyPolicy",
+              "scope": 3051,
+              "stateMutability": "nonpayable",
+              "virtual": false,
+              "visibility": "external"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "text": "@notice Let user to buy policy by supplying DAI, access: ANY\n @param _durationSeconds is number of seconds to cover\n @param _coverTokens is number of tokens to cover  "
+                },
+                "id": 2983,
+                "name": "StructuredDocumentation",
+                "src": "3018:181:9"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "mutability": "mutable",
+                      "name": "_durationSeconds",
+                      "scope": 2990,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 2984,
+                        "name": "ElementaryTypeName",
+                        "src": "3226:7:9"
+                      }
+                    ],
+                    "id": 2985,
+                    "name": "VariableDeclaration",
+                    "src": "3226:24:9"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "mutability": "mutable",
+                      "name": "_coverTokens",
+                      "scope": 2990,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 2986,
+                        "name": "ElementaryTypeName",
+                        "src": "3256:7:9"
+                      }
+                    ],
+                    "id": 2987,
+                    "name": "VariableDeclaration",
+                    "src": "3256:20:9"
+                  }
+                ],
+                "id": 2988,
+                "name": "ParameterList",
+                "src": "3220:60:9"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 2989,
+                "name": "ParameterList",
+                "src": "3289:0:9"
+              }
+            ],
+            "id": 2990,
+            "name": "FunctionDefinition",
+            "src": "3202:88:9"
+          },
+          {
+            "attributes": {
+              "functionSelector": "7234751b",
+              "implemented": false,
+              "isConstructor": false,
+              "kind": "function",
+              "modifiers": [
+                null
+              ],
+              "name": "buyPolicyFor",
+              "scope": 3051,
+              "stateMutability": "nonpayable",
+              "virtual": false,
+              "visibility": "external"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "text": "@notice Let user to buy policy for another user by supplying DAI, access: ANY\n @param _policyHolderAddr is address of address to assign cover\n @param _durationSeconds is number of seconds to cover\n @param _coverTokens is number of tokens to cover  "
+                },
+                "id": 2991,
+                "name": "StructuredDocumentation",
+                "src": "3294:267:9"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "mutability": "mutable",
+                      "name": "_policyHolderAddr",
+                      "scope": 3000,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "address",
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "stateMutability": "nonpayable",
+                          "type": "address"
+                        },
+                        "id": 2992,
+                        "name": "ElementaryTypeName",
+                        "src": "3591:7:9"
+                      }
+                    ],
+                    "id": 2993,
+                    "name": "VariableDeclaration",
+                    "src": "3591:25:9"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "mutability": "mutable",
+                      "name": "_durationSeconds",
+                      "scope": 3000,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 2994,
+                        "name": "ElementaryTypeName",
+                        "src": "3622:7:9"
+                      }
+                    ],
+                    "id": 2995,
+                    "name": "VariableDeclaration",
+                    "src": "3622:24:9"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "mutability": "mutable",
+                      "name": "_coverTokens",
+                      "scope": 3000,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 2996,
+                        "name": "ElementaryTypeName",
+                        "src": "3652:7:9"
+                      }
+                    ],
+                    "id": 2997,
+                    "name": "VariableDeclaration",
+                    "src": "3652:20:9"
+                  }
+                ],
+                "id": 2998,
+                "name": "ParameterList",
+                "src": "3585:91:9"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 2999,
+                "name": "ParameterList",
+                "src": "3685:0:9"
+              }
+            ],
+            "id": 3000,
+            "name": "FunctionDefinition",
+            "src": "3564:122:9"
+          },
+          {
+            "attributes": {
+              "functionSelector": "51c6590a",
+              "implemented": false,
+              "isConstructor": false,
+              "kind": "function",
+              "modifiers": [
+                null
+              ],
+              "name": "addLiquidity",
+              "scope": 3051,
+              "stateMutability": "nonpayable",
+              "virtual": false,
+              "visibility": "external"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "text": "@notice Let user to add liquidity by supplying DAI, access: ANY\n @param _liqudityAmount is amount of DAI tokens to secure"
+                },
+                "id": 3001,
+                "name": "StructuredDocumentation",
+                "src": "3690:130:9"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "mutability": "mutable",
+                      "name": "_liqudityAmount",
+                      "scope": 3006,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 3002,
+                        "name": "ElementaryTypeName",
+                        "src": "3845:7:9"
+                      }
+                    ],
+                    "id": 3003,
+                    "name": "VariableDeclaration",
+                    "src": "3845:23:9"
+                  }
+                ],
+                "id": 3004,
+                "name": "ParameterList",
+                "src": "3844:25:9"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 3005,
+                "name": "ParameterList",
+                "src": "3878:0:9"
+              }
+            ],
+            "id": 3006,
+            "name": "FunctionDefinition",
+            "src": "3823:56:9"
+          },
+          {
+            "attributes": {
+              "functionSelector": "efa1f98a",
+              "implemented": false,
+              "isConstructor": false,
+              "kind": "function",
+              "modifiers": [
+                null
+              ],
+              "name": "addLiquidityFor",
+              "scope": 3051,
+              "stateMutability": "nonpayable",
+              "virtual": false,
+              "visibility": "external"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "text": "@notice Let user to add liqiudity for another user by supplying DAI, access: ANY\n @param _liquidityHolderAddr is address of address to assign cover\n @param _liqudityAmount is amount of DAI tokens to secure"
+                },
+                "id": 3007,
+                "name": "StructuredDocumentation",
+                "src": "3883:219:9"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "mutability": "mutable",
+                      "name": "_liquidityHolderAddr",
+                      "scope": 3014,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "address",
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "stateMutability": "nonpayable",
+                          "type": "address"
+                        },
+                        "id": 3008,
+                        "name": "ElementaryTypeName",
+                        "src": "4130:7:9"
+                      }
+                    ],
+                    "id": 3009,
+                    "name": "VariableDeclaration",
+                    "src": "4130:28:9"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "mutability": "mutable",
+                      "name": "_liqudityAmount",
+                      "scope": 3014,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 3010,
+                        "name": "ElementaryTypeName",
+                        "src": "4160:7:9"
+                      }
+                    ],
+                    "id": 3011,
+                    "name": "VariableDeclaration",
+                    "src": "4160:23:9"
+                  }
+                ],
+                "id": 3012,
+                "name": "ParameterList",
+                "src": "4129:55:9"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 3013,
+                "name": "ParameterList",
+                "src": "4193:0:9"
+              }
+            ],
+            "id": 3014,
+            "name": "FunctionDefinition",
+            "src": "4105:89:9"
+          },
+          {
+            "attributes": {
+              "functionSelector": "0a861f2a",
+              "implemented": false,
+              "isConstructor": false,
+              "kind": "function",
+              "modifiers": [
+                null
+              ],
+              "name": "withdrawLiquidity",
+              "scope": 3051,
+              "stateMutability": "nonpayable",
+              "virtual": false,
+              "visibility": "external"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "text": "@notice Let user to withdraw deposited liqiudity, access: ANY\n @param _tokensToWithdraw is amount of DAI tokens to withdraw"
+                },
+                "id": 3015,
+                "name": "StructuredDocumentation",
+                "src": "4198:132:9"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "mutability": "mutable",
+                      "name": "_tokensToWithdraw",
+                      "scope": 3020,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 3016,
+                        "name": "ElementaryTypeName",
+                        "src": "4360:7:9"
+                      }
+                    ],
+                    "id": 3017,
+                    "name": "VariableDeclaration",
+                    "src": "4360:25:9"
+                  }
+                ],
+                "id": 3018,
+                "name": "ParameterList",
+                "src": "4359:27:9"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 3019,
+                "name": "ParameterList",
+                "src": "4395:0:9"
+              }
+            ],
+            "id": 3020,
+            "name": "FunctionDefinition",
+            "src": "4333:63:9"
+          },
+          {
+            "attributes": {
+              "functionSelector": "758af3ab",
+              "implemented": false,
+              "isConstructor": false,
+              "kind": "function",
+              "modifiers": [
+                null
+              ],
+              "name": "getQuote",
+              "scope": 3051,
+              "stateMutability": "view",
+              "virtual": false,
+              "visibility": "external"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "text": "@notice Let user to calculate policy cost in DAI, access: ANY\n @param _durationSeconds is number of seconds to cover\n @param _tokens is number of tokens to cover\n @return _daiTokens is amount of DAI policy costs"
+                },
+                "id": 3021,
+                "name": "StructuredDocumentation",
+                "src": "4400:230:9"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "mutability": "mutable",
+                      "name": "_durationSeconds",
+                      "scope": 3030,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 3022,
+                        "name": "ElementaryTypeName",
+                        "src": "4651:7:9"
+                      }
+                    ],
+                    "id": 3023,
+                    "name": "VariableDeclaration",
+                    "src": "4651:24:9"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "mutability": "mutable",
+                      "name": "_tokens",
+                      "scope": 3030,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 3024,
+                        "name": "ElementaryTypeName",
+                        "src": "4677:7:9"
+                      }
+                    ],
+                    "id": 3025,
+                    "name": "VariableDeclaration",
+                    "src": "4677:15:9"
+                  }
+                ],
+                "id": 3026,
+                "name": "ParameterList",
+                "src": "4650:43:9"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "mutability": "mutable",
+                      "name": "_daiTokens",
+                      "scope": 3030,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 3027,
+                        "name": "ElementaryTypeName",
+                        "src": "4717:7:9"
+                      }
+                    ],
+                    "id": 3028,
+                    "name": "VariableDeclaration",
+                    "src": "4717:18:9"
+                  }
+                ],
+                "id": 3029,
+                "name": "ParameterList",
+                "src": "4716:20:9"
+              }
+            ],
+            "id": 3030,
+            "name": "FunctionDefinition",
+            "src": "4633:104:9"
+          },
+          {
+            "attributes": {
+              "functionSelector": "c18c6057",
+              "implemented": false,
+              "isConstructor": false,
+              "kind": "function",
+              "modifiers": [
+                null
+              ],
+              "name": "rewardForUnclaimedExpiredPolicy",
+              "scope": 3051,
+              "stateMutability": "nonpayable",
+              "virtual": false,
+              "visibility": "external"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "text": "@notice Let user to claim rewards for unclaimed policy cost in DAI, access: ANY\n @param _policyId is id of policy to get reward for, reward will be sent to policy holder"
+                },
+                "id": 3031,
+                "name": "StructuredDocumentation",
+                "src": "4741:178:9"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "mutability": "mutable",
+                      "name": "_policyId",
+                      "scope": 3036,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 3032,
+                        "name": "ElementaryTypeName",
+                        "src": "4963:7:9"
+                      }
+                    ],
+                    "id": 3033,
+                    "name": "VariableDeclaration",
+                    "src": "4963:17:9"
+                  }
+                ],
+                "id": 3034,
+                "name": "ParameterList",
+                "src": "4962:19:9"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 3035,
+                "name": "ParameterList",
+                "src": "4990:0:9"
+              }
+            ],
+            "id": 3036,
+            "name": "FunctionDefinition",
+            "src": "4922:69:9"
+          },
+          {
+            "attributes": {
+              "functionSelector": "d80528ae",
+              "implemented": false,
+              "isConstructor": false,
+              "kind": "function",
+              "modifiers": [
+                null
+              ],
+              "name": "stats",
+              "scope": 3051,
+              "stateMutability": "view",
+              "virtual": false,
+              "visibility": "external"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "text": "@notice Getting stats, access: ANY\n @return _name is the name of PolicyBook\n @return _contractType is a type of insured contract\n @return _maxCapacities is a max token amount that a user can buy\n @return _totalDaiLiquidity is PolicyBook's liquidity\n @return _annualProfitYields is its APY"
+                },
+                "id": 3037,
+                "name": "StructuredDocumentation",
+                "src": "4995:317:9"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 3038,
+                "name": "ParameterList",
+                "src": "5329:2:9"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "mutability": "mutable",
+                      "name": "_name",
+                      "scope": 3050,
+                      "stateVariable": false,
+                      "storageLocation": "memory",
+                      "type": "string",
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "string",
+                          "type": "string"
+                        },
+                        "id": 3039,
+                        "name": "ElementaryTypeName",
+                        "src": "5374:6:9"
+                      }
+                    ],
+                    "id": 3040,
+                    "name": "VariableDeclaration",
+                    "src": "5374:19:9"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "mutability": "mutable",
+                      "name": "_contractType",
+                      "scope": 3050,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "enum IPolicyBookFabric.ContractType",
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "IPolicyBookFabric.ContractType",
+                          "referencedDeclaration": 3058,
+                          "type": "enum IPolicyBookFabric.ContractType"
+                        },
+                        "id": 3041,
+                        "name": "UserDefinedTypeName",
+                        "src": "5401:30:9"
+                      }
+                    ],
+                    "id": 3042,
+                    "name": "VariableDeclaration",
+                    "src": "5401:44:9"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "mutability": "mutable",
+                      "name": "_maxCapacities",
+                      "scope": 3050,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 3043,
+                        "name": "ElementaryTypeName",
+                        "src": "5453:7:9"
+                      }
+                    ],
+                    "id": 3044,
+                    "name": "VariableDeclaration",
+                    "src": "5453:22:9"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "mutability": "mutable",
+                      "name": "_totalDaiLiquidity",
+                      "scope": 3050,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 3045,
+                        "name": "ElementaryTypeName",
+                        "src": "5483:7:9"
+                      }
+                    ],
+                    "id": 3046,
+                    "name": "VariableDeclaration",
+                    "src": "5483:26:9"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "mutability": "mutable",
+                      "name": "_annualProfitYields",
+                      "scope": 3050,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 3047,
+                        "name": "ElementaryTypeName",
+                        "src": "5517:7:9"
+                      }
+                    ],
+                    "id": 3048,
+                    "name": "VariableDeclaration",
+                    "src": "5517:27:9"
+                  }
+                ],
+                "id": 3049,
+                "name": "ParameterList",
                 "src": "5366:184:9"
               }
             ],
-            "id": 2979,
+            "id": 3050,
             "name": "FunctionDefinition",
             "src": "5315:236:9"
           }
         ],
-        "id": 2980,
+        "id": 3051,
         "name": "ContractDefinition",
         "src": "126:5427:9"
       }
     ],
-    "id": 2981,
+    "id": 3052,
     "name": "SourceUnit",
     "src": "32:5522:9"
   },
@@ -3489,7 +3489,7 @@
   },
   "networks": {},
   "schemaVersion": "3.3.3",
-  "updatedAt": "2021-01-26T15:28:29.603Z",
+  "updatedAt": "2021-01-27T14:17:24.019Z",
   "devdoc": {
     "kind": "dev",
     "methods": {
