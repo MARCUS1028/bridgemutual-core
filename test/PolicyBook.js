@@ -1,7 +1,10 @@
+const PolicyBookMock = artifacts.require('./mock/PolicyBookMock');
+const DAIMock = artifacts.require('./mock/DAIMock');
+const BMIToken = artifacts.require('BMIToken.sol');
+const ContractsRegistry = artifacts.require('ContractsRegistry');
+const BMIDAIStaking = artifacts.require('BMIDAIStaking');
+const LiquidityMiningNFT = artifacts.require('LiquidityMiningNFT.sol');
 const LiquidityMining = artifacts.require('LiquidityMining.sol');
-const ContractsRegistry = artifacts.require('ContractsRegistry.sol');
-const PolicyBook = artifacts.require('./Mock/MockPolicyBook');
-const DAI = artifacts.require('./Mock/DAIMock');
 
 const Reverter = require('./helpers/reverter');
 const BigNumber = require('bignumber.js');
@@ -18,24 +21,39 @@ const ContractType = {
 contract('PolicyBook', async (accounts) => {
   const reverter = new Reverter(web3);
 
-  let liquidityMining;
-  let registry;
-  let policyBook;
+  let contractsRegistry;
+  let bmiDaiStaking;
+  let policyBookMock;
+  let liquidityMining;  
   let dai;
 
-  const BOOK = accounts[0];
+  const insuranceContract = accounts[0];
   const USER1 = accounts[1];
-  const USER2 = accounts[2];
+  const USER2 = accounts[2];  
 
   before('setup', async () => {
-    dai = await DAI.new('dai', 'dai');
-    registry = await ContractsRegistry.new();
+    const bmiToken = await BMIToken.new(USER1);
+    const liquidityMiningNFT = await LiquidityMiningNFT.new("");
+    contractsRegistry = await ContractsRegistry.new();    
+    dai = await DAIMock.new('dai', 'dai');
+    bmiDaiStaking = await BMIDAIStaking.new();
+    liquidityMining = await LiquidityMining.new();
 
-    liquidityMining = await LiquidityMining.new(registry.address);
-    policyBook = await PolicyBook.new(BOOK, ContractType.CONTRACT, registry.address);
+    await contractsRegistry.addContractRegistry(
+      (await contractsRegistry.getLiquidityMiningNFTName.call()), liquidityMiningNFT.address);
+    await contractsRegistry.addContractRegistry(
+      (await contractsRegistry.getLiquidityMiningName.call()), liquidityMining.address);
+    await contractsRegistry.addContractRegistry(
+      (await contractsRegistry.getDAIName.call()), dai.address);
+    await contractsRegistry.addContractRegistry(
+      (await contractsRegistry.getBMIName.call()), bmiToken.address);
+    await contractsRegistry.addContractRegistry(
+      (await contractsRegistry.getBMIDAIStakingName.call()), bmiDaiStaking.address);
 
-    await registry.addContractRegistry('DAI', dai.address);
-    await registry.addContractRegistry('LIQUIDITY_MINING', liquidityMining.address);
+    liquidityMining.initRegistry(contractsRegistry.address);
+
+    policyBookMock = await PolicyBookMock.new(insuranceContract, ContractType.CONTRACT);
+    await policyBookMock.initRegistry(contractsRegistry.address);    
 
     await reverter.snapshot();
   });
@@ -47,60 +65,61 @@ contract('PolicyBook', async (accounts) => {
     const liquidityAmount = toBN(5000);
     const durationSeconds = toBN(100).times(24).times(60).times(60);
     const coverTokensAmount = toBN(1000);
-    const maxDaiTokens = toBN(500);
     let price;
 
     beforeEach('setup', async () => {
       await dai.transfer(USER1, daiAmount);
-      await dai.approve(policyBook.address, daiAmount, {from: USER1});
+      await dai.approve(policyBookMock.address, daiAmount, {from: USER1});
 
       await dai.transfer(USER2, daiAmount);
-      await dai.approve(policyBook.address, daiAmount, {from: USER2});
+      await dai.approve(policyBookMock.address, daiAmount, {from: USER2});
 
       await setCurrentTime(1);
-      await policyBook.addLiquidity(liquidityAmount, {from: USER1});
-      assert.equal(await policyBook.totalLiquidity(), liquidityAmount.toString());
-      assert.equal(await dai.balanceOf(policyBook.address), liquidityAmount.toString());
+      await policyBookMock.addLiquidity(liquidityAmount, {from: USER1});
+      assert.equal(await policyBookMock.totalLiquidity(), liquidityAmount.toString());
+      assert.equal(await dai.balanceOf(policyBookMock.address), liquidityAmount.toString());
       assert.equal(await dai.balanceOf(USER1), daiAmount.minus(liquidityAmount).toString());
-      price = toBN(await policyBook.getQuote(durationSeconds, coverTokensAmount));
+      price = toBN(await policyBookMock.getQuote(durationSeconds, coverTokensAmount));
     });
 
     it('should set correct values', async () => {
-      await policyBook.buyPolicy(durationSeconds, coverTokensAmount, maxDaiTokens, {from: USER2});
+      await policyBookMock.buyPolicy(durationSeconds, coverTokensAmount, {from: USER2});
 
-      assert.equal(await policyBook.totalCoverTokens(), coverTokensAmount.toString());
+      assert.equal(await policyBookMock.totalCoverTokens(), coverTokensAmount.toString());
 
-      const policyHolder = await policyBook.policyHolders(USER2);
+      const policyHolder = await policyBookMock.policyHolders(USER2);
       assert.equal(policyHolder.coverTokens, coverTokensAmount.toString());
       assert.equal(policyHolder.durationSeconds, durationSeconds.toString());
-      assert.equal(policyHolder.maxDaiTokens, maxDaiTokens.toString());
 
-      assert.equal(toBN(await dai.balanceOf(policyBook.address)).toString(), liquidityAmount.plus(price).toString());
-      assert.equal(await dai.balanceOf(USER2), daiAmount.minus(price).toString());
+      assert.equal(toBN(await dai.balanceOf(policyBookMock.address)).toString(),
+        liquidityAmount.plus(price).toString());
+      assert.equal(await dai.balanceOf(USER2),
+        daiAmount.minus(price).toString());
     });
 
     it('should get exception, policy holder already exists', async () => {
-      await policyBook.buyPolicy(durationSeconds, coverTokensAmount, maxDaiTokens, {from: USER2});
+      await policyBookMock.buyPolicy(durationSeconds, coverTokensAmount, {from: USER2});
 
-      assert.equal(await policyBook.totalCoverTokens(), coverTokensAmount.toString());
+      assert.equal(await policyBookMock.totalCoverTokens(), coverTokensAmount.toString());
 
-      const policyHolder = await policyBook.policyHolders(USER2);
+      const policyHolder = await policyBookMock.policyHolders(USER2);
       assert.equal(policyHolder.coverTokens, coverTokensAmount.toString());
       assert.equal(policyHolder.durationSeconds, durationSeconds.toString());
-      assert.equal(policyHolder.maxDaiTokens, maxDaiTokens.toString());
 
-      assert.equal(toBN(await dai.balanceOf(policyBook.address)).toString(), liquidityAmount.plus(price).toString());
-      assert.equal(await dai.balanceOf(USER2), daiAmount.minus(price).toString());
+      assert.equal(toBN(await dai.balanceOf(policyBookMock.address)).toString(),
+        liquidityAmount.plus(price).toString());
+      assert.equal(await dai.balanceOf(USER2),
+        daiAmount.minus(price).toString());
 
       const reason = 'The policy holder already exists';
-      await truffleAssert.reverts(policyBook.buyPolicy(durationSeconds, coverTokensAmount, maxDaiTokens, {from: USER2}),
+      await truffleAssert.reverts(policyBookMock.buyPolicy(durationSeconds, coverTokensAmount, {from: USER2}),
         reason);
     });
 
     it('should get exception, not enough available liquidity', async () => {
       const reason = 'Not enough available liquidity';
-      await truffleAssert.reverts(policyBook
-      .buyPolicy(durationSeconds, coverTokensAmount.times(10), maxDaiTokens, {from: USER2}), reason);
+      await truffleAssert.reverts(policyBookMock
+      .buyPolicy(durationSeconds, coverTokensAmount.times(10), {from: USER2}), reason);
     });
   });
 
@@ -109,60 +128,61 @@ contract('PolicyBook', async (accounts) => {
     const liquidityAmount = toBN(5000);
     const durationSeconds = toBN(100).times(24).times(60).times(60);
     const coverTokensAmount = toBN(1000);
-    const maxDaiTokens = toBN(500);
     let price;
 
     beforeEach('setup', async () => {
       await dai.transfer(USER1, daiAmount);
-      await dai.approve(policyBook.address, daiAmount, {from: USER1});
+      await dai.approve(policyBookMock.address, daiAmount, {from: USER1});
 
       await dai.transfer(USER2, daiAmount);
-      await dai.approve(policyBook.address, daiAmount, {from: USER2});
+      await dai.approve(policyBookMock.address, daiAmount, {from: USER2});
 
       await setCurrentTime(1);
-      await policyBook.addLiquidity(liquidityAmount, {from: USER1});
-      assert.equal(await policyBook.totalLiquidity(), liquidityAmount.toString());
-      assert.equal(await dai.balanceOf(policyBook.address), liquidityAmount.toString());
+      await policyBookMock.addLiquidity(liquidityAmount, {from: USER1});
+      assert.equal(await policyBookMock.totalLiquidity(), liquidityAmount.toString());
+      assert.equal(await dai.balanceOf(policyBookMock.address), liquidityAmount.toString());
       assert.equal(await dai.balanceOf(USER1), daiAmount.minus(liquidityAmount).toString());
-      price = toBN(await policyBook.getQuote(durationSeconds, coverTokensAmount));
+      price = toBN(await policyBookMock.getQuote(durationSeconds, coverTokensAmount));
     });
 
     it('should set correct values', async () => {
-      await policyBook.buyPolicyFor(USER2, durationSeconds, coverTokensAmount, maxDaiTokens);
+      await policyBookMock.buyPolicyFor(USER2, durationSeconds, coverTokensAmount);
 
-      assert.equal(await policyBook.totalCoverTokens(), coverTokensAmount.toString());
+      assert.equal(await policyBookMock.totalCoverTokens(), coverTokensAmount.toString());
 
-      const policyHolder = await policyBook.policyHolders(USER2);
+      const policyHolder = await policyBookMock.policyHolders(USER2);
       assert.equal(policyHolder.coverTokens, coverTokensAmount.toString());
       assert.equal(policyHolder.durationSeconds, durationSeconds.toString());
-      assert.equal(policyHolder.maxDaiTokens, maxDaiTokens.toString());
 
-      assert.equal(toBN(await dai.balanceOf(policyBook.address)).toString(), liquidityAmount.plus(price).toString());
-      assert.equal(await dai.balanceOf(USER2), daiAmount.minus(price).toString());
+      assert.equal(toBN(await dai.balanceOf(policyBookMock.address)).toString(),
+        liquidityAmount.plus(price).toString());
+      assert.equal(await dai.balanceOf(USER2),
+        daiAmount.minus(price).toString());
     });
 
     it('should get exception, policy holder already exists', async () => {
-      await policyBook.buyPolicyFor(USER2, durationSeconds, coverTokensAmount, maxDaiTokens);
+      await policyBookMock.buyPolicyFor(USER2, durationSeconds, coverTokensAmount);
 
-      assert.equal(await policyBook.totalCoverTokens(), coverTokensAmount.toString());
+      assert.equal(await policyBookMock.totalCoverTokens(), coverTokensAmount.toString());
 
-      const policyHolder = await policyBook.policyHolders(USER2);
+      const policyHolder = await policyBookMock.policyHolders(USER2);
       assert.equal(policyHolder.coverTokens, coverTokensAmount.toString());
       assert.equal(policyHolder.durationSeconds, durationSeconds.toString());
-      assert.equal(policyHolder.maxDaiTokens, maxDaiTokens.toString());
 
-      assert.equal(toBN(await dai.balanceOf(policyBook.address)).toString(), liquidityAmount.plus(price).toString());
-      assert.equal(await dai.balanceOf(USER2), daiAmount.minus(price).toString());
+      assert.equal(toBN(await dai.balanceOf(policyBookMock.address)).toString(),
+        liquidityAmount.plus(price).toString());
+      assert.equal(await dai.balanceOf(USER2),
+        daiAmount.minus(price).toString());
 
       const reason = 'The policy holder already exists';
-      await truffleAssert.reverts(policyBook.buyPolicyFor(USER2, durationSeconds, coverTokensAmount, maxDaiTokens),
+      await truffleAssert.reverts(policyBookMock.buyPolicyFor(USER2, durationSeconds, coverTokensAmount),
         reason);
     });
 
     it('should get exception, not enough available liquidity', async () => {
       const reason = 'Not enough available liquidity';
-      await truffleAssert.reverts(policyBook
-      .buyPolicyFor(USER2, durationSeconds, coverTokensAmount.times(10), maxDaiTokens), reason);
+      await truffleAssert.reverts(policyBookMock
+      .buyPolicyFor(USER2, durationSeconds, coverTokensAmount.times(10)), reason);
     });
   });
 
@@ -172,34 +192,34 @@ contract('PolicyBook', async (accounts) => {
 
     beforeEach('setup', async () => {
       await dai.transfer(USER1, daiAmount);
-      await dai.approve(policyBook.address, daiAmount, {from: USER1});
+      await dai.approve(policyBookMock.address, daiAmount, {from: USER1});
     });
 
     it('should set correct values', async () => {
       await setCurrentTime(1);
-      await policyBook.addLiquidity(amount, {from: USER1});
+      await policyBookMock.addLiquidity(amount, {from: USER1});
 
-      assert.equal(await policyBook.totalLiquidity(), amount.toString());
-      assert.equal(await policyBook.balanceOf(USER1), amount.toString());
-      assert.equal(await dai.balanceOf(policyBook.address), amount.toString());
+      assert.equal(await policyBookMock.totalLiquidity(), amount.toString());
+      assert.equal(await policyBookMock.balanceOf(USER1), amount.toString());
+      assert.equal(await dai.balanceOf(policyBookMock.address), amount.toString());
       assert.equal(await dai.balanceOf(USER1), daiAmount.minus(amount).toString());
     });
 
     it('should update the values correctly', async () => {
       await setCurrentTime(1);
-      await policyBook.addLiquidity(amount, {from: USER1});
+      await policyBookMock.addLiquidity(amount, {from: USER1});
 
-      assert.equal(await policyBook.totalLiquidity(), amount.toString());
-      assert.equal(await policyBook.balanceOf(USER1), amount.toString());
-      assert.equal(await dai.balanceOf(policyBook.address), amount.toString());
+      assert.equal(await policyBookMock.totalLiquidity(), amount.toString());
+      assert.equal(await policyBookMock.balanceOf(USER1), amount.toString());
+      assert.equal(await dai.balanceOf(policyBookMock.address), amount.toString());
       assert.equal(await dai.balanceOf(USER1), daiAmount.minus(amount).toString());
 
       await setCurrentTime(100);
-      await policyBook.addLiquidity(amount, {from: USER1});
+      await policyBookMock.addLiquidity(amount, {from: USER1});
 
-      assert.equal(await policyBook.totalLiquidity(), amount.times(2).toString());
-      assert.equal(await policyBook.balanceOf(USER1), amount.times(2).toString());
-      assert.equal(await dai.balanceOf(policyBook.address), amount.times(2).toString());
+      assert.equal(await policyBookMock.totalLiquidity(), amount.times(2).toString());
+      assert.equal(await policyBookMock.balanceOf(USER1), amount.times(2).toString());
+      assert.equal(await dai.balanceOf(policyBookMock.address), amount.times(2).toString());
       assert.equal(await dai.balanceOf(USER1), daiAmount.minus(amount.times(2)).toString());
     });
   });
@@ -210,34 +230,34 @@ contract('PolicyBook', async (accounts) => {
 
     beforeEach('setup', async () => {
       await dai.transfer(USER1, daiAmount);
-      await dai.approve(policyBook.address, daiAmount, {from: USER1});
+      await dai.approve(policyBookMock.address, daiAmount, {from: USER1});
     });
 
     it('should set correct values', async () => {
       await setCurrentTime(1);
-      await policyBook.addLiquidityFor(USER1, amount);
+      await policyBookMock.addLiquidityFor(USER1, amount);
 
-      assert.equal(await policyBook.totalLiquidity(), amount.toString());
-      assert.equal(await policyBook.balanceOf(USER1), amount.toString());
-      assert.equal(await dai.balanceOf(policyBook.address), amount.toString());
+      assert.equal(await policyBookMock.totalLiquidity(), amount.toString());
+      assert.equal(await policyBookMock.balanceOf(USER1), amount.toString());
+      assert.equal(await dai.balanceOf(policyBookMock.address), amount.toString());
       assert.equal(await dai.balanceOf(USER1), daiAmount.minus(amount).toString());
     });
 
     it('should update the values correctly', async () => {
       await setCurrentTime(1);
-      await policyBook.addLiquidityFor(USER1, amount);
+      await policyBookMock.addLiquidityFor(USER1, amount);
 
-      assert.equal(await policyBook.totalLiquidity(), amount.toString());
-      assert.equal(await policyBook.balanceOf(USER1), amount.toString());
-      assert.equal(await dai.balanceOf(policyBook.address), amount.toString());
+      assert.equal(await policyBookMock.totalLiquidity(), amount.toString());
+      assert.equal(await policyBookMock.balanceOf(USER1), amount.toString());
+      assert.equal(await dai.balanceOf(policyBookMock.address), amount.toString());
       assert.equal(await dai.balanceOf(USER1), daiAmount.minus(amount).toString());
 
       await setCurrentTime(100);
-      await policyBook.addLiquidityFor(USER1, amount);
+      await policyBookMock.addLiquidityFor(USER1, amount);
 
-      assert.equal(await policyBook.totalLiquidity(), amount.times(2).toString());
-      assert.equal(await policyBook.balanceOf(USER1), amount.times(2).toString());
-      assert.equal(await dai.balanceOf(policyBook.address), amount.times(2).toString());
+      assert.equal(await policyBookMock.totalLiquidity(), amount.times(2).toString());
+      assert.equal(await policyBookMock.balanceOf(USER1), amount.times(2).toString());
+      assert.equal(await dai.balanceOf(policyBookMock.address), amount.times(2).toString());
       assert.equal(await dai.balanceOf(USER1), daiAmount.minus(amount.times(2)).toString());
     });
   });
@@ -252,34 +272,34 @@ contract('PolicyBook', async (accounts) => {
 
     beforeEach('setup', async () => {
       await dai.transfer(USER1, daiAmount);
-      await dai.approve(policyBook.address, daiAmount, {from: USER1});
+      await dai.approve(policyBookMock.address, daiAmount, {from: USER1});
 
       await dai.transfer(USER2, daiAmount);
-      await dai.approve(policyBook.address, daiAmount, {from: USER2});
+      await dai.approve(policyBookMock.address, daiAmount, {from: USER2});
     });
 
     it('should successfully withdraw tokens', async () => {
       await setCurrentTime(1);
-      await policyBook.addLiquidity(liquidityAmount, {from: USER1});
-      assert.equal(await policyBook.totalLiquidity(), liquidityAmount.toString());
+      await policyBookMock.addLiquidity(liquidityAmount, {from: USER1});
+      assert.equal(await policyBookMock.totalLiquidity(), liquidityAmount.toString());
 
-      price = toBN(await policyBook.getQuote(durationSeconds, coverTokensAmount));
+      price = toBN(await policyBookMock.getQuote(durationSeconds, coverTokensAmount));
 
-      await policyBook.buyPolicy(durationSeconds, coverTokensAmount, 10, {from: USER2});
-      assert.equal(await policyBook.totalCoverTokens(), coverTokensAmount.toString());
+      await policyBookMock.buyPolicy(durationSeconds, coverTokensAmount, {from: USER2});
+      assert.equal(await policyBookMock.totalCoverTokens(), coverTokensAmount.toString());
 
-      assert.equal(await dai.balanceOf(policyBook.address), liquidityAmount.plus(price).toString());
+      assert.equal(await dai.balanceOf(policyBookMock.address), liquidityAmount.plus(price).toString());
       assert.equal(await dai.balanceOf(USER1), daiAmount.minus(liquidityAmount).toString());
 
       await setCurrentTime(10);
-      await policyBook.withdrawLiquidity(amountToWithdraw, {from: USER1});
-      assert.equal(toBN(await policyBook.totalLiquidity()).toString(),
+      await policyBookMock.withdrawLiquidity(amountToWithdraw, {from: USER1});
+      assert.equal(toBN(await policyBookMock.totalLiquidity()).toString(),
         liquidityAmount.minus(amountToWithdraw).toString());
 
-      assert.equal(await policyBook.balanceOf(USER1),
+      assert.equal(await policyBookMock.balanceOf(USER1),
         liquidityAmount.minus(amountToWithdraw).toString());
 
-      assert.equal(await dai.balanceOf(policyBook.address),
+      assert.equal(await dai.balanceOf(policyBookMock.address),
         liquidityAmount.plus(price).minus(amountToWithdraw).toString());
       assert.equal(await dai.balanceOf(USER1),
         daiAmount.minus(liquidityAmount).plus(amountToWithdraw).toString());
@@ -287,70 +307,70 @@ contract('PolicyBook', async (accounts) => {
 
     it('should successfully withdraw tokens that 2 weeks has expire', async () => {
       await setCurrentTime(1);
-      await policyBook.addLiquidity(liquidityAmount, {from: USER1});
-      await liquidityMining.investDAI(0, liquidityAmount.div(2), policyBook.address, {from: USER1});
+      await policyBookMock.addLiquidity(liquidityAmount, {from: USER1});
+      await liquidityMining.investDAI(0, liquidityAmount.div(2), policyBookMock.address, {from: USER1});
       const totalLiquidity = toBN(7500);
 
-      assert.equal(toBN(await policyBook.totalLiquidity()).toString(), totalLiquidity.toString());
+      assert.equal(toBN(await policyBookMock.totalLiquidity()).toString(), totalLiquidity.toString());
 
       await setCurrentTime(toBN(await liquidityMining.getEndLMTime()).plus(10));
 
       const amountToWithdraw = liquidityAmount.plus(1000);
-      await policyBook.withdrawLiquidity(amountToWithdraw, {from: USER1});
+      await policyBookMock.withdrawLiquidity(amountToWithdraw, {from: USER1});
 
-      assert.equal(toBN(await policyBook.totalLiquidity()).toString(),
+      assert.equal(toBN(await policyBookMock.totalLiquidity()).toString(),
         totalLiquidity.minus(amountToWithdraw).toString());
 
-      assert.equal(toBN(await policyBook.balanceOf(USER1)).toString(),
+      assert.equal(toBN(await policyBookMock.balanceOf(USER1)).toString(),
         totalLiquidity.minus(amountToWithdraw).toString());
 
       assert.equal(toBN(await dai.balanceOf(USER1)).toString(),
         daiAmount.minus(totalLiquidity.minus(amountToWithdraw)).toString());
     });
 
-    it('should get exception, amount to be withdrawn is greater than the deposited amount', async () => {
+    it('should get exception, amount to be withdrawn is greater than the available amount', async () => {
       await setCurrentTime(1);
-      await policyBook.addLiquidity(liquidityAmount, {from: USER1});
-      await policyBook.addLiquidity(liquidityAmount, {from: USER2});
-      assert.equal(toBN(await policyBook.totalLiquidity()).toString(), liquidityAmount.times(2).toString());
+      await policyBookMock.addLiquidity(liquidityAmount, {from: USER1});
+      await policyBookMock.addLiquidity(liquidityAmount, {from: USER2});
+      assert.equal(toBN(await policyBookMock.totalLiquidity()).toString(), liquidityAmount.times(2).toString());
 
       const reason = 'The amount to be withdrawn is greater than the available amount';
-      await truffleAssert.reverts(policyBook.withdrawLiquidity(liquidityAmount.plus(1), {from: USER1}), reason);
+      await truffleAssert.reverts(policyBookMock.withdrawLiquidity(liquidityAmount.plus(1), {from: USER1}), reason);
     });
 
     it('should get exception, amount to be withdrawn is greater than the deposited amount and 2 weeks has not expire', async () => {
       await setCurrentTime(1);
-      await policyBook.addLiquidity(liquidityAmount, {from: USER1});
-      await liquidityMining.investDAI(0, liquidityAmount.div(2), policyBook.address, {from: USER1});
-      await policyBook.addLiquidity(liquidityAmount, {from: USER2});
-      assert.equal(toBN(await policyBook.totalLiquidity()).toString(), toBN(12500).toString());
+      await policyBookMock.addLiquidity(liquidityAmount, {from: USER1});
+      await liquidityMining.investDAI(0, liquidityAmount.div(2), policyBookMock.address, {from: USER1});
+      await policyBookMock.addLiquidity(liquidityAmount, {from: USER2});
+      assert.equal(toBN(await policyBookMock.totalLiquidity()).toString(), toBN(12500).toString());
 
       const reason = 'The amount to be withdrawn is greater than the available amount';
-      await truffleAssert.reverts(policyBook.withdrawLiquidity(liquidityAmount.plus(1), {from: USER1}), reason);
+      await truffleAssert.reverts(policyBookMock.withdrawLiquidity(liquidityAmount.plus(1), {from: USER1}), reason);
     });
 
     it('should get exception, not enough available liquidity', async () => {
       await setCurrentTime(1);
-      await policyBook.addLiquidity(liquidityAmount, {from: USER1});
-      assert.equal(toBN(await policyBook.totalLiquidity()).toString(), liquidityAmount.toString());
+      await policyBookMock.addLiquidity(liquidityAmount, {from: USER1});
+      assert.equal(toBN(await policyBookMock.totalLiquidity()).toString(), liquidityAmount.toString());
 
-      await policyBook.buyPolicy(1, coverTokensAmount, 10, {from: USER2});
-      assert.equal(toBN(await policyBook.totalCoverTokens()).toString(), coverTokensAmount.toString());
+      await policyBookMock.buyPolicy(1, coverTokensAmount, {from: USER2});
+      assert.equal(toBN(await policyBookMock.totalCoverTokens()).toString(), coverTokensAmount.toString());
 
-      const reason = 'Not enough available liquidity';
-      await truffleAssert.reverts(policyBook.withdrawLiquidity(amountToWithdraw.times(3), {from: USER1}), reason);
+      const reason = 'Not enough liquidity available';
+      await truffleAssert.reverts(policyBookMock.withdrawLiquidity(amountToWithdraw.times(3), {from: USER1}), reason);
     });
 
     it('should be allowed to withdraw liquidity after token transfer', async () => {
-      await policyBook.addLiquidity(liquidityAmount, {from: USER1});
-      const bmiDaibalance = await policyBook.balanceOf(USER1);
-      await policyBook.transfer(USER2, bmiDaibalance, {from: USER1});
-      await policyBook.withdrawLiquidity(bmiDaibalance, {from: USER2});
+      await policyBookMock.addLiquidity(liquidityAmount, {from: USER1});
+      const bmiDaibalance = await policyBookMock.balanceOf(USER1);
+      await policyBookMock.transfer(USER2, bmiDaibalance, {from: USER1});
+      await policyBookMock.withdrawLiquidity(bmiDaibalance, {from: USER2});
 
-      assert.equal(await dai.balanceOf(policyBook.address), toBN(0).toString());
+      assert.equal(await dai.balanceOf(policyBookMock.address), toBN(0).toString());
       assert.equal(await dai.balanceOf(USER1), daiAmount.minus(liquidityAmount).toString());
       assert.equal(await dai.balanceOf(USER2), daiAmount.plus(liquidityAmount).toString());
-      assert.equal(await policyBook.totalSupply(), toBN(0).toString());
+      assert.equal(await policyBookMock.totalSupply(), toBN(0).toString());
     });
   });
 
@@ -366,10 +386,10 @@ contract('PolicyBook', async (accounts) => {
       total = 10000000; // 10mil
       bought = 5000000; // 5mil
 
-      await policyBook.setTotalLiquidity(total);
-      await policyBook.setTotalCoverTokens(bought);
+      await policyBookMock.setTotalLiquidity(total);
+      await policyBookMock.setTotalCoverTokens(bought);
 
-      const calculatedPrice = toBN(await policyBook.getQuote(seconds, myMoney));
+      const calculatedPrice = toBN(await policyBookMock.getQuote(seconds, myMoney));
 
       assert.equal(calculatedPrice.toString(), toBN(21857).toString(), 'UR < RISKY case is incorrect');
     });
@@ -380,10 +400,10 @@ contract('PolicyBook', async (accounts) => {
       total = 10000000; // 10mil
       bought = 5000000; // 5mil
 
-      await policyBook.setTotalLiquidity(total);
-      await policyBook.setTotalCoverTokens(bought);
+      await policyBookMock.setTotalLiquidity(total);
+      await policyBookMock.setTotalCoverTokens(bought);
 
-      const calculatedPrice = toBN(await policyBook.getQuote(seconds, myMoney));
+      const calculatedPrice = toBN(await policyBookMock.getQuote(seconds, myMoney));
 
       assert.equal(calculatedPrice.toString(), toBN(4399999), 'UR > RISKY case is incorrect');
     });
@@ -394,10 +414,10 @@ contract('PolicyBook', async (accounts) => {
       total = 10000000; // 10mil
       bought = 500000; // 500k
 
-      await policyBook.setTotalLiquidity(total);
-      await policyBook.setTotalCoverTokens(bought);
+      await policyBookMock.setTotalLiquidity(total);
+      await policyBookMock.setTotalCoverTokens(bought);
 
-      const calculatedPrice = toBN(await policyBook.getQuote(seconds, myMoney));
+      const calculatedPrice = toBN(await policyBookMock.getQuote(seconds, myMoney));
 
       assert.equal(calculatedPrice.toString(), toBN(5000), 'UR < RISKY case is incorrect');
     });
@@ -408,10 +428,10 @@ contract('PolicyBook', async (accounts) => {
       total = 10000000; // 10mil
       bought = 5000000; // 5mil
 
-      await policyBook.setTotalLiquidity(total);
-      await policyBook.setTotalCoverTokens(bought);
+      await policyBookMock.setTotalLiquidity(total);
+      await policyBookMock.setTotalCoverTokens(bought);
 
-      const calculatedPrice = toBN(await policyBook.getQuote(seconds, myMoney));
+      const calculatedPrice = toBN(await policyBookMock.getQuote(seconds, myMoney));
       const expectedPrice = toBN(21857).times(seconds).idiv(365 * 24 * 60 * 60);
       assert.equal(calculatedPrice.toString(), expectedPrice.toString(), 'UR < RISKY case is incorrect');
     });
@@ -422,10 +442,10 @@ contract('PolicyBook', async (accounts) => {
       total = 10000000; // 10mil
       bought = 5000000; // 5mil
 
-      await policyBook.setTotalLiquidity(total);
-      await policyBook.setTotalCoverTokens(bought);
+      await policyBookMock.setTotalLiquidity(total);
+      await policyBookMock.setTotalCoverTokens(bought);
 
-      const calculatedPrice = toBN(await policyBook.getQuote(seconds, myMoney));
+      const calculatedPrice = toBN(await policyBookMock.getQuote(seconds, myMoney));
       const expectedPrice = toBN(21857).times(seconds).idiv(365 * 24 * 60 * 60);
       assert.equal(calculatedPrice.toString(), expectedPrice.toString(), 'UR < RISKY case is incorrect');
     });
@@ -436,10 +456,10 @@ contract('PolicyBook', async (accounts) => {
       total = 10000000; // 10mil
       bought = 5000000; // 5mil
 
-      await policyBook.setTotalLiquidity(total);
-      await policyBook.setTotalCoverTokens(bought);
+      await policyBookMock.setTotalLiquidity(total);
+      await policyBookMock.setTotalCoverTokens(bought);
 
-      const calculatedPrice = toBN(await policyBook.getQuote(seconds, myMoney));
+      const calculatedPrice = toBN(await policyBookMock.getQuote(seconds, myMoney));
       const expectedPrice = toBN(21857).times(seconds).idiv(365 * 24 * 60 * 60);
       assert.equal(calculatedPrice.toString(), expectedPrice.toString(), 'UR < RISKY case is incorrect');
     });
@@ -450,10 +470,10 @@ contract('PolicyBook', async (accounts) => {
       total = 10000000; // 10mil
       bought = 5000000; // 5mil
 
-      await policyBook.setTotalLiquidity(total);
-      await policyBook.setTotalCoverTokens(bought);
+      await policyBookMock.setTotalLiquidity(total);
+      await policyBookMock.setTotalCoverTokens(bought);
 
-      const calculatedPrice = toBN(await policyBook.getQuote(seconds, myMoney));
+      const calculatedPrice = toBN(await policyBookMock.getQuote(seconds, myMoney));
       assert.equal(calculatedPrice.toString(), 0, 'No matter what it should equal to 0');
     });
 
@@ -463,10 +483,10 @@ contract('PolicyBook', async (accounts) => {
       total = 10000000; // 10mil
       bought = 0; // 0
 
-      await policyBook.setTotalLiquidity(total);
-      await policyBook.setTotalCoverTokens(bought);
+      await policyBookMock.setTotalLiquidity(total);
+      await policyBookMock.setTotalCoverTokens(bought);
 
-      const calculatedPrice = toBN(await policyBook.getQuote(seconds, myMoney));
+      const calculatedPrice = toBN(await policyBookMock.getQuote(seconds, myMoney));
       const expectedPrice = toBN(5);
       assert.equal(calculatedPrice.toString(), expectedPrice.toString(), 'Less than minimal');
     });
@@ -477,11 +497,11 @@ contract('PolicyBook', async (accounts) => {
       total = toBN(10).pow(14); // 100tril
       bought = toBN(10).pow(13).times(5); // 50tril
 
-      await policyBook.setTotalLiquidity(total);
-      await policyBook.setTotalCoverTokens(bought);
+      await policyBookMock.setTotalLiquidity(total);
+      await policyBookMock.setTotalCoverTokens(bought);
 
-      const calculatedPrice = toBN(await policyBook.getQuote(seconds, myMoney));
-      const expectedPrice = toBN(2185714285710);
+      const calculatedPrice = toBN(await policyBookMock.getQuote(seconds, myMoney));
+      const expectedPrice = toBN(2185714285714);
       assert.equal(calculatedPrice.toString(), expectedPrice.toString(), 'UR < RISKY case is incorrect');
     });
 
@@ -491,10 +511,10 @@ contract('PolicyBook', async (accounts) => {
       total = 1000000; // 1mil
       bought = 500000; // 500k
 
-      await policyBook.setTotalLiquidity(total);
-      await policyBook.setTotalCoverTokens(bought);
+      await policyBookMock.setTotalLiquidity(total);
+      await policyBookMock.setTotalCoverTokens(bought);
 
-      const calculatedPrice = toBN(await policyBook.getQuote(seconds, myMoney));
+      const calculatedPrice = toBN(await policyBookMock.getQuote(seconds, myMoney));
       assert.equal(calculatedPrice, 750000, 'UR > RISKY case is incorrect');
     });
 
@@ -504,10 +524,10 @@ contract('PolicyBook', async (accounts) => {
       total = 1000000; // 1mil
       bought = 500000; // 500k
 
-      await policyBook.setTotalLiquidity(total);
-      await policyBook.setTotalCoverTokens(bought);
+      await policyBookMock.setTotalLiquidity(total);
+      await policyBookMock.setTotalCoverTokens(bought);
 
-      await truffleAssert.reverts(policyBook.getQuote(seconds, myMoney),
+      await truffleAssert.reverts(policyBookMock.getQuote(seconds, myMoney),
         'Requiring more than there exists');
     });
 
@@ -517,10 +537,10 @@ contract('PolicyBook', async (accounts) => {
       total = 0; // 0
       bought = 0; // 0
 
-      await policyBook.setTotalLiquidity(total);
-      await policyBook.setTotalCoverTokens(bought);
+      await policyBookMock.setTotalLiquidity(total);
+      await policyBookMock.setTotalCoverTokens(bought);
 
-      await truffleAssert.reverts(policyBook.getQuote(seconds, myMoney),
+      await truffleAssert.reverts(policyBookMock.getQuote(seconds, myMoney),
         'The pool is empty');
     });
 
@@ -530,10 +550,10 @@ contract('PolicyBook', async (accounts) => {
       total = toBN(10).times(toBN(10).pow(toBN(76)));
       bought = toBN(5).times(toBN(10).pow(toBN(76)));
 
-      await policyBook.setTotalLiquidity(total);
-      await policyBook.setTotalCoverTokens(bought);
+      await policyBookMock.setTotalLiquidity(total);
+      await policyBookMock.setTotalCoverTokens(bought);
 
-      await truffleAssert.reverts(policyBook.getQuote(seconds, myMoney), 'SafeMath: multiplication overflow');
+      await truffleAssert.reverts(policyBookMock.getQuote(seconds, myMoney), 'SafeMath: multiplication overflow');
     });
   });
 });

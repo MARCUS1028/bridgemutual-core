@@ -4,10 +4,10 @@ pragma experimental ABIEncoderV2;
 
 import "../PolicyBook.sol";
 
-contract MockPolicyBook is PolicyBook {
-  constructor(address _contract, IPolicyBookFabric.ContractType _contractType, address _registry)
-    PolicyBook(_contract, _contractType, _registry, "", "") {}
-
+contract PolicyBookMock is PolicyBook {
+  constructor(address _insuranceContract, IPolicyBookFabric.ContractType _contractType)
+    PolicyBook(_insuranceContract, _contractType, "", "") {}
+    
   function setTotalLiquidity(uint256 _daiInThePoolTotal) public {
     totalLiquidity = _daiInThePoolTotal;
   }

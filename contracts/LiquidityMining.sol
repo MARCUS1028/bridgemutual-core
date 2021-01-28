@@ -2,17 +2,20 @@
 pragma solidity ^0.7.4;
 
 import "@openzeppelin/contracts/math/SafeMath.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/token/ERC1155/ERC1155Receiver.sol";
+
 import "./interfaces/IPolicyBook.sol";
+
 import "./ContractsRegistry.sol";
 import "./LiquidityMiningNFT.sol";
 
-contract LiquidityMining is ERC1155Receiver {
+contract LiquidityMining is ERC1155Receiver, Ownable {
     using SafeMath for uint256;
 
-    ContractsRegistry private registry;
+    ContractsRegistry public contractsRegistry;
 
     uint256[] public leaderboard;
     uint256 public groupsCount;
@@ -22,15 +25,17 @@ contract LiquidityMining is ERC1155Receiver {
     uint256 public maxMonthToGetReward = 5;
     uint256 public decimal = 10**27;
 
+    ERC20 public bmiToken;
+    LiquidityMiningNFT public LMNFT;
+
     struct RewardInfo {
         uint256 countOfMonth;
         uint256 lastUpdate;
     }
 
-    constructor (address _registry) {
+    constructor () {
         groupsCount = 1;
-        startLiquidityMiningTime = block.timestamp;
-        registry = ContractsRegistry(_registry);
+        startLiquidityMiningTime = block.timestamp;        
     }
 
     // ID => Address => InvestedAmount
@@ -50,6 +55,13 @@ contract LiquidityMining is ERC1155Receiver {
     event RewardInfoUpdated(uint256 _groupID, address _address, uint256 _newCountOfMonth, uint256 _newLastUpdate);
     event RewardSent(uint256 _groupID, address _address, uint256 _reward);
     event NFTSent(address _address, uint256 _nftIndex);
+
+    function initRegistry(ContractsRegistry _contractsRegistry) external onlyOwner {
+        contractsRegistry = _contractsRegistry;  
+
+        bmiToken = ERC20(contractsRegistry.getContract(contractsRegistry.getBMIName()));
+        LMNFT = LiquidityMiningNFT(contractsRegistry.getContract(contractsRegistry.getLiquidityMiningNFTName()));
+    }
 
     function getLeaderboardSize() external view returns (uint256) {
         return leaderboard.length;
@@ -141,8 +153,7 @@ contract LiquidityMining is ERC1155Receiver {
         uint256 _userRewardPer = _calculatePercentage(groups[_groupID][msg.sender], totalGroupsAmount[_groupID]);
         uint256 _userReward = _totalReward.mul(_userRewardPer).div(decimal);
 
-        IERC20 _bmiToken = IERC20(registry.getContract(registry.getBMIName()));
-        require(_bmiToken.transfer(msg.sender, _userReward), "Failed to transfer tokens");
+        require(bmiToken.transfer(msg.sender, _userReward), "Failed to transfer tokens");
         emit RewardSent(_groupID, msg.sender, _userReward);
 
         _rewardInfo.countOfMonth = 0;
@@ -187,9 +198,8 @@ contract LiquidityMining is ERC1155Receiver {
         } else {
             _nftIndex = 4;
         }
-
-        LiquidityMiningNFT _nft = LiquidityMiningNFT(registry.getContract(registry.getLiquidityMiningNFTName()));
-        _nft.safeTransferFrom(address(this), msg.sender, _nftIndex, 1, "");
+    
+        LMNFT.safeTransferFrom(address(this), msg.sender, _nftIndex, 1, "");
 
         emit NFTSent(msg.sender, _nftIndex);
     }
@@ -202,7 +212,7 @@ contract LiquidityMining is ERC1155Receiver {
     }
 
     function _getRewardPerMonth(uint256 _groupID) internal view returns (uint256) {
-        uint256 _oneToken = 10 ** ERC20(registry.getContract(registry.getBMIName())).decimals();
+        uint256 _oneToken = 10 ** bmiToken.decimals();
         uint256 _indexInTheLeaderboard = _getIndexInTheLeaderboard(_groupID);
         uint256 _rewardPerMonth;
 
@@ -362,6 +372,7 @@ contract LiquidityMining is ERC1155Receiver {
         bytes memory data
     )
         external
+        pure
         override
         returns(bytes4)
     {
@@ -376,6 +387,7 @@ contract LiquidityMining is ERC1155Receiver {
         bytes memory data
     )
         external
+        pure
         override
         returns(bytes4)
     {

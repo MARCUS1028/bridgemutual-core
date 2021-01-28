@@ -1,9 +1,10 @@
 const LiquidityMining = artifacts.require('LiquidityMining.sol');
-const ContractsRegistry = artifacts.require('ContractsRegistry.sol');
+const LiquidityMiningNFT = artifacts.require('LiquidityMiningNFT.sol');
+const ContractsRegistry = artifacts.require('ContractsRegistry');
+const BMIDAIStaking = artifacts.require('BMIDAIStaking');
 const BMIToken = artifacts.require('BMIToken.sol');
 const DAI = artifacts.require('./Mock/DAIMock');
-const LiquidityMiningNFT = artifacts.require('LiquidityMiningNFT.sol');
-const PolicyBook = artifacts.require('./Mock/MockPolicyBook');
+const PolicyBookMock = artifacts.require('./Mock/PolicyBookMock');
 
 const Reverter = require('./helpers/reverter');
 const BigNumber = require('bignumber.js');
@@ -32,28 +33,39 @@ contract.skip('LiquidityMining', async (accounts) => {
   const daiAmount = toBN(100000);
   const oneBMI = toBN(10).pow(18);
 
-  let registry;
+  let contractsRegistry;
   let liquidityMining;
   let liquidityMiningNFT;
   let bmiToken;
   let dai;
-  let policyBook;
+  let policyBookMock;
 
   before('setup', async () => {
-    registry = await ContractsRegistry.new();
+    const bmiDaiStaking = await BMIDAIStaking.new();
+    contractsRegistry = await ContractsRegistry.new();
     bmiToken = await BMIToken.new(OWNER);
     dai = await DAI.new('dai', 'dai');
 
-    liquidityMiningNFT = await LiquidityMiningNFT.new('LiquidityMiningNFT');
+    liquidityMiningNFT = await LiquidityMiningNFT.new('');
 
     await setCurrentTime(1);
-    liquidityMining = await LiquidityMining.new(registry.address);
-    policyBook = await PolicyBook.new(BOOK, ContractType.CONTRACT, registry.address);
+    liquidityMining = await LiquidityMining.new();
 
-    await registry.addContractRegistry('DAI', dai.address);
-    await registry.addContractRegistry('BMI', bmiToken.address);
-    await registry.addContractRegistry('LIQUIDITY_MINING_NFT', liquidityMiningNFT.address);
-    await registry.addContractRegistry('LIQUIDITY_MINING', liquidityMining.address);
+    policyBookMock = await PolicyBookMock.new(BOOK, ContractType.CONTRACT);
+
+    await contractsRegistry.addContractRegistry(
+      (await contractsRegistry.getLiquidityMiningName.call()), liquidityMining.address);
+    await contractsRegistry.addContractRegistry(
+      (await contractsRegistry.getLiquidityMiningNFTName.call()), liquidityMiningNFT.address);
+    await contractsRegistry.addContractRegistry(
+      (await contractsRegistry.getDAIName.call()), dai.address);
+    await contractsRegistry.addContractRegistry(
+      (await contractsRegistry.getBMIName.call()), bmiToken.address);
+    await contractsRegistry.addContractRegistry(
+      (await contractsRegistry.getBMIDAIStakingName.call()), bmiDaiStaking.address);
+
+    await liquidityMining.initRegistry(contractsRegistry.address);
+    await policyBookMock.initRegistry(contractsRegistry.address);    
 
     await liquidityMiningNFT.mintNFTsForLM(liquidityMining.address);
 
@@ -67,14 +79,14 @@ contract.skip('LiquidityMining', async (accounts) => {
 
     beforeEach('setup', async () => {
       await dai.transfer(USER1, daiAmount);
-      await dai.approve(policyBook.address, daiAmount, {from: USER1});
+      await dai.approve(policyBookMock.address, daiAmount, {from: USER1});
 
       await dai.transfer(USER2, daiAmount);
-      await dai.approve(policyBook.address, daiAmount, {from: USER2});
+      await dai.approve(policyBookMock.address, daiAmount, {from: USER2});
     });
 
     it('should create new group and invest DAI', async () => {
-      const result = await liquidityMining.investDAI(0, investAmount, policyBook.address, {from: USER1});
+      const result = await liquidityMining.investDAI(0, investAmount, policyBookMock.address, {from: USER1});
 
       await checkLeaderboard(liquidityMining, [1]);
 
@@ -84,22 +96,22 @@ contract.skip('LiquidityMining', async (accounts) => {
       assert.equal(result.logs[1].args._tokensAmount, 1000);
       assert.equal(result.logs[1].args._newTotalGroupAmount, 1000);
 
-      assert.equal(toBN(await policyBook.totalLiquidity()).toString(), investAmount.toString());
-      assert.equal(toBN(await policyBook.liquidityFromLM(USER1)).toString(), investAmount.toString());
+      assert.equal(toBN(await policyBookMock.totalLiquidity()).toString(), investAmount.toString());
+      assert.equal(toBN(await policyBookMock.liquidityFromLM(USER1)).toString(), investAmount.toString());
     });
 
     it('should create many group and investDAI with diiferent users', async () => {
-      await liquidityMining.investDAI(0, investAmount, policyBook.address, {from: USER1});
-      await liquidityMining.investDAI(0, investAmount.div(2), policyBook.address, {from: USER1});
-      await liquidityMining.investDAI(0, investAmount.times(10), policyBook.address, {from: USER2});
-      await liquidityMining.investDAI(0, investAmount.plus(1), policyBook.address, {from: USER2});
-      await liquidityMining.investDAI(0, investAmount.minus(1), policyBook.address, {from: USER1});
+      await liquidityMining.investDAI(0, investAmount, policyBookMock.address, {from: USER1});
+      await liquidityMining.investDAI(0, investAmount.div(2), policyBookMock.address, {from: USER1});
+      await liquidityMining.investDAI(0, investAmount.times(10), policyBookMock.address, {from: USER2});
+      await liquidityMining.investDAI(0, investAmount.plus(1), policyBookMock.address, {from: USER2});
+      await liquidityMining.investDAI(0, investAmount.minus(1), policyBookMock.address, {from: USER1});
 
       await checkLeaderboard(liquidityMining, [3, 4, 1, 5, 2]);
 
-      await liquidityMining.investDAI(1, investAmount.times(10), policyBook.address, {from: USER2});
-      await liquidityMining.investDAI(3, investAmount.div(2), policyBook.address, {from: USER1});
-      await liquidityMining.investDAI(5, investAmount, policyBook.address, {from: USER2});
+      await liquidityMining.investDAI(1, investAmount.times(10), policyBookMock.address, {from: USER2});
+      await liquidityMining.investDAI(3, investAmount.div(2), policyBookMock.address, {from: USER1});
+      await liquidityMining.investDAI(5, investAmount, policyBookMock.address, {from: USER2});
 
       await checkLeaderboard(liquidityMining, [1, 3, 5, 4, 2]);
 
@@ -109,9 +121,9 @@ contract.skip('LiquidityMining', async (accounts) => {
       assert.equal(toBN(await liquidityMining.totalGroupsAmount(4)).toString(), 1001);
       assert.equal(toBN(await liquidityMining.totalGroupsAmount(5)).toString(), 1999);
 
-      assert.equal(toBN(await policyBook.totalLiquidity()).toString(), 25000);
-      assert.equal(toBN(await policyBook.liquidityFromLM(USER1)).toString(), 2999);
-      assert.equal(toBN(await policyBook.liquidityFromLM(USER2)).toString(), 22001);
+      assert.equal(toBN(await policyBookMock.totalLiquidity()).toString(), 25000);
+      assert.equal(toBN(await policyBookMock.liquidityFromLM(USER1)).toString(), 2999);
+      assert.equal(toBN(await policyBookMock.liquidityFromLM(USER2)).toString(), 22001);
     });
   });
 
@@ -120,16 +132,16 @@ contract.skip('LiquidityMining', async (accounts) => {
 
     it('should send zero nft if the user does not deserve a reward', async () => {
       await dai.transfer(USER1, daiAmount);
-      await dai.approve(policyBook.address, daiAmount, {from: USER1});
+      await dai.approve(policyBookMock.address, daiAmount, {from: USER1});
 
       await dai.transfer(USER2, daiAmount);
-      await dai.approve(policyBook.address, daiAmount, {from: USER2});
+      await dai.approve(policyBookMock.address, daiAmount, {from: USER2});
 
       for (let i = 0; i < 10; i++) {
-        await liquidityMining.investDAI(0, 100, policyBook.address, {from: USER1});
+        await liquidityMining.investDAI(0, 100, policyBookMock.address, {from: USER1});
       }
 
-      await liquidityMining.investDAI(0, 50, policyBook.address, {from: USER2});
+      await liquidityMining.investDAI(0, 50, policyBookMock.address, {from: USER2});
 
       await setCurrentTime(endLiquidityMiningTime.plus(10));
       await liquidityMining.distributeAllNFT({from: USER2});
@@ -140,18 +152,18 @@ contract.skip('LiquidityMining', async (accounts) => {
       const users = [USER1, USER2, USER3, USER4];
       for (let i = 0; i < 4; i++) {
         await dai.transfer(users[i], daiAmount);
-        await dai.approve(policyBook.address, daiAmount, {from: users[i]});
+        await dai.approve(policyBookMock.address, daiAmount, {from: users[i]});
       }
 
       for (let i = 0; i < 5; i++) {
-        await liquidityMining.investDAI(0, 1000, policyBook.address, {from: USER1});
+        await liquidityMining.investDAI(0, 1000, policyBookMock.address, {from: USER1});
       }
 
-      await liquidityMining.investDAI(2, 2000, policyBook.address, {from: USER2});
-      await liquidityMining.investDAI(3, 2000, policyBook.address, {from: USER2});
-      await liquidityMining.investDAI(3, 3000, policyBook.address, {from: USER3});
-      await liquidityMining.investDAI(3, 4000, policyBook.address, {from: USER4});
-      await liquidityMining.investDAI(4, 4000, policyBook.address, {from: USER4});
+      await liquidityMining.investDAI(2, 2000, policyBookMock.address, {from: USER2});
+      await liquidityMining.investDAI(3, 2000, policyBookMock.address, {from: USER2});
+      await liquidityMining.investDAI(3, 3000, policyBookMock.address, {from: USER3});
+      await liquidityMining.investDAI(3, 4000, policyBookMock.address, {from: USER4});
+      await liquidityMining.investDAI(4, 4000, policyBookMock.address, {from: USER4});
 
       await setCurrentTime(endLiquidityMiningTime.plus(10));
       await liquidityMining.distributeAllNFT({from: USER1});
@@ -165,17 +177,17 @@ contract.skip('LiquidityMining', async (accounts) => {
 
     it('should send 10 platinum and 5 silver nfts', async () => {
       await dai.transfer(USER1, daiAmount);
-      await dai.approve(policyBook.address, daiAmount, {from: USER1});
+      await dai.approve(policyBookMock.address, daiAmount, {from: USER1});
 
       await dai.transfer(USER2, daiAmount);
-      await dai.approve(policyBook.address, daiAmount, {from: USER2});
+      await dai.approve(policyBookMock.address, daiAmount, {from: USER2});
 
       for (let i = 0; i < 10; i++) {
-        await liquidityMining.investDAI(0, 1000, policyBook.address, {from: USER1});
+        await liquidityMining.investDAI(0, 1000, policyBookMock.address, {from: USER1});
       }
 
       for (let i = 1; i <= 5; i++) {
-        await liquidityMining.investDAI(i, 500, policyBook.address, {from: USER2});
+        await liquidityMining.investDAI(i, 500, policyBookMock.address, {from: USER2});
       }
 
       await setCurrentTime(endLiquidityMiningTime.plus(10));
@@ -195,18 +207,18 @@ contract.skip('LiquidityMining', async (accounts) => {
       const users = [USER1, USER2, USER3, USER4, USER5];
       for (let i = 0; i < 5; i++) {
         await dai.transfer(users[i], daiAmount);
-        await dai.approve(policyBook.address, daiAmount, {from: users[i]});
+        await dai.approve(policyBookMock.address, daiAmount, {from: users[i]});
       }
 
-      await liquidityMining.investDAI(0, 100, policyBook.address, {from: USER1});
+      await liquidityMining.investDAI(0, 100, policyBookMock.address, {from: USER1});
     });
 
     it('should correct update accounts leaders', async () => {
-      await liquidityMining.investDAI(1, 200, policyBook.address, {from: USER2});
-      await liquidityMining.investDAI(1, 300, policyBook.address, {from: USER3});
-      await liquidityMining.investDAI(1, 400, policyBook.address, {from: USER4});
-      await liquidityMining.investDAI(1, 300, policyBook.address, {from: USER2});
-      await liquidityMining.investDAI(1, 350, policyBook.address, {from: USER5});
+      await liquidityMining.investDAI(1, 200, policyBookMock.address, {from: USER2});
+      await liquidityMining.investDAI(1, 300, policyBookMock.address, {from: USER3});
+      await liquidityMining.investDAI(1, 400, policyBookMock.address, {from: USER4});
+      await liquidityMining.investDAI(1, 300, policyBookMock.address, {from: USER2});
+      await liquidityMining.investDAI(1, 350, policyBookMock.address, {from: USER5});
 
       const expectedArr = [USER2, USER4, USER5, USER3, USER1];
 
@@ -214,9 +226,9 @@ contract.skip('LiquidityMining', async (accounts) => {
     });
 
     it('should send correct nft', async () => {
-      await liquidityMining.investDAI(1, 200, policyBook.address, {from: USER2});
-      await liquidityMining.investDAI(1, 300, policyBook.address, {from: USER3});
-      await liquidityMining.investDAI(1, 400, policyBook.address, {from: USER4});
+      await liquidityMining.investDAI(1, 200, policyBookMock.address, {from: USER2});
+      await liquidityMining.investDAI(1, 300, policyBookMock.address, {from: USER3});
+      await liquidityMining.investDAI(1, 400, policyBookMock.address, {from: USER4});
 
       await setCurrentTime(endLiquidityMiningTime.plus(10));
       await liquidityMining.distributeNFT(1, {from: USER4});
@@ -241,7 +253,7 @@ contract.skip('LiquidityMining', async (accounts) => {
 
     it('should not send if the group is not in the lead', async () => {
       for (let i = 0; i < 10; i++) {
-        await liquidityMining.investDAI(0, 100, policyBook.address, {from: USER1});
+        await liquidityMining.investDAI(0, 100, policyBookMock.address, {from: USER1});
       }
 
       await setCurrentTime(endLiquidityMiningTime.plus(10));
@@ -267,10 +279,10 @@ contract.skip('LiquidityMining', async (accounts) => {
 
     beforeEach('setup', async () => {
       await dai.transfer(USER1, daiAmount);
-      await dai.approve(policyBook.address, daiAmount, {from: USER1});
+      await dai.approve(policyBookMock.address, daiAmount, {from: USER1});
 
       await dai.transfer(USER2, daiAmount);
-      await dai.approve(policyBook.address, daiAmount, {from: USER2});
+      await dai.approve(policyBookMock.address, daiAmount, {from: USER2});
 
       await bmiToken.transfer(liquidityMining.address, amountToTransfer);
 
@@ -281,7 +293,7 @@ contract.skip('LiquidityMining', async (accounts) => {
     it('should get zero if no reward is available', async () => {
       let amount = toBN(150);
       for (let i = 1; i <= 11; i++) {
-        await liquidityMining.investDAI(0, amount, policyBook.address, {from: USER1});
+        await liquidityMining.investDAI(0, amount, policyBookMock.address, {from: USER1});
         amount = amount.minus(5);
       }
 
@@ -292,7 +304,7 @@ contract.skip('LiquidityMining', async (accounts) => {
     });
 
     it('should get 100% of tokens when user invest 100%', async () => {
-      await liquidityMining.investDAI(0, 1000, policyBook.address, {from: USER1});
+      await liquidityMining.investDAI(0, 1000, policyBookMock.address, {from: USER1});
       await setCurrentTime(endLiquidityMiningTime.plus(10));
 
       await liquidityMining.getRewardFromGroup(1, {from: USER1});
@@ -301,11 +313,11 @@ contract.skip('LiquidityMining', async (accounts) => {
 
     it('should correct get reward for different users', async () => {
       await dai.transfer(USER3, daiAmount);
-      await dai.approve(policyBook.address, daiAmount, {from: USER3});
+      await dai.approve(policyBookMock.address, daiAmount, {from: USER3});
 
-      await liquidityMining.investDAI(0, 100, policyBook.address, {from: USER1});
-      await liquidityMining.investDAI(1, 400, policyBook.address, {from: USER2});
-      await liquidityMining.investDAI(1, 500, policyBook.address, {from: USER3});
+      await liquidityMining.investDAI(0, 100, policyBookMock.address, {from: USER1});
+      await liquidityMining.investDAI(1, 400, policyBookMock.address, {from: USER2});
+      await liquidityMining.investDAI(1, 500, policyBookMock.address, {from: USER3});
       await setCurrentTime(endLiquidityMiningTime.plus(10));
 
       await liquidityMining.getRewardFromGroup(1, {from: USER1});
@@ -318,8 +330,8 @@ contract.skip('LiquidityMining', async (accounts) => {
     });
 
     it('should get 100% of tokens 5 month reward on 2 place', async () => {
-      await liquidityMining.investDAI(0, 1000, policyBook.address, {from: USER1});
-      await liquidityMining.investDAI(0, 500, policyBook.address, {from: USER2});
+      await liquidityMining.investDAI(0, 1000, policyBookMock.address, {from: USER1});
+      await liquidityMining.investDAI(0, 500, policyBookMock.address, {from: USER2});
 
       await setCurrentTime(endLiquidityMiningTime.plus(10).plus(oneMonth.times(4)));
 
@@ -328,7 +340,7 @@ contract.skip('LiquidityMining', async (accounts) => {
     });
 
     it('should correct get reward multiple times', async () => {
-      await liquidityMining.investDAI(0, 1000, policyBook.address, {from: USER1});
+      await liquidityMining.investDAI(0, 1000, policyBookMock.address, {from: USER1});
       await setCurrentTime(endLiquidityMiningTime.plus(10).plus(oneMonth));
 
       await liquidityMining.getRewardFromGroup(1, {from: USER1});
@@ -345,11 +357,11 @@ contract.skip('LiquidityMining', async (accounts) => {
       const amount = toBN(1000);
 
       for (let i = 1; i <= 7; i++) {
-        await liquidityMining.investDAI(0, amount, policyBook.address, {from: USER1});
+        await liquidityMining.investDAI(0, amount, policyBookMock.address, {from: USER1});
       }
 
-      await liquidityMining.investDAI(0, 100, policyBook.address, {from: USER1});
-      await liquidityMining.investDAI(8, 100, policyBook.address, {from: USER2});
+      await liquidityMining.investDAI(0, 100, policyBookMock.address, {from: USER1});
+      await liquidityMining.investDAI(8, 100, policyBookMock.address, {from: USER2});
 
       const oneReward = oneBMI.times(2000);
       let totalTokens = oneReward;

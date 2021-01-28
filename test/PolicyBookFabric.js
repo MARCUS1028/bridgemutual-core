@@ -1,7 +1,12 @@
 const PolicyBookFabric = artifacts.require('PolicyBookFabric');
 const PolicyBook = artifacts.require('PolicyBook');
 const PolicyBookRegistry = artifacts.require('PolicyBookRegistry');
-const DAI = artifacts.require('DAIMock');
+const MockDAI = artifacts.require('./mock/DAIMock');
+const BMIToken = artifacts.require('BMIToken.sol');
+const ContractsRegistry = artifacts.require('ContractsRegistry');
+const BMIDAIStaking = artifacts.require('BMIDAIStaking');
+const LiquidityMiningNFT = artifacts.require('LiquidityMiningNFT.sol');
+const LiquidityMining = artifacts.require('LiquidityMining.sol');
 
 const Reverter = require('./helpers/reverter');
 const truffleAssert = require('truffle-assertions');
@@ -16,6 +21,8 @@ const ContractType = {
 contract('PolicyBookFabric', async (accounts) => {
   const reverter = new Reverter(web3);
 
+  let contractsRegistry;
+  let bmiDaiStaking;
   let policyBookRegistry;
   let policyBookFabric;
   let dai;
@@ -25,10 +32,33 @@ contract('PolicyBookFabric', async (accounts) => {
   const CONTRACT3 = accounts[2];
 
   before('setup', async () => {
-    dai = await DAI.new('dai', 'dai');
+    const liquidityMining = await LiquidityMining.new();
+    const liquidityMiningNFT = await LiquidityMiningNFT.new("");
+    const bmiToken = await BMIToken.new(CONTRACT1);
+    dai = await MockDAI.new('dai', 'dai');
+    contractsRegistry = await ContractsRegistry.new();
     policyBookRegistry = await PolicyBookRegistry.new();
-    policyBookFabric = await PolicyBookFabric.new(policyBookRegistry.address, dai.address);
-    await policyBookRegistry.setPolicyFabricAddress(policyBookFabric.address);
+    policyBookFabric = await PolicyBookFabric.new();
+    bmiDaiStaking = await BMIDAIStaking.new();    
+
+    await contractsRegistry.addContractRegistry(
+      (await contractsRegistry.getLiquidityMiningNFTName.call()), liquidityMiningNFT.address);
+    await contractsRegistry.addContractRegistry(
+      (await contractsRegistry.getLiquidityMiningName.call()), liquidityMining.address);
+    await contractsRegistry.addContractRegistry(
+      (await contractsRegistry.getDAIName.call()), dai.address);
+    await contractsRegistry.addContractRegistry(
+      (await contractsRegistry.getBMIName.call()), bmiToken.address);
+    await contractsRegistry.addContractRegistry(
+      (await contractsRegistry.getBMIDAIStakingName.call()), bmiDaiStaking.address);
+    await contractsRegistry.addContractRegistry(
+      (await contractsRegistry.getPolicyBookRegistryName.call()), policyBookRegistry.address);
+    await contractsRegistry.addContractRegistry(
+      (await contractsRegistry.getPolicyBookFabricName.call()), policyBookFabric.address);
+
+    await liquidityMining.initRegistry(contractsRegistry.address);
+    await policyBookFabric.initRegistry(contractsRegistry.address);
+    await policyBookRegistry.initRegistry(contractsRegistry.address);
 
     await reverter.snapshot();
   });
@@ -41,7 +71,7 @@ contract('PolicyBookFabric', async (accounts) => {
       const address = await policyBookFabric.policyBookFor(CONTRACT1);
       const book = await PolicyBook.at(address);
 
-      assert.equal(await book.contractAddress(), CONTRACT1);
+      assert.equal(await book.insuranceContractAddress(), CONTRACT1);
       assert.equal(await book.contractType(), ContractType.DEFI);
       assert.equal(await book.name(), 'Test description');
       assert.equal(await book.symbol(), 'bmiDAITEST');
@@ -51,11 +81,11 @@ contract('PolicyBookFabric', async (accounts) => {
       const result = await policyBookFabric.create(CONTRACT1, ContractType.DEFI, '', '');
       const address = await policyBookFabric.policyBookFor(CONTRACT1);
 
-      assert.equal(result.logs.length, 1);
-      assert.equal(result.logs[0].event, 'Created');
-      assert.equal(result.logs[0].args.insured, CONTRACT1);
-      assert.equal(result.logs[0].args.contractType, ContractType.DEFI);
-      assert.equal(result.logs[0].args.at, address);
+      assert.equal(result.logs.length, 3); // 3 because of ownership
+      assert.equal(result.logs[2].event, 'Created');
+      assert.equal(result.logs[2].args.insured, CONTRACT1);
+      assert.equal(result.logs[2].args.contractType, ContractType.DEFI);
+      assert.equal(result.logs[2].args.at, address);
     });
 
     it('should not allow to create dublicate by the same address', async () => {
@@ -66,7 +96,7 @@ contract('PolicyBookFabric', async (accounts) => {
 
     it('should add policy to registry', async () => {
       const result = await policyBookFabric.create(CONTRACT1, 1, '', '');
-      const bookAddress = result.logs[0].args.at;
+      const bookAddress = result.logs[2].args.at;
       assert.equal(await policyBookRegistry.policyBookFor(CONTRACT1), bookAddress);
     });
 
@@ -86,7 +116,7 @@ contract('PolicyBookFabric', async (accounts) => {
       const book3 = await policyBookFabric.create(CONTRACT3, ContractType.CONTRACT, '', '');
       assert.equal(await policyBookFabric.policyBooksCount(), 3);
 
-      bookAddrArr = [book1.logs[0].args.at, book2.logs[0].args.at, book3.logs[0].args.at];
+      bookAddrArr = [book1.logs[2].args.at, book2.logs[2].args.at, book3.logs[2].args.at];
     });
 
     it('should return valid if inside range', async () => {

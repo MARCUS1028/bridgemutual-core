@@ -1,4 +1,5 @@
 const PolicyBookRegistry = artifacts.require('PolicyBookRegistry');
+const ContractsRegistry = artifacts.require('ContractsRegistry');
 
 const Reverter = require('./helpers/reverter');
 const truffleAssert = require('truffle-assertions');
@@ -8,29 +9,39 @@ contract('PolicyBookRegistry', async (accounts) => {
   const reverter = new Reverter(web3);
 
   let policyBookRegistry;
+  let contractsRegistry;
 
   const NON_OWNER = accounts[1];
   const FABRIC = accounts[2];
   const NON_FABRIC = accounts[3];
 
   before('setup', async () => {
+    contractsRegistry = await ContractsRegistry.new();
     policyBookRegistry = await PolicyBookRegistry.new();
-    await policyBookRegistry.setPolicyFabricAddress(FABRIC);
+
+    await contractsRegistry.addContractRegistry(
+      (await contractsRegistry.getPolicyBookRegistryName.call()), policyBookRegistry.address);
+    await contractsRegistry.addContractRegistry(
+      (await contractsRegistry.getPolicyBookFabricName.call()), FABRIC);
+
+    await policyBookRegistry.initRegistry(contractsRegistry.address);
 
     await reverter.snapshot();
   });
 
   afterEach('revert', reverter.revert);
 
-  describe('setPolicyFabricAddress', async () => {
+  describe('setPolicyBookFabricAddress', async () => {
     it('should not allow not owner to set', async () => {
-      await truffleAssert.reverts(policyBookRegistry.setPolicyFabricAddress(FABRIC, {from: NON_OWNER}),
+      await contractsRegistry.addContractRegistry((await contractsRegistry.getPolicyBookFabricName.call()), FABRIC);
+      await truffleAssert.reverts(policyBookRegistry.initRegistry(contractsRegistry.address, {from: NON_OWNER}),
         'Ownable: caller is not the owner');
     });
 
     it('should actually set address', async () => {
-      await policyBookRegistry.setPolicyFabricAddress(NON_FABRIC);
-      await assert.equal(await policyBookRegistry.policyFabricAddress(), NON_FABRIC);
+      await contractsRegistry.addContractRegistry((await contractsRegistry.getPolicyBookFabricName.call()), NON_FABRIC);
+      await policyBookRegistry.initRegistry(contractsRegistry.address);
+      await assert.equal(await policyBookRegistry.policyBookFabricAddress(), NON_FABRIC);
     });
   });
 
@@ -41,7 +52,7 @@ contract('PolicyBookRegistry', async (accounts) => {
 
     it('should not allow not fabric to add', async () => {
       await truffleAssert.reverts(policyBookRegistry.add(CONTRACT, BOOK1, {from: NON_FABRIC}),
-        'Caller is not a policyFabric contract');
+        'Caller is not a PolicyBookFabric contract');
     });
 
     it('should not allow to add dublicate by the same address', async () => {

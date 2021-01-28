@@ -2,25 +2,13 @@
 pragma solidity ^0.7.4;
 pragma experimental ABIEncoderV2;
 
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "./IPolicyBookFabric.sol";
 
-interface IPolicyBook is IERC20 {
-  struct Policy {
-    uint256 id;
-    uint256 holder;
-    uint256 daiTokens;
-    uint256 durationSeconds;
-    uint256 coveredTokens;
-    uint256 createdAt;
-    bool claimed;
-    bool rewarded;
-  }
-
+interface IPolicyBook {
   // @TODO: should we let DAO to change contract address?
   /// @notice Returns address of contract this PolicyBook covers, access: ANY
   /// @return _contract is address of covered contract
-  function contractAddress() external view returns (address _contract);
+  function insuranceContractAddress() external view returns (address _contract);
 
   /// @notice Returns type of contract this PolicyBook covers, access: ANY
   /// @return _type is type of contract
@@ -70,24 +58,20 @@ interface IPolicyBook is IERC20 {
 
   /// @notice Let user to buy policy by supplying DAI, access: ANY
   /// @param _durationSeconds is number of seconds to cover
-  /// @param _coverTokens is number of tokens to cover
-  /// @param _maxDaiTokens is number of DAI to spend
+  /// @param _coverTokens is number of tokens to cover  
   function buyPolicy(
     uint256 _durationSeconds,
-    uint256 _coverTokens,
-    uint256 _maxDaiTokens
+    uint256 _coverTokens
   ) external;
 
   /// @notice Let user to buy policy for another user by supplying DAI, access: ANY
   /// @param _policyHolderAddr is address of address to assign cover
   /// @param _durationSeconds is number of seconds to cover
-  /// @param _coverTokens is number of tokens to cover
-  /// @param _maxDaiTokens is number of DAI to spend
+  /// @param _coverTokens is number of tokens to cover  
   function buyPolicyFor(
     address _policyHolderAddr,
     uint256 _durationSeconds,
-    uint256 _coverTokens,
-    uint256 _maxDaiTokens
+    uint256 _coverTokens
   ) external;
 
   /// @notice Let user to add liquidity by supplying DAI, access: ANY
@@ -119,16 +103,21 @@ interface IPolicyBook is IERC20 {
   function rewardForUnclaimedExpiredPolicy(uint256 _policyId) external;
 
   /// @notice Getting stats, access: ANY
-  /// @return _yearlyCost
-  /// @return _maxCapacities is max DAI amount to be covered at now
-  /// @return _totalDaiLiquidity is DAI amount placed by Policy providers
-  /// @return _annualProfitYields is current annual profit yield
+  /// @return _name is the name of PolicyBook
+  /// @return _insuredContract is an addres of insured contract
+  /// @return _contractType is a type of insured contract
+  /// @return _maxCapacities is a max token amount that a user can buy
+  /// @return _totalDaiLiquidity is PolicyBook's liquidity
+  /// @return _annualProfitYields is its APY  
   function stats()
     external
+    view
     returns (
-      uint256 _yearlyCost,
+      string memory _name,
+      address _insuredContract,
+      IPolicyBookFabric.ContractType _contractType,
       uint256 _maxCapacities,
       uint256 _totalDaiLiquidity,
-      uint256 _annualProfitYields
+      uint256 _annualProfitYields      
     );
 }
