@@ -12,14 +12,13 @@ const VestingSchedule = {
   SEEDROUND: 1,
   PRIVATEROUND: 2,
   LISTINGS: 3,
-  LIQUIDITYMINING: 4,
-  GROWTH: 5,
-  OPERATIONAL: 6,
-  FOUNDERS: 7,
-  DEVELOPERS: 8,
-  ADVISORS: 9,
-  BUGFINDING: 10,
-  VAULT: 11,
+  GROWTH: 4,
+  FOUNDERS: 5,
+  DEVELOPERS: 6,
+  BUGFINDING: 7,
+  VAULT: 8,
+  ADVISORSCUSTOMFIRST: 9,
+  ADVISORSCUSTOMSECOND: 10,
 };
 
 contract('BMITokenVesting', async (accounts) => {
@@ -450,12 +449,14 @@ contract('BMITokenVesting', async (accounts) => {
         const offsetSeconds = secondsInMonth.times(monthOffset).plus(10);
         await setCurrentTime(tgeTimestamp.plus(offsetSeconds));
         await vesting.withdrawFromVesting(0);
-        assert.equal((await token.balanceOf(OTHER_ADDR)).toString(), expectedTokens);
+        const tokenBalance = web3.utils.fromWei((await token.balanceOf(OTHER_ADDR)).toString());
+        const roundedTokenBalance = Math.floor(parseFloat(tokenBalance));
+        assert.equal(roundedTokenBalance, expectedTokens);
       }
     };
 
     it('should withdraw from angel round as expected', async () => {
-      await vesting.createVesting(OTHER_ADDR, 800000, VestingSchedule.ANGELROUND, true);
+      await vesting.createVesting(OTHER_ADDR, web3.utils.toWei('800000'), VestingSchedule.ANGELROUND, true);
       await testAmountByMonthOffset([
         [-1, 0],
         [0, 0],
@@ -468,7 +469,7 @@ contract('BMITokenVesting', async (accounts) => {
     });
 
     it('should withdraw from seed round as expected', async () => {
-      await vesting.createVesting(OTHER_ADDR, 2240000, VestingSchedule.SEEDROUND, true);
+      await vesting.createVesting(OTHER_ADDR, web3.utils.toWei('2240000'), VestingSchedule.SEEDROUND, true);
       await testAmountByMonthOffset([
         [-1, 0],
         [0, 560000],
@@ -479,7 +480,7 @@ contract('BMITokenVesting', async (accounts) => {
     });
 
     it('should withdraw from private round as expected', async () => {
-      await vesting.createVesting(OTHER_ADDR, 10800000, VestingSchedule.PRIVATEROUND, true);
+      await vesting.createVesting(OTHER_ADDR, web3.utils.toWei('10800000'), VestingSchedule.PRIVATEROUND, true);
       await testAmountByMonthOffset([
         [-1, 0],
         [0, 2700000],
@@ -491,7 +492,7 @@ contract('BMITokenVesting', async (accounts) => {
     });
 
     it('should withdraw from listings as expected', async () => {
-      await vesting.createVesting(OTHER_ADDR, 5000000, VestingSchedule.LISTINGS, true);
+      await vesting.createVesting(OTHER_ADDR, web3.utils.toWei('5000000'), VestingSchedule.LISTINGS, true);
       await testAmountByMonthOffset([
         [-1, 0],
         [0, 3000000],
@@ -500,21 +501,8 @@ contract('BMITokenVesting', async (accounts) => {
       ]);
     });
 
-    it('should withdraw from liquidity mining as expected', async () => {
-      await vesting.createVesting(OTHER_ADDR, 76000000, VestingSchedule.LIQUIDITYMINING, true);
-      await testAmountByMonthOffset([
-        [-1, 0],
-        [0, 0],
-        [1, 7600000],
-        [2, 15200000],
-        [5, 38000000],
-        [10, 76000000],
-        [20, 76000000],
-      ]);
-    });
-
     it('should withdraw from growth as expected', async () => {
-      await vesting.createVesting(OTHER_ADDR, 13000000, VestingSchedule.GROWTH, true);
+      await vesting.createVesting(OTHER_ADDR, web3.utils.toWei('13000000'), VestingSchedule.GROWTH, true);
       await testAmountByMonthOffset([
         [-1, 0],
         [0, 0],
@@ -528,33 +516,20 @@ contract('BMITokenVesting', async (accounts) => {
       ]);
     });
 
-    it('should withdraw from operational as expected', async () => {
-      await vesting.createVesting(OTHER_ADDR, 10160000, VestingSchedule.OPERATIONAL, true);
-      await testAmountByMonthOffset([
-        [-1, 0],
-        [0, 0],
-        [1, 508000],
-        [2, 1016000],
-        [5, 2540000],
-        [20, 10160000],
-        [40, 10160000],
-      ]);
-    });
-
     it('should withdraw from founders as expected', async () => {
-      await vesting.createVesting(OTHER_ADDR, 16000000, VestingSchedule.FOUNDERS, true);
+      await vesting.createVesting(OTHER_ADDR, web3.utils.toWei('16000000'), VestingSchedule.FOUNDERS, true);
       await testAmountByMonthOffset([
         [-1, 0],
-        [0, 640000],
-        [1, 1280000],
-        [4, 3200000],
+        [0, 160000],
+        [1, 160000 + 633600],
+        [4, 160000 + 633600 * 4],
         [25, 16000000],
         [50, 16000000],
       ]);
     });
 
     it('should withdraw from developers as expected', async () => {
-      await vesting.createVesting(OTHER_ADDR, 8000000, VestingSchedule.DEVELOPERS, true);
+      await vesting.createVesting(OTHER_ADDR, web3.utils.toWei('8000000'), VestingSchedule.DEVELOPERS, true);
       await testAmountByMonthOffset([
         [-1, 0],
         [0, 320000],
@@ -565,24 +540,8 @@ contract('BMITokenVesting', async (accounts) => {
       ]);
     });
 
-    it('should withdraw from advisors as expected', async () => {
-      await vesting.createVesting(OTHER_ADDR, 6000000, VestingSchedule.ADVISORS, true);
-      await testAmountByMonthOffset([
-        [-1, 0],
-        [0, 720000],
-        [1, 1440000],
-        [3, 2880000],
-        [4, 3399792],
-        [5, 3919584],
-        [6, 4439376],
-        [9, 5998752],
-        [10, 6000000],
-        [20, 6000000],
-      ]);
-    });
-
     it('should withdraw from bug finding as expected', async () => {
-      await vesting.createVesting(OTHER_ADDR, 2000000, VestingSchedule.BUGFINDING, true);
+      await vesting.createVesting(OTHER_ADDR, web3.utils.toWei('2000000'), VestingSchedule.BUGFINDING, true);
       await testAmountByMonthOffset([
         [-1, 0],
         [0, 0],
@@ -593,8 +552,8 @@ contract('BMITokenVesting', async (accounts) => {
       ]);
     });
 
-    it('should withdraw from bug vault as expected', async () => {
-      await vesting.createVesting(OTHER_ADDR, 10000000, VestingSchedule.VAULT, true);
+    it('should withdraw from vault as expected', async () => {
+      await vesting.createVesting(OTHER_ADDR, web3.utils.toWei('10000000'), VestingSchedule.VAULT, true);
       await testAmountByMonthOffset([
         [-1, 0],
         [0, 0],
@@ -603,6 +562,34 @@ contract('BMITokenVesting', async (accounts) => {
         [5, 2500000],
         [20, 10000000],
         [40, 10000000],
+      ]);
+    });
+
+    it('should withdraw from second adviser custom as expected', async () => {
+      await vesting.createVesting(OTHER_ADDR, web3.utils.toWei('1396000'), VestingSchedule.ADVISORSCUSTOMFIRST, true);
+      await testAmountByMonthOffset([
+        [-1, 0],
+        [0, 369000],
+        [1, 369000+102333],
+        [2, 369000+102333+102333],
+        [3, 369000+102333+102333+102333],
+        [4, 369000+102333+102333+102333+252933],
+        [5, 369000+102333+102333+102333+252933+252933],
+        [6, 369000+102333+102333+102333+252933+252933+214135],
+        [10, 1396000],
+      ]);
+    });
+
+    it('should withdraw from first adviser custom as expected', async () => {
+      await vesting.createVesting(OTHER_ADDR, web3.utils.toWei('3200000'), VestingSchedule.ADVISORSCUSTOMSECOND, true);
+      await testAmountByMonthOffset([
+        [-1, 0],
+        [0, 0],
+        [1, 266667 - 1],
+        [2, 266667 * 2 - 1],
+        [3, 266667 * 3 - 1],
+        [12, 3200000],
+        [20, 3200000],
       ]);
     });
   });

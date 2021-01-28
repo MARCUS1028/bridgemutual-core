@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity =0.7.4;
+pragma solidity ^0.7.4;
 
 import "@openzeppelin/contracts-upgradeable/token/ERC20/IERC20Upgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC20/SafeERC20Upgradeable.sol";
@@ -19,14 +19,13 @@ contract BMITokenVesting is Initializable, OwnableUpgradeable {
     SEEDROUND,
     PRIVATEROUND,
     LISTINGS,
-    LIQUIDITYMINING,
     GROWTH,
-    OPERATIONAL,
     FOUNDERS,
     DEVELOPERS,
-    ADVISORS,
     BUGFINDING,
-    VAULT
+    VAULT,
+    ADVISORSCUSTOMFIRST,
+    ADVISORSCUSTOMSECOND
   }
 
   struct Vesting {
@@ -47,8 +46,8 @@ contract BMITokenVesting is Initializable, OwnableUpgradeable {
   }
 
   uint256 public constant SECONDS_IN_MONTH = 60 * 60 * 24 * 30;
-  uint256 public constant PORTION_OF_TOTAL_PRECISION = 100;
-  uint256 public constant PORTION_PER_PERIOD_PRECISION = 10**4;
+  uint256 public constant PORTION_OF_TOTAL_PRECISION = 10**10;
+  uint256 public constant PORTION_PER_PERIOD_PRECISION = 10**10;
 
   IERC20Upgradeable public token;
   Vesting[] public vestings;
@@ -72,7 +71,7 @@ contract BMITokenVesting is Initializable, OwnableUpgradeable {
     addLinearVestingSchedule(
       VestingSchedule.ANGELROUND,
       LinearVestingSchedule({
-        portionOfTotal: 100,
+        portionOfTotal: PORTION_OF_TOTAL_PRECISION,
         startDate: tgeTimestamp,
         periodInSeconds: SECONDS_IN_MONTH,
         portionPerPeriod: PORTION_PER_PERIOD_PRECISION.div(4),
@@ -83,7 +82,7 @@ contract BMITokenVesting is Initializable, OwnableUpgradeable {
     addLinearVestingSchedule(
       VestingSchedule.SEEDROUND,
       LinearVestingSchedule({
-        portionOfTotal: 50,
+        portionOfTotal: PORTION_OF_TOTAL_PRECISION.div(2),
         startDate: tgeTimestamp.sub(SECONDS_IN_MONTH.mul(2)),
         periodInSeconds: SECONDS_IN_MONTH.mul(2),
         portionPerPeriod: PORTION_PER_PERIOD_PRECISION.div(2),
@@ -93,7 +92,7 @@ contract BMITokenVesting is Initializable, OwnableUpgradeable {
     addLinearVestingSchedule(
       VestingSchedule.SEEDROUND,
       LinearVestingSchedule({
-        portionOfTotal: 50,
+        portionOfTotal: PORTION_OF_TOTAL_PRECISION.div(2),
         startDate: tgeTimestamp,
         periodInSeconds: SECONDS_IN_MONTH,
         portionPerPeriod: PORTION_PER_PERIOD_PRECISION,
@@ -104,7 +103,7 @@ contract BMITokenVesting is Initializable, OwnableUpgradeable {
     addLinearVestingSchedule(
       VestingSchedule.PRIVATEROUND,
       LinearVestingSchedule({
-        portionOfTotal: 100,
+        portionOfTotal: PORTION_OF_TOTAL_PRECISION,
         startDate: tgeTimestamp.sub(SECONDS_IN_MONTH),
         periodInSeconds: SECONDS_IN_MONTH,
         portionPerPeriod: PORTION_PER_PERIOD_PRECISION.div(4),
@@ -115,7 +114,7 @@ contract BMITokenVesting is Initializable, OwnableUpgradeable {
     addLinearVestingSchedule(
       VestingSchedule.LISTINGS,
       LinearVestingSchedule({
-        portionOfTotal: 60,
+        portionOfTotal: PORTION_OF_TOTAL_PRECISION.div(100).mul(60),
         startDate: tgeTimestamp.sub(SECONDS_IN_MONTH),
         periodInSeconds: SECONDS_IN_MONTH,
         portionPerPeriod: PORTION_PER_PERIOD_PRECISION,
@@ -125,7 +124,7 @@ contract BMITokenVesting is Initializable, OwnableUpgradeable {
     addLinearVestingSchedule(
       VestingSchedule.LISTINGS,
       LinearVestingSchedule({
-        portionOfTotal: 40,
+        portionOfTotal: PORTION_OF_TOTAL_PRECISION.div(100).mul(40),
         startDate: tgeTimestamp,
         periodInSeconds: SECONDS_IN_MONTH,
         portionPerPeriod: PORTION_PER_PERIOD_PRECISION,
@@ -134,32 +133,10 @@ contract BMITokenVesting is Initializable, OwnableUpgradeable {
     );
 
     addLinearVestingSchedule(
-      VestingSchedule.LIQUIDITYMINING,
-      LinearVestingSchedule({
-        portionOfTotal: 100,
-        startDate: tgeTimestamp,
-        periodInSeconds: SECONDS_IN_MONTH,
-        portionPerPeriod: PORTION_PER_PERIOD_PRECISION.div(10),
-        cliffInPeriods: 0
-      })
-    );
-
-    addLinearVestingSchedule(
       VestingSchedule.GROWTH,
       LinearVestingSchedule({
-        portionOfTotal: 100,
+        portionOfTotal: PORTION_OF_TOTAL_PRECISION,
         startDate: tgeTimestamp.add(SECONDS_IN_MONTH.mul(2)),
-        periodInSeconds: SECONDS_IN_MONTH,
-        portionPerPeriod: PORTION_PER_PERIOD_PRECISION.div(100).mul(5),
-        cliffInPeriods: 0
-      })
-    );
-
-    addLinearVestingSchedule(
-      VestingSchedule.OPERATIONAL,
-      LinearVestingSchedule({
-        portionOfTotal: 100,
-        startDate: tgeTimestamp,
         periodInSeconds: SECONDS_IN_MONTH,
         portionPerPeriod: PORTION_PER_PERIOD_PRECISION.div(100).mul(5),
         cliffInPeriods: 0
@@ -169,10 +146,20 @@ contract BMITokenVesting is Initializable, OwnableUpgradeable {
     addLinearVestingSchedule(
       VestingSchedule.FOUNDERS,
       LinearVestingSchedule({
-        portionOfTotal: 100,
+        portionOfTotal: PORTION_OF_TOTAL_PRECISION.div(100),
         startDate: tgeTimestamp.sub(SECONDS_IN_MONTH),
         periodInSeconds: SECONDS_IN_MONTH,
-        portionPerPeriod: PORTION_PER_PERIOD_PRECISION.div(100).mul(4),
+        portionPerPeriod: PORTION_PER_PERIOD_PRECISION,
+        cliffInPeriods: 0
+      })
+    );
+    addLinearVestingSchedule(
+      VestingSchedule.FOUNDERS,
+      LinearVestingSchedule({
+        portionOfTotal: PORTION_OF_TOTAL_PRECISION.div(100).mul(99),
+        startDate: tgeTimestamp,
+        periodInSeconds: SECONDS_IN_MONTH,
+        portionPerPeriod: PORTION_PER_PERIOD_PRECISION.div(25),
         cliffInPeriods: 0
       })
     );
@@ -180,7 +167,7 @@ contract BMITokenVesting is Initializable, OwnableUpgradeable {
     addLinearVestingSchedule(
       VestingSchedule.DEVELOPERS,
       LinearVestingSchedule({
-        portionOfTotal: 100,
+        portionOfTotal: PORTION_OF_TOTAL_PRECISION,
         startDate: tgeTimestamp.sub(SECONDS_IN_MONTH),
         periodInSeconds: SECONDS_IN_MONTH,
         portionPerPeriod: PORTION_PER_PERIOD_PRECISION.div(100).mul(4),
@@ -189,30 +176,9 @@ contract BMITokenVesting is Initializable, OwnableUpgradeable {
     );
 
     addLinearVestingSchedule(
-      VestingSchedule.ADVISORS,
-      LinearVestingSchedule({
-        portionOfTotal: 48,
-        startDate: tgeTimestamp.sub(SECONDS_IN_MONTH),
-        periodInSeconds: SECONDS_IN_MONTH,
-        portionPerPeriod: PORTION_PER_PERIOD_PRECISION.div(4),
-        cliffInPeriods: 0
-      })
-    );
-    addLinearVestingSchedule(
-      VestingSchedule.ADVISORS,
-      LinearVestingSchedule({
-        portionOfTotal: 52,
-        startDate: tgeTimestamp.add(SECONDS_IN_MONTH.mul(3)),
-        periodInSeconds: SECONDS_IN_MONTH,
-        portionPerPeriod: PORTION_PER_PERIOD_PRECISION.div(6),
-        cliffInPeriods: 0
-      })
-    );
-
-    addLinearVestingSchedule(
       VestingSchedule.BUGFINDING,
       LinearVestingSchedule({
-        portionOfTotal: 50,
+        portionOfTotal: PORTION_OF_TOTAL_PRECISION.div(2),
         startDate: tgeTimestamp,
         periodInSeconds: SECONDS_IN_MONTH,
         portionPerPeriod: PORTION_PER_PERIOD_PRECISION,
@@ -222,7 +188,7 @@ contract BMITokenVesting is Initializable, OwnableUpgradeable {
     addLinearVestingSchedule(
       VestingSchedule.BUGFINDING,
       LinearVestingSchedule({
-        portionOfTotal: 50,
+        portionOfTotal: PORTION_OF_TOTAL_PRECISION.div(2),
         startDate: tgeTimestamp,
         periodInSeconds: SECONDS_IN_MONTH.mul(3),
         portionPerPeriod: PORTION_PER_PERIOD_PRECISION,
@@ -233,10 +199,52 @@ contract BMITokenVesting is Initializable, OwnableUpgradeable {
     addLinearVestingSchedule(
       VestingSchedule.VAULT,
       LinearVestingSchedule({
-        portionOfTotal: 100,
+        portionOfTotal: PORTION_OF_TOTAL_PRECISION,
         startDate: tgeTimestamp,
         periodInSeconds: SECONDS_IN_MONTH,
         portionPerPeriod: PORTION_PER_PERIOD_PRECISION.div(100).mul(5),
+        cliffInPeriods: 0
+      })
+    );
+
+    addLinearVestingSchedule(
+      VestingSchedule.ADVISORSCUSTOMFIRST,
+      LinearVestingSchedule({
+        portionOfTotal: PORTION_OF_TOTAL_PRECISION.div(10**10).mul(2643266476),
+        startDate: tgeTimestamp.sub(SECONDS_IN_MONTH),
+        periodInSeconds: SECONDS_IN_MONTH,
+        portionPerPeriod: PORTION_PER_PERIOD_PRECISION,
+        cliffInPeriods: 0
+      })
+    );
+    addLinearVestingSchedule(
+      VestingSchedule.ADVISORSCUSTOMFIRST,
+      LinearVestingSchedule({
+        portionOfTotal: PORTION_OF_TOTAL_PRECISION.div(10**10).mul(2199133238),
+        startDate: tgeTimestamp,
+        periodInSeconds: SECONDS_IN_MONTH,
+        portionPerPeriod: PORTION_PER_PERIOD_PRECISION.div(3),
+        cliffInPeriods: 0
+      })
+    );
+    addLinearVestingSchedule(
+      VestingSchedule.ADVISORSCUSTOMFIRST,
+      LinearVestingSchedule({
+        portionOfTotal: PORTION_OF_TOTAL_PRECISION.div(10**10).mul(5157600286),
+        startDate: tgeTimestamp.add(SECONDS_IN_MONTH.mul(3)),
+        periodInSeconds: SECONDS_IN_MONTH,
+        portionPerPeriod: PORTION_PER_PERIOD_PRECISION.div(10**10).mul(3512953455),
+        cliffInPeriods: 0
+      })
+    );
+
+    addLinearVestingSchedule(
+      VestingSchedule.ADVISORSCUSTOMSECOND,
+      LinearVestingSchedule({
+        portionOfTotal: PORTION_OF_TOTAL_PRECISION,
+        startDate: tgeTimestamp,
+        periodInSeconds: SECONDS_IN_MONTH,
+        portionPerPeriod: PORTION_PER_PERIOD_PRECISION.div(12).add(1),
         cliffInPeriods: 0
       })
     );
