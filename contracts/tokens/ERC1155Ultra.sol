@@ -13,7 +13,7 @@ import "@openzeppelin/contracts/introspection/ERC165.sol";
 import "@openzeppelin/contracts/math/SafeMath.sol";
 import "@openzeppelin/contracts/utils/Address.sol";
 
-contract ERC1155 is Context, ERC165, IERC1155, IERC20 {
+contract ERC1155Ultra is Context, ERC165, IERC1155, IERC20 {
     using SafeMath for uint256;
     using Address for address;
 

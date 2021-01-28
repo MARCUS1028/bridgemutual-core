@@ -1,7 +1,10 @@
 const PolicyBookMock = artifacts.require('./mock/PolicyBookMock');
 const DAIMock = artifacts.require('./mock/DAIMock');
+const BMIToken = artifacts.require('BMIToken.sol');
 const ContractsRegistry = artifacts.require('ContractsRegistry');
-const BmiDAIStaking = artifacts.require('BmiDAIStaking');
+const BMIDAIStaking = artifacts.require('BMIDAIStaking');
+const LiquidityMiningNFT = artifacts.require('LiquidityMiningNFT.sol');
+const LiquidityMining = artifacts.require('LiquidityMining.sol');
 
 const Reverter = require('./helpers/reverter');
 const BigNumber = require('bignumber.js');
@@ -18,28 +21,39 @@ const ContractType = {
 contract('PolicyBook', async (accounts) => {
   const reverter = new Reverter(web3);
 
+  let contractsRegistry;
   let bmiDaiStaking;
   let policyBookMock;
+  let liquidityMining;  
   let dai;
 
   const insuranceContract = accounts[0];
   const USER1 = accounts[1];
-  const USER2 = accounts[2];
-
-  let contractsRegistry;
+  const USER2 = accounts[2];  
 
   before('setup', async () => {
-    contractsRegistry = await ContractsRegistry.new();
+    const bmiToken = await BMIToken.new(USER1);
+    const liquidityMiningNFT = await LiquidityMiningNFT.new("");
+    contractsRegistry = await ContractsRegistry.new();    
     dai = await DAIMock.new('dai', 'dai');
-    bmiDaiStaking = await BmiDAIStaking.new();
+    bmiDaiStaking = await BMIDAIStaking.new();
+    liquidityMining = await LiquidityMining.new();
 
+    await contractsRegistry.addContractRegistry(
+      (await contractsRegistry.getLiquidityMiningNFTName.call()), liquidityMiningNFT.address);
+    await contractsRegistry.addContractRegistry(
+      (await contractsRegistry.getLiquidityMiningName.call()), liquidityMining.address);
     await contractsRegistry.addContractRegistry(
       (await contractsRegistry.getDAIName.call()), dai.address);
     await contractsRegistry.addContractRegistry(
-      (await contractsRegistry.getBmiDAIStakingName.call()), bmiDaiStaking.address);
+      (await contractsRegistry.getBMIName.call()), bmiToken.address);
+    await contractsRegistry.addContractRegistry(
+      (await contractsRegistry.getBMIDAIStakingName.call()), bmiDaiStaking.address);
+
+    liquidityMining.initRegistry(contractsRegistry.address);
 
     policyBookMock = await PolicyBookMock.new(insuranceContract, ContractType.CONTRACT);
-    await policyBookMock.initRegistry(contractsRegistry.address);
+    await policyBookMock.initRegistry(contractsRegistry.address);    
 
     await reverter.snapshot();
   });
@@ -291,13 +305,47 @@ contract('PolicyBook', async (accounts) => {
         daiAmount.minus(liquidityAmount).plus(amountToWithdraw).toString());
     });
 
-    it('should get exception, amount to be withdrawn is greater than the deposited amount', async () => {
+    it('should successfully withdraw tokens that 2 weeks has expire', async () => {
+      await setCurrentTime(1);
+      await policyBookMock.addLiquidity(liquidityAmount, {from: USER1});
+      await liquidityMining.investDAI(0, liquidityAmount.div(2), policyBookMock.address, {from: USER1});
+      const totalLiquidity = toBN(7500);
+
+      assert.equal(toBN(await policyBookMock.totalLiquidity()).toString(), totalLiquidity.toString());
+
+      await setCurrentTime(toBN(await liquidityMining.getEndLMTime()).plus(10));
+
+      const amountToWithdraw = liquidityAmount.plus(1000);
+      await policyBookMock.withdrawLiquidity(amountToWithdraw, {from: USER1});
+
+      assert.equal(toBN(await policyBookMock.totalLiquidity()).toString(),
+        totalLiquidity.minus(amountToWithdraw).toString());
+
+      assert.equal(toBN(await policyBookMock.balanceOf(USER1)).toString(),
+        totalLiquidity.minus(amountToWithdraw).toString());
+
+      assert.equal(toBN(await dai.balanceOf(USER1)).toString(),
+        daiAmount.minus(totalLiquidity.minus(amountToWithdraw)).toString());
+    });
+
+    it('should get exception, amount to be withdrawn is greater than the available amount', async () => {
       await setCurrentTime(1);
       await policyBookMock.addLiquidity(liquidityAmount, {from: USER1});
       await policyBookMock.addLiquidity(liquidityAmount, {from: USER2});
       assert.equal(toBN(await policyBookMock.totalLiquidity()).toString(), liquidityAmount.times(2).toString());
 
-      const reason = 'The amount to be withdrawn is greater than the deposited amount';
+      const reason = 'The amount to be withdrawn is greater than the available amount';
+      await truffleAssert.reverts(policyBookMock.withdrawLiquidity(liquidityAmount.plus(1), {from: USER1}), reason);
+    });
+
+    it('should get exception, amount to be withdrawn is greater than the deposited amount and 2 weeks has not expire', async () => {
+      await setCurrentTime(1);
+      await policyBookMock.addLiquidity(liquidityAmount, {from: USER1});
+      await liquidityMining.investDAI(0, liquidityAmount.div(2), policyBookMock.address, {from: USER1});
+      await policyBookMock.addLiquidity(liquidityAmount, {from: USER2});
+      assert.equal(toBN(await policyBookMock.totalLiquidity()).toString(), toBN(12500).toString());
+
+      const reason = 'The amount to be withdrawn is greater than the available amount';
       await truffleAssert.reverts(policyBookMock.withdrawLiquidity(liquidityAmount.plus(1), {from: USER1}), reason);
     });
 
@@ -309,7 +357,7 @@ contract('PolicyBook', async (accounts) => {
       await policyBookMock.buyPolicy(1, coverTokensAmount, {from: USER2});
       assert.equal(toBN(await policyBookMock.totalCoverTokens()).toString(), coverTokensAmount.toString());
 
-      const reason = 'Not enough available liquidity';
+      const reason = 'Not enough liquidity available';
       await truffleAssert.reverts(policyBookMock.withdrawLiquidity(amountToWithdraw.times(3), {from: USER1}), reason);
     });
 

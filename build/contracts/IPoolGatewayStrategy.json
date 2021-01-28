@@ -74,15 +74,15 @@
     "absolutePath": "/home/artem/Projects/Distributed_Lab/Applicature/bridgemutual-core/contracts/interfaces/IPoolGatewayStrategy.sol",
     "exportedSymbols": {
       "IPoolGatewayStrategy": [
-        3387
+        4888
       ]
     },
-    "id": 3388,
+    "id": 4889,
     "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 3362,
+        "id": 4863,
         "literals": [
           "solidity",
           "^",
@@ -90,7 +90,7 @@
           ".4"
         ],
         "nodeType": "PragmaDirective",
-        "src": "32:23:14"
+        "src": "32:23:16"
       },
       {
         "abstract": false,
@@ -98,39 +98,39 @@
         "contractDependencies": [],
         "contractKind": "interface",
         "fullyImplemented": false,
-        "id": 3387,
+        "id": 4888,
         "linearizedBaseContracts": [
-          3387
+          4888
         ],
         "name": "IPoolGatewayStrategy",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "documentation": {
-              "id": 3363,
+              "id": 4864,
               "nodeType": "StructuredDocumentation",
-              "src": "92:343:14",
+              "src": "92:343:16",
               "text": "@notice Calculate amount of tokens to be sent to pool, access: ANY\n @param _sender is address of sender\n @param _tokens is number of tokens received from sender\n @param _pool is address of pool\n @param _tokens is number of tokens received from sender\n @return _tokensFraction is number of tokens to be send to pool"
             },
             "functionSelector": "42f1f7e0",
-            "id": 3374,
+            "id": 4875,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "captureTokensAmount",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3370,
+              "id": 4871,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3365,
+                  "id": 4866,
                   "mutability": "mutable",
                   "name": "_sender",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3374,
-                  "src": "472:15:14",
+                  "scope": 4875,
+                  "src": "472:15:16",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -138,10 +138,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3364,
+                    "id": 4865,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "472:7:14",
+                    "src": "472:7:16",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -152,12 +152,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 3367,
+                  "id": 4868,
                   "mutability": "mutable",
                   "name": "_pool",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3374,
-                  "src": "493:13:14",
+                  "scope": 4875,
+                  "src": "493:13:16",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -165,10 +165,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3366,
+                    "id": 4867,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "493:7:14",
+                    "src": "493:7:16",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -179,12 +179,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 3369,
+                  "id": 4870,
                   "mutability": "mutable",
                   "name": "_tokens",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3374,
-                  "src": "512:15:14",
+                  "scope": 4875,
+                  "src": "512:15:16",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -192,10 +192,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 3368,
+                    "id": 4869,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "512:7:14",
+                    "src": "512:7:16",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -204,20 +204,20 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "466:65:14"
+              "src": "466:65:16"
             },
             "returnParameters": {
-              "id": 3373,
+              "id": 4874,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3372,
+                  "id": 4873,
                   "mutability": "mutable",
                   "name": "_tokensFraction",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3374,
-                  "src": "550:23:14",
+                  "scope": 4875,
+                  "src": "550:23:16",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -225,10 +225,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 3371,
+                    "id": 4872,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "550:7:14",
+                    "src": "550:7:16",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -237,40 +237,40 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "549:25:14"
+              "src": "549:25:16"
             },
-            "scope": 3387,
-            "src": "438:137:14",
+            "scope": 4888,
+            "src": "438:137:16",
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "external"
           },
           {
             "documentation": {
-              "id": 3375,
+              "id": 4876,
               "nodeType": "StructuredDocumentation",
-              "src": "579:296:14",
+              "src": "579:296:16",
               "text": "@notice Calculate amount of tokens to be released to receiver, access: ANY\n @param _receiver is address of receiver\n @param _tokens is number of tokens requested by sender\n @param _pool is address of pool\n @return _tokensFraction is number of tokens to be send to receiver"
             },
             "functionSelector": "b50a7013",
-            "id": 3386,
+            "id": 4887,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "releaseTokensAmount",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3382,
+              "id": 4883,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3377,
+                  "id": 4878,
                   "mutability": "mutable",
                   "name": "_receiver",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3386,
-                  "src": "912:17:14",
+                  "scope": 4887,
+                  "src": "912:17:16",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -278,10 +278,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3376,
+                    "id": 4877,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "912:7:14",
+                    "src": "912:7:16",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -292,12 +292,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 3379,
+                  "id": 4880,
                   "mutability": "mutable",
                   "name": "_pool",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3386,
-                  "src": "935:13:14",
+                  "scope": 4887,
+                  "src": "935:13:16",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -305,10 +305,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3378,
+                    "id": 4879,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "935:7:14",
+                    "src": "935:7:16",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -319,12 +319,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 3381,
+                  "id": 4882,
                   "mutability": "mutable",
                   "name": "_tokens",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3386,
-                  "src": "954:15:14",
+                  "scope": 4887,
+                  "src": "954:15:16",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -332,10 +332,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 3380,
+                    "id": 4881,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "954:7:14",
+                    "src": "954:7:16",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -344,20 +344,20 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "906:67:14"
+              "src": "906:67:16"
             },
             "returnParameters": {
-              "id": 3385,
+              "id": 4886,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3384,
+                  "id": 4885,
                   "mutability": "mutable",
                   "name": "_tokensFraction",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3386,
-                  "src": "992:23:14",
+                  "scope": 4887,
+                  "src": "992:23:16",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -365,10 +365,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 3383,
+                    "id": 4884,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "992:7:14",
+                    "src": "992:7:16",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -377,27 +377,27 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "991:25:14"
+              "src": "991:25:16"
             },
-            "scope": 3387,
-            "src": "878:139:14",
+            "scope": 4888,
+            "src": "878:139:16",
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "external"
           }
         ],
-        "scope": 3388,
-        "src": "57:962:14"
+        "scope": 4889,
+        "src": "57:962:16"
       }
     ],
-    "src": "32:988:14"
+    "src": "32:988:16"
   },
   "legacyAST": {
     "attributes": {
       "absolutePath": "/home/artem/Projects/Distributed_Lab/Applicature/bridgemutual-core/contracts/interfaces/IPoolGatewayStrategy.sol",
       "exportedSymbols": {
         "IPoolGatewayStrategy": [
-          3387
+          4888
         ]
       },
       "license": "MIT"
@@ -412,9 +412,9 @@
             ".4"
           ]
         },
-        "id": 3362,
+        "id": 4863,
         "name": "PragmaDirective",
-        "src": "32:23:14"
+        "src": "32:23:16"
       },
       {
         "attributes": {
@@ -428,10 +428,10 @@
           "contractKind": "interface",
           "fullyImplemented": false,
           "linearizedBaseContracts": [
-            3387
+            4888
           ],
           "name": "IPoolGatewayStrategy",
-          "scope": 3388
+          "scope": 4889
         },
         "children": [
           {
@@ -444,7 +444,7 @@
                 null
               ],
               "name": "captureTokensAmount",
-              "scope": 3387,
+              "scope": 4888,
               "stateMutability": "nonpayable",
               "virtual": false,
               "visibility": "external"
@@ -454,9 +454,9 @@
                 "attributes": {
                   "text": "@notice Calculate amount of tokens to be sent to pool, access: ANY\n @param _sender is address of sender\n @param _tokens is number of tokens received from sender\n @param _pool is address of pool\n @param _tokens is number of tokens received from sender\n @return _tokensFraction is number of tokens to be send to pool"
                 },
-                "id": 3363,
+                "id": 4864,
                 "name": "StructuredDocumentation",
-                "src": "92:343:14"
+                "src": "92:343:16"
               },
               {
                 "children": [
@@ -465,7 +465,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_sender",
-                      "scope": 3374,
+                      "scope": 4875,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -478,21 +478,21 @@
                           "stateMutability": "nonpayable",
                           "type": "address"
                         },
-                        "id": 3364,
+                        "id": 4865,
                         "name": "ElementaryTypeName",
-                        "src": "472:7:14"
+                        "src": "472:7:16"
                       }
                     ],
-                    "id": 3365,
+                    "id": 4866,
                     "name": "VariableDeclaration",
-                    "src": "472:15:14"
+                    "src": "472:15:16"
                   },
                   {
                     "attributes": {
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_pool",
-                      "scope": 3374,
+                      "scope": 4875,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -505,21 +505,21 @@
                           "stateMutability": "nonpayable",
                           "type": "address"
                         },
-                        "id": 3366,
+                        "id": 4867,
                         "name": "ElementaryTypeName",
-                        "src": "493:7:14"
+                        "src": "493:7:16"
                       }
                     ],
-                    "id": 3367,
+                    "id": 4868,
                     "name": "VariableDeclaration",
-                    "src": "493:13:14"
+                    "src": "493:13:16"
                   },
                   {
                     "attributes": {
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_tokens",
-                      "scope": 3374,
+                      "scope": 4875,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -531,19 +531,19 @@
                           "name": "uint256",
                           "type": "uint256"
                         },
-                        "id": 3368,
+                        "id": 4869,
                         "name": "ElementaryTypeName",
-                        "src": "512:7:14"
+                        "src": "512:7:16"
                       }
                     ],
-                    "id": 3369,
+                    "id": 4870,
                     "name": "VariableDeclaration",
-                    "src": "512:15:14"
+                    "src": "512:15:16"
                   }
                 ],
-                "id": 3370,
+                "id": 4871,
                 "name": "ParameterList",
-                "src": "466:65:14"
+                "src": "466:65:16"
               },
               {
                 "children": [
@@ -552,7 +552,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_tokensFraction",
-                      "scope": 3374,
+                      "scope": 4875,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -564,24 +564,24 @@
                           "name": "uint256",
                           "type": "uint256"
                         },
-                        "id": 3371,
+                        "id": 4872,
                         "name": "ElementaryTypeName",
-                        "src": "550:7:14"
+                        "src": "550:7:16"
                       }
                     ],
-                    "id": 3372,
+                    "id": 4873,
                     "name": "VariableDeclaration",
-                    "src": "550:23:14"
+                    "src": "550:23:16"
                   }
                 ],
-                "id": 3373,
+                "id": 4874,
                 "name": "ParameterList",
-                "src": "549:25:14"
+                "src": "549:25:16"
               }
             ],
-            "id": 3374,
+            "id": 4875,
             "name": "FunctionDefinition",
-            "src": "438:137:14"
+            "src": "438:137:16"
           },
           {
             "attributes": {
@@ -593,7 +593,7 @@
                 null
               ],
               "name": "releaseTokensAmount",
-              "scope": 3387,
+              "scope": 4888,
               "stateMutability": "nonpayable",
               "virtual": false,
               "visibility": "external"
@@ -603,9 +603,9 @@
                 "attributes": {
                   "text": "@notice Calculate amount of tokens to be released to receiver, access: ANY\n @param _receiver is address of receiver\n @param _tokens is number of tokens requested by sender\n @param _pool is address of pool\n @return _tokensFraction is number of tokens to be send to receiver"
                 },
-                "id": 3375,
+                "id": 4876,
                 "name": "StructuredDocumentation",
-                "src": "579:296:14"
+                "src": "579:296:16"
               },
               {
                 "children": [
@@ -614,7 +614,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_receiver",
-                      "scope": 3386,
+                      "scope": 4887,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -627,21 +627,21 @@
                           "stateMutability": "nonpayable",
                           "type": "address"
                         },
-                        "id": 3376,
+                        "id": 4877,
                         "name": "ElementaryTypeName",
-                        "src": "912:7:14"
+                        "src": "912:7:16"
                       }
                     ],
-                    "id": 3377,
+                    "id": 4878,
                     "name": "VariableDeclaration",
-                    "src": "912:17:14"
+                    "src": "912:17:16"
                   },
                   {
                     "attributes": {
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_pool",
-                      "scope": 3386,
+                      "scope": 4887,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -654,21 +654,21 @@
                           "stateMutability": "nonpayable",
                           "type": "address"
                         },
-                        "id": 3378,
+                        "id": 4879,
                         "name": "ElementaryTypeName",
-                        "src": "935:7:14"
+                        "src": "935:7:16"
                       }
                     ],
-                    "id": 3379,
+                    "id": 4880,
                     "name": "VariableDeclaration",
-                    "src": "935:13:14"
+                    "src": "935:13:16"
                   },
                   {
                     "attributes": {
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_tokens",
-                      "scope": 3386,
+                      "scope": 4887,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -680,19 +680,19 @@
                           "name": "uint256",
                           "type": "uint256"
                         },
-                        "id": 3380,
+                        "id": 4881,
                         "name": "ElementaryTypeName",
-                        "src": "954:7:14"
+                        "src": "954:7:16"
                       }
                     ],
-                    "id": 3381,
+                    "id": 4882,
                     "name": "VariableDeclaration",
-                    "src": "954:15:14"
+                    "src": "954:15:16"
                   }
                 ],
-                "id": 3382,
+                "id": 4883,
                 "name": "ParameterList",
-                "src": "906:67:14"
+                "src": "906:67:16"
               },
               {
                 "children": [
@@ -701,7 +701,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_tokensFraction",
-                      "scope": 3386,
+                      "scope": 4887,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -713,34 +713,34 @@
                           "name": "uint256",
                           "type": "uint256"
                         },
-                        "id": 3383,
+                        "id": 4884,
                         "name": "ElementaryTypeName",
-                        "src": "992:7:14"
+                        "src": "992:7:16"
                       }
                     ],
-                    "id": 3384,
+                    "id": 4885,
                     "name": "VariableDeclaration",
-                    "src": "992:23:14"
+                    "src": "992:23:16"
                   }
                 ],
-                "id": 3385,
+                "id": 4886,
                 "name": "ParameterList",
-                "src": "991:25:14"
+                "src": "991:25:16"
               }
             ],
-            "id": 3386,
+            "id": 4887,
             "name": "FunctionDefinition",
-            "src": "878:139:14"
+            "src": "878:139:16"
           }
         ],
-        "id": 3387,
+        "id": 4888,
         "name": "ContractDefinition",
-        "src": "57:962:14"
+        "src": "57:962:16"
       }
     ],
-    "id": 3388,
+    "id": 4889,
     "name": "SourceUnit",
-    "src": "32:988:14"
+    "src": "32:988:16"
   },
   "compiler": {
     "name": "solc",
@@ -748,7 +748,7 @@
   },
   "networks": {},
   "schemaVersion": "3.3.3",
-  "updatedAt": "2021-01-28T11:21:06.225Z",
+  "updatedAt": "2021-01-28T13:34:56.751Z",
   "devdoc": {
     "kind": "dev",
     "methods": {

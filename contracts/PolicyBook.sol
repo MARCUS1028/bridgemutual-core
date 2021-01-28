@@ -9,10 +9,11 @@ import "@openzeppelin/contracts/math/Math.sol";
 import "./interfaces/IPolicyBook.sol";
 import "./interfaces/IPolicyBookFabric.sol";
 
+import "./LiquidityMining.sol";
 import "./ContractsRegistry.sol";
-import "./tokens/ERC1155NFTMintableBurnable.sol";
+import "./tokens/ERC1155UltraNFTMintableBurnable.sol";
 
-contract PolicyBook is IPolicyBook, ERC1155NFTMintableBurnable {
+contract PolicyBook is IPolicyBook, ERC1155UltraNFTMintableBurnable {
   using SafeMath for uint256;
   using Math for uint256;
 
@@ -21,13 +22,15 @@ contract PolicyBook is IPolicyBook, ERC1155NFTMintableBurnable {
   ContractsRegistry public contractsRegistry;
 
   address public override insuranceContractAddress;
+
   IPolicyBookFabric.ContractType public override contractType;
   
   IERC20 public daiToken;
   address public bmiDaiStakingAddress;
+  LiquidityMining public liquidityMining;
 
   uint256 public totalLiquidity;
-  uint256 public totalCoverTokens;
+  uint256 public totalCoverTokens;  
 
   struct PolicyHolder {
     uint256 coverTokens;
@@ -35,17 +38,24 @@ contract PolicyBook is IPolicyBook, ERC1155NFTMintableBurnable {
   }
 
   mapping(address => PolicyHolder) public policyHolders;
+  mapping(address => uint256) public liquidityFromLM;
 
   event AddLiquidity(address _liquidityHolder, uint256 _liqudityAmount, uint256 _newTotalLiquidity);
   event WithdrawLiquidity(address _liquidityHolder, uint256 _tokensToWithdraw, uint256 _newTotalLiquidity);
   event BuyPolicy(address _policyHolder, uint256 _coverTokens, uint256 _price, uint256 _newTotalCoverTokens);
+
+  modifier onlyLiquidityMining() {
+    require(msg.sender == address(liquidityMining),
+      "The caller does not have access, only liquidity mining has");
+    _;
+  }
 
   constructor(    
     address _insuranceContract,
     IPolicyBookFabric.ContractType _contractType,    
     string memory _description,
     string memory _projectSymbol
-  ) ERC1155NFTMintableBurnable(_description, string(abi.encodePacked("bmiDAI", _projectSymbol))) {    
+  ) ERC1155UltraNFTMintableBurnable(_description, string(abi.encodePacked("bmiDAI", _projectSymbol))) {    
     insuranceContractAddress = _insuranceContract;
     contractType = _contractType;       
   }
@@ -54,7 +64,8 @@ contract PolicyBook is IPolicyBook, ERC1155NFTMintableBurnable {
     contractsRegistry = _contractsRegistry;
     
     daiToken = IERC20(_contractsRegistry.getContract(_contractsRegistry.getDAIName()));
-    bmiDaiStakingAddress = contractsRegistry.getContract(contractsRegistry.getBmiDAIStakingName());    
+    bmiDaiStakingAddress = contractsRegistry.getContract(contractsRegistry.getBMIDAIStakingName()); 
+    liquidityMining = LiquidityMining(contractsRegistry.getContract(contractsRegistry.getLiquidityMiningName()));
   }  
 
   function approveAllDaiTokensForStakingAndTransferOwnership() external onlyOwner {
@@ -63,8 +74,6 @@ contract PolicyBook is IPolicyBook, ERC1155NFTMintableBurnable {
 
     transferOwnership(bmiDaiStakingAddress);
   }
-
-  receive() external payable {}
 
   function quoteStrategy() external view override returns (address _quoteStrategy) {
     return address(0);
@@ -142,29 +151,45 @@ contract PolicyBook is IPolicyBook, ERC1155NFTMintableBurnable {
   }
 
   function addLiquidity(uint256 _liqudityAmount) external override {
-    _addLiquidityFor(msg.sender, _liqudityAmount);
+    _addLiquidityFor(msg.sender, _liqudityAmount, false);
+  }
+
+  function addLiquidityFromLM(
+    address _liquidityHolderAddr, 
+    uint256 _liqudityAmount
+  ) onlyLiquidityMining external override {
+    _addLiquidityFor(_liquidityHolderAddr, _liqudityAmount, true);
   }
 
   function addLiquidityFor(address _liquidityHolderAddr, uint256 _liqudityAmount) external override {
-    _addLiquidityFor(_liquidityHolderAddr, _liqudityAmount);
+    _addLiquidityFor(_liquidityHolderAddr, _liqudityAmount, false);
   }
 
-  function _addLiquidityFor(address _liquidityHolderAddr, uint256 _liqudityAmount) internal {
+  function _addLiquidityFor(address _liquidityHolderAddr, uint256 _liqudityAmount, bool _isLM) internal {
     bool _success = daiToken.transferFrom(_liquidityHolderAddr, address(this), _liqudityAmount);
     require(_success, "Failed to transfer DAI tokens");
 
     totalLiquidity = totalLiquidity.add(_liqudityAmount);
     _mintERC20(_liquidityHolderAddr, _liqudityAmount);
 
+    if (_isLM) {
+      liquidityFromLM[_liquidityHolderAddr] = liquidityFromLM[_liquidityHolderAddr].add(_liqudityAmount);
+    }
+
     emit AddLiquidity(_liquidityHolderAddr, _liqudityAmount, totalLiquidity);
   }
 
   function withdrawLiquidity(uint256 _tokensToWithdraw) external override {
-    require(
-      balanceOf(msg.sender) >= _tokensToWithdraw,
-      "The amount to be withdrawn is greater than the deposited amount"
-    );
-    require(totalLiquidity.sub(_tokensToWithdraw) >= totalCoverTokens, "Not enough available liquidity");
+    uint256 _availableBalance = balanceOf(msg.sender);
+
+    if (block.timestamp < liquidityMining.getEndLMTime()) {
+      _availableBalance = _availableBalance.sub(liquidityFromLM[msg.sender]);
+    }
+
+    require(_availableBalance >= _tokensToWithdraw,
+      "The amount to be withdrawn is greater than the available amount");
+    require(totalLiquidity.sub(_tokensToWithdraw) >= totalCoverTokens, 
+      "Not enough liquidity available");
 
     bool _success = daiToken.transfer(msg.sender, _tokensToWithdraw);
     require(_success, "Failed to transfer DAI tokens");

@@ -2,11 +2,11 @@
 pragma solidity ^0.7.4;
 pragma experimental ABIEncoderV2;
 
-import "../tokens/ERC1155.sol";
+import "../tokens/ERC1155Ultra.sol";
 
-contract ERC1155Mock is ERC1155 {
+contract ERC1155UltraMock is ERC1155Ultra {
 
-    constructor() ERC1155("ERC1155Mock", "M1155") {}
+    constructor() ERC1155Ultra("ERC1155Mock", "M1155") {}
 
     function mint(uint256 id, uint256 amount) public {
         _mint(_msgSender(), id, amount, "");

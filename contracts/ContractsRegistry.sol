@@ -16,6 +16,8 @@ contract ContractsRegistry is Ownable, AccessControl {
     string constant private YIELD_GENERATOR_NAME = "YIELD_GENERATOR";
     string constant private DAI_NAME = "DAI";
     string constant private BMI_NAME = "BMI";
+    string constant private LIQUIDITY_MINING_NFT_NAME = "LIQ_MINING_NFT";
+    string constant private LIQUIDITY_MINING_NAME = "LIQ_MINING";
 
     modifier onlyAdmin() {
         require(hasRole(REGISTRY_ADMIN_ROLE, msg.sender), "ContractsRegistry: Caller is not an admin");
@@ -43,12 +45,20 @@ contract ContractsRegistry is Ownable, AccessControl {
         return POLICY_BOOK_FABRIC_NAME;
     }
 
-    function getBmiDAIStakingName() external pure returns (string memory) {
+    function getBMIDAIStakingName() external pure returns (string memory) {
         return BMI_DAI_STAKING_NAME;
     }
 
     function getYieldGeneratorName() external pure returns (string memory) {
         return YIELD_GENERATOR_NAME;
+    }
+
+    function getLiquidityMiningNFTName() external pure returns (string memory) {
+        return LIQUIDITY_MINING_NFT_NAME;
+    }
+
+    function getLiquidityMiningName() external pure returns (string memory) {
+        return LIQUIDITY_MINING_NAME;
     }
 
     function getContract(string memory _name) public view returns (address) {

@@ -40,17 +40,17 @@ module.exports = async (deployer, network, accounts) => {
   const smallLiquidity = 100;
   const bigLiquidity = 1000000;
   
-  console.log("Deploying PolicyBook...");
+  console.log("\nDeploying PolicyBook...\n");
   const emptyPolicyBook = await PolicyBook.at(emptyPolicyBookAddress);
 
   console.log(emptyPolicyBookAddress + " - empty PolicyBook\n");
 
-  console.log("Deploying PolicyBook...");
+  console.log("\nDeploying PolicyBook...\n");
   const smallPolicyBook = await PolicyBook.at(smallPolicyBookAddress);
   
   console.log(smallPolicyBookAddress + " - small PolicyBook with " + smallLiquidity + " DAI\n");
 
-  console.log("Deploying PolicyBook...");
+  console.log("\nDeploying PolicyBook...\n");
   const bigPolicyBook = await PolicyBook.at(bigPolicyBookAddress);
 
   console.log(bigPolicyBookAddress + " - big PolicyBook with " + bigLiquidity + " DAI\n");

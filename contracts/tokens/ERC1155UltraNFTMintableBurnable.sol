@@ -4,10 +4,10 @@ pragma experimental ABIEncoderV2;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-import "./ERC1155.sol";
+import "./ERC1155Ultra.sol";
 
-contract ERC1155NFTMintableBurnable is ERC1155, Ownable {
-    constructor (string memory name_, string memory symbol_) ERC1155(name_, symbol_) {}
+contract ERC1155UltraNFTMintableBurnable is ERC1155Ultra, Ownable {
+    constructor (string memory name_, string memory symbol_) ERC1155Ultra(name_, symbol_) {}
 
     function mintNFT(address account, uint256 id, uint256 amount, bytes memory data) external onlyOwner {
         _mint(account, id, amount, data);

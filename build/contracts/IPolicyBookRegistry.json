@@ -237,18 +237,18 @@
     "absolutePath": "/home/artem/Projects/Distributed_Lab/Applicature/bridgemutual-core/contracts/interfaces/IPolicyBookRegistry.sol",
     "exportedSymbols": {
       "IPolicyBookFabric": [
-        3132
+        4633
       ],
       "IPolicyBookRegistry": [
-        3250
+        4751
       ]
     },
-    "id": 3251,
+    "id": 4752,
     "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 3134,
+        "id": 4635,
         "literals": [
           "solidity",
           "^",
@@ -256,25 +256,25 @@
           ".4"
         ],
         "nodeType": "PragmaDirective",
-        "src": "32:23:11"
+        "src": "32:23:13"
       },
       {
-        "id": 3135,
+        "id": 4636,
         "literals": [
           "experimental",
           "ABIEncoderV2"
         ],
         "nodeType": "PragmaDirective",
-        "src": "56:33:11"
+        "src": "56:33:13"
       },
       {
         "absolutePath": "/home/artem/Projects/Distributed_Lab/Applicature/bridgemutual-core/contracts/interfaces/IPolicyBookFabric.sol",
         "file": "./IPolicyBookFabric.sol",
-        "id": 3136,
+        "id": 4637,
         "nodeType": "ImportDirective",
-        "scope": 3251,
-        "sourceUnit": 3133,
-        "src": "91:33:11",
+        "scope": 4752,
+        "sourceUnit": 4634,
+        "src": "91:33:13",
         "symbolAliases": [],
         "unitAlias": ""
       },
@@ -284,39 +284,39 @@
         "contractDependencies": [],
         "contractKind": "interface",
         "fullyImplemented": false,
-        "id": 3250,
+        "id": 4751,
         "linearizedBaseContracts": [
-          3250
+          4751
         ],
         "name": "IPolicyBookRegistry",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "documentation": {
-              "id": 3137,
+              "id": 4638,
               "nodeType": "StructuredDocumentation",
-              "src": "160:61:11",
+              "src": "160:61:13",
               "text": "@notice Adds PolicyBook to registry, access: PolicyFabric"
             },
             "functionSelector": "52c28fab",
-            "id": 3144,
+            "id": 4645,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "add",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3142,
+              "id": 4643,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3139,
+                  "id": 4640,
                   "mutability": "mutable",
                   "name": "_insuredContract",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3144,
-                  "src": "237:24:11",
+                  "scope": 4645,
+                  "src": "237:24:13",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -324,10 +324,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3138,
+                    "id": 4639,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "237:7:11",
+                    "src": "237:7:13",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -338,12 +338,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 3141,
+                  "id": 4642,
                   "mutability": "mutable",
                   "name": "_policyBook",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3144,
-                  "src": "263:19:11",
+                  "scope": 4645,
+                  "src": "263:19:13",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -351,10 +351,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3140,
+                    "id": 4641,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "263:7:11",
+                    "src": "263:7:13",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -364,52 +364,52 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "236:47:11"
+              "src": "236:47:13"
             },
             "returnParameters": {
-              "id": 3143,
+              "id": 4644,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "292:0:11"
+              "src": "292:0:13"
             },
-            "scope": 3250,
-            "src": "224:69:11",
+            "scope": 4751,
+            "src": "224:69:13",
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "external"
           },
           {
             "documentation": {
-              "id": 3145,
+              "id": 4646,
               "nodeType": "StructuredDocumentation",
-              "src": "297:122:11",
+              "src": "297:122:13",
               "text": "@notice Returns number of registered PolicyBooks, access: ANY\n @return _policyBooksCount is number of PolicyBooks"
             },
             "functionSelector": "06661abd",
-            "id": 3150,
+            "id": 4651,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "count",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3146,
+              "id": 4647,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "436:2:11"
+              "src": "436:2:13"
             },
             "returnParameters": {
-              "id": 3149,
+              "id": 4650,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3148,
+                  "id": 4649,
                   "mutability": "mutable",
                   "name": "_policyBooksCount",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3150,
-                  "src": "462:25:11",
+                  "scope": 4651,
+                  "src": "462:25:13",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -417,10 +417,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 3147,
+                    "id": 4648,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "462:7:11",
+                    "src": "462:7:13",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -429,40 +429,40 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "461:27:11"
+              "src": "461:27:13"
             },
-            "scope": 3250,
-            "src": "422:67:11",
+            "scope": 4751,
+            "src": "422:67:13",
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
           },
           {
             "documentation": {
-              "id": 3151,
+              "id": 4652,
               "nodeType": "StructuredDocumentation",
-              "src": "493:211:11",
+              "src": "493:211:13",
               "text": "@notice Listing registered PolicyBooks, access: ANY\n @return _policyBooksCount is count of returned registered PolicyBook addresses\n @return _policyBooks is array of registered PolicyBook addresses"
             },
             "functionSelector": "50fd7367",
-            "id": 3163,
+            "id": 4664,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "list",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3156,
+              "id": 4657,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3153,
+                  "id": 4654,
                   "mutability": "mutable",
                   "name": "_offset",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3163,
-                  "src": "721:15:11",
+                  "scope": 4664,
+                  "src": "721:15:13",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -470,10 +470,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 3152,
+                    "id": 4653,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "721:7:11",
+                    "src": "721:7:13",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -483,12 +483,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 3155,
+                  "id": 4656,
                   "mutability": "mutable",
                   "name": "_limit",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3163,
-                  "src": "738:14:11",
+                  "scope": 4664,
+                  "src": "738:14:13",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -496,10 +496,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 3154,
+                    "id": 4655,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "738:7:11",
+                    "src": "738:7:13",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -508,20 +508,20 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "720:33:11"
+              "src": "720:33:13"
             },
             "returnParameters": {
-              "id": 3162,
+              "id": 4663,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3158,
+                  "id": 4659,
                   "mutability": "mutable",
                   "name": "_policyBooksCount",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3163,
-                  "src": "789:25:11",
+                  "scope": 4664,
+                  "src": "789:25:13",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -529,10 +529,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 3157,
+                    "id": 4658,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "789:7:11",
+                    "src": "789:7:13",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -542,12 +542,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 3161,
+                  "id": 4662,
                   "mutability": "mutable",
                   "name": "_policyBooks",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3163,
-                  "src": "816:29:11",
+                  "scope": 4664,
+                  "src": "816:29:13",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
@@ -556,19 +556,19 @@
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 3159,
+                      "id": 4660,
                       "name": "address",
                       "nodeType": "ElementaryTypeName",
-                      "src": "816:7:11",
+                      "src": "816:7:13",
                       "stateMutability": "nonpayable",
                       "typeDescriptions": {
                         "typeIdentifier": "t_address",
                         "typeString": "address"
                       }
                     },
-                    "id": 3160,
+                    "id": 4661,
                     "nodeType": "ArrayTypeName",
-                    "src": "816:9:11",
+                    "src": "816:9:13",
                     "typeDescriptions": {
                       "typeIdentifier": "t_array$_t_address_$dyn_storage_ptr",
                       "typeString": "address[]"
@@ -577,40 +577,40 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "788:58:11"
+              "src": "788:58:13"
             },
-            "scope": 3250,
-            "src": "707:140:11",
+            "scope": 4751,
+            "src": "707:140:13",
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
           },
           {
             "documentation": {
-              "id": 3164,
+              "id": 4665,
               "nodeType": "StructuredDocumentation",
-              "src": "851:589:11",
+              "src": "851:589:13",
               "text": "@notice Listing registered PolicyBooks, access: ANY\n @return _policyBooksCount is count of returned registered PolicyBook addresses\n @return _policyBooks is array of registered PolicyBook addresses\n @return _names is an array of PolicyBooks names\n @return _insuredContracts is array of insured contracts\n @return _contractTypes is an array of insured contract types\n @return _maxCapacities is an array of max token amount that a user can buy\n @return _totalDaiLiquidity is an array of liquidities\n @return _annualProfitYields is an array of APYs"
             },
             "functionSelector": "c85b4e14",
-            "id": 3194,
+            "id": 4695,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "listWithStats",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3169,
+              "id": 4670,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3166,
+                  "id": 4667,
                   "mutability": "mutable",
                   "name": "_offset",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3194,
-                  "src": "1466:15:11",
+                  "scope": 4695,
+                  "src": "1466:15:13",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -618,10 +618,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 3165,
+                    "id": 4666,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1466:7:11",
+                    "src": "1466:7:13",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -631,12 +631,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 3168,
+                  "id": 4669,
                   "mutability": "mutable",
                   "name": "_limit",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3194,
-                  "src": "1483:14:11",
+                  "scope": 4695,
+                  "src": "1483:14:13",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -644,10 +644,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 3167,
+                    "id": 4668,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1483:7:11",
+                    "src": "1483:7:13",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -656,20 +656,20 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1465:33:11"
+              "src": "1465:33:13"
             },
             "returnParameters": {
-              "id": 3193,
+              "id": 4694,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3171,
+                  "id": 4672,
                   "mutability": "mutable",
                   "name": "_policyBooksCount",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3194,
-                  "src": "1541:25:11",
+                  "scope": 4695,
+                  "src": "1541:25:13",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -677,10 +677,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 3170,
+                    "id": 4671,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1541:7:11",
+                    "src": "1541:7:13",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -690,12 +690,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 3174,
+                  "id": 4675,
                   "mutability": "mutable",
                   "name": "_policyBooks",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3194,
-                  "src": "1575:29:11",
+                  "scope": 4695,
+                  "src": "1575:29:13",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
@@ -704,19 +704,19 @@
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 3172,
+                      "id": 4673,
                       "name": "address",
                       "nodeType": "ElementaryTypeName",
-                      "src": "1575:7:11",
+                      "src": "1575:7:13",
                       "stateMutability": "nonpayable",
                       "typeDescriptions": {
                         "typeIdentifier": "t_address",
                         "typeString": "address"
                       }
                     },
-                    "id": 3173,
+                    "id": 4674,
                     "nodeType": "ArrayTypeName",
-                    "src": "1575:9:11",
+                    "src": "1575:9:13",
                     "typeDescriptions": {
                       "typeIdentifier": "t_array$_t_address_$dyn_storage_ptr",
                       "typeString": "address[]"
@@ -726,12 +726,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 3177,
+                  "id": 4678,
                   "mutability": "mutable",
                   "name": "_names",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3194,
-                  "src": "1612:22:11",
+                  "scope": 4695,
+                  "src": "1612:22:13",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
@@ -740,18 +740,18 @@
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 3175,
+                      "id": 4676,
                       "name": "string",
                       "nodeType": "ElementaryTypeName",
-                      "src": "1612:6:11",
+                      "src": "1612:6:13",
                       "typeDescriptions": {
                         "typeIdentifier": "t_string_storage_ptr",
                         "typeString": "string"
                       }
                     },
-                    "id": 3176,
+                    "id": 4677,
                     "nodeType": "ArrayTypeName",
-                    "src": "1612:8:11",
+                    "src": "1612:8:13",
                     "typeDescriptions": {
                       "typeIdentifier": "t_array$_t_string_storage_$dyn_storage_ptr",
                       "typeString": "string[]"
@@ -761,12 +761,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 3180,
+                  "id": 4681,
                   "mutability": "mutable",
                   "name": "_insuredContracts",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3194,
-                  "src": "1642:34:11",
+                  "scope": 4695,
+                  "src": "1642:34:13",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
@@ -775,19 +775,19 @@
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 3178,
+                      "id": 4679,
                       "name": "address",
                       "nodeType": "ElementaryTypeName",
-                      "src": "1642:7:11",
+                      "src": "1642:7:13",
                       "stateMutability": "nonpayable",
                       "typeDescriptions": {
                         "typeIdentifier": "t_address",
                         "typeString": "address"
                       }
                     },
-                    "id": 3179,
+                    "id": 4680,
                     "nodeType": "ArrayTypeName",
-                    "src": "1642:9:11",
+                    "src": "1642:9:13",
                     "typeDescriptions": {
                       "typeIdentifier": "t_array$_t_address_$dyn_storage_ptr",
                       "typeString": "address[]"
@@ -797,35 +797,35 @@
                 },
                 {
                   "constant": false,
-                  "id": 3183,
+                  "id": 4684,
                   "mutability": "mutable",
                   "name": "_contractTypes",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3194,
-                  "src": "1684:54:11",
+                  "scope": 4695,
+                  "src": "1684:54:13",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_array$_t_enum$_ContractType_$3090_$dyn_memory_ptr",
+                    "typeIdentifier": "t_array$_t_enum$_ContractType_$4591_$dyn_memory_ptr",
                     "typeString": "enum IPolicyBookFabric.ContractType[]"
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 3181,
+                      "id": 4682,
                       "name": "IPolicyBookFabric.ContractType",
                       "nodeType": "UserDefinedTypeName",
-                      "referencedDeclaration": 3090,
-                      "src": "1684:30:11",
+                      "referencedDeclaration": 4591,
+                      "src": "1684:30:13",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_enum$_ContractType_$3090",
+                        "typeIdentifier": "t_enum$_ContractType_$4591",
                         "typeString": "enum IPolicyBookFabric.ContractType"
                       }
                     },
-                    "id": 3182,
+                    "id": 4683,
                     "nodeType": "ArrayTypeName",
-                    "src": "1684:32:11",
+                    "src": "1684:32:13",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_array$_t_enum$_ContractType_$3090_$dyn_storage_ptr",
+                      "typeIdentifier": "t_array$_t_enum$_ContractType_$4591_$dyn_storage_ptr",
                       "typeString": "enum IPolicyBookFabric.ContractType[]"
                     }
                   },
@@ -833,12 +833,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 3186,
+                  "id": 4687,
                   "mutability": "mutable",
                   "name": "_maxCapacities",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3194,
-                  "src": "1746:31:11",
+                  "scope": 4695,
+                  "src": "1746:31:13",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
@@ -847,18 +847,18 @@
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 3184,
+                      "id": 4685,
                       "name": "uint256",
                       "nodeType": "ElementaryTypeName",
-                      "src": "1746:7:11",
+                      "src": "1746:7:13",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
                       }
                     },
-                    "id": 3185,
+                    "id": 4686,
                     "nodeType": "ArrayTypeName",
-                    "src": "1746:9:11",
+                    "src": "1746:9:13",
                     "typeDescriptions": {
                       "typeIdentifier": "t_array$_t_uint256_$dyn_storage_ptr",
                       "typeString": "uint256[]"
@@ -868,12 +868,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 3189,
+                  "id": 4690,
                   "mutability": "mutable",
                   "name": "_totalDaiLiquidity",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3194,
-                  "src": "1785:35:11",
+                  "scope": 4695,
+                  "src": "1785:35:13",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
@@ -882,18 +882,18 @@
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 3187,
+                      "id": 4688,
                       "name": "uint256",
                       "nodeType": "ElementaryTypeName",
-                      "src": "1785:7:11",
+                      "src": "1785:7:13",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
                       }
                     },
-                    "id": 3188,
+                    "id": 4689,
                     "nodeType": "ArrayTypeName",
-                    "src": "1785:9:11",
+                    "src": "1785:9:13",
                     "typeDescriptions": {
                       "typeIdentifier": "t_array$_t_uint256_$dyn_storage_ptr",
                       "typeString": "uint256[]"
@@ -903,12 +903,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 3192,
+                  "id": 4693,
                   "mutability": "mutable",
                   "name": "_annualProfitYields",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3194,
-                  "src": "1828:36:11",
+                  "scope": 4695,
+                  "src": "1828:36:13",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
@@ -917,18 +917,18 @@
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 3190,
+                      "id": 4691,
                       "name": "uint256",
                       "nodeType": "ElementaryTypeName",
-                      "src": "1828:7:11",
+                      "src": "1828:7:13",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
                       }
                     },
-                    "id": 3191,
+                    "id": 4692,
                     "nodeType": "ArrayTypeName",
-                    "src": "1828:9:11",
+                    "src": "1828:9:13",
                     "typeDescriptions": {
                       "typeIdentifier": "t_array$_t_uint256_$dyn_storage_ptr",
                       "typeString": "uint256[]"
@@ -937,40 +937,40 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1533:343:11"
+              "src": "1533:343:13"
             },
-            "scope": 3250,
-            "src": "1443:434:11",
+            "scope": 4751,
+            "src": "1443:434:13",
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
           },
           {
             "documentation": {
-              "id": 3195,
+              "id": 4696,
               "nodeType": "StructuredDocumentation",
-              "src": "1881:259:11",
+              "src": "1881:259:13",
               "text": "@notice Return existing Policy Book contract, access: ANY\n @param _contract is contract address to lookup for created IPolicyBook\n @return _policyBook is policy book address if exists for passed contract address, if not it will return address(0)"
             },
             "functionSelector": "217c1552",
-            "id": 3202,
+            "id": 4703,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "policyBookFor",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3198,
+              "id": 4699,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3197,
+                  "id": 4698,
                   "mutability": "mutable",
                   "name": "_contract",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3202,
-                  "src": "2166:17:11",
+                  "scope": 4703,
+                  "src": "2166:17:13",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -978,10 +978,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3196,
+                    "id": 4697,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "2166:7:11",
+                    "src": "2166:7:13",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -991,20 +991,20 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "2165:19:11"
+              "src": "2165:19:13"
             },
             "returnParameters": {
-              "id": 3201,
+              "id": 4702,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3200,
+                  "id": 4701,
                   "mutability": "mutable",
                   "name": "_policyBook",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3202,
-                  "src": "2208:19:11",
+                  "scope": 4703,
+                  "src": "2208:19:13",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1012,10 +1012,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3199,
+                    "id": 4700,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "2208:7:11",
+                    "src": "2208:7:13",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -1025,40 +1025,40 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "2207:21:11"
+              "src": "2207:21:13"
             },
-            "scope": 3250,
-            "src": "2143:86:11",
+            "scope": 4751,
+            "src": "2143:86:13",
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
           },
           {
             "documentation": {
-              "id": 3203,
+              "id": 4704,
               "nodeType": "StructuredDocumentation",
-              "src": "2233:553:11",
+              "src": "2233:553:13",
               "text": "@notice Getting stats from policy books, access: ANY\n @param _policyBooks is list of PolicyBooks addresses\n @return _names is array of names per PolicyBooks\n @return _insuredContracts is array of insured contracts per PolicyBooks\n @return _contractTypes is array of insured contracts per PolicyBooks\n @return _maxCapacities is array of max capacities per PolicyBooks\n @return _totalDaiLiquidity is array of DAI liquidity per PolicyBooks\n @return _annualProfitYields is array of annual profit yields per PolicyBooks"
             },
             "functionSelector": "f10ed7a3",
-            "id": 3227,
+            "id": 4728,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "stats",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3207,
+              "id": 4708,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3206,
+                  "id": 4707,
                   "mutability": "mutable",
                   "name": "_policyBooks",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3227,
-                  "src": "2804:31:11",
+                  "scope": 4728,
+                  "src": "2804:31:13",
                   "stateVariable": false,
                   "storageLocation": "calldata",
                   "typeDescriptions": {
@@ -1067,19 +1067,19 @@
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 3204,
+                      "id": 4705,
                       "name": "address",
                       "nodeType": "ElementaryTypeName",
-                      "src": "2804:7:11",
+                      "src": "2804:7:13",
                       "stateMutability": "nonpayable",
                       "typeDescriptions": {
                         "typeIdentifier": "t_address",
                         "typeString": "address"
                       }
                     },
-                    "id": 3205,
+                    "id": 4706,
                     "nodeType": "ArrayTypeName",
-                    "src": "2804:9:11",
+                    "src": "2804:9:13",
                     "typeDescriptions": {
                       "typeIdentifier": "t_array$_t_address_$dyn_storage_ptr",
                       "typeString": "address[]"
@@ -1088,20 +1088,20 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "2803:33:11"
+              "src": "2803:33:13"
             },
             "returnParameters": {
-              "id": 3226,
+              "id": 4727,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3210,
+                  "id": 4711,
                   "mutability": "mutable",
                   "name": "_names",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3227,
-                  "src": "2879:22:11",
+                  "scope": 4728,
+                  "src": "2879:22:13",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
@@ -1110,18 +1110,18 @@
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 3208,
+                      "id": 4709,
                       "name": "string",
                       "nodeType": "ElementaryTypeName",
-                      "src": "2879:6:11",
+                      "src": "2879:6:13",
                       "typeDescriptions": {
                         "typeIdentifier": "t_string_storage_ptr",
                         "typeString": "string"
                       }
                     },
-                    "id": 3209,
+                    "id": 4710,
                     "nodeType": "ArrayTypeName",
-                    "src": "2879:8:11",
+                    "src": "2879:8:13",
                     "typeDescriptions": {
                       "typeIdentifier": "t_array$_t_string_storage_$dyn_storage_ptr",
                       "typeString": "string[]"
@@ -1131,12 +1131,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 3213,
+                  "id": 4714,
                   "mutability": "mutable",
                   "name": "_insuredContracts",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3227,
-                  "src": "2909:34:11",
+                  "scope": 4728,
+                  "src": "2909:34:13",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
@@ -1145,19 +1145,19 @@
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 3211,
+                      "id": 4712,
                       "name": "address",
                       "nodeType": "ElementaryTypeName",
-                      "src": "2909:7:11",
+                      "src": "2909:7:13",
                       "stateMutability": "nonpayable",
                       "typeDescriptions": {
                         "typeIdentifier": "t_address",
                         "typeString": "address"
                       }
                     },
-                    "id": 3212,
+                    "id": 4713,
                     "nodeType": "ArrayTypeName",
-                    "src": "2909:9:11",
+                    "src": "2909:9:13",
                     "typeDescriptions": {
                       "typeIdentifier": "t_array$_t_address_$dyn_storage_ptr",
                       "typeString": "address[]"
@@ -1167,35 +1167,35 @@
                 },
                 {
                   "constant": false,
-                  "id": 3216,
+                  "id": 4717,
                   "mutability": "mutable",
                   "name": "_contractTypes",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3227,
-                  "src": "2951:54:11",
+                  "scope": 4728,
+                  "src": "2951:54:13",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_array$_t_enum$_ContractType_$3090_$dyn_memory_ptr",
+                    "typeIdentifier": "t_array$_t_enum$_ContractType_$4591_$dyn_memory_ptr",
                     "typeString": "enum IPolicyBookFabric.ContractType[]"
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 3214,
+                      "id": 4715,
                       "name": "IPolicyBookFabric.ContractType",
                       "nodeType": "UserDefinedTypeName",
-                      "referencedDeclaration": 3090,
-                      "src": "2951:30:11",
+                      "referencedDeclaration": 4591,
+                      "src": "2951:30:13",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_enum$_ContractType_$3090",
+                        "typeIdentifier": "t_enum$_ContractType_$4591",
                         "typeString": "enum IPolicyBookFabric.ContractType"
                       }
                     },
-                    "id": 3215,
+                    "id": 4716,
                     "nodeType": "ArrayTypeName",
-                    "src": "2951:32:11",
+                    "src": "2951:32:13",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_array$_t_enum$_ContractType_$3090_$dyn_storage_ptr",
+                      "typeIdentifier": "t_array$_t_enum$_ContractType_$4591_$dyn_storage_ptr",
                       "typeString": "enum IPolicyBookFabric.ContractType[]"
                     }
                   },
@@ -1203,12 +1203,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 3219,
+                  "id": 4720,
                   "mutability": "mutable",
                   "name": "_maxCapacities",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3227,
-                  "src": "3013:31:11",
+                  "scope": 4728,
+                  "src": "3013:31:13",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
@@ -1217,18 +1217,18 @@
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 3217,
+                      "id": 4718,
                       "name": "uint256",
                       "nodeType": "ElementaryTypeName",
-                      "src": "3013:7:11",
+                      "src": "3013:7:13",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
                       }
                     },
-                    "id": 3218,
+                    "id": 4719,
                     "nodeType": "ArrayTypeName",
-                    "src": "3013:9:11",
+                    "src": "3013:9:13",
                     "typeDescriptions": {
                       "typeIdentifier": "t_array$_t_uint256_$dyn_storage_ptr",
                       "typeString": "uint256[]"
@@ -1238,12 +1238,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 3222,
+                  "id": 4723,
                   "mutability": "mutable",
                   "name": "_totalDaiLiquidity",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3227,
-                  "src": "3052:35:11",
+                  "scope": 4728,
+                  "src": "3052:35:13",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
@@ -1252,18 +1252,18 @@
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 3220,
+                      "id": 4721,
                       "name": "uint256",
                       "nodeType": "ElementaryTypeName",
-                      "src": "3052:7:11",
+                      "src": "3052:7:13",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
                       }
                     },
-                    "id": 3221,
+                    "id": 4722,
                     "nodeType": "ArrayTypeName",
-                    "src": "3052:9:11",
+                    "src": "3052:9:13",
                     "typeDescriptions": {
                       "typeIdentifier": "t_array$_t_uint256_$dyn_storage_ptr",
                       "typeString": "uint256[]"
@@ -1273,12 +1273,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 3225,
+                  "id": 4726,
                   "mutability": "mutable",
                   "name": "_annualProfitYields",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3227,
-                  "src": "3095:36:11",
+                  "scope": 4728,
+                  "src": "3095:36:13",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
@@ -1287,18 +1287,18 @@
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 3223,
+                      "id": 4724,
                       "name": "uint256",
                       "nodeType": "ElementaryTypeName",
-                      "src": "3095:7:11",
+                      "src": "3095:7:13",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
                       }
                     },
-                    "id": 3224,
+                    "id": 4725,
                     "nodeType": "ArrayTypeName",
-                    "src": "3095:9:11",
+                    "src": "3095:9:13",
                     "typeDescriptions": {
                       "typeIdentifier": "t_array$_t_uint256_$dyn_storage_ptr",
                       "typeString": "uint256[]"
@@ -1307,40 +1307,40 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "2871:272:11"
+              "src": "2871:272:13"
             },
-            "scope": 3250,
-            "src": "2789:355:11",
+            "scope": 4751,
+            "src": "2789:355:13",
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
           },
           {
             "documentation": {
-              "id": 3228,
+              "id": 4729,
               "nodeType": "StructuredDocumentation",
-              "src": "3148:487:11",
+              "src": "3148:487:13",
               "text": "@notice Getting stats from policy books, access: ANY\n @param _insuredContracts is list of insuredContracts in registry\n @return _names is array of names per PolicyBooks\n @return _contractTypes is array of insured contracts per PolicyBooks\n @return _maxCapacities is array of max capacities per PolicyBooks\n @return _totalDaiLiquidity is array of DAI liquidity per PolicyBooks\n @return _annualProfitYields is array of annual profit yields per PolicyBooks"
             },
             "functionSelector": "da82de5c",
-            "id": 3249,
+            "id": 4750,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "statsByInsuredContracts",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3232,
+              "id": 4733,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3231,
+                  "id": 4732,
                   "mutability": "mutable",
                   "name": "_insuredContracts",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3249,
-                  "src": "3671:36:11",
+                  "scope": 4750,
+                  "src": "3671:36:13",
                   "stateVariable": false,
                   "storageLocation": "calldata",
                   "typeDescriptions": {
@@ -1349,19 +1349,19 @@
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 3229,
+                      "id": 4730,
                       "name": "address",
                       "nodeType": "ElementaryTypeName",
-                      "src": "3671:7:11",
+                      "src": "3671:7:13",
                       "stateMutability": "nonpayable",
                       "typeDescriptions": {
                         "typeIdentifier": "t_address",
                         "typeString": "address"
                       }
                     },
-                    "id": 3230,
+                    "id": 4731,
                     "nodeType": "ArrayTypeName",
-                    "src": "3671:9:11",
+                    "src": "3671:9:13",
                     "typeDescriptions": {
                       "typeIdentifier": "t_array$_t_address_$dyn_storage_ptr",
                       "typeString": "address[]"
@@ -1370,20 +1370,20 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "3670:38:11"
+              "src": "3670:38:13"
             },
             "returnParameters": {
-              "id": 3248,
+              "id": 4749,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3235,
+                  "id": 4736,
                   "mutability": "mutable",
                   "name": "_names",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3249,
-                  "src": "3751:22:11",
+                  "scope": 4750,
+                  "src": "3751:22:13",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
@@ -1392,18 +1392,18 @@
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 3233,
+                      "id": 4734,
                       "name": "string",
                       "nodeType": "ElementaryTypeName",
-                      "src": "3751:6:11",
+                      "src": "3751:6:13",
                       "typeDescriptions": {
                         "typeIdentifier": "t_string_storage_ptr",
                         "typeString": "string"
                       }
                     },
-                    "id": 3234,
+                    "id": 4735,
                     "nodeType": "ArrayTypeName",
-                    "src": "3751:8:11",
+                    "src": "3751:8:13",
                     "typeDescriptions": {
                       "typeIdentifier": "t_array$_t_string_storage_$dyn_storage_ptr",
                       "typeString": "string[]"
@@ -1413,35 +1413,35 @@
                 },
                 {
                   "constant": false,
-                  "id": 3238,
+                  "id": 4739,
                   "mutability": "mutable",
                   "name": "_contractTypes",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3249,
-                  "src": "3787:54:11",
+                  "scope": 4750,
+                  "src": "3787:54:13",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_array$_t_enum$_ContractType_$3090_$dyn_memory_ptr",
+                    "typeIdentifier": "t_array$_t_enum$_ContractType_$4591_$dyn_memory_ptr",
                     "typeString": "enum IPolicyBookFabric.ContractType[]"
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 3236,
+                      "id": 4737,
                       "name": "IPolicyBookFabric.ContractType",
                       "nodeType": "UserDefinedTypeName",
-                      "referencedDeclaration": 3090,
-                      "src": "3787:30:11",
+                      "referencedDeclaration": 4591,
+                      "src": "3787:30:13",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_enum$_ContractType_$3090",
+                        "typeIdentifier": "t_enum$_ContractType_$4591",
                         "typeString": "enum IPolicyBookFabric.ContractType"
                       }
                     },
-                    "id": 3237,
+                    "id": 4738,
                     "nodeType": "ArrayTypeName",
-                    "src": "3787:32:11",
+                    "src": "3787:32:13",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_array$_t_enum$_ContractType_$3090_$dyn_storage_ptr",
+                      "typeIdentifier": "t_array$_t_enum$_ContractType_$4591_$dyn_storage_ptr",
                       "typeString": "enum IPolicyBookFabric.ContractType[]"
                     }
                   },
@@ -1449,12 +1449,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 3241,
+                  "id": 4742,
                   "mutability": "mutable",
                   "name": "_maxCapacities",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3249,
-                  "src": "3849:31:11",
+                  "scope": 4750,
+                  "src": "3849:31:13",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
@@ -1463,18 +1463,18 @@
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 3239,
+                      "id": 4740,
                       "name": "uint256",
                       "nodeType": "ElementaryTypeName",
-                      "src": "3849:7:11",
+                      "src": "3849:7:13",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
                       }
                     },
-                    "id": 3240,
+                    "id": 4741,
                     "nodeType": "ArrayTypeName",
-                    "src": "3849:9:11",
+                    "src": "3849:9:13",
                     "typeDescriptions": {
                       "typeIdentifier": "t_array$_t_uint256_$dyn_storage_ptr",
                       "typeString": "uint256[]"
@@ -1484,12 +1484,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 3244,
+                  "id": 4745,
                   "mutability": "mutable",
                   "name": "_totalDaiLiquidity",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3249,
-                  "src": "3888:35:11",
+                  "scope": 4750,
+                  "src": "3888:35:13",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
@@ -1498,18 +1498,18 @@
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 3242,
+                      "id": 4743,
                       "name": "uint256",
                       "nodeType": "ElementaryTypeName",
-                      "src": "3888:7:11",
+                      "src": "3888:7:13",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
                       }
                     },
-                    "id": 3243,
+                    "id": 4744,
                     "nodeType": "ArrayTypeName",
-                    "src": "3888:9:11",
+                    "src": "3888:9:13",
                     "typeDescriptions": {
                       "typeIdentifier": "t_array$_t_uint256_$dyn_storage_ptr",
                       "typeString": "uint256[]"
@@ -1519,12 +1519,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 3247,
+                  "id": 4748,
                   "mutability": "mutable",
                   "name": "_annualProfitYields",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3249,
-                  "src": "3931:36:11",
+                  "scope": 4750,
+                  "src": "3931:36:13",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
@@ -1533,18 +1533,18 @@
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 3245,
+                      "id": 4746,
                       "name": "uint256",
                       "nodeType": "ElementaryTypeName",
-                      "src": "3931:7:11",
+                      "src": "3931:7:13",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
                       }
                     },
-                    "id": 3246,
+                    "id": 4747,
                     "nodeType": "ArrayTypeName",
-                    "src": "3931:9:11",
+                    "src": "3931:9:13",
                     "typeDescriptions": {
                       "typeIdentifier": "t_array$_t_uint256_$dyn_storage_ptr",
                       "typeString": "uint256[]"
@@ -1553,30 +1553,30 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "3743:236:11"
+              "src": "3743:236:13"
             },
-            "scope": 3250,
-            "src": "3638:342:11",
+            "scope": 4751,
+            "src": "3638:342:13",
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
           }
         ],
-        "scope": 3251,
-        "src": "126:3856:11"
+        "scope": 4752,
+        "src": "126:3856:13"
       }
     ],
-    "src": "32:3951:11"
+    "src": "32:3951:13"
   },
   "legacyAST": {
     "attributes": {
       "absolutePath": "/home/artem/Projects/Distributed_Lab/Applicature/bridgemutual-core/contracts/interfaces/IPolicyBookRegistry.sol",
       "exportedSymbols": {
         "IPolicyBookFabric": [
-          3132
+          4633
         ],
         "IPolicyBookRegistry": [
-          3250
+          4751
         ]
       },
       "license": "MIT"
@@ -1591,9 +1591,9 @@
             ".4"
           ]
         },
-        "id": 3134,
+        "id": 4635,
         "name": "PragmaDirective",
-        "src": "32:23:11"
+        "src": "32:23:13"
       },
       {
         "attributes": {
@@ -1602,24 +1602,24 @@
             "ABIEncoderV2"
           ]
         },
-        "id": 3135,
+        "id": 4636,
         "name": "PragmaDirective",
-        "src": "56:33:11"
+        "src": "56:33:13"
       },
       {
         "attributes": {
-          "SourceUnit": 3133,
+          "SourceUnit": 4634,
           "absolutePath": "/home/artem/Projects/Distributed_Lab/Applicature/bridgemutual-core/contracts/interfaces/IPolicyBookFabric.sol",
           "file": "./IPolicyBookFabric.sol",
-          "scope": 3251,
+          "scope": 4752,
           "symbolAliases": [
             null
           ],
           "unitAlias": ""
         },
-        "id": 3136,
+        "id": 4637,
         "name": "ImportDirective",
-        "src": "91:33:11"
+        "src": "91:33:13"
       },
       {
         "attributes": {
@@ -1633,10 +1633,10 @@
           "contractKind": "interface",
           "fullyImplemented": false,
           "linearizedBaseContracts": [
-            3250
+            4751
           ],
           "name": "IPolicyBookRegistry",
-          "scope": 3251
+          "scope": 4752
         },
         "children": [
           {
@@ -1649,7 +1649,7 @@
                 null
               ],
               "name": "add",
-              "scope": 3250,
+              "scope": 4751,
               "stateMutability": "nonpayable",
               "virtual": false,
               "visibility": "external"
@@ -1659,9 +1659,9 @@
                 "attributes": {
                   "text": "@notice Adds PolicyBook to registry, access: PolicyFabric"
                 },
-                "id": 3137,
+                "id": 4638,
                 "name": "StructuredDocumentation",
-                "src": "160:61:11"
+                "src": "160:61:13"
               },
               {
                 "children": [
@@ -1670,7 +1670,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_insuredContract",
-                      "scope": 3144,
+                      "scope": 4645,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -1683,21 +1683,21 @@
                           "stateMutability": "nonpayable",
                           "type": "address"
                         },
-                        "id": 3138,
+                        "id": 4639,
                         "name": "ElementaryTypeName",
-                        "src": "237:7:11"
+                        "src": "237:7:13"
                       }
                     ],
-                    "id": 3139,
+                    "id": 4640,
                     "name": "VariableDeclaration",
-                    "src": "237:24:11"
+                    "src": "237:24:13"
                   },
                   {
                     "attributes": {
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_policyBook",
-                      "scope": 3144,
+                      "scope": 4645,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -1710,19 +1710,19 @@
                           "stateMutability": "nonpayable",
                           "type": "address"
                         },
-                        "id": 3140,
+                        "id": 4641,
                         "name": "ElementaryTypeName",
-                        "src": "263:7:11"
+                        "src": "263:7:13"
                       }
                     ],
-                    "id": 3141,
+                    "id": 4642,
                     "name": "VariableDeclaration",
-                    "src": "263:19:11"
+                    "src": "263:19:13"
                   }
                 ],
-                "id": 3142,
+                "id": 4643,
                 "name": "ParameterList",
-                "src": "236:47:11"
+                "src": "236:47:13"
               },
               {
                 "attributes": {
@@ -1731,14 +1731,14 @@
                   ]
                 },
                 "children": [],
-                "id": 3143,
+                "id": 4644,
                 "name": "ParameterList",
-                "src": "292:0:11"
+                "src": "292:0:13"
               }
             ],
-            "id": 3144,
+            "id": 4645,
             "name": "FunctionDefinition",
-            "src": "224:69:11"
+            "src": "224:69:13"
           },
           {
             "attributes": {
@@ -1750,7 +1750,7 @@
                 null
               ],
               "name": "count",
-              "scope": 3250,
+              "scope": 4751,
               "stateMutability": "view",
               "virtual": false,
               "visibility": "external"
@@ -1760,9 +1760,9 @@
                 "attributes": {
                   "text": "@notice Returns number of registered PolicyBooks, access: ANY\n @return _policyBooksCount is number of PolicyBooks"
                 },
-                "id": 3145,
+                "id": 4646,
                 "name": "StructuredDocumentation",
-                "src": "297:122:11"
+                "src": "297:122:13"
               },
               {
                 "attributes": {
@@ -1771,9 +1771,9 @@
                   ]
                 },
                 "children": [],
-                "id": 3146,
+                "id": 4647,
                 "name": "ParameterList",
-                "src": "436:2:11"
+                "src": "436:2:13"
               },
               {
                 "children": [
@@ -1782,7 +1782,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_policyBooksCount",
-                      "scope": 3150,
+                      "scope": 4651,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -1794,24 +1794,24 @@
                           "name": "uint256",
                           "type": "uint256"
                         },
-                        "id": 3147,
+                        "id": 4648,
                         "name": "ElementaryTypeName",
-                        "src": "462:7:11"
+                        "src": "462:7:13"
                       }
                     ],
-                    "id": 3148,
+                    "id": 4649,
                     "name": "VariableDeclaration",
-                    "src": "462:25:11"
+                    "src": "462:25:13"
                   }
                 ],
-                "id": 3149,
+                "id": 4650,
                 "name": "ParameterList",
-                "src": "461:27:11"
+                "src": "461:27:13"
               }
             ],
-            "id": 3150,
+            "id": 4651,
             "name": "FunctionDefinition",
-            "src": "422:67:11"
+            "src": "422:67:13"
           },
           {
             "attributes": {
@@ -1823,7 +1823,7 @@
                 null
               ],
               "name": "list",
-              "scope": 3250,
+              "scope": 4751,
               "stateMutability": "view",
               "virtual": false,
               "visibility": "external"
@@ -1833,9 +1833,9 @@
                 "attributes": {
                   "text": "@notice Listing registered PolicyBooks, access: ANY\n @return _policyBooksCount is count of returned registered PolicyBook addresses\n @return _policyBooks is array of registered PolicyBook addresses"
                 },
-                "id": 3151,
+                "id": 4652,
                 "name": "StructuredDocumentation",
-                "src": "493:211:11"
+                "src": "493:211:13"
               },
               {
                 "children": [
@@ -1844,7 +1844,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_offset",
-                      "scope": 3163,
+                      "scope": 4664,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -1856,21 +1856,21 @@
                           "name": "uint256",
                           "type": "uint256"
                         },
-                        "id": 3152,
+                        "id": 4653,
                         "name": "ElementaryTypeName",
-                        "src": "721:7:11"
+                        "src": "721:7:13"
                       }
                     ],
-                    "id": 3153,
+                    "id": 4654,
                     "name": "VariableDeclaration",
-                    "src": "721:15:11"
+                    "src": "721:15:13"
                   },
                   {
                     "attributes": {
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_limit",
-                      "scope": 3163,
+                      "scope": 4664,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -1882,19 +1882,19 @@
                           "name": "uint256",
                           "type": "uint256"
                         },
-                        "id": 3154,
+                        "id": 4655,
                         "name": "ElementaryTypeName",
-                        "src": "738:7:11"
+                        "src": "738:7:13"
                       }
                     ],
-                    "id": 3155,
+                    "id": 4656,
                     "name": "VariableDeclaration",
-                    "src": "738:14:11"
+                    "src": "738:14:13"
                   }
                 ],
-                "id": 3156,
+                "id": 4657,
                 "name": "ParameterList",
-                "src": "720:33:11"
+                "src": "720:33:13"
               },
               {
                 "children": [
@@ -1903,7 +1903,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_policyBooksCount",
-                      "scope": 3163,
+                      "scope": 4664,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -1915,21 +1915,21 @@
                           "name": "uint256",
                           "type": "uint256"
                         },
-                        "id": 3157,
+                        "id": 4658,
                         "name": "ElementaryTypeName",
-                        "src": "789:7:11"
+                        "src": "789:7:13"
                       }
                     ],
-                    "id": 3158,
+                    "id": 4659,
                     "name": "VariableDeclaration",
-                    "src": "789:25:11"
+                    "src": "789:25:13"
                   },
                   {
                     "attributes": {
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_policyBooks",
-                      "scope": 3163,
+                      "scope": 4664,
                       "stateVariable": false,
                       "storageLocation": "memory",
                       "type": "address[]",
@@ -1947,29 +1947,29 @@
                               "stateMutability": "nonpayable",
                               "type": "address"
                             },
-                            "id": 3159,
+                            "id": 4660,
                             "name": "ElementaryTypeName",
-                            "src": "816:7:11"
+                            "src": "816:7:13"
                           }
                         ],
-                        "id": 3160,
+                        "id": 4661,
                         "name": "ArrayTypeName",
-                        "src": "816:9:11"
+                        "src": "816:9:13"
                       }
                     ],
-                    "id": 3161,
+                    "id": 4662,
                     "name": "VariableDeclaration",
-                    "src": "816:29:11"
+                    "src": "816:29:13"
                   }
                 ],
-                "id": 3162,
+                "id": 4663,
                 "name": "ParameterList",
-                "src": "788:58:11"
+                "src": "788:58:13"
               }
             ],
-            "id": 3163,
+            "id": 4664,
             "name": "FunctionDefinition",
-            "src": "707:140:11"
+            "src": "707:140:13"
           },
           {
             "attributes": {
@@ -1981,7 +1981,7 @@
                 null
               ],
               "name": "listWithStats",
-              "scope": 3250,
+              "scope": 4751,
               "stateMutability": "view",
               "virtual": false,
               "visibility": "external"
@@ -1991,9 +1991,9 @@
                 "attributes": {
                   "text": "@notice Listing registered PolicyBooks, access: ANY\n @return _policyBooksCount is count of returned registered PolicyBook addresses\n @return _policyBooks is array of registered PolicyBook addresses\n @return _names is an array of PolicyBooks names\n @return _insuredContracts is array of insured contracts\n @return _contractTypes is an array of insured contract types\n @return _maxCapacities is an array of max token amount that a user can buy\n @return _totalDaiLiquidity is an array of liquidities\n @return _annualProfitYields is an array of APYs"
                 },
-                "id": 3164,
+                "id": 4665,
                 "name": "StructuredDocumentation",
-                "src": "851:589:11"
+                "src": "851:589:13"
               },
               {
                 "children": [
@@ -2002,7 +2002,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_offset",
-                      "scope": 3194,
+                      "scope": 4695,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -2014,21 +2014,21 @@
                           "name": "uint256",
                           "type": "uint256"
                         },
-                        "id": 3165,
+                        "id": 4666,
                         "name": "ElementaryTypeName",
-                        "src": "1466:7:11"
+                        "src": "1466:7:13"
                       }
                     ],
-                    "id": 3166,
+                    "id": 4667,
                     "name": "VariableDeclaration",
-                    "src": "1466:15:11"
+                    "src": "1466:15:13"
                   },
                   {
                     "attributes": {
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_limit",
-                      "scope": 3194,
+                      "scope": 4695,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -2040,19 +2040,19 @@
                           "name": "uint256",
                           "type": "uint256"
                         },
-                        "id": 3167,
+                        "id": 4668,
                         "name": "ElementaryTypeName",
-                        "src": "1483:7:11"
+                        "src": "1483:7:13"
                       }
                     ],
-                    "id": 3168,
+                    "id": 4669,
                     "name": "VariableDeclaration",
-                    "src": "1483:14:11"
+                    "src": "1483:14:13"
                   }
                 ],
-                "id": 3169,
+                "id": 4670,
                 "name": "ParameterList",
-                "src": "1465:33:11"
+                "src": "1465:33:13"
               },
               {
                 "children": [
@@ -2061,7 +2061,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_policyBooksCount",
-                      "scope": 3194,
+                      "scope": 4695,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -2073,21 +2073,21 @@
                           "name": "uint256",
                           "type": "uint256"
                         },
-                        "id": 3170,
+                        "id": 4671,
                         "name": "ElementaryTypeName",
-                        "src": "1541:7:11"
+                        "src": "1541:7:13"
                       }
                     ],
-                    "id": 3171,
+                    "id": 4672,
                     "name": "VariableDeclaration",
-                    "src": "1541:25:11"
+                    "src": "1541:25:13"
                   },
                   {
                     "attributes": {
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_policyBooks",
-                      "scope": 3194,
+                      "scope": 4695,
                       "stateVariable": false,
                       "storageLocation": "memory",
                       "type": "address[]",
@@ -2105,26 +2105,26 @@
                               "stateMutability": "nonpayable",
                               "type": "address"
                             },
-                            "id": 3172,
+                            "id": 4673,
                             "name": "ElementaryTypeName",
-                            "src": "1575:7:11"
+                            "src": "1575:7:13"
                           }
                         ],
-                        "id": 3173,
+                        "id": 4674,
                         "name": "ArrayTypeName",
-                        "src": "1575:9:11"
+                        "src": "1575:9:13"
                       }
                     ],
-                    "id": 3174,
+                    "id": 4675,
                     "name": "VariableDeclaration",
-                    "src": "1575:29:11"
+                    "src": "1575:29:13"
                   },
                   {
                     "attributes": {
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_names",
-                      "scope": 3194,
+                      "scope": 4695,
                       "stateVariable": false,
                       "storageLocation": "memory",
                       "type": "string[]",
@@ -2141,26 +2141,26 @@
                               "name": "string",
                               "type": "string"
                             },
-                            "id": 3175,
+                            "id": 4676,
                             "name": "ElementaryTypeName",
-                            "src": "1612:6:11"
+                            "src": "1612:6:13"
                           }
                         ],
-                        "id": 3176,
+                        "id": 4677,
                         "name": "ArrayTypeName",
-                        "src": "1612:8:11"
+                        "src": "1612:8:13"
                       }
                     ],
-                    "id": 3177,
+                    "id": 4678,
                     "name": "VariableDeclaration",
-                    "src": "1612:22:11"
+                    "src": "1612:22:13"
                   },
                   {
                     "attributes": {
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_insuredContracts",
-                      "scope": 3194,
+                      "scope": 4695,
                       "stateVariable": false,
                       "storageLocation": "memory",
                       "type": "address[]",
@@ -2178,26 +2178,26 @@
                               "stateMutability": "nonpayable",
                               "type": "address"
                             },
-                            "id": 3178,
+                            "id": 4679,
                             "name": "ElementaryTypeName",
-                            "src": "1642:7:11"
+                            "src": "1642:7:13"
                           }
                         ],
-                        "id": 3179,
+                        "id": 4680,
                         "name": "ArrayTypeName",
-                        "src": "1642:9:11"
+                        "src": "1642:9:13"
                       }
                     ],
-                    "id": 3180,
+                    "id": 4681,
                     "name": "VariableDeclaration",
-                    "src": "1642:34:11"
+                    "src": "1642:34:13"
                   },
                   {
                     "attributes": {
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_contractTypes",
-                      "scope": 3194,
+                      "scope": 4695,
                       "stateVariable": false,
                       "storageLocation": "memory",
                       "type": "enum IPolicyBookFabric.ContractType[]",
@@ -2212,29 +2212,29 @@
                           {
                             "attributes": {
                               "name": "IPolicyBookFabric.ContractType",
-                              "referencedDeclaration": 3090,
+                              "referencedDeclaration": 4591,
                               "type": "enum IPolicyBookFabric.ContractType"
                             },
-                            "id": 3181,
+                            "id": 4682,
                             "name": "UserDefinedTypeName",
-                            "src": "1684:30:11"
+                            "src": "1684:30:13"
                           }
                         ],
-                        "id": 3182,
+                        "id": 4683,
                         "name": "ArrayTypeName",
-                        "src": "1684:32:11"
+                        "src": "1684:32:13"
                       }
                     ],
-                    "id": 3183,
+                    "id": 4684,
                     "name": "VariableDeclaration",
-                    "src": "1684:54:11"
+                    "src": "1684:54:13"
                   },
                   {
                     "attributes": {
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_maxCapacities",
-                      "scope": 3194,
+                      "scope": 4695,
                       "stateVariable": false,
                       "storageLocation": "memory",
                       "type": "uint256[]",
@@ -2251,26 +2251,26 @@
                               "name": "uint256",
                               "type": "uint256"
                             },
-                            "id": 3184,
+                            "id": 4685,
                             "name": "ElementaryTypeName",
-                            "src": "1746:7:11"
+                            "src": "1746:7:13"
                           }
                         ],
-                        "id": 3185,
+                        "id": 4686,
                         "name": "ArrayTypeName",
-                        "src": "1746:9:11"
+                        "src": "1746:9:13"
                       }
                     ],
-                    "id": 3186,
+                    "id": 4687,
                     "name": "VariableDeclaration",
-                    "src": "1746:31:11"
+                    "src": "1746:31:13"
                   },
                   {
                     "attributes": {
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_totalDaiLiquidity",
-                      "scope": 3194,
+                      "scope": 4695,
                       "stateVariable": false,
                       "storageLocation": "memory",
                       "type": "uint256[]",
@@ -2287,26 +2287,26 @@
                               "name": "uint256",
                               "type": "uint256"
                             },
-                            "id": 3187,
+                            "id": 4688,
                             "name": "ElementaryTypeName",
-                            "src": "1785:7:11"
+                            "src": "1785:7:13"
                           }
                         ],
-                        "id": 3188,
+                        "id": 4689,
                         "name": "ArrayTypeName",
-                        "src": "1785:9:11"
+                        "src": "1785:9:13"
                       }
                     ],
-                    "id": 3189,
+                    "id": 4690,
                     "name": "VariableDeclaration",
-                    "src": "1785:35:11"
+                    "src": "1785:35:13"
                   },
                   {
                     "attributes": {
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_annualProfitYields",
-                      "scope": 3194,
+                      "scope": 4695,
                       "stateVariable": false,
                       "storageLocation": "memory",
                       "type": "uint256[]",
@@ -2323,29 +2323,29 @@
                               "name": "uint256",
                               "type": "uint256"
                             },
-                            "id": 3190,
+                            "id": 4691,
                             "name": "ElementaryTypeName",
-                            "src": "1828:7:11"
+                            "src": "1828:7:13"
                           }
                         ],
-                        "id": 3191,
+                        "id": 4692,
                         "name": "ArrayTypeName",
-                        "src": "1828:9:11"
+                        "src": "1828:9:13"
                       }
                     ],
-                    "id": 3192,
+                    "id": 4693,
                     "name": "VariableDeclaration",
-                    "src": "1828:36:11"
+                    "src": "1828:36:13"
                   }
                 ],
-                "id": 3193,
+                "id": 4694,
                 "name": "ParameterList",
-                "src": "1533:343:11"
+                "src": "1533:343:13"
               }
             ],
-            "id": 3194,
+            "id": 4695,
             "name": "FunctionDefinition",
-            "src": "1443:434:11"
+            "src": "1443:434:13"
           },
           {
             "attributes": {
@@ -2357,7 +2357,7 @@
                 null
               ],
               "name": "policyBookFor",
-              "scope": 3250,
+              "scope": 4751,
               "stateMutability": "view",
               "virtual": false,
               "visibility": "external"
@@ -2367,9 +2367,9 @@
                 "attributes": {
                   "text": "@notice Return existing Policy Book contract, access: ANY\n @param _contract is contract address to lookup for created IPolicyBook\n @return _policyBook is policy book address if exists for passed contract address, if not it will return address(0)"
                 },
-                "id": 3195,
+                "id": 4696,
                 "name": "StructuredDocumentation",
-                "src": "1881:259:11"
+                "src": "1881:259:13"
               },
               {
                 "children": [
@@ -2378,7 +2378,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_contract",
-                      "scope": 3202,
+                      "scope": 4703,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -2391,19 +2391,19 @@
                           "stateMutability": "nonpayable",
                           "type": "address"
                         },
-                        "id": 3196,
+                        "id": 4697,
                         "name": "ElementaryTypeName",
-                        "src": "2166:7:11"
+                        "src": "2166:7:13"
                       }
                     ],
-                    "id": 3197,
+                    "id": 4698,
                     "name": "VariableDeclaration",
-                    "src": "2166:17:11"
+                    "src": "2166:17:13"
                   }
                 ],
-                "id": 3198,
+                "id": 4699,
                 "name": "ParameterList",
-                "src": "2165:19:11"
+                "src": "2165:19:13"
               },
               {
                 "children": [
@@ -2412,7 +2412,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_policyBook",
-                      "scope": 3202,
+                      "scope": 4703,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -2425,24 +2425,24 @@
                           "stateMutability": "nonpayable",
                           "type": "address"
                         },
-                        "id": 3199,
+                        "id": 4700,
                         "name": "ElementaryTypeName",
-                        "src": "2208:7:11"
+                        "src": "2208:7:13"
                       }
                     ],
-                    "id": 3200,
+                    "id": 4701,
                     "name": "VariableDeclaration",
-                    "src": "2208:19:11"
+                    "src": "2208:19:13"
                   }
                 ],
-                "id": 3201,
+                "id": 4702,
                 "name": "ParameterList",
-                "src": "2207:21:11"
+                "src": "2207:21:13"
               }
             ],
-            "id": 3202,
+            "id": 4703,
             "name": "FunctionDefinition",
-            "src": "2143:86:11"
+            "src": "2143:86:13"
           },
           {
             "attributes": {
@@ -2454,7 +2454,7 @@
                 null
               ],
               "name": "stats",
-              "scope": 3250,
+              "scope": 4751,
               "stateMutability": "view",
               "virtual": false,
               "visibility": "external"
@@ -2464,9 +2464,9 @@
                 "attributes": {
                   "text": "@notice Getting stats from policy books, access: ANY\n @param _policyBooks is list of PolicyBooks addresses\n @return _names is array of names per PolicyBooks\n @return _insuredContracts is array of insured contracts per PolicyBooks\n @return _contractTypes is array of insured contracts per PolicyBooks\n @return _maxCapacities is array of max capacities per PolicyBooks\n @return _totalDaiLiquidity is array of DAI liquidity per PolicyBooks\n @return _annualProfitYields is array of annual profit yields per PolicyBooks"
                 },
-                "id": 3203,
+                "id": 4704,
                 "name": "StructuredDocumentation",
-                "src": "2233:553:11"
+                "src": "2233:553:13"
               },
               {
                 "children": [
@@ -2475,7 +2475,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_policyBooks",
-                      "scope": 3227,
+                      "scope": 4728,
                       "stateVariable": false,
                       "storageLocation": "calldata",
                       "type": "address[]",
@@ -2493,24 +2493,24 @@
                               "stateMutability": "nonpayable",
                               "type": "address"
                             },
-                            "id": 3204,
+                            "id": 4705,
                             "name": "ElementaryTypeName",
-                            "src": "2804:7:11"
+                            "src": "2804:7:13"
                           }
                         ],
-                        "id": 3205,
+                        "id": 4706,
                         "name": "ArrayTypeName",
-                        "src": "2804:9:11"
+                        "src": "2804:9:13"
                       }
                     ],
-                    "id": 3206,
+                    "id": 4707,
                     "name": "VariableDeclaration",
-                    "src": "2804:31:11"
+                    "src": "2804:31:13"
                   }
                 ],
-                "id": 3207,
+                "id": 4708,
                 "name": "ParameterList",
-                "src": "2803:33:11"
+                "src": "2803:33:13"
               },
               {
                 "children": [
@@ -2519,7 +2519,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_names",
-                      "scope": 3227,
+                      "scope": 4728,
                       "stateVariable": false,
                       "storageLocation": "memory",
                       "type": "string[]",
@@ -2536,26 +2536,26 @@
                               "name": "string",
                               "type": "string"
                             },
-                            "id": 3208,
+                            "id": 4709,
                             "name": "ElementaryTypeName",
-                            "src": "2879:6:11"
+                            "src": "2879:6:13"
                           }
                         ],
-                        "id": 3209,
+                        "id": 4710,
                         "name": "ArrayTypeName",
-                        "src": "2879:8:11"
+                        "src": "2879:8:13"
                       }
                     ],
-                    "id": 3210,
+                    "id": 4711,
                     "name": "VariableDeclaration",
-                    "src": "2879:22:11"
+                    "src": "2879:22:13"
                   },
                   {
                     "attributes": {
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_insuredContracts",
-                      "scope": 3227,
+                      "scope": 4728,
                       "stateVariable": false,
                       "storageLocation": "memory",
                       "type": "address[]",
@@ -2573,26 +2573,26 @@
                               "stateMutability": "nonpayable",
                               "type": "address"
                             },
-                            "id": 3211,
+                            "id": 4712,
                             "name": "ElementaryTypeName",
-                            "src": "2909:7:11"
+                            "src": "2909:7:13"
                           }
                         ],
-                        "id": 3212,
+                        "id": 4713,
                         "name": "ArrayTypeName",
-                        "src": "2909:9:11"
+                        "src": "2909:9:13"
                       }
                     ],
-                    "id": 3213,
+                    "id": 4714,
                     "name": "VariableDeclaration",
-                    "src": "2909:34:11"
+                    "src": "2909:34:13"
                   },
                   {
                     "attributes": {
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_contractTypes",
-                      "scope": 3227,
+                      "scope": 4728,
                       "stateVariable": false,
                       "storageLocation": "memory",
                       "type": "enum IPolicyBookFabric.ContractType[]",
@@ -2607,29 +2607,29 @@
                           {
                             "attributes": {
                               "name": "IPolicyBookFabric.ContractType",
-                              "referencedDeclaration": 3090,
+                              "referencedDeclaration": 4591,
                               "type": "enum IPolicyBookFabric.ContractType"
                             },
-                            "id": 3214,
+                            "id": 4715,
                             "name": "UserDefinedTypeName",
-                            "src": "2951:30:11"
+                            "src": "2951:30:13"
                           }
                         ],
-                        "id": 3215,
+                        "id": 4716,
                         "name": "ArrayTypeName",
-                        "src": "2951:32:11"
+                        "src": "2951:32:13"
                       }
                     ],
-                    "id": 3216,
+                    "id": 4717,
                     "name": "VariableDeclaration",
-                    "src": "2951:54:11"
+                    "src": "2951:54:13"
                   },
                   {
                     "attributes": {
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_maxCapacities",
-                      "scope": 3227,
+                      "scope": 4728,
                       "stateVariable": false,
                       "storageLocation": "memory",
                       "type": "uint256[]",
@@ -2646,26 +2646,26 @@
                               "name": "uint256",
                               "type": "uint256"
                             },
-                            "id": 3217,
+                            "id": 4718,
                             "name": "ElementaryTypeName",
-                            "src": "3013:7:11"
+                            "src": "3013:7:13"
                           }
                         ],
-                        "id": 3218,
+                        "id": 4719,
                         "name": "ArrayTypeName",
-                        "src": "3013:9:11"
+                        "src": "3013:9:13"
                       }
                     ],
-                    "id": 3219,
+                    "id": 4720,
                     "name": "VariableDeclaration",
-                    "src": "3013:31:11"
+                    "src": "3013:31:13"
                   },
                   {
                     "attributes": {
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_totalDaiLiquidity",
-                      "scope": 3227,
+                      "scope": 4728,
                       "stateVariable": false,
                       "storageLocation": "memory",
                       "type": "uint256[]",
@@ -2682,26 +2682,26 @@
                               "name": "uint256",
                               "type": "uint256"
                             },
-                            "id": 3220,
+                            "id": 4721,
                             "name": "ElementaryTypeName",
-                            "src": "3052:7:11"
+                            "src": "3052:7:13"
                           }
                         ],
-                        "id": 3221,
+                        "id": 4722,
                         "name": "ArrayTypeName",
-                        "src": "3052:9:11"
+                        "src": "3052:9:13"
                       }
                     ],
-                    "id": 3222,
+                    "id": 4723,
                     "name": "VariableDeclaration",
-                    "src": "3052:35:11"
+                    "src": "3052:35:13"
                   },
                   {
                     "attributes": {
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_annualProfitYields",
-                      "scope": 3227,
+                      "scope": 4728,
                       "stateVariable": false,
                       "storageLocation": "memory",
                       "type": "uint256[]",
@@ -2718,29 +2718,29 @@
                               "name": "uint256",
                               "type": "uint256"
                             },
-                            "id": 3223,
+                            "id": 4724,
                             "name": "ElementaryTypeName",
-                            "src": "3095:7:11"
+                            "src": "3095:7:13"
                           }
                         ],
-                        "id": 3224,
+                        "id": 4725,
                         "name": "ArrayTypeName",
-                        "src": "3095:9:11"
+                        "src": "3095:9:13"
                       }
                     ],
-                    "id": 3225,
+                    "id": 4726,
                     "name": "VariableDeclaration",
-                    "src": "3095:36:11"
+                    "src": "3095:36:13"
                   }
                 ],
-                "id": 3226,
+                "id": 4727,
                 "name": "ParameterList",
-                "src": "2871:272:11"
+                "src": "2871:272:13"
               }
             ],
-            "id": 3227,
+            "id": 4728,
             "name": "FunctionDefinition",
-            "src": "2789:355:11"
+            "src": "2789:355:13"
           },
           {
             "attributes": {
@@ -2752,7 +2752,7 @@
                 null
               ],
               "name": "statsByInsuredContracts",
-              "scope": 3250,
+              "scope": 4751,
               "stateMutability": "view",
               "virtual": false,
               "visibility": "external"
@@ -2762,9 +2762,9 @@
                 "attributes": {
                   "text": "@notice Getting stats from policy books, access: ANY\n @param _insuredContracts is list of insuredContracts in registry\n @return _names is array of names per PolicyBooks\n @return _contractTypes is array of insured contracts per PolicyBooks\n @return _maxCapacities is array of max capacities per PolicyBooks\n @return _totalDaiLiquidity is array of DAI liquidity per PolicyBooks\n @return _annualProfitYields is array of annual profit yields per PolicyBooks"
                 },
-                "id": 3228,
+                "id": 4729,
                 "name": "StructuredDocumentation",
-                "src": "3148:487:11"
+                "src": "3148:487:13"
               },
               {
                 "children": [
@@ -2773,7 +2773,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_insuredContracts",
-                      "scope": 3249,
+                      "scope": 4750,
                       "stateVariable": false,
                       "storageLocation": "calldata",
                       "type": "address[]",
@@ -2791,24 +2791,24 @@
                               "stateMutability": "nonpayable",
                               "type": "address"
                             },
-                            "id": 3229,
+                            "id": 4730,
                             "name": "ElementaryTypeName",
-                            "src": "3671:7:11"
+                            "src": "3671:7:13"
                           }
                         ],
-                        "id": 3230,
+                        "id": 4731,
                         "name": "ArrayTypeName",
-                        "src": "3671:9:11"
+                        "src": "3671:9:13"
                       }
                     ],
-                    "id": 3231,
+                    "id": 4732,
                     "name": "VariableDeclaration",
-                    "src": "3671:36:11"
+                    "src": "3671:36:13"
                   }
                 ],
-                "id": 3232,
+                "id": 4733,
                 "name": "ParameterList",
-                "src": "3670:38:11"
+                "src": "3670:38:13"
               },
               {
                 "children": [
@@ -2817,7 +2817,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_names",
-                      "scope": 3249,
+                      "scope": 4750,
                       "stateVariable": false,
                       "storageLocation": "memory",
                       "type": "string[]",
@@ -2834,26 +2834,26 @@
                               "name": "string",
                               "type": "string"
                             },
-                            "id": 3233,
+                            "id": 4734,
                             "name": "ElementaryTypeName",
-                            "src": "3751:6:11"
+                            "src": "3751:6:13"
                           }
                         ],
-                        "id": 3234,
+                        "id": 4735,
                         "name": "ArrayTypeName",
-                        "src": "3751:8:11"
+                        "src": "3751:8:13"
                       }
                     ],
-                    "id": 3235,
+                    "id": 4736,
                     "name": "VariableDeclaration",
-                    "src": "3751:22:11"
+                    "src": "3751:22:13"
                   },
                   {
                     "attributes": {
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_contractTypes",
-                      "scope": 3249,
+                      "scope": 4750,
                       "stateVariable": false,
                       "storageLocation": "memory",
                       "type": "enum IPolicyBookFabric.ContractType[]",
@@ -2868,29 +2868,29 @@
                           {
                             "attributes": {
                               "name": "IPolicyBookFabric.ContractType",
-                              "referencedDeclaration": 3090,
+                              "referencedDeclaration": 4591,
                               "type": "enum IPolicyBookFabric.ContractType"
                             },
-                            "id": 3236,
+                            "id": 4737,
                             "name": "UserDefinedTypeName",
-                            "src": "3787:30:11"
+                            "src": "3787:30:13"
                           }
                         ],
-                        "id": 3237,
+                        "id": 4738,
                         "name": "ArrayTypeName",
-                        "src": "3787:32:11"
+                        "src": "3787:32:13"
                       }
                     ],
-                    "id": 3238,
+                    "id": 4739,
                     "name": "VariableDeclaration",
-                    "src": "3787:54:11"
+                    "src": "3787:54:13"
                   },
                   {
                     "attributes": {
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_maxCapacities",
-                      "scope": 3249,
+                      "scope": 4750,
                       "stateVariable": false,
                       "storageLocation": "memory",
                       "type": "uint256[]",
@@ -2907,26 +2907,26 @@
                               "name": "uint256",
                               "type": "uint256"
                             },
-                            "id": 3239,
+                            "id": 4740,
                             "name": "ElementaryTypeName",
-                            "src": "3849:7:11"
+                            "src": "3849:7:13"
                           }
                         ],
-                        "id": 3240,
+                        "id": 4741,
                         "name": "ArrayTypeName",
-                        "src": "3849:9:11"
+                        "src": "3849:9:13"
                       }
                     ],
-                    "id": 3241,
+                    "id": 4742,
                     "name": "VariableDeclaration",
-                    "src": "3849:31:11"
+                    "src": "3849:31:13"
                   },
                   {
                     "attributes": {
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_totalDaiLiquidity",
-                      "scope": 3249,
+                      "scope": 4750,
                       "stateVariable": false,
                       "storageLocation": "memory",
                       "type": "uint256[]",
@@ -2943,26 +2943,26 @@
                               "name": "uint256",
                               "type": "uint256"
                             },
-                            "id": 3242,
+                            "id": 4743,
                             "name": "ElementaryTypeName",
-                            "src": "3888:7:11"
+                            "src": "3888:7:13"
                           }
                         ],
-                        "id": 3243,
+                        "id": 4744,
                         "name": "ArrayTypeName",
-                        "src": "3888:9:11"
+                        "src": "3888:9:13"
                       }
                     ],
-                    "id": 3244,
+                    "id": 4745,
                     "name": "VariableDeclaration",
-                    "src": "3888:35:11"
+                    "src": "3888:35:13"
                   },
                   {
                     "attributes": {
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_annualProfitYields",
-                      "scope": 3249,
+                      "scope": 4750,
                       "stateVariable": false,
                       "storageLocation": "memory",
                       "type": "uint256[]",
@@ -2979,39 +2979,39 @@
                               "name": "uint256",
                               "type": "uint256"
                             },
-                            "id": 3245,
+                            "id": 4746,
                             "name": "ElementaryTypeName",
-                            "src": "3931:7:11"
+                            "src": "3931:7:13"
                           }
                         ],
-                        "id": 3246,
+                        "id": 4747,
                         "name": "ArrayTypeName",
-                        "src": "3931:9:11"
+                        "src": "3931:9:13"
                       }
                     ],
-                    "id": 3247,
+                    "id": 4748,
                     "name": "VariableDeclaration",
-                    "src": "3931:36:11"
+                    "src": "3931:36:13"
                   }
                 ],
-                "id": 3248,
+                "id": 4749,
                 "name": "ParameterList",
-                "src": "3743:236:11"
+                "src": "3743:236:13"
               }
             ],
-            "id": 3249,
+            "id": 4750,
             "name": "FunctionDefinition",
-            "src": "3638:342:11"
+            "src": "3638:342:13"
           }
         ],
-        "id": 3250,
+        "id": 4751,
         "name": "ContractDefinition",
-        "src": "126:3856:11"
+        "src": "126:3856:13"
       }
     ],
-    "id": 3251,
+    "id": 4752,
     "name": "SourceUnit",
-    "src": "32:3951:11"
+    "src": "32:3951:13"
   },
   "compiler": {
     "name": "solc",
@@ -3019,7 +3019,7 @@
   },
   "networks": {},
   "schemaVersion": "3.3.3",
-  "updatedAt": "2021-01-28T11:21:06.218Z",
+  "updatedAt": "2021-01-28T13:34:56.744Z",
   "devdoc": {
     "kind": "dev",
     "methods": {

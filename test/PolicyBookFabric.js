@@ -2,8 +2,11 @@ const PolicyBookFabric = artifacts.require('PolicyBookFabric');
 const PolicyBook = artifacts.require('PolicyBook');
 const PolicyBookRegistry = artifacts.require('PolicyBookRegistry');
 const MockDAI = artifacts.require('./mock/DAIMock');
+const BMIToken = artifacts.require('BMIToken.sol');
 const ContractsRegistry = artifacts.require('ContractsRegistry');
-const BmiDAIStaking = artifacts.require('BmiDAIStaking');
+const BMIDAIStaking = artifacts.require('BMIDAIStaking');
+const LiquidityMiningNFT = artifacts.require('LiquidityMiningNFT.sol');
+const LiquidityMining = artifacts.require('LiquidityMining.sol');
 
 const Reverter = require('./helpers/reverter');
 const truffleAssert = require('truffle-assertions');
@@ -29,21 +32,31 @@ contract('PolicyBookFabric', async (accounts) => {
   const CONTRACT3 = accounts[2];
 
   before('setup', async () => {
+    const liquidityMining = await LiquidityMining.new();
+    const liquidityMiningNFT = await LiquidityMiningNFT.new("");
+    const bmiToken = await BMIToken.new(CONTRACT1);
     dai = await MockDAI.new('dai', 'dai');
     contractsRegistry = await ContractsRegistry.new();
     policyBookRegistry = await PolicyBookRegistry.new();
     policyBookFabric = await PolicyBookFabric.new();
-    bmiDaiStaking = await BmiDAIStaking.new();
+    bmiDaiStaking = await BMIDAIStaking.new();    
 
+    await contractsRegistry.addContractRegistry(
+      (await contractsRegistry.getLiquidityMiningNFTName.call()), liquidityMiningNFT.address);
+    await contractsRegistry.addContractRegistry(
+      (await contractsRegistry.getLiquidityMiningName.call()), liquidityMining.address);
     await contractsRegistry.addContractRegistry(
       (await contractsRegistry.getDAIName.call()), dai.address);
     await contractsRegistry.addContractRegistry(
-      (await contractsRegistry.getBmiDAIStakingName.call()), bmiDaiStaking.address);
+      (await contractsRegistry.getBMIName.call()), bmiToken.address);
+    await contractsRegistry.addContractRegistry(
+      (await contractsRegistry.getBMIDAIStakingName.call()), bmiDaiStaking.address);
     await contractsRegistry.addContractRegistry(
       (await contractsRegistry.getPolicyBookRegistryName.call()), policyBookRegistry.address);
     await contractsRegistry.addContractRegistry(
       (await contractsRegistry.getPolicyBookFabricName.call()), policyBookFabric.address);
 
+    await liquidityMining.initRegistry(contractsRegistry.address);
     await policyBookFabric.initRegistry(contractsRegistry.address);
     await policyBookRegistry.initRegistry(contractsRegistry.address);
 

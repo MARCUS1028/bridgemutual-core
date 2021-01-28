@@ -26,7 +26,7 @@ contract DefiYieldGenerator is Ownable {
         
         daiToken = IERC20(_contractsRegistry.getContract(_contractsRegistry.getDAIName()));
         bmiToken = IERC20(_contractsRegistry.getContract(_contractsRegistry.getBMIName()));
-        bmiDaiStakingAddress = _contractsRegistry.getContract(_contractsRegistry.getBmiDAIStakingName());
+        bmiDaiStakingAddress = _contractsRegistry.getContract(_contractsRegistry.getBMIDAIStakingName());
     }
 
     function approveAllDAITokensForStakingWithdrowal() external onlyStaking {

@@ -83,6 +83,11 @@ interface IPolicyBook {
   /// @param _liqudityAmount is amount of DAI tokens to secure
   function addLiquidityFor(address _liquidityHolderAddr, uint256 _liqudityAmount) external;
 
+  /// @notice Let liquidityMining contract to add liqiudity for another user by supplying DAI, access: ONLY LM
+  /// @param _liquidityHolderAddr is address of address to assign cover
+  /// @param _liqudityAmount is amount of DAI tokens to secure
+  function addLiquidityFromLM(address _liquidityHolderAddr, uint256 _liqudityAmount) external;
+
   /// @notice Let user to withdraw deposited liqiudity, access: ANY
   /// @param _tokensToWithdraw is amount of DAI tokens to withdraw
   function withdrawLiquidity(uint256 _tokensToWithdraw) external;
