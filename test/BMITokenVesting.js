@@ -1,11 +1,13 @@
-const BMIToken = artifacts.require('BMIToken.sol');
-const BMITokenVesting = artifacts.require('BMITokenVesting.sol');
-
-const Reverter = require('./helpers/reverter');
 const BigNumber = require('bignumber.js');
 const truffleAssert = require('truffle-assertions');
 const {deployProxy} = require('@openzeppelin/truffle-upgrades');
+
+const Reverter = require('./helpers/reverter');
 const setCurrentTime = require('./helpers/ganacheTimeTraveler');
+const {ZERO_ADDRESS} = require('./helpers/constants');
+
+const BMIToken = artifacts.require('BMIToken.sol');
+const BMITokenVesting = artifacts.require('BMITokenVesting.sol');
 
 const VestingSchedule = {
   ANGELROUND: 0,
@@ -49,7 +51,9 @@ contract('BMITokenVesting', async (accounts) => {
 
     it('should not allow not owner to set token', async () => {
       await truffleAssert.reverts(
-        vesting.setToken(token.address, {from: OTHER_ADDR}),
+        vesting.setToken(token.address, {
+          from: OTHER_ADDR,
+        }),
         'Ownable: caller is not the owner -- Reason given: Ownable: caller is not the owner.',
       );
     });
@@ -75,7 +79,9 @@ contract('BMITokenVesting', async (accounts) => {
 
     it('should not allow not owner to create vesting', async () => {
       await truffleAssert.reverts(
-        vesting.createVesting(OTHER_ADDR, 100, VestingSchedule.ANGELROUND, false, {from: OTHER_ADDR}),
+        vesting.createVesting(OTHER_ADDR, 100, VestingSchedule.ANGELROUND, false, {
+          from: OTHER_ADDR,
+        }),
         'Ownable: caller is not the owner -- Reason given: Ownable: caller is not the owner.',
       );
     });
@@ -86,6 +92,13 @@ contract('BMITokenVesting', async (accounts) => {
       await truffleAssert.reverts(
         vesting.createVesting(OTHER_ADDR, tokensLeft.plus(1), VestingSchedule.ANGELROUND, true),
         'Not enough tokens',
+      );
+    });
+
+    it('should not allow to create vesting with zero address beneficiar', async () => {
+      await truffleAssert.reverts(
+        vesting.createVesting(ZERO_ADDRESS, 1, VestingSchedule.ANGELROUND, true),
+        'Cannot create vesting for zero address',
       );
     });
 
@@ -145,7 +158,9 @@ contract('BMITokenVesting', async (accounts) => {
 
     it('should not allow not owner to call', async () => {
       await truffleAssert.reverts(
-        vesting.createVestingBulk([OTHER_ADDR], [100], [VestingSchedule.ANGELROUND], [false], {from: OTHER_ADDR}),
+        vesting.createVestingBulk([OTHER_ADDR], [100], [VestingSchedule.ANGELROUND], [false], {
+          from: OTHER_ADDR,
+        }),
         'Ownable: caller is not the owner -- Reason given: Ownable: caller is not the owner.',
       );
     });
@@ -209,7 +224,9 @@ contract('BMITokenVesting', async (accounts) => {
 
     it('should not allow not owner to cancel vesting', async () => {
       await truffleAssert.reverts(
-        vesting.cancelVesting(vestingId, {from: OTHER_ADDR}),
+        vesting.cancelVesting(vestingId, {
+          from: OTHER_ADDR,
+        }),
         'Ownable: caller is not the owner -- Reason given: Ownable: caller is not the owner.',
       );
     });
@@ -274,13 +291,17 @@ contract('BMITokenVesting', async (accounts) => {
 
     it('should not allow to withdraw invalid vesting', async () => {
       await truffleAssert.reverts(
-        vesting.withdrawFromVesting(vestingId + 1, {from: OTHER_ADDR}),
+        vesting.withdrawFromVesting(vestingId + 1, {
+          from: OTHER_ADDR,
+        }),
         'No vesting with such id',
       );
     });
 
     it('should not withdraw anything if called too early', async () => {
-      await vesting.withdrawFromVesting(vestingId, {from: OTHER_ADDR});
+      await vesting.withdrawFromVesting(vestingId, {
+        from: OTHER_ADDR,
+      });
 
       assert.equal(await token.balanceOf(OTHER_ADDR), 0);
     });
@@ -316,7 +337,9 @@ contract('BMITokenVesting', async (accounts) => {
 
       for (let i = 1; i < 4; i++) {
         await setCurrentTime(tgeTimestamp.plus(secondsInMonth.times(i)).plus(10));
-        await vesting.withdrawFromVesting(vestingId + 1, {from: OTHER_ADDR});
+        await vesting.withdrawFromVesting(vestingId + 1, {
+          from: OTHER_ADDR,
+        });
         assert.equal(await token.balanceOf(OTHER_ADDR), i * 25);
       }
     });
@@ -325,7 +348,9 @@ contract('BMITokenVesting', async (accounts) => {
       const contractTokensBefore = toBN(await token.balanceOf(vesting.address));
       await setCurrentTime(tgeTimestamp.plus(secondsInMonth.times(5)).plus(10));
 
-      await vesting.withdrawFromVesting(vestingId, {from: OTHER_ADDR});
+      await vesting.withdrawFromVesting(vestingId, {
+        from: OTHER_ADDR,
+      });
       const contractTokensAfter = toBN(await token.balanceOf(vesting.address));
       const userTokensAfter = toBN(await token.balanceOf(OTHER_ADDR));
 
@@ -336,7 +361,9 @@ contract('BMITokenVesting', async (accounts) => {
     it('should change vesting object', async () => {
       await setCurrentTime(tgeTimestamp.plus(secondsInMonth.times(5)).plus(10));
 
-      await vesting.withdrawFromVesting(vestingId, {from: OTHER_ADDR});
+      await vesting.withdrawFromVesting(vestingId, {
+        from: OTHER_ADDR,
+      });
       const vestingData = await vesting.getVestingById(vestingId);
       assert.equal(vestingData.paidAmount, 100);
     });
@@ -344,7 +371,9 @@ contract('BMITokenVesting', async (accounts) => {
     it('should emit valid vesting withdraw event', async () => {
       await setCurrentTime(tgeTimestamp.plus(secondsInMonth.times(5)).plus(10));
 
-      const tx = await vesting.withdrawFromVesting(vestingId, {from: OTHER_ADDR});
+      const tx = await vesting.withdrawFromVesting(vestingId, {
+        from: OTHER_ADDR,
+      });
 
       assert.equal(tx.logs.length, 1);
       assert.equal(tx.logs[0].event, 'VestingWithdraw');
@@ -355,8 +384,12 @@ contract('BMITokenVesting', async (accounts) => {
     it('should allow empty withdraw of already withdrawn vesting', async () => {
       await setCurrentTime(tgeTimestamp.plus(secondsInMonth.times(5)).plus(10));
 
-      await vesting.withdrawFromVesting(vestingId, {from: OTHER_ADDR});
-      const tx = await vesting.withdrawFromVesting(vestingId, {from: OTHER_ADDR});
+      await vesting.withdrawFromVesting(vestingId, {
+        from: OTHER_ADDR,
+      });
+      const tx = await vesting.withdrawFromVesting(vestingId, {
+        from: OTHER_ADDR,
+      });
 
       assert.equal(tx.logs.length, 1);
       assert.equal(tx.logs[0].event, 'VestingWithdraw');
@@ -370,7 +403,9 @@ contract('BMITokenVesting', async (accounts) => {
       await setCurrentTime(tgeTimestamp.plus(secondsInMonth.times(5)).plus(10));
 
       const availableBefore = toBN(await vesting.getTokensAvailable());
-      await vesting.withdrawFromVesting(vestingId, {from: OTHER_ADDR});
+      await vesting.withdrawFromVesting(vestingId, {
+        from: OTHER_ADDR,
+      });
 
       assert.equal(toBN(await vesting.amountInVestings()).toString(), 0);
       assert.equal(toBN(await vesting.getTokensAvailable()).toString(), availableBefore.toString());
@@ -391,7 +426,9 @@ contract('BMITokenVesting', async (accounts) => {
 
     it('should not allow not owner to withdraw excessive tokens', async () => {
       await truffleAssert.reverts(
-        vesting.withdrawExcessiveTokens({from: OTHER_ADDR}),
+        vesting.withdrawExcessiveTokens({
+          from: OTHER_ADDR,
+        }),
         'Ownable: caller is not the owner -- Reason given: Ownable: caller is not the owner.',
       );
     });
@@ -434,6 +471,48 @@ contract('BMITokenVesting', async (accounts) => {
       await vesting.withdrawFromVesting(0);
       await setCurrentTime(tgeTimestamp.plus(secondsInMonth.times(3)).plus(10));
       assert.equal(await vesting.getWithdrawableAmount(vestingId), 25);
+    });
+  });
+
+  describe('withdrawFromVestingBulk', async () => {
+    beforeEach('setup', async () => {
+      await vesting.setToken(token.address);
+
+      await setCurrentTime(tgeTimestamp.plus(secondsInMonth.times(5)).plus(10));
+
+      await vesting.createVesting(OTHER_ADDR, 100, VestingSchedule.ANGELROUND, true);
+      await vesting.createVesting(SOME_ADDR_1, 100, VestingSchedule.SEEDROUND, true);
+      await vesting.createVesting(SOME_ADDR_2, 100, VestingSchedule.PRIVATEROUND, true);
+    });
+
+    it('should withdraw valid amounts', async () => {
+      await vesting.withdrawFromVestingBulk(0, 100);
+      assert.equal(await token.balanceOf(OTHER_ADDR), 100);
+      assert.equal(await token.balanceOf(SOME_ADDR_1), 100);
+      assert.equal(await token.balanceOf(SOME_ADDR_2), 100);
+    });
+
+    it('should withdraw valid amounts if one canceled', async () => {
+      await vesting.cancelVesting(1);
+
+      await vesting.withdrawFromVestingBulk(0, 100);
+      assert.equal(await token.balanceOf(OTHER_ADDR), 100);
+      assert.equal(await token.balanceOf(SOME_ADDR_1), 0);
+      assert.equal(await token.balanceOf(SOME_ADDR_2), 100);
+    });
+
+    it('should withdraw valid amounts with subset parameters', async () => {
+      await vesting.withdrawFromVestingBulk(0, 1);
+      assert.equal(await token.balanceOf(OTHER_ADDR), 100);
+      assert.equal(await token.balanceOf(SOME_ADDR_1), 0);
+      assert.equal(await token.balanceOf(SOME_ADDR_2), 0);
+    });
+
+    it('should withdraw valid amounts with out of bounds parameters', async () => {
+      await vesting.withdrawFromVestingBulk(100, 100);
+      assert.equal(await token.balanceOf(OTHER_ADDR), 0);
+      assert.equal(await token.balanceOf(SOME_ADDR_1), 0);
+      assert.equal(await token.balanceOf(SOME_ADDR_2), 0);
     });
   });
 
@@ -570,12 +649,12 @@ contract('BMITokenVesting', async (accounts) => {
       await testAmountByMonthOffset([
         [-1, 0],
         [0, 369000],
-        [1, 369000+102333],
-        [2, 369000+102333+102333],
-        [3, 369000+102333+102333+102333],
-        [4, 369000+102333+102333+102333+252933],
-        [5, 369000+102333+102333+102333+252933+252933],
-        [6, 369000+102333+102333+102333+252933+252933+214135],
+        [1, 369000 + 102333],
+        [2, 369000 + 102333 + 102333],
+        [3, 369000 + 102333 + 102333 + 102333],
+        [4, 369000 + 102333 + 102333 + 102333 + 252933],
+        [5, 369000 + 102333 + 102333 + 102333 + 252933 + 252933],
+        [6, 369000 + 102333 + 102333 + 102333 + 252933 + 252933 + 214135],
         [10, 1396000],
       ]);
     });

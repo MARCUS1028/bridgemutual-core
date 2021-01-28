@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.7.4;
+pragma solidity =0.7.4;
 
 import "@openzeppelin/contracts-upgradeable/token/ERC20/IERC20Upgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC20/SafeERC20Upgradeable.sol";
@@ -294,8 +294,9 @@ contract BMITokenVesting is Initializable, OwnableUpgradeable {
     bool _isCancelable
   ) internal returns (uint256 vestingId) {
     require(getTokensAvailable() >= _amount, "Not enough tokens");
+    require(_beneficiary != address(0), "Cannot create vesting for zero address");
 
-    amountInVestings += _amount;
+    amountInVestings = amountInVestings.add(_amount);
 
     vestingId = vestings.length;
     vestings.push(
@@ -324,14 +325,28 @@ contract BMITokenVesting is Initializable, OwnableUpgradeable {
     emit VestingCanceled(_vestingId);
   }
 
+  function withdrawFromVestingBulk(uint256 _offset, uint256 _limit) external {
+    uint256 to = (_offset + _limit).min(vestings.length).max(_offset);
+    for (uint256 i = _offset; i < to; i++) {
+      Vesting storage vesting = getVesting(i);
+      if (vesting.isValid) {
+        _withdrawFromVesting(vesting, i);
+      }
+    }
+  }
+
   function withdrawFromVesting(uint256 _vestingId) external {
     Vesting storage vesting = getVesting(_vestingId);
     require(vesting.isValid, "Vesting is canceled");
 
-    uint256 amountToPay = _getWithdrawableAmount(vesting);
-    vesting.paidAmount += amountToPay;
+    _withdrawFromVesting(vesting, _vestingId);
+  }
+
+  function _withdrawFromVesting(Vesting storage _vesting, uint256 _vestingId) internal {
+    uint256 amountToPay = _getWithdrawableAmount(_vesting);
+    _vesting.paidAmount = _vesting.paidAmount.add(amountToPay);
     amountInVestings = amountInVestings.sub(amountToPay);
-    token.transfer(vesting.beneficiary, amountToPay);
+    token.transfer(_vesting.beneficiary, amountToPay);
 
     emit VestingWithdraw(_vestingId, amountToPay);
   }
