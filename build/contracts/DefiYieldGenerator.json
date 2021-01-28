@@ -31,8 +31,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [],
@@ -45,8 +44,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [],
@@ -59,8 +57,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [],
@@ -73,8 +70,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [],
@@ -87,8 +83,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [],
@@ -2398,7 +2393,7 @@
                 }
               ]
             },
-            "name": "abi_encode_tuple_t_contract$_IERC20_$6897__to_t_address__fromStack_reversed",
+            "name": "abi_encode_tuple_t_contract$_IERC20_$6935__to_t_address__fromStack_reversed",
             "nodeType": "YulFunctionDefinition",
             "parameters": [
               {
@@ -3756,7 +3751,7 @@
           }
         ]
       },
-      "contents": "{\n    { }\n    function abi_decode_tuple_t_address(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(value0, value0) }\n        let value := calldataload(headStart)\n        validator_revert_t_address(value)\n        value0 := value\n    }\n    function abi_decode_tuple_t_address_fromMemory(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(value0, value0) }\n        let value := mload(headStart)\n        validator_revert_t_address(value)\n        value0 := value\n    }\n    function abi_decode_tuple_t_bool_fromMemory(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(value0, value0) }\n        let value := mload(headStart)\n        if iszero(eq(value, iszero(iszero(value)))) { revert(value0, value0) }\n        value0 := value\n    }\n    function abi_decode_tuple_t_contract$_ContractsRegistry_$1324(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(value0, value0) }\n        let value := calldataload(headStart)\n        validator_revert_t_address(value)\n        value0 := value\n    }\n    function abi_decode_tuple_t_string_memory_ptr_fromMemory(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(value0, value0) }\n        let offset := mload(headStart)\n        let _1 := 0xffffffffffffffff\n        if gt(offset, _1) { revert(value0, value0) }\n        let _2 := add(headStart, offset)\n        if iszero(slt(add(_2, 0x1f), dataEnd)) { revert(value0, value0) }\n        let length := mload(_2)\n        if gt(length, _1) { invalid() }\n        let memPtr := mload(64)\n        let newFreePtr := add(add(memPtr, and(add(length, 0x1f), 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe0)), 32)\n        if or(gt(newFreePtr, _1), lt(newFreePtr, memPtr)) { invalid() }\n        mstore(64, newFreePtr)\n        mstore(memPtr, length)\n        if gt(add(add(_2, length), 32), dataEnd) { revert(value0, value0) }\n        copy_memory_to_memory(add(_2, 32), add(memPtr, 32), length)\n        value0 := memPtr\n    }\n    function abi_decode_tuple_t_uint256t_uint256(headStart, dataEnd) -> value0, value1\n    {\n        if slt(sub(dataEnd, headStart), 64) { revert(value1, value1) }\n        value0 := calldataload(headStart)\n        value1 := calldataload(add(headStart, 32))\n    }\n    function abi_encode_tuple_t_address__to_t_address__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, and(value0, 0xffffffffffffffffffffffffffffffffffffffff))\n    }\n    function abi_encode_tuple_t_address_payable_t_uint256__to_t_address_t_uint256__fromStack_reversed(headStart, value1, value0) -> tail\n    {\n        tail := add(headStart, 64)\n        mstore(headStart, and(value0, 0xffffffffffffffffffffffffffffffffffffffff))\n        mstore(add(headStart, 32), value1)\n    }\n    function abi_encode_tuple_t_contract$_ContractsRegistry_$1324__to_t_address__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, and(value0, 0xffffffffffffffffffffffffffffffffffffffff))\n    }\n    function abi_encode_tuple_t_contract$_IERC20_$6897__to_t_address__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, and(value0, 0xffffffffffffffffffffffffffffffffffffffff))\n    }\n    function abi_encode_tuple_t_string_memory_ptr__to_t_string_memory_ptr__fromStack_reversed(headStart, value0) -> tail\n    {\n        mstore(headStart, 32)\n        let length := mload(value0)\n        mstore(add(headStart, 32), length)\n        copy_memory_to_memory(add(value0, 32), add(headStart, 64), length)\n        tail := add(add(headStart, and(add(length, 31), 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe0)), 64)\n    }\n    function abi_encode_tuple_t_stringliteral_7b14d5a1a6cb4f9b9c241bce50c693699673170ad40aaaa545df6b86e1ef40d9__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 28)\n        mstore(add(headStart, 64), \"Failed to approve DAI tokens\")\n        tail := add(headStart, 96)\n    }\n    function abi_encode_tuple_t_stringliteral_ce44ce2f00876d7842994a3555e35deaf98c2e180cbf261a06a508d2e5cad440__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 52)\n        mstore(add(headStart, 64), \"DefiYieldGenerator: caller is no\")\n        mstore(add(headStart, 96), \"t a staking contract\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_f73bf93c96d9002862961f2d9996227c3754e3fab7c0e2cf56fc3b1bf5a1e501__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 28)\n        mstore(add(headStart, 64), \"Failed to approve BMI tokens\")\n        tail := add(headStart, 96)\n    }\n    function abi_encode_tuple_t_uint256__to_t_uint256__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, value0)\n    }\n    function copy_memory_to_memory(src, dst, length)\n    {\n        let i := 0\n        for { } lt(i, length) { i := add(i, 32) }\n        {\n            mstore(add(dst, i), mload(add(src, i)))\n        }\n        if gt(i, length) { mstore(add(dst, length), 0) }\n    }\n    function validator_revert_t_address(value)\n    {\n        if iszero(eq(value, and(value, 0xffffffffffffffffffffffffffffffffffffffff))) { revert(0, 0) }\n    }\n}",
+      "contents": "{\n    { }\n    function abi_decode_tuple_t_address(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(value0, value0) }\n        let value := calldataload(headStart)\n        validator_revert_t_address(value)\n        value0 := value\n    }\n    function abi_decode_tuple_t_address_fromMemory(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(value0, value0) }\n        let value := mload(headStart)\n        validator_revert_t_address(value)\n        value0 := value\n    }\n    function abi_decode_tuple_t_bool_fromMemory(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(value0, value0) }\n        let value := mload(headStart)\n        if iszero(eq(value, iszero(iszero(value)))) { revert(value0, value0) }\n        value0 := value\n    }\n    function abi_decode_tuple_t_contract$_ContractsRegistry_$1324(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(value0, value0) }\n        let value := calldataload(headStart)\n        validator_revert_t_address(value)\n        value0 := value\n    }\n    function abi_decode_tuple_t_string_memory_ptr_fromMemory(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(value0, value0) }\n        let offset := mload(headStart)\n        let _1 := 0xffffffffffffffff\n        if gt(offset, _1) { revert(value0, value0) }\n        let _2 := add(headStart, offset)\n        if iszero(slt(add(_2, 0x1f), dataEnd)) { revert(value0, value0) }\n        let length := mload(_2)\n        if gt(length, _1) { invalid() }\n        let memPtr := mload(64)\n        let newFreePtr := add(add(memPtr, and(add(length, 0x1f), 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe0)), 32)\n        if or(gt(newFreePtr, _1), lt(newFreePtr, memPtr)) { invalid() }\n        mstore(64, newFreePtr)\n        mstore(memPtr, length)\n        if gt(add(add(_2, length), 32), dataEnd) { revert(value0, value0) }\n        copy_memory_to_memory(add(_2, 32), add(memPtr, 32), length)\n        value0 := memPtr\n    }\n    function abi_decode_tuple_t_uint256t_uint256(headStart, dataEnd) -> value0, value1\n    {\n        if slt(sub(dataEnd, headStart), 64) { revert(value1, value1) }\n        value0 := calldataload(headStart)\n        value1 := calldataload(add(headStart, 32))\n    }\n    function abi_encode_tuple_t_address__to_t_address__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, and(value0, 0xffffffffffffffffffffffffffffffffffffffff))\n    }\n    function abi_encode_tuple_t_address_payable_t_uint256__to_t_address_t_uint256__fromStack_reversed(headStart, value1, value0) -> tail\n    {\n        tail := add(headStart, 64)\n        mstore(headStart, and(value0, 0xffffffffffffffffffffffffffffffffffffffff))\n        mstore(add(headStart, 32), value1)\n    }\n    function abi_encode_tuple_t_contract$_ContractsRegistry_$1324__to_t_address__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, and(value0, 0xffffffffffffffffffffffffffffffffffffffff))\n    }\n    function abi_encode_tuple_t_contract$_IERC20_$6935__to_t_address__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, and(value0, 0xffffffffffffffffffffffffffffffffffffffff))\n    }\n    function abi_encode_tuple_t_string_memory_ptr__to_t_string_memory_ptr__fromStack_reversed(headStart, value0) -> tail\n    {\n        mstore(headStart, 32)\n        let length := mload(value0)\n        mstore(add(headStart, 32), length)\n        copy_memory_to_memory(add(value0, 32), add(headStart, 64), length)\n        tail := add(add(headStart, and(add(length, 31), 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe0)), 64)\n    }\n    function abi_encode_tuple_t_stringliteral_7b14d5a1a6cb4f9b9c241bce50c693699673170ad40aaaa545df6b86e1ef40d9__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 28)\n        mstore(add(headStart, 64), \"Failed to approve DAI tokens\")\n        tail := add(headStart, 96)\n    }\n    function abi_encode_tuple_t_stringliteral_ce44ce2f00876d7842994a3555e35deaf98c2e180cbf261a06a508d2e5cad440__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 52)\n        mstore(add(headStart, 64), \"DefiYieldGenerator: caller is no\")\n        mstore(add(headStart, 96), \"t a staking contract\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_f73bf93c96d9002862961f2d9996227c3754e3fab7c0e2cf56fc3b1bf5a1e501__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 28)\n        mstore(add(headStart, 64), \"Failed to approve BMI tokens\")\n        tail := add(headStart, 96)\n    }\n    function abi_encode_tuple_t_uint256__to_t_uint256__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, value0)\n    }\n    function copy_memory_to_memory(src, dst, length)\n    {\n        let i := 0\n        for { } lt(i, length) { i := add(i, 32) }\n        {\n            mstore(add(dst, i), mload(add(src, i)))\n        }\n        if gt(i, length) { mstore(add(dst, length), 0) }\n    }\n    function validator_revert_t_address(value)\n    {\n        if iszero(eq(value, and(value, 0xffffffffffffffffffffffffffffffffffffffff))) { revert(0, 0) }\n    }\n}",
       "id": 37,
       "language": "Yul",
       "name": "#utility.yul"
@@ -3770,13 +3765,13 @@
     "absolutePath": "/home/artem/Projects/Distributed_Lab/Applicature/bridgemutual-core/contracts/DefiYieldGenerator.sol",
     "exportedSymbols": {
       "AccessControl": [
-        5706
+        5744
       ],
       "Address": [
-        7354
+        7392
       ],
       "Context": [
-        5423
+        5461
       ],
       "ContractsRegistry": [
         1324
@@ -3785,13 +3780,13 @@
         1457
       ],
       "EnumerableSet": [
-        8289
+        8327
       ],
       "IERC20": [
-        6897
+        6935
       ],
       "Ownable": [
-        5815
+        5853
       ]
     },
     "id": 1458,
@@ -3824,7 +3819,7 @@
         "id": 1328,
         "nodeType": "ImportDirective",
         "scope": 1458,
-        "sourceUnit": 5816,
+        "sourceUnit": 5854,
         "src": "91:52:4",
         "symbolAliases": [],
         "unitAlias": ""
@@ -3835,7 +3830,7 @@
         "id": 1329,
         "nodeType": "ImportDirective",
         "scope": 1458,
-        "sourceUnit": 6898,
+        "sourceUnit": 6936,
         "src": "144:56:4",
         "symbolAliases": [],
         "unitAlias": ""
@@ -3859,10 +3854,10 @@
               "id": 1331,
               "name": "Ownable",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 5815,
+              "referencedDeclaration": 5853,
               "src": "268:7:4",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_Ownable_$5815",
+                "typeIdentifier": "t_contract$_Ownable_$5853",
                 "typeString": "contract Ownable"
               }
             },
@@ -3872,16 +3867,16 @@
           }
         ],
         "contractDependencies": [
-          5423,
-          5815
+          5461,
+          5853
         ],
         "contractKind": "contract",
         "fullyImplemented": true,
         "id": 1457,
         "linearizedBaseContracts": [
           1457,
-          5815,
-          5423
+          5853,
+          5461
         ],
         "name": "DefiYieldGenerator",
         "nodeType": "ContractDefinition",
@@ -4036,17 +4031,17 @@
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_contract$_IERC20_$6897",
+              "typeIdentifier": "t_contract$_IERC20_$6935",
               "typeString": "contract IERC20"
             },
             "typeName": {
               "id": 1342,
               "name": "IERC20",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 6897,
+              "referencedDeclaration": 6935,
               "src": "383:6:4",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_IERC20_$6897",
+                "typeIdentifier": "t_contract$_IERC20_$6935",
                 "typeString": "contract IERC20"
               }
             },
@@ -4064,17 +4059,17 @@
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_contract$_IERC20_$6897",
+              "typeIdentifier": "t_contract$_IERC20_$6935",
               "typeString": "contract IERC20"
             },
             "typeName": {
               "id": 1344,
               "name": "IERC20",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 6897,
+              "referencedDeclaration": 6935,
               "src": "411:6:4",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_IERC20_$6897",
+                "typeIdentifier": "t_contract$_IERC20_$6935",
                 "typeString": "contract IERC20"
               }
             },
@@ -4318,7 +4313,7 @@
                       "referencedDeclaration": 1343,
                       "src": "784:8:4",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_IERC20_$6897",
+                        "typeIdentifier": "t_contract$_IERC20_$6935",
                         "typeString": "contract IERC20"
                       }
                     },
@@ -4434,10 +4429,10 @@
                         "name": "IERC20",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 6897,
+                        "referencedDeclaration": 6935,
                         "src": "795:6:4",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_type$_t_contract$_IERC20_$6897_$",
+                          "typeIdentifier": "t_type$_t_contract$_IERC20_$6935_$",
                           "typeString": "type(contract IERC20)"
                         }
                       },
@@ -4452,13 +4447,13 @@
                       "src": "795:71:4",
                       "tryCall": false,
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_IERC20_$6897",
+                        "typeIdentifier": "t_contract$_IERC20_$6935",
                         "typeString": "contract IERC20"
                       }
                     },
                     "src": "784:82:4",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_IERC20_$6897",
+                      "typeIdentifier": "t_contract$_IERC20_$6935",
                       "typeString": "contract IERC20"
                     }
                   },
@@ -4481,7 +4476,7 @@
                       "referencedDeclaration": 1345,
                       "src": "876:8:4",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_IERC20_$6897",
+                        "typeIdentifier": "t_contract$_IERC20_$6935",
                         "typeString": "contract IERC20"
                       }
                     },
@@ -4597,10 +4592,10 @@
                         "name": "IERC20",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 6897,
+                        "referencedDeclaration": 6935,
                         "src": "887:6:4",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_type$_t_contract$_IERC20_$6897_$",
+                          "typeIdentifier": "t_type$_t_contract$_IERC20_$6935_$",
                           "typeString": "type(contract IERC20)"
                         }
                       },
@@ -4615,13 +4610,13 @@
                       "src": "887:71:4",
                       "tryCall": false,
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_IERC20_$6897",
+                        "typeIdentifier": "t_contract$_IERC20_$6935",
                         "typeString": "contract IERC20"
                       }
                     },
                     "src": "876:82:4",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_IERC20_$6897",
+                      "typeIdentifier": "t_contract$_IERC20_$6935",
                       "typeString": "contract IERC20"
                     }
                   },
@@ -4770,7 +4765,7 @@
                   "name": "onlyOwner",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 5764,
+                  "referencedDeclaration": 5802,
                   "src": "707:9:4",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
@@ -4878,7 +4873,7 @@
                           "name": "_msgSender",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 5411,
+                          "referencedDeclaration": 5449,
                           "src": "1191:10:4",
                           "typeDescriptions": {
                             "typeIdentifier": "t_function_internal_view$__$returns$_t_address_payable_$",
@@ -4932,7 +4927,7 @@
                         "referencedDeclaration": 1343,
                         "src": "1174:8:4",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_contract$_IERC20_$6897",
+                          "typeIdentifier": "t_contract$_IERC20_$6935",
                           "typeString": "contract IERC20"
                         }
                       },
@@ -4943,7 +4938,7 @@
                       "lValueRequested": false,
                       "memberName": "approve",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 6866,
+                      "referencedDeclaration": 6904,
                       "src": "1174:16:4",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_external_nonpayable$_t_address_$_t_uint256_$returns$_t_bool_$",
@@ -5138,7 +5133,7 @@
                           "name": "_msgSender",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 5411,
+                          "referencedDeclaration": 5449,
                           "src": "1399:10:4",
                           "typeDescriptions": {
                             "typeIdentifier": "t_function_internal_view$__$returns$_t_address_payable_$",
@@ -5192,7 +5187,7 @@
                         "referencedDeclaration": 1345,
                         "src": "1382:8:4",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_contract$_IERC20_$6897",
+                          "typeIdentifier": "t_contract$_IERC20_$6935",
                           "typeString": "contract IERC20"
                         }
                       },
@@ -5203,7 +5198,7 @@
                       "lValueRequested": false,
                       "memberName": "approve",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 6866,
+                      "referencedDeclaration": 6904,
                       "src": "1382:16:4",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_external_nonpayable$_t_address_$_t_uint256_$returns$_t_bool_$",
@@ -5514,13 +5509,13 @@
       "absolutePath": "/home/artem/Projects/Distributed_Lab/Applicature/bridgemutual-core/contracts/DefiYieldGenerator.sol",
       "exportedSymbols": {
         "AccessControl": [
-          5706
+          5744
         ],
         "Address": [
-          7354
+          7392
         ],
         "Context": [
-          5423
+          5461
         ],
         "ContractsRegistry": [
           1324
@@ -5529,13 +5524,13 @@
           1457
         ],
         "EnumerableSet": [
-          8289
+          8327
         ],
         "IERC20": [
-          6897
+          6935
         ],
         "Ownable": [
-          5815
+          5853
         ]
       },
       "license": "MIT"
@@ -5567,7 +5562,7 @@
       },
       {
         "attributes": {
-          "SourceUnit": 5816,
+          "SourceUnit": 5854,
           "absolutePath": "@openzeppelin/contracts/access/Ownable.sol",
           "file": "@openzeppelin/contracts/access/Ownable.sol",
           "scope": 1458,
@@ -5582,7 +5577,7 @@
       },
       {
         "attributes": {
-          "SourceUnit": 6898,
+          "SourceUnit": 6936,
           "absolutePath": "@openzeppelin/contracts/token/ERC20/IERC20.sol",
           "file": "@openzeppelin/contracts/token/ERC20/IERC20.sol",
           "scope": 1458,
@@ -5614,15 +5609,15 @@
         "attributes": {
           "abstract": false,
           "contractDependencies": [
-            5423,
-            5815
+            5461,
+            5853
           ],
           "contractKind": "contract",
           "fullyImplemented": true,
           "linearizedBaseContracts": [
             1457,
-            5815,
-            5423
+            5853,
+            5461
           ],
           "name": "DefiYieldGenerator",
           "scope": 1458
@@ -5634,7 +5629,7 @@
               {
                 "attributes": {
                   "name": "Ownable",
-                  "referencedDeclaration": 5815,
+                  "referencedDeclaration": 5853,
                   "type": "contract Ownable"
                 },
                 "id": 1331,
@@ -5799,7 +5794,7 @@
               {
                 "attributes": {
                   "name": "IERC20",
-                  "referencedDeclaration": 6897,
+                  "referencedDeclaration": 6935,
                   "type": "contract IERC20"
                 },
                 "id": 1342,
@@ -5827,7 +5822,7 @@
               {
                 "attributes": {
                   "name": "IERC20",
-                  "referencedDeclaration": 6897,
+                  "referencedDeclaration": 6935,
                   "type": "contract IERC20"
                 },
                 "id": 1344,
@@ -6094,7 +6089,7 @@
                       "overloadedDeclarations": [
                         null
                       ],
-                      "referencedDeclaration": 5764,
+                      "referencedDeclaration": 5802,
                       "type": "modifier ()",
                       "value": "onlyOwner"
                     },
@@ -6208,7 +6203,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 6897,
+                                  "referencedDeclaration": 6935,
                                   "type": "type(contract IERC20)",
                                   "value": "IERC20"
                                 },
@@ -6392,7 +6387,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 6897,
+                                  "referencedDeclaration": 6935,
                                   "type": "type(contract IERC20)",
                                   "value": "IERC20"
                                 },
@@ -6803,7 +6798,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "approve",
-                              "referencedDeclaration": 6866,
+                              "referencedDeclaration": 6904,
                               "type": "function (address,uint256) external returns (bool)"
                             },
                             "children": [
@@ -6851,7 +6846,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 5411,
+                                  "referencedDeclaration": 5449,
                                   "type": "function () view returns (address payable)",
                                   "value": "_msgSender"
                                 },
@@ -7099,7 +7094,7 @@
                               "isPure": false,
                               "lValueRequested": false,
                               "member_name": "approve",
-                              "referencedDeclaration": 6866,
+                              "referencedDeclaration": 6904,
                               "type": "function (address,uint256) external returns (bool)"
                             },
                             "children": [
@@ -7147,7 +7142,7 @@
                                   "overloadedDeclarations": [
                                     null
                                   ],
-                                  "referencedDeclaration": 5411,
+                                  "referencedDeclaration": 5449,
                                   "type": "function () view returns (address payable)",
                                   "value": "_msgSender"
                                 },
@@ -7660,8 +7655,7 @@
     }
   },
   "schemaVersion": "3.3.3",
-  "updatedAt": "2021-01-27T15:34:07.585Z",
-  "networkType": "ethereum",
+  "updatedAt": "2021-01-28T11:21:06.130Z",
   "devdoc": {
     "kind": "dev",
     "methods": {

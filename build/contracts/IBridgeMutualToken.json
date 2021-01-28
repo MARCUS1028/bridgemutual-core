@@ -199,18 +199,18 @@
     "absolutePath": "/home/artem/Projects/Distributed_Lab/Applicature/bridgemutual-core/contracts/interfaces/IToken.sol",
     "exportedSymbols": {
       "IBridgeMutualToken": [
-        3370
+        3408
       ],
       "IERC20": [
-        6897
+        6935
       ]
     },
-    "id": 3371,
+    "id": 3409,
     "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 3366,
+        "id": 3404,
         "literals": [
           "solidity",
           "^",
@@ -223,10 +223,10 @@
       {
         "absolutePath": "@openzeppelin/contracts/token/ERC20/IERC20.sol",
         "file": "@openzeppelin/contracts/token/ERC20/IERC20.sol",
-        "id": 3367,
+        "id": 3405,
         "nodeType": "ImportDirective",
-        "scope": 3371,
-        "sourceUnit": 6898,
+        "scope": 3409,
+        "sourceUnit": 6936,
         "src": "57:56:16",
         "symbolAliases": [],
         "unitAlias": ""
@@ -236,35 +236,35 @@
         "baseContracts": [
           {
             "baseName": {
-              "id": 3368,
+              "id": 3406,
               "name": "IERC20",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 6897,
+              "referencedDeclaration": 6935,
               "src": "147:6:16",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_IERC20_$6897",
+                "typeIdentifier": "t_contract$_IERC20_$6935",
                 "typeString": "contract IERC20"
               }
             },
-            "id": 3369,
+            "id": 3407,
             "nodeType": "InheritanceSpecifier",
             "src": "147:6:16"
           }
         ],
         "contractDependencies": [
-          6897
+          6935
         ],
         "contractKind": "interface",
         "fullyImplemented": false,
-        "id": 3370,
+        "id": 3408,
         "linearizedBaseContracts": [
-          3370,
-          6897
+          3408,
+          6935
         ],
         "name": "IBridgeMutualToken",
         "nodeType": "ContractDefinition",
         "nodes": [],
-        "scope": 3371,
+        "scope": 3409,
         "src": "115:41:16"
       }
     ],
@@ -275,10 +275,10 @@
       "absolutePath": "/home/artem/Projects/Distributed_Lab/Applicature/bridgemutual-core/contracts/interfaces/IToken.sol",
       "exportedSymbols": {
         "IBridgeMutualToken": [
-          3370
+          3408
         ],
         "IERC20": [
-          6897
+          6935
         ]
       },
       "license": "MIT"
@@ -293,22 +293,22 @@
             ".4"
           ]
         },
-        "id": 3366,
+        "id": 3404,
         "name": "PragmaDirective",
         "src": "32:23:16"
       },
       {
         "attributes": {
-          "SourceUnit": 6898,
+          "SourceUnit": 6936,
           "absolutePath": "@openzeppelin/contracts/token/ERC20/IERC20.sol",
           "file": "@openzeppelin/contracts/token/ERC20/IERC20.sol",
-          "scope": 3371,
+          "scope": 3409,
           "symbolAliases": [
             null
           ],
           "unitAlias": ""
         },
-        "id": 3367,
+        "id": 3405,
         "name": "ImportDirective",
         "src": "57:56:16"
       },
@@ -316,19 +316,19 @@
         "attributes": {
           "abstract": false,
           "contractDependencies": [
-            6897
+            6935
           ],
           "contractKind": "interface",
           "fullyImplemented": false,
           "linearizedBaseContracts": [
-            3370,
-            6897
+            3408,
+            6935
           ],
           "name": "IBridgeMutualToken",
           "nodes": [
             null
           ],
-          "scope": 3371
+          "scope": 3409
         },
         "children": [
           {
@@ -337,25 +337,25 @@
               {
                 "attributes": {
                   "name": "IERC20",
-                  "referencedDeclaration": 6897,
+                  "referencedDeclaration": 6935,
                   "type": "contract IERC20"
                 },
-                "id": 3368,
+                "id": 3406,
                 "name": "UserDefinedTypeName",
                 "src": "147:6:16"
               }
             ],
-            "id": 3369,
+            "id": 3407,
             "name": "InheritanceSpecifier",
             "src": "147:6:16"
           }
         ],
-        "id": 3370,
+        "id": 3408,
         "name": "ContractDefinition",
         "src": "115:41:16"
       }
     ],
-    "id": 3371,
+    "id": 3409,
     "name": "SourceUnit",
     "src": "32:125:16"
   },
@@ -365,7 +365,7 @@
   },
   "networks": {},
   "schemaVersion": "3.3.3",
-  "updatedAt": "2021-01-27T14:17:24.027Z",
+  "updatedAt": "2021-01-28T11:21:06.228Z",
   "devdoc": {
     "kind": "dev",
     "methods": {

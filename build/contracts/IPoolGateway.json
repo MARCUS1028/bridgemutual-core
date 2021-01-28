@@ -255,18 +255,18 @@
     "absolutePath": "/home/artem/Projects/Distributed_Lab/Applicature/bridgemutual-core/contracts/interfaces/IPoolGateway.sol",
     "exportedSymbols": {
       "IPool": [
-        3257
+        3295
       ],
       "IPoolGateway": [
-        3322
+        3360
       ]
     },
-    "id": 3323,
+    "id": 3361,
     "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 3259,
+        "id": 3297,
         "literals": [
           "solidity",
           "^",
@@ -277,7 +277,7 @@
         "src": "32:23:13"
       },
       {
-        "id": 3260,
+        "id": 3298,
         "literals": [
           "experimental",
           "ABIEncoderV2"
@@ -288,10 +288,10 @@
       {
         "absolutePath": "/home/artem/Projects/Distributed_Lab/Applicature/bridgemutual-core/contracts/interfaces/IPool.sol",
         "file": "./IPool.sol",
-        "id": 3261,
+        "id": 3299,
         "nodeType": "ImportDirective",
-        "scope": 3323,
-        "sourceUnit": 3258,
+        "scope": 3361,
+        "sourceUnit": 3296,
         "src": "91:21:13",
         "symbolAliases": [],
         "unitAlias": ""
@@ -301,45 +301,45 @@
         "baseContracts": [
           {
             "baseName": {
-              "id": 3262,
+              "id": 3300,
               "name": "IPool",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 3257,
+              "referencedDeclaration": 3295,
               "src": "140:5:13",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_IPool_$3257",
+                "typeIdentifier": "t_contract$_IPool_$3295",
                 "typeString": "contract IPool"
               }
             },
-            "id": 3263,
+            "id": 3301,
             "nodeType": "InheritanceSpecifier",
             "src": "140:5:13"
           }
         ],
         "contractDependencies": [
-          3257
+          3295
         ],
         "contractKind": "interface",
         "fullyImplemented": false,
-        "id": 3322,
+        "id": 3360,
         "linearizedBaseContracts": [
-          3322,
-          3257
+          3360,
+          3295
         ],
         "name": "IPoolGateway",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "canonicalName": "IPoolGateway.DistributionPool",
-            "id": 3268,
+            "id": 3306,
             "members": [
               {
                 "constant": false,
-                "id": 3265,
+                "id": 3303,
                 "mutability": "mutable",
                 "name": "pool",
                 "nodeType": "VariableDeclaration",
-                "scope": 3268,
+                "scope": 3306,
                 "src": "180:12:13",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -348,7 +348,7 @@
                   "typeString": "address"
                 },
                 "typeName": {
-                  "id": 3264,
+                  "id": 3302,
                   "name": "address",
                   "nodeType": "ElementaryTypeName",
                   "src": "180:7:13",
@@ -362,11 +362,11 @@
               },
               {
                 "constant": false,
-                "id": 3267,
+                "id": 3305,
                 "mutability": "mutable",
                 "name": "poolGatewayStrategy",
                 "nodeType": "VariableDeclaration",
-                "scope": 3268,
+                "scope": 3306,
                 "src": "198:27:13",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -375,7 +375,7 @@
                   "typeString": "address"
                 },
                 "typeName": {
-                  "id": 3266,
+                  "id": 3304,
                   "name": "address",
                   "nodeType": "ElementaryTypeName",
                   "src": "198:7:13",
@@ -390,35 +390,35 @@
             ],
             "name": "DistributionPool",
             "nodeType": "StructDefinition",
-            "scope": 3322,
+            "scope": 3360,
             "src": "150:80:13",
             "visibility": "public"
           },
           {
             "documentation": {
-              "id": 3269,
+              "id": 3307,
               "nodeType": "StructuredDocumentation",
               "src": "234:344:13",
               "text": "@notice Returns list of distribution pools, access: ANY\n @param _offset is starting item in array to return array from\n @param _limit is number of distribution pools to returns from _offset\n @return _distributionPoolsCount is total number of distribution pools\n @return _distributionPools is subset of distribution pools"
             },
             "functionSelector": "0d05560c",
-            "id": 3281,
+            "id": 3319,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "distributionPools",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3274,
+              "id": 3312,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3271,
+                  "id": 3309,
                   "mutability": "mutable",
                   "name": "_offset",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3281,
+                  "scope": 3319,
                   "src": "608:15:13",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -427,7 +427,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 3270,
+                    "id": 3308,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "608:7:13",
@@ -440,11 +440,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 3273,
+                  "id": 3311,
                   "mutability": "mutable",
                   "name": "_limit",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3281,
+                  "scope": 3319,
                   "src": "625:14:13",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -453,7 +453,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 3272,
+                    "id": 3310,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "625:7:13",
@@ -468,16 +468,16 @@
               "src": "607:33:13"
             },
             "returnParameters": {
-              "id": 3280,
+              "id": 3318,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3276,
+                  "id": 3314,
                   "mutability": "mutable",
                   "name": "_distributionPoolsCount",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3281,
+                  "scope": 3319,
                   "src": "676:31:13",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -486,7 +486,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 3275,
+                    "id": 3313,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "676:7:13",
@@ -499,35 +499,35 @@
                 },
                 {
                   "constant": false,
-                  "id": 3279,
+                  "id": 3317,
                   "mutability": "mutable",
                   "name": "_distributionPools",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3281,
+                  "scope": 3319,
                   "src": "709:44:13",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_array$_t_struct$_DistributionPool_$3268_memory_ptr_$dyn_memory_ptr",
+                    "typeIdentifier": "t_array$_t_struct$_DistributionPool_$3306_memory_ptr_$dyn_memory_ptr",
                     "typeString": "struct IPoolGateway.DistributionPool[]"
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 3277,
+                      "id": 3315,
                       "name": "DistributionPool",
                       "nodeType": "UserDefinedTypeName",
-                      "referencedDeclaration": 3268,
+                      "referencedDeclaration": 3306,
                       "src": "709:16:13",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_struct$_DistributionPool_$3268_storage_ptr",
+                        "typeIdentifier": "t_struct$_DistributionPool_$3306_storage_ptr",
                         "typeString": "struct IPoolGateway.DistributionPool"
                       }
                     },
-                    "id": 3278,
+                    "id": 3316,
                     "nodeType": "ArrayTypeName",
                     "src": "709:18:13",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_array$_t_struct$_DistributionPool_$3268_storage_$dyn_storage_ptr",
+                      "typeIdentifier": "t_array$_t_struct$_DistributionPool_$3306_storage_$dyn_storage_ptr",
                       "typeString": "struct IPoolGateway.DistributionPool[]"
                     }
                   },
@@ -536,7 +536,7 @@
               ],
               "src": "675:79:13"
             },
-            "scope": 3322,
+            "scope": 3360,
             "src": "581:174:13",
             "stateMutability": "view",
             "virtual": false,
@@ -544,29 +544,29 @@
           },
           {
             "documentation": {
-              "id": 3282,
+              "id": 3320,
               "nodeType": "StructuredDocumentation",
               "src": "759:205:13",
               "text": "@notice Returns list of distribution pools, access: ANY\n @param _distributionPoolId is id of distribution to return\n @return _distributionPool is distribution pool referred by _distributionId"
             },
             "functionSelector": "755ee8a5",
-            "id": 3289,
+            "id": 3327,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "distributionPool",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3285,
+              "id": 3323,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3284,
+                  "id": 3322,
                   "mutability": "mutable",
                   "name": "_distributionPoolId",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3289,
+                  "scope": 3327,
                   "src": "993:27:13",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -575,7 +575,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 3283,
+                    "id": 3321,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "993:7:13",
@@ -590,31 +590,31 @@
               "src": "992:29:13"
             },
             "returnParameters": {
-              "id": 3288,
+              "id": 3326,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3287,
+                  "id": 3325,
                   "mutability": "mutable",
                   "name": "_distributionPool",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3289,
+                  "scope": 3327,
                   "src": "1057:41:13",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_DistributionPool_$3268_memory_ptr",
+                    "typeIdentifier": "t_struct$_DistributionPool_$3306_memory_ptr",
                     "typeString": "struct IPoolGateway.DistributionPool"
                   },
                   "typeName": {
-                    "id": 3286,
+                    "id": 3324,
                     "name": "DistributionPool",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 3268,
+                    "referencedDeclaration": 3306,
                     "src": "1057:16:13",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_DistributionPool_$3268_storage_ptr",
+                      "typeIdentifier": "t_struct$_DistributionPool_$3306_storage_ptr",
                       "typeString": "struct IPoolGateway.DistributionPool"
                     }
                   },
@@ -623,7 +623,7 @@
               ],
               "src": "1056:43:13"
             },
-            "scope": 3322,
+            "scope": 3360,
             "src": "967:133:13",
             "stateMutability": "view",
             "virtual": false,
@@ -631,35 +631,35 @@
           },
           {
             "documentation": {
-              "id": 3290,
+              "id": 3328,
               "nodeType": "StructuredDocumentation",
               "src": "1104:137:13",
               "text": "@notice Returns number of distribution pools, access: ANY\n @return _distributionPoolsCount is total number of distribution pools"
             },
             "functionSelector": "3c52032e",
-            "id": 3295,
+            "id": 3333,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "distributionPoolsCount",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3291,
+              "id": 3329,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1275:2:13"
             },
             "returnParameters": {
-              "id": 3294,
+              "id": 3332,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3293,
+                  "id": 3331,
                   "mutability": "mutable",
                   "name": "_distributionPoolsCount",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3295,
+                  "scope": 3333,
                   "src": "1301:31:13",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -668,7 +668,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 3292,
+                    "id": 3330,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "1301:7:13",
@@ -682,7 +682,7 @@
               ],
               "src": "1300:33:13"
             },
-            "scope": 3322,
+            "scope": 3360,
             "src": "1244:90:13",
             "stateMutability": "view",
             "virtual": false,
@@ -690,29 +690,29 @@
           },
           {
             "documentation": {
-              "id": 3296,
+              "id": 3334,
               "nodeType": "StructuredDocumentation",
               "src": "1338:346:13",
               "text": "@notice Adds distribution to pass captured tokens to, \n gateway can have multiple records of same pool with different pool strategies, access: DAO\n @param _pool is address of pool to be added\n @param _poolStrategy is pool strategy that pool is assigned to\n @return _distributionPoolId is total number of distribution pools"
             },
             "functionSelector": "de4010d2",
-            "id": 3305,
+            "id": 3343,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "addDistributionPool",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3301,
+              "id": 3339,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3298,
+                  "id": 3336,
                   "mutability": "mutable",
                   "name": "_pool",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3305,
+                  "scope": 3343,
                   "src": "1716:13:13",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -721,7 +721,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3297,
+                    "id": 3335,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "1716:7:13",
@@ -735,11 +735,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 3300,
+                  "id": 3338,
                   "mutability": "mutable",
                   "name": "_poolStrategy",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3305,
+                  "scope": 3343,
                   "src": "1731:21:13",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -748,7 +748,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3299,
+                    "id": 3337,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "1731:7:13",
@@ -764,16 +764,16 @@
               "src": "1715:38:13"
             },
             "returnParameters": {
-              "id": 3304,
+              "id": 3342,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3303,
+                  "id": 3341,
                   "mutability": "mutable",
                   "name": "_distributionPoolId",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3305,
+                  "scope": 3343,
                   "src": "1772:27:13",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -782,7 +782,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 3302,
+                    "id": 3340,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "1772:7:13",
@@ -796,7 +796,7 @@
               ],
               "src": "1771:29:13"
             },
-            "scope": 3322,
+            "scope": 3360,
             "src": "1687:114:13",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -804,29 +804,29 @@
           },
           {
             "documentation": {
-              "id": 3306,
+              "id": 3344,
               "nodeType": "StructuredDocumentation",
               "src": "1805:252:13",
               "text": "@notice Updates distribution by passed id, access: DAO\n @param _distributionPoolId is id of pool distribution should be updated\n @param _pool is address of pool to change to\n @param _poolStrategy is pool strategy address to change to"
             },
             "functionSelector": "d1f17950",
-            "id": 3315,
+            "id": 3353,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "updateDistributionPool",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3313,
+              "id": 3351,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3308,
+                  "id": 3346,
                   "mutability": "mutable",
                   "name": "_distributionPoolId",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3315,
+                  "scope": 3353,
                   "src": "2097:27:13",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -835,7 +835,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 3307,
+                    "id": 3345,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "2097:7:13",
@@ -848,11 +848,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 3310,
+                  "id": 3348,
                   "mutability": "mutable",
                   "name": "_pool",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3315,
+                  "scope": 3353,
                   "src": "2130:13:13",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -861,7 +861,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3309,
+                    "id": 3347,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "2130:7:13",
@@ -875,11 +875,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 3312,
+                  "id": 3350,
                   "mutability": "mutable",
                   "name": "_poolStrategy",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3315,
+                  "scope": 3353,
                   "src": "2149:21:13",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -888,7 +888,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 3311,
+                    "id": 3349,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "2149:7:13",
@@ -904,12 +904,12 @@
               "src": "2091:83:13"
             },
             "returnParameters": {
-              "id": 3314,
+              "id": 3352,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "2183:0:13"
             },
-            "scope": 3322,
+            "scope": 3360,
             "src": "2060:124:13",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -917,29 +917,29 @@
           },
           {
             "documentation": {
-              "id": 3316,
+              "id": 3354,
               "nodeType": "StructuredDocumentation",
               "src": "2188:136:13",
               "text": "@notice Removes distribution by passed id, access: DAO\n @param _distributionPoolId is id of pool distribution should be removed"
             },
             "functionSelector": "c032fb6c",
-            "id": 3321,
+            "id": 3359,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "removeDistributionPool",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3319,
+              "id": 3357,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 3318,
+                  "id": 3356,
                   "mutability": "mutable",
                   "name": "_distributionPoolId",
                   "nodeType": "VariableDeclaration",
-                  "scope": 3321,
+                  "scope": 3359,
                   "src": "2359:27:13",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -948,7 +948,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 3317,
+                    "id": 3355,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "2359:7:13",
@@ -963,19 +963,19 @@
               "src": "2358:29:13"
             },
             "returnParameters": {
-              "id": 3320,
+              "id": 3358,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "2396:0:13"
             },
-            "scope": 3322,
+            "scope": 3360,
             "src": "2327:70:13",
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "external"
           }
         ],
-        "scope": 3323,
+        "scope": 3361,
         "src": "114:2285:13"
       }
     ],
@@ -986,10 +986,10 @@
       "absolutePath": "/home/artem/Projects/Distributed_Lab/Applicature/bridgemutual-core/contracts/interfaces/IPoolGateway.sol",
       "exportedSymbols": {
         "IPool": [
-          3257
+          3295
         ],
         "IPoolGateway": [
-          3322
+          3360
         ]
       },
       "license": "MIT"
@@ -1004,7 +1004,7 @@
             ".4"
           ]
         },
-        "id": 3259,
+        "id": 3297,
         "name": "PragmaDirective",
         "src": "32:23:13"
       },
@@ -1015,22 +1015,22 @@
             "ABIEncoderV2"
           ]
         },
-        "id": 3260,
+        "id": 3298,
         "name": "PragmaDirective",
         "src": "56:33:13"
       },
       {
         "attributes": {
-          "SourceUnit": 3258,
+          "SourceUnit": 3296,
           "absolutePath": "/home/artem/Projects/Distributed_Lab/Applicature/bridgemutual-core/contracts/interfaces/IPool.sol",
           "file": "./IPool.sol",
-          "scope": 3323,
+          "scope": 3361,
           "symbolAliases": [
             null
           ],
           "unitAlias": ""
         },
-        "id": 3261,
+        "id": 3299,
         "name": "ImportDirective",
         "src": "91:21:13"
       },
@@ -1038,16 +1038,16 @@
         "attributes": {
           "abstract": false,
           "contractDependencies": [
-            3257
+            3295
           ],
           "contractKind": "interface",
           "fullyImplemented": false,
           "linearizedBaseContracts": [
-            3322,
-            3257
+            3360,
+            3295
           ],
           "name": "IPoolGateway",
-          "scope": 3323
+          "scope": 3361
         },
         "children": [
           {
@@ -1056,15 +1056,15 @@
               {
                 "attributes": {
                   "name": "IPool",
-                  "referencedDeclaration": 3257,
+                  "referencedDeclaration": 3295,
                   "type": "contract IPool"
                 },
-                "id": 3262,
+                "id": 3300,
                 "name": "UserDefinedTypeName",
                 "src": "140:5:13"
               }
             ],
-            "id": 3263,
+            "id": 3301,
             "name": "InheritanceSpecifier",
             "src": "140:5:13"
           },
@@ -1072,7 +1072,7 @@
             "attributes": {
               "canonicalName": "IPoolGateway.DistributionPool",
               "name": "DistributionPool",
-              "scope": 3322,
+              "scope": 3360,
               "visibility": "public"
             },
             "children": [
@@ -1081,7 +1081,7 @@
                   "constant": false,
                   "mutability": "mutable",
                   "name": "pool",
-                  "scope": 3268,
+                  "scope": 3306,
                   "stateVariable": false,
                   "storageLocation": "default",
                   "type": "address",
@@ -1094,12 +1094,12 @@
                       "stateMutability": "nonpayable",
                       "type": "address"
                     },
-                    "id": 3264,
+                    "id": 3302,
                     "name": "ElementaryTypeName",
                     "src": "180:7:13"
                   }
                 ],
-                "id": 3265,
+                "id": 3303,
                 "name": "VariableDeclaration",
                 "src": "180:12:13"
               },
@@ -1108,7 +1108,7 @@
                   "constant": false,
                   "mutability": "mutable",
                   "name": "poolGatewayStrategy",
-                  "scope": 3268,
+                  "scope": 3306,
                   "stateVariable": false,
                   "storageLocation": "default",
                   "type": "address",
@@ -1121,17 +1121,17 @@
                       "stateMutability": "nonpayable",
                       "type": "address"
                     },
-                    "id": 3266,
+                    "id": 3304,
                     "name": "ElementaryTypeName",
                     "src": "198:7:13"
                   }
                 ],
-                "id": 3267,
+                "id": 3305,
                 "name": "VariableDeclaration",
                 "src": "198:27:13"
               }
             ],
-            "id": 3268,
+            "id": 3306,
             "name": "StructDefinition",
             "src": "150:80:13"
           },
@@ -1145,7 +1145,7 @@
                 null
               ],
               "name": "distributionPools",
-              "scope": 3322,
+              "scope": 3360,
               "stateMutability": "view",
               "virtual": false,
               "visibility": "external"
@@ -1155,7 +1155,7 @@
                 "attributes": {
                   "text": "@notice Returns list of distribution pools, access: ANY\n @param _offset is starting item in array to return array from\n @param _limit is number of distribution pools to returns from _offset\n @return _distributionPoolsCount is total number of distribution pools\n @return _distributionPools is subset of distribution pools"
                 },
-                "id": 3269,
+                "id": 3307,
                 "name": "StructuredDocumentation",
                 "src": "234:344:13"
               },
@@ -1166,7 +1166,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_offset",
-                      "scope": 3281,
+                      "scope": 3319,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -1178,12 +1178,12 @@
                           "name": "uint256",
                           "type": "uint256"
                         },
-                        "id": 3270,
+                        "id": 3308,
                         "name": "ElementaryTypeName",
                         "src": "608:7:13"
                       }
                     ],
-                    "id": 3271,
+                    "id": 3309,
                     "name": "VariableDeclaration",
                     "src": "608:15:13"
                   },
@@ -1192,7 +1192,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_limit",
-                      "scope": 3281,
+                      "scope": 3319,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -1204,17 +1204,17 @@
                           "name": "uint256",
                           "type": "uint256"
                         },
-                        "id": 3272,
+                        "id": 3310,
                         "name": "ElementaryTypeName",
                         "src": "625:7:13"
                       }
                     ],
-                    "id": 3273,
+                    "id": 3311,
                     "name": "VariableDeclaration",
                     "src": "625:14:13"
                   }
                 ],
-                "id": 3274,
+                "id": 3312,
                 "name": "ParameterList",
                 "src": "607:33:13"
               },
@@ -1225,7 +1225,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_distributionPoolsCount",
-                      "scope": 3281,
+                      "scope": 3319,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -1237,12 +1237,12 @@
                           "name": "uint256",
                           "type": "uint256"
                         },
-                        "id": 3275,
+                        "id": 3313,
                         "name": "ElementaryTypeName",
                         "src": "676:7:13"
                       }
                     ],
-                    "id": 3276,
+                    "id": 3314,
                     "name": "VariableDeclaration",
                     "src": "676:31:13"
                   },
@@ -1251,7 +1251,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_distributionPools",
-                      "scope": 3281,
+                      "scope": 3319,
                       "stateVariable": false,
                       "storageLocation": "memory",
                       "type": "struct IPoolGateway.DistributionPool[]",
@@ -1266,30 +1266,30 @@
                           {
                             "attributes": {
                               "name": "DistributionPool",
-                              "referencedDeclaration": 3268,
+                              "referencedDeclaration": 3306,
                               "type": "struct IPoolGateway.DistributionPool"
                             },
-                            "id": 3277,
+                            "id": 3315,
                             "name": "UserDefinedTypeName",
                             "src": "709:16:13"
                           }
                         ],
-                        "id": 3278,
+                        "id": 3316,
                         "name": "ArrayTypeName",
                         "src": "709:18:13"
                       }
                     ],
-                    "id": 3279,
+                    "id": 3317,
                     "name": "VariableDeclaration",
                     "src": "709:44:13"
                   }
                 ],
-                "id": 3280,
+                "id": 3318,
                 "name": "ParameterList",
                 "src": "675:79:13"
               }
             ],
-            "id": 3281,
+            "id": 3319,
             "name": "FunctionDefinition",
             "src": "581:174:13"
           },
@@ -1303,7 +1303,7 @@
                 null
               ],
               "name": "distributionPool",
-              "scope": 3322,
+              "scope": 3360,
               "stateMutability": "view",
               "virtual": false,
               "visibility": "external"
@@ -1313,7 +1313,7 @@
                 "attributes": {
                   "text": "@notice Returns list of distribution pools, access: ANY\n @param _distributionPoolId is id of distribution to return\n @return _distributionPool is distribution pool referred by _distributionId"
                 },
-                "id": 3282,
+                "id": 3320,
                 "name": "StructuredDocumentation",
                 "src": "759:205:13"
               },
@@ -1324,7 +1324,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_distributionPoolId",
-                      "scope": 3289,
+                      "scope": 3327,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -1336,17 +1336,17 @@
                           "name": "uint256",
                           "type": "uint256"
                         },
-                        "id": 3283,
+                        "id": 3321,
                         "name": "ElementaryTypeName",
                         "src": "993:7:13"
                       }
                     ],
-                    "id": 3284,
+                    "id": 3322,
                     "name": "VariableDeclaration",
                     "src": "993:27:13"
                   }
                 ],
-                "id": 3285,
+                "id": 3323,
                 "name": "ParameterList",
                 "src": "992:29:13"
               },
@@ -1357,7 +1357,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_distributionPool",
-                      "scope": 3289,
+                      "scope": 3327,
                       "stateVariable": false,
                       "storageLocation": "memory",
                       "type": "struct IPoolGateway.DistributionPool",
@@ -1367,25 +1367,25 @@
                       {
                         "attributes": {
                           "name": "DistributionPool",
-                          "referencedDeclaration": 3268,
+                          "referencedDeclaration": 3306,
                           "type": "struct IPoolGateway.DistributionPool"
                         },
-                        "id": 3286,
+                        "id": 3324,
                         "name": "UserDefinedTypeName",
                         "src": "1057:16:13"
                       }
                     ],
-                    "id": 3287,
+                    "id": 3325,
                     "name": "VariableDeclaration",
                     "src": "1057:41:13"
                   }
                 ],
-                "id": 3288,
+                "id": 3326,
                 "name": "ParameterList",
                 "src": "1056:43:13"
               }
             ],
-            "id": 3289,
+            "id": 3327,
             "name": "FunctionDefinition",
             "src": "967:133:13"
           },
@@ -1399,7 +1399,7 @@
                 null
               ],
               "name": "distributionPoolsCount",
-              "scope": 3322,
+              "scope": 3360,
               "stateMutability": "view",
               "virtual": false,
               "visibility": "external"
@@ -1409,7 +1409,7 @@
                 "attributes": {
                   "text": "@notice Returns number of distribution pools, access: ANY\n @return _distributionPoolsCount is total number of distribution pools"
                 },
-                "id": 3290,
+                "id": 3328,
                 "name": "StructuredDocumentation",
                 "src": "1104:137:13"
               },
@@ -1420,7 +1420,7 @@
                   ]
                 },
                 "children": [],
-                "id": 3291,
+                "id": 3329,
                 "name": "ParameterList",
                 "src": "1275:2:13"
               },
@@ -1431,7 +1431,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_distributionPoolsCount",
-                      "scope": 3295,
+                      "scope": 3333,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -1443,22 +1443,22 @@
                           "name": "uint256",
                           "type": "uint256"
                         },
-                        "id": 3292,
+                        "id": 3330,
                         "name": "ElementaryTypeName",
                         "src": "1301:7:13"
                       }
                     ],
-                    "id": 3293,
+                    "id": 3331,
                     "name": "VariableDeclaration",
                     "src": "1301:31:13"
                   }
                 ],
-                "id": 3294,
+                "id": 3332,
                 "name": "ParameterList",
                 "src": "1300:33:13"
               }
             ],
-            "id": 3295,
+            "id": 3333,
             "name": "FunctionDefinition",
             "src": "1244:90:13"
           },
@@ -1472,7 +1472,7 @@
                 null
               ],
               "name": "addDistributionPool",
-              "scope": 3322,
+              "scope": 3360,
               "stateMutability": "nonpayable",
               "virtual": false,
               "visibility": "external"
@@ -1482,7 +1482,7 @@
                 "attributes": {
                   "text": "@notice Adds distribution to pass captured tokens to, \n gateway can have multiple records of same pool with different pool strategies, access: DAO\n @param _pool is address of pool to be added\n @param _poolStrategy is pool strategy that pool is assigned to\n @return _distributionPoolId is total number of distribution pools"
                 },
-                "id": 3296,
+                "id": 3334,
                 "name": "StructuredDocumentation",
                 "src": "1338:346:13"
               },
@@ -1493,7 +1493,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_pool",
-                      "scope": 3305,
+                      "scope": 3343,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -1506,12 +1506,12 @@
                           "stateMutability": "nonpayable",
                           "type": "address"
                         },
-                        "id": 3297,
+                        "id": 3335,
                         "name": "ElementaryTypeName",
                         "src": "1716:7:13"
                       }
                     ],
-                    "id": 3298,
+                    "id": 3336,
                     "name": "VariableDeclaration",
                     "src": "1716:13:13"
                   },
@@ -1520,7 +1520,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_poolStrategy",
-                      "scope": 3305,
+                      "scope": 3343,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -1533,17 +1533,17 @@
                           "stateMutability": "nonpayable",
                           "type": "address"
                         },
-                        "id": 3299,
+                        "id": 3337,
                         "name": "ElementaryTypeName",
                         "src": "1731:7:13"
                       }
                     ],
-                    "id": 3300,
+                    "id": 3338,
                     "name": "VariableDeclaration",
                     "src": "1731:21:13"
                   }
                 ],
-                "id": 3301,
+                "id": 3339,
                 "name": "ParameterList",
                 "src": "1715:38:13"
               },
@@ -1554,7 +1554,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_distributionPoolId",
-                      "scope": 3305,
+                      "scope": 3343,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -1566,22 +1566,22 @@
                           "name": "uint256",
                           "type": "uint256"
                         },
-                        "id": 3302,
+                        "id": 3340,
                         "name": "ElementaryTypeName",
                         "src": "1772:7:13"
                       }
                     ],
-                    "id": 3303,
+                    "id": 3341,
                     "name": "VariableDeclaration",
                     "src": "1772:27:13"
                   }
                 ],
-                "id": 3304,
+                "id": 3342,
                 "name": "ParameterList",
                 "src": "1771:29:13"
               }
             ],
-            "id": 3305,
+            "id": 3343,
             "name": "FunctionDefinition",
             "src": "1687:114:13"
           },
@@ -1595,7 +1595,7 @@
                 null
               ],
               "name": "updateDistributionPool",
-              "scope": 3322,
+              "scope": 3360,
               "stateMutability": "nonpayable",
               "virtual": false,
               "visibility": "external"
@@ -1605,7 +1605,7 @@
                 "attributes": {
                   "text": "@notice Updates distribution by passed id, access: DAO\n @param _distributionPoolId is id of pool distribution should be updated\n @param _pool is address of pool to change to\n @param _poolStrategy is pool strategy address to change to"
                 },
-                "id": 3306,
+                "id": 3344,
                 "name": "StructuredDocumentation",
                 "src": "1805:252:13"
               },
@@ -1616,7 +1616,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_distributionPoolId",
-                      "scope": 3315,
+                      "scope": 3353,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -1628,12 +1628,12 @@
                           "name": "uint256",
                           "type": "uint256"
                         },
-                        "id": 3307,
+                        "id": 3345,
                         "name": "ElementaryTypeName",
                         "src": "2097:7:13"
                       }
                     ],
-                    "id": 3308,
+                    "id": 3346,
                     "name": "VariableDeclaration",
                     "src": "2097:27:13"
                   },
@@ -1642,7 +1642,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_pool",
-                      "scope": 3315,
+                      "scope": 3353,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -1655,12 +1655,12 @@
                           "stateMutability": "nonpayable",
                           "type": "address"
                         },
-                        "id": 3309,
+                        "id": 3347,
                         "name": "ElementaryTypeName",
                         "src": "2130:7:13"
                       }
                     ],
-                    "id": 3310,
+                    "id": 3348,
                     "name": "VariableDeclaration",
                     "src": "2130:13:13"
                   },
@@ -1669,7 +1669,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_poolStrategy",
-                      "scope": 3315,
+                      "scope": 3353,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -1682,17 +1682,17 @@
                           "stateMutability": "nonpayable",
                           "type": "address"
                         },
-                        "id": 3311,
+                        "id": 3349,
                         "name": "ElementaryTypeName",
                         "src": "2149:7:13"
                       }
                     ],
-                    "id": 3312,
+                    "id": 3350,
                     "name": "VariableDeclaration",
                     "src": "2149:21:13"
                   }
                 ],
-                "id": 3313,
+                "id": 3351,
                 "name": "ParameterList",
                 "src": "2091:83:13"
               },
@@ -1703,12 +1703,12 @@
                   ]
                 },
                 "children": [],
-                "id": 3314,
+                "id": 3352,
                 "name": "ParameterList",
                 "src": "2183:0:13"
               }
             ],
-            "id": 3315,
+            "id": 3353,
             "name": "FunctionDefinition",
             "src": "2060:124:13"
           },
@@ -1722,7 +1722,7 @@
                 null
               ],
               "name": "removeDistributionPool",
-              "scope": 3322,
+              "scope": 3360,
               "stateMutability": "nonpayable",
               "virtual": false,
               "visibility": "external"
@@ -1732,7 +1732,7 @@
                 "attributes": {
                   "text": "@notice Removes distribution by passed id, access: DAO\n @param _distributionPoolId is id of pool distribution should be removed"
                 },
-                "id": 3316,
+                "id": 3354,
                 "name": "StructuredDocumentation",
                 "src": "2188:136:13"
               },
@@ -1743,7 +1743,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "_distributionPoolId",
-                      "scope": 3321,
+                      "scope": 3359,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -1755,17 +1755,17 @@
                           "name": "uint256",
                           "type": "uint256"
                         },
-                        "id": 3317,
+                        "id": 3355,
                         "name": "ElementaryTypeName",
                         "src": "2359:7:13"
                       }
                     ],
-                    "id": 3318,
+                    "id": 3356,
                     "name": "VariableDeclaration",
                     "src": "2359:27:13"
                   }
                 ],
-                "id": 3319,
+                "id": 3357,
                 "name": "ParameterList",
                 "src": "2358:29:13"
               },
@@ -1776,22 +1776,22 @@
                   ]
                 },
                 "children": [],
-                "id": 3320,
+                "id": 3358,
                 "name": "ParameterList",
                 "src": "2396:0:13"
               }
             ],
-            "id": 3321,
+            "id": 3359,
             "name": "FunctionDefinition",
             "src": "2327:70:13"
           }
         ],
-        "id": 3322,
+        "id": 3360,
         "name": "ContractDefinition",
         "src": "114:2285:13"
       }
     ],
-    "id": 3323,
+    "id": 3361,
     "name": "SourceUnit",
     "src": "32:2368:13"
   },
@@ -1801,7 +1801,7 @@
   },
   "networks": {},
   "schemaVersion": "3.3.3",
-  "updatedAt": "2021-01-27T14:17:24.025Z",
+  "updatedAt": "2021-01-28T11:21:06.222Z",
   "devdoc": {
     "kind": "dev",
     "methods": {

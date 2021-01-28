@@ -84,8 +84,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -128,8 +127,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [],
@@ -142,8 +140,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -204,8 +201,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [],
@@ -218,8 +214,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [],
@@ -232,8 +227,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -306,16 +300,16 @@
         669
       ],
       "Context": [
-        5423
+        5461
       ],
       "ERC20": [
-        6819
+        6857
       ],
       "IERC20": [
-        6897
+        6935
       ],
       "SafeMath": [
-        6153
+        6191
       ]
     },
     "id": 670,
@@ -339,7 +333,7 @@
         "id": 638,
         "nodeType": "ImportDirective",
         "scope": 670,
-        "sourceUnit": 6820,
+        "sourceUnit": 6858,
         "src": "57:55:1",
         "symbolAliases": [],
         "unitAlias": ""
@@ -352,10 +346,10 @@
               "id": 639,
               "name": "ERC20",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 6819,
+              "referencedDeclaration": 6857,
               "src": "135:5:1",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_ERC20_$6819",
+                "typeIdentifier": "t_contract$_ERC20_$6857",
                 "typeString": "contract ERC20"
               }
             },
@@ -365,18 +359,18 @@
           }
         ],
         "contractDependencies": [
-          5423,
-          6819,
-          6897
+          5461,
+          6857,
+          6935
         ],
         "contractKind": "contract",
         "fullyImplemented": true,
         "id": 669,
         "linearizedBaseContracts": [
           669,
-          6819,
-          6897,
-          5423
+          6857,
+          6935,
+          5461
         ],
         "name": "BMIToken",
         "nodeType": "ContractDefinition",
@@ -640,7 +634,7 @@
                       "name": "_mint",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 6695,
+                      "referencedDeclaration": 6733,
                       "src": "288:5:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$_t_address_$_t_uint256_$returns$__$",
@@ -713,10 +707,10 @@
                   "name": "ERC20",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 6819,
+                  "referencedDeclaration": 6857,
                   "src": "243:5:1",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_type$_t_contract$_ERC20_$6819_$",
+                    "typeIdentifier": "t_type$_t_contract$_ERC20_$6857_$",
                     "typeString": "type(contract ERC20)"
                   }
                 },
@@ -787,16 +781,16 @@
           669
         ],
         "Context": [
-          5423
+          5461
         ],
         "ERC20": [
-          6819
+          6857
         ],
         "IERC20": [
-          6897
+          6935
         ],
         "SafeMath": [
-          6153
+          6191
         ]
       },
       "license": "MIT"
@@ -817,7 +811,7 @@
       },
       {
         "attributes": {
-          "SourceUnit": 6820,
+          "SourceUnit": 6858,
           "absolutePath": "@openzeppelin/contracts/token/ERC20/ERC20.sol",
           "file": "@openzeppelin/contracts/token/ERC20/ERC20.sol",
           "scope": 670,
@@ -834,17 +828,17 @@
         "attributes": {
           "abstract": false,
           "contractDependencies": [
-            5423,
-            6819,
-            6897
+            5461,
+            6857,
+            6935
           ],
           "contractKind": "contract",
           "fullyImplemented": true,
           "linearizedBaseContracts": [
             669,
-            6819,
-            6897,
-            5423
+            6857,
+            6935,
+            5461
           ],
           "name": "BMIToken",
           "scope": 670
@@ -856,7 +850,7 @@
               {
                 "attributes": {
                   "name": "ERC20",
-                  "referencedDeclaration": 6819,
+                  "referencedDeclaration": 6857,
                   "type": "contract ERC20"
                 },
                 "id": 639,
@@ -1139,7 +1133,7 @@
                       "overloadedDeclarations": [
                         null
                       ],
-                      "referencedDeclaration": 6819,
+                      "referencedDeclaration": 6857,
                       "type": "type(contract ERC20)",
                       "value": "ERC20"
                     },
@@ -1216,7 +1210,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 6695,
+                              "referencedDeclaration": 6733,
                               "type": "function (address,uint256)",
                               "value": "_mint"
                             },
@@ -2028,8 +2022,7 @@
     }
   },
   "schemaVersion": "3.3.3",
-  "updatedAt": "2021-01-27T15:34:07.548Z",
-  "networkType": "ethereum",
+  "updatedAt": "2021-01-28T11:21:06.106Z",
   "devdoc": {
     "kind": "dev",
     "methods": {
