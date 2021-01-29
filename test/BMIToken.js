@@ -16,7 +16,7 @@ contract('BMIToken', async (accounts) => {
   let token;
 
   before('setup', async () => {
-    token = await deployProxy(BMIToken, [VEST_ADDR]);
+    token = await BMIToken.new(VEST_ADDR);
 
     await reverter.snapshot();
   });

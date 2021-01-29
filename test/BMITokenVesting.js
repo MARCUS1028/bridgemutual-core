@@ -38,7 +38,7 @@ contract('BMITokenVesting', async (accounts) => {
 
   before('setup', async () => {
     vesting = await deployProxy(BMITokenVesting, [tgeTimestamp]);
-    token = await deployProxy(BMIToken, [vesting.address]);
+    token = await BMIToken.new(vesting.address);
 
     await reverter.snapshot();
   });

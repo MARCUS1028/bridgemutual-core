@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity =0.7.4;
 
-import "@openzeppelin/contracts-upgradeable/token/ERC20/IERC20Upgradeable.sol";
-import "@openzeppelin/contracts-upgradeable/token/ERC20/SafeERC20Upgradeable.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
 import "@openzeppelin/contracts-upgradeable/math/MathUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/math/SafeMathUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
@@ -12,7 +12,7 @@ import "@openzeppelin/contracts-upgradeable/proxy/Initializable.sol";
 contract BMITokenVesting is Initializable, OwnableUpgradeable {
   using MathUpgradeable for uint256;
   using SafeMathUpgradeable for uint256;
-  using SafeERC20Upgradeable for IERC20Upgradeable;
+  using SafeERC20 for IERC20;
 
   enum VestingSchedule {
     ANGELROUND,
@@ -50,13 +50,13 @@ contract BMITokenVesting is Initializable, OwnableUpgradeable {
   uint256 public constant PORTION_OF_TOTAL_PRECISION = 10**10;
   uint256 public constant PORTION_PER_PERIOD_PRECISION = 10**10;
 
-  IERC20Upgradeable public token;
+  IERC20 public token;
   Vesting[] public vestings;
   uint256 public amountInVestings;
   uint256 public tgeTimestamp;
   mapping(VestingSchedule => LinearVestingSchedule[]) public vestingSchedules;
 
-  event TokenSet(IERC20Upgradeable token);
+  event TokenSet(IERC20 token);
   event VestingAdded(uint256 vestingId, address beneficiary);
   event VestingCanceled(uint256 vestingId);
   event VestingWithdraw(uint256 vestingId, uint256 amount);
@@ -266,7 +266,7 @@ contract BMITokenVesting is Initializable, OwnableUpgradeable {
     vestingSchedules[_type].push(_schedule);
   }
 
-  function setToken(IERC20Upgradeable _token) external onlyOwner {
+  function setToken(IERC20 _token) external onlyOwner {
     require(address(token) == address(0), "token is already set");
     token = _token;
     emit TokenSet(token);
