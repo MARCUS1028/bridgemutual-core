@@ -15,12 +15,13 @@ const VestingSchedule = {
   PRIVATEROUND: 2,
   LISTINGS: 3,
   GROWTH: 4,
-  FOUNDERS: 5,
-  DEVELOPERS: 6,
-  BUGFINDING: 7,
-  VAULT: 8,
-  ADVISORSCUSTOMFIRST: 9,
-  ADVISORSCUSTOMSECOND: 10,
+  OPERATIONAL: 5,
+  FOUNDERS: 6,
+  DEVELOPERS: 7,
+  BUGFINDING: 8,
+  VAULT: 9,
+  ADVISORSCUSTOMFIRST: 10,
+  ADVISORSCUSTOMSECOND: 11,
 };
 
 contract('BMITokenVesting', async (accounts) => {
@@ -592,6 +593,19 @@ contract('BMITokenVesting', async (accounts) => {
         [5, 1950000],
         [23, 13000000],
         [40, 13000000],
+      ]);
+    });
+
+    it('should withdraw from operational as expected', async () => {
+      await vesting.createVesting(OTHER_ADDR, web3.utils.toWei('10160000'), VestingSchedule.OPERATIONAL, true);
+      await testAmountByMonthOffset([
+        [-1, 0],
+        [0, 0],
+        [1, 508000],
+        [2, 1016000],
+        [5, 2540000],
+        [20, 10160000],
+        [40, 10160000],
       ]);
     });
 

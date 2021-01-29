@@ -20,6 +20,7 @@ contract BMITokenVesting is Initializable, OwnableUpgradeable {
     PRIVATEROUND,
     LISTINGS,
     GROWTH,
+    OPERATIONAL,
     FOUNDERS,
     DEVELOPERS,
     BUGFINDING,
@@ -137,6 +138,17 @@ contract BMITokenVesting is Initializable, OwnableUpgradeable {
       LinearVestingSchedule({
         portionOfTotal: PORTION_OF_TOTAL_PRECISION,
         startDate: tgeTimestamp.add(SECONDS_IN_MONTH.mul(2)),
+        periodInSeconds: SECONDS_IN_MONTH,
+        portionPerPeriod: PORTION_PER_PERIOD_PRECISION.div(100).mul(5),
+        cliffInPeriods: 0
+      })
+    );
+
+    addLinearVestingSchedule(
+      VestingSchedule.OPERATIONAL,
+      LinearVestingSchedule({
+        portionOfTotal: PORTION_OF_TOTAL_PRECISION,
+        startDate: tgeTimestamp,
         periodInSeconds: SECONDS_IN_MONTH,
         portionPerPeriod: PORTION_PER_PERIOD_PRECISION.div(100).mul(5),
         cliffInPeriods: 0
